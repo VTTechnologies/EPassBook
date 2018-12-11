@@ -30,6 +30,7 @@
           <ScalarProperty Name="Class" ColumnName="Class" />
           <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
           <ScalarProperty Name="DTRNo" ColumnName="DTRNo" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
           <ScalarProperty Name="PresentAddress" ColumnName="PresentAddress" />
           <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
           <ScalarProperty Name="Mother" ColumnName="Mother" />
@@ -138,9 +139,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="UserInRoles">
+      <EntityTypeMapping TypeName="EPassBookModel.UserInRole">
+        <MappingFragment StoreEntitySet="UserInRoles">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="UserMasters">
       <EntityTypeMapping TypeName="EPassBookModel.UserMaster">
         <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />

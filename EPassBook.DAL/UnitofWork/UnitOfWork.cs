@@ -60,7 +60,7 @@ namespace EPassBook.DAL.Repository
             if (!repositories.ContainsKey(type))
             {
                 var repositoryType = typeof(GenericRepository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _dbContext);
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)));
                 repositories.Add(type, repositoryInstance);
             }
             return (GenericRepository<TEntity>)repositories[type];

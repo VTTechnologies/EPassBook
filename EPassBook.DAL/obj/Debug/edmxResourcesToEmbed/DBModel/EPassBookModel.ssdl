@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="EPassBookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="EPassBookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="BenificiaryMaster">
     <Key>
       <PropertyRef Name="BeneficiaryId" />
@@ -10,6 +10,7 @@
     <Property Name="Mother" Type="nvarchar" MaxLength="150" />
     <Property Name="MobileNo" Type="bigint" />
     <Property Name="PresentAddress" Type="nvarchar" MaxLength="350" />
+    <Property Name="CityId" Type="int" />
     <Property Name="DTRNo" Type="int" />
     <Property Name="RecordNo" Type="bigint" />
     <Property Name="Class" Type="nvarchar" MaxLength="50" />
@@ -129,6 +130,14 @@
     <Property Name="RoleName" Type="nvarchar" MaxLength="150" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
+  <EntityType Name="UserInRoles">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="UserId" Type="int" />
+  </EntityType>
   <EntityType Name="UserMaster">
     <Key>
       <PropertyRef Name="UserId" />
@@ -139,7 +148,20 @@
     <Property Name="IsActive" Type="bit" />
     <Property Name="IsLoggedIn" Type="bit" />
     <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="CityId" Type="int" />
   </EntityType>
+  <Association Name="FK_BenificiaryMaster_CityMaster">
+    <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityMaster">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="BenificiaryMaster">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CityHeadDetails_BenificiaryMaster">
     <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1" />
     <End Role="InstallmentDetails" Type="Self.InstallmentDetails" Multiplicity="*" />
@@ -284,6 +306,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserMaster_CityMaster">
+    <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityMaster">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="UserMaster">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserMaster_RoleMaster">
     <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="1" />
     <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
@@ -296,6 +330,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UserInRoles_roleid_fk">
+    <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="0..1" />
+    <End Role="UserInRoles" Type="Self.UserInRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserInRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserInRoles_userid_fk">
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1" />
+    <End Role="UserInRoles" Type="Self.UserInRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserInRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="EPassBookModelStoreContainer">
     <EntitySet Name="BenificiaryMaster" EntityType="Self.BenificiaryMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CityMaster" EntityType="Self.CityMaster" Schema="dbo" store:Type="Tables" />
@@ -305,7 +363,12 @@
     <EntitySet Name="InstallmentRejection" EntityType="Self.InstallmentRejection" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InstallmentSigning" EntityType="Self.InstallmentSigning" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoleMaster" EntityType="Self.RoleMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserInRoles" EntityType="Self.UserInRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BenificiaryMaster_CityMaster" Association="Self.FK_BenificiaryMaster_CityMaster">
+      <End Role="CityMaster" EntitySet="CityMaster" />
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMaster" />
+    </AssociationSet>
     <AssociationSet Name="FK_CityHeadDetails_BenificiaryMaster" Association="Self.FK_CityHeadDetails_BenificiaryMaster">
       <End Role="BenificiaryMaster" EntitySet="BenificiaryMaster" />
       <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
@@ -354,9 +417,21 @@
       <End Role="UserMaster" EntitySet="UserMaster" />
       <End Role="InstallmentSigning" EntitySet="InstallmentSigning" />
     </AssociationSet>
+    <AssociationSet Name="FK_UserMaster_CityMaster" Association="Self.FK_UserMaster_CityMaster">
+      <End Role="CityMaster" EntitySet="CityMaster" />
+      <End Role="UserMaster" EntitySet="UserMaster" />
+    </AssociationSet>
     <AssociationSet Name="FK_UserMaster_RoleMaster" Association="Self.FK_UserMaster_RoleMaster">
       <End Role="RoleMaster" EntitySet="RoleMaster" />
       <End Role="UserMaster" EntitySet="UserMaster" />
+    </AssociationSet>
+    <AssociationSet Name="UserInRoles_roleid_fk" Association="Self.UserInRoles_roleid_fk">
+      <End Role="RoleMaster" EntitySet="RoleMaster" />
+      <End Role="UserInRoles" EntitySet="UserInRoles" />
+    </AssociationSet>
+    <AssociationSet Name="UserInRoles_userid_fk" Association="Self.UserInRoles_userid_fk">
+      <End Role="UserMaster" EntitySet="UserMaster" />
+      <End Role="UserInRoles" EntitySet="UserInRoles" />
     </AssociationSet>
   </EntityContainer>
 </Schema>
