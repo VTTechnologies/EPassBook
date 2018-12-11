@@ -27,6 +27,11 @@
         <AssociationConnector Association="EPassBookModel.FK_InstallmentSigning_RoleMaster" />
         <AssociationConnector Association="EPassBookModel.FK_InstallmentSigning_UserMaster" />
         <AssociationConnector Association="EPassBookModel.FK_UserMaster_RoleMaster" />
+        <EntityTypeShape EntityType="EPassBookModel.UserInRole" Width="1.5" PointX="8.25" PointY="12.75" />
+        <AssociationConnector Association="EPassBookModel.FK_BenificiaryMaster_CityMaster" />
+        <AssociationConnector Association="EPassBookModel.FK_UserMaster_CityMaster" />
+        <AssociationConnector Association="EPassBookModel.UserInRoles_roleid_fk" />
+        <AssociationConnector Association="EPassBookModel.UserInRoles_userid_fk" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

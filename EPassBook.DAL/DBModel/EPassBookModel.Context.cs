@@ -34,5 +34,6 @@ namespace EPassBook.DAL.DBModel
         public virtual DbSet<InstallmentSigning> InstallmentSignings { get; set; }
         public virtual DbSet<RoleMaster> RoleMasters { get; set; }
         public virtual DbSet<UserMaster> UserMasters { get; set; }
+        public virtual DbSet<UserInRole> UserInRoles { get; set; }
     }
 }
