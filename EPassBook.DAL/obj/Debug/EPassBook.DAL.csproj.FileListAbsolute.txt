@@ -8,3 +8,13 @@ D:\EPassBook\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.SqlServer.xml
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csprojResolveAssemblyReference.cache
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csprojResolveAssemblyReference.cache
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll.config
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.pdb
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.dll
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.xml
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.SqlServer.xml

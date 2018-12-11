@@ -62,6 +62,23 @@
       <End Role="RoleMaster" EntitySet="RoleMasters" />
       <End Role="UserMaster" EntitySet="UserMasters" />
     </AssociationSet>
+    <EntitySet Name="UserInRoles" EntityType="EPassBookModel.UserInRole" />
+    <AssociationSet Name="FK_BenificiaryMaster_CityMaster" Association="EPassBookModel.FK_BenificiaryMaster_CityMaster">
+      <End Role="CityMaster" EntitySet="CityMasters" />
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMaster_CityMaster" Association="EPassBookModel.FK_UserMaster_CityMaster">
+      <End Role="CityMaster" EntitySet="CityMasters" />
+      <End Role="UserMaster" EntitySet="UserMasters" />
+    </AssociationSet>
+    <AssociationSet Name="UserInRoles_roleid_fk" Association="EPassBookModel.UserInRoles_roleid_fk">
+      <End Role="RoleMaster" EntitySet="RoleMasters" />
+      <End Role="UserInRole" EntitySet="UserInRoles" />
+    </AssociationSet>
+    <AssociationSet Name="UserInRoles_userid_fk" Association="EPassBookModel.UserInRoles_userid_fk">
+      <End Role="UserMaster" EntitySet="UserMasters" />
+      <End Role="UserInRole" EntitySet="UserInRoles" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="BenificiaryMaster">
     <Key>
@@ -103,6 +120,8 @@
     <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="Comment" />
     <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="GeoTaggingDetail" />
     <NavigationProperty Name="InstallmentRejections" Relationship="EPassBookModel.FK_InstallmentRejection_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="InstallmentRejection" />
+    <Property Name="CityId" Type="Int32" />
+    <NavigationProperty Name="CityMaster" Relationship="EPassBookModel.FK_BenificiaryMaster_CityMaster" FromRole="BenificiaryMaster" ToRole="CityMaster" />
   </EntityType>
   <EntityType Name="CityMaster">
     <Key>
@@ -112,6 +131,8 @@
     <Property Name="CityName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="CityShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="BenificiaryMasters" Relationship="EPassBookModel.FK_BenificiaryMaster_CityMaster" FromRole="CityMaster" ToRole="BenificiaryMaster" />
+    <NavigationProperty Name="UserMasters" Relationship="EPassBookModel.FK_UserMaster_CityMaster" FromRole="CityMaster" ToRole="UserMaster" />
   </EntityType>
   <EntityType Name="Comment">
     <Key>
@@ -214,6 +235,7 @@
     <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_RoleMaster" FromRole="RoleMaster" ToRole="Comment" />
     <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_RoleMaster" FromRole="RoleMaster" ToRole="InstallmentSigning" />
     <NavigationProperty Name="UserMasters" Relationship="EPassBookModel.FK_UserMaster_RoleMaster" FromRole="RoleMaster" ToRole="UserMaster" />
+    <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_roleid_fk" FromRole="RoleMaster" ToRole="UserInRole" />
   </EntityType>
   <EntityType Name="UserMaster">
     <Key>
@@ -228,6 +250,9 @@
     <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetail" />
     <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="UserMaster" ToRole="InstallmentSigning" />
     <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.FK_UserMaster_RoleMaster" FromRole="UserMaster" ToRole="RoleMaster" />
+    <Property Name="CityId" Type="Int32" />
+    <NavigationProperty Name="CityMaster" Relationship="EPassBookModel.FK_UserMaster_CityMaster" FromRole="UserMaster" ToRole="CityMaster" />
+    <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_userid_fk" FromRole="UserMaster" ToRole="UserInRole" />
   </EntityType>
   <Association Name="FK_CityHeadDetails_BenificiaryMaster">
     <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="1" />
@@ -382,6 +407,64 @@
       </Principal>
       <Dependent Role="UserMaster">
         <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="UserInRole">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.UserInRoles_roleid_fk" FromRole="UserInRole" ToRole="RoleMaster" />
+    <NavigationProperty Name="UserMaster" Relationship="EPassBookModel.UserInRoles_userid_fk" FromRole="UserInRole" ToRole="UserMaster" />
+  </EntityType>
+  <Association Name="FK_BenificiaryMaster_CityMaster">
+    <End Type="EPassBookModel.CityMaster" Role="CityMaster" Multiplicity="0..1" />
+    <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityMaster">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="BenificiaryMaster">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserMaster_CityMaster">
+    <End Type="EPassBookModel.CityMaster" Role="CityMaster" Multiplicity="0..1" />
+    <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityMaster">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="UserMaster">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserInRoles_roleid_fk">
+    <End Type="EPassBookModel.RoleMaster" Role="RoleMaster" Multiplicity="0..1" />
+    <End Type="EPassBookModel.UserInRole" Role="UserInRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserInRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserInRoles_userid_fk">
+    <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="0..1" />
+    <End Type="EPassBookModel.UserInRole" Role="UserInRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserInRole">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

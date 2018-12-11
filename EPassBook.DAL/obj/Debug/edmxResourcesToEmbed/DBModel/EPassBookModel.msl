@@ -4,6 +4,7 @@
     <EntitySetMapping Name="BenificiaryMasters">
       <EntityTypeMapping TypeName="EPassBookModel.BenificiaryMaster">
         <MappingFragment StoreEntitySet="BenificiaryMaster">
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -141,12 +142,22 @@
     <EntitySetMapping Name="UserMasters">
       <EntityTypeMapping TypeName="EPassBookModel.UserMaster">
         <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserInRoles">
+      <EntityTypeMapping TypeName="EPassBookModel.UserInRole">
+        <MappingFragment StoreEntitySet="UserInRoles">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
