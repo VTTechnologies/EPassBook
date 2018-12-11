@@ -19,6 +19,7 @@ namespace EPassBook.DAL.DBModel
         {
             this.GeoTaggingDetails = new HashSet<GeoTaggingDetail>();
             this.InstallmentSignings = new HashSet<InstallmentSigning>();
+            this.UserInRoles = new HashSet<UserInRole>();
         }
     
         public int UserId { get; set; }
@@ -27,11 +28,15 @@ namespace EPassBook.DAL.DBModel
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsLoggedIn { get; set; }
         public int RoleId { get; set; }
+        public Nullable<int> CityId { get; set; }
     
+        public virtual CityMaster CityMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GeoTaggingDetail> GeoTaggingDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentSigning> InstallmentSignings { get; set; }
         public virtual RoleMaster RoleMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserInRole> UserInRoles { get; set; }
     }
 }

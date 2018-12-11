@@ -29,6 +29,7 @@ namespace EPassBook.DAL.DBModel
         public string Mother { get; set; }
         public Nullable<long> MobileNo { get; set; }
         public string PresentAddress { get; set; }
+        public Nullable<int> CityId { get; set; }
         public Nullable<int> DTRNo { get; set; }
         public Nullable<long> RecordNo { get; set; }
         public string Class { get; set; }
@@ -56,6 +57,7 @@ namespace EPassBook.DAL.DBModel
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
     
+        public virtual CityMaster CityMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentDetail> InstallmentDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
