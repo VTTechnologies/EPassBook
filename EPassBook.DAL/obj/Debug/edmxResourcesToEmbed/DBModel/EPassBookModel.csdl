@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EPassBookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="EPassBookEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BenificiaryMasters" EntityType="EPassBookModel.BenificiaryMaster" />
+    <EntitySet Name="CityMasters" EntityType="EPassBookModel.CityMaster" />
+    <EntitySet Name="Comments" EntityType="EPassBookModel.Comment" />
+    <EntitySet Name="GeoTaggingDetails" EntityType="EPassBookModel.GeoTaggingDetail" />
+    <EntitySet Name="InstallmentDetails" EntityType="EPassBookModel.InstallmentDetail" />
+    <EntitySet Name="InstallmentRejections" EntityType="EPassBookModel.InstallmentRejection" />
+    <EntitySet Name="InstallmentSignings" EntityType="EPassBookModel.InstallmentSigning" />
+    <EntitySet Name="RoleMasters" EntityType="EPassBookModel.RoleMaster" />
+    <EntitySet Name="UserMasters" EntityType="EPassBookModel.UserMaster" />
+    <AssociationSet Name="FK_CityHeadDetails_BenificiaryMaster" Association="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+      <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_BenificiaryMaster" Association="EPassBookModel.FK_Comments_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GeoTaggingDetails_BenificiaryMaster" Association="EPassBookModel.FK_GeoTaggingDetails_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+      <End Role="GeoTaggingDetail" EntitySet="GeoTaggingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstallmentRejection_BenificiaryMaster" Association="EPassBookModel.FK_InstallmentRejection_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+      <End Role="InstallmentRejection" EntitySet="InstallmentRejections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_InstallmentDetails" Association="EPassBookModel.FK_Comments_InstallmentDetails">
+      <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_RoleMaster" Association="EPassBookModel.FK_Comments_RoleMaster">
+      <End Role="RoleMaster" EntitySet="RoleMasters" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GeoTaggingDetails_InstallmentDetails" Association="EPassBookModel.FK_GeoTaggingDetails_InstallmentDetails">
+      <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
+      <End Role="GeoTaggingDetail" EntitySet="GeoTaggingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GeoTaggingDetails_UserMaster" Association="EPassBookModel.FK_GeoTaggingDetails_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMasters" />
+      <End Role="GeoTaggingDetail" EntitySet="GeoTaggingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstallmentSigning_InstallmentDetails" Association="EPassBookModel.FK_InstallmentSigning_InstallmentDetails">
+      <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
+      <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstallmentRejection_InstallmentRejection" Association="EPassBookModel.FK_InstallmentRejection_InstallmentRejection">
+      <End Role="InstallmentRejection" EntitySet="InstallmentRejections" />
+      <End Role="InstallmentRejection1" EntitySet="InstallmentRejections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstallmentSigning_RoleMaster" Association="EPassBookModel.FK_InstallmentSigning_RoleMaster">
+      <End Role="RoleMaster" EntitySet="RoleMasters" />
+      <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstallmentSigning_UserMaster" Association="EPassBookModel.FK_InstallmentSigning_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMasters" />
+      <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMaster_RoleMaster" Association="EPassBookModel.FK_UserMaster_RoleMaster">
+      <End Role="RoleMaster" EntitySet="RoleMasters" />
+      <End Role="UserMaster" EntitySet="UserMasters" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BenificiaryMaster">
+    <Key>
+      <PropertyRef Name="BeneficiaryId" />
+    </Key>
+    <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+    <Property Name="BeneficairyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="FatherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Mother" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNo" Type="Int64" />
+    <Property Name="PresentAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="DTRNo" Type="Int32" />
+    <Property Name="RecordNo" Type="Int64" />
+    <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="General" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Single" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Disabled" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="AdharNo" Type="Int64" />
+    <Property Name="VoterID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Area" Type="Int32" />
+    <Property Name="MojaNo" Type="Int32" />
+    <Property Name="KhataNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KhasraNo" Type="Int32" />
+    <Property Name="PlotNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PoliceStation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="WardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BankName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="BranchName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IFSCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AccountNo" Type="Int64" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InstallmentDetails" Relationship="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="InstallmentDetail" />
+    <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="Comment" />
+    <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="GeoTaggingDetail" />
+    <NavigationProperty Name="InstallmentRejections" Relationship="EPassBookModel.FK_InstallmentRejection_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="InstallmentRejection" />
+  </EntityType>
+  <EntityType Name="CityMaster">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="CityShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+    <Property Name="InstallementId" Type="Int32" Nullable="false" />
+    <Property Name="Reason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_Comments_BenificiaryMaster" FromRole="Comment" ToRole="BenificiaryMaster" />
+    <NavigationProperty Name="InstallmentDetail" Relationship="EPassBookModel.FK_Comments_InstallmentDetails" FromRole="Comment" ToRole="InstallmentDetail" />
+    <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.FK_Comments_RoleMaster" FromRole="Comment" ToRole="RoleMaster" />
+  </EntityType>
+  <EntityType Name="GeoTaggingDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ConstructionLevel" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="BeneficiaryId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="InstallmentId" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_GeoTaggingDetails_BenificiaryMaster" FromRole="GeoTaggingDetail" ToRole="BenificiaryMaster" />
+    <NavigationProperty Name="InstallmentDetail" Relationship="EPassBookModel.FK_GeoTaggingDetails_InstallmentDetails" FromRole="GeoTaggingDetail" ToRole="InstallmentDetail" />
+    <NavigationProperty Name="UserMaster" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="GeoTaggingDetail" ToRole="UserMaster" />
+  </EntityType>
+  <EntityType Name="InstallmentDetail">
+    <Key>
+      <PropertyRef Name="InstallmentId" />
+    </Key>
+    <Property Name="InstallmentId" Type="Int32" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+    <Property Name="BeneficiaryAmnt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="LoanAmnt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="State" Type="Boolean" />
+    <Property Name="Centre" Type="Boolean" />
+    <Property Name="ConstructionLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsCompleted" Type="Boolean" />
+    <Property Name="InstallmentNo" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster" FromRole="InstallmentDetail" ToRole="BenificiaryMaster" />
+    <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_InstallmentDetails" FromRole="InstallmentDetail" ToRole="Comment" />
+    <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_InstallmentDetails" FromRole="InstallmentDetail" ToRole="GeoTaggingDetail" />
+    <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_InstallmentDetails" FromRole="InstallmentDetail" ToRole="InstallmentSigning" />
+  </EntityType>
+  <EntityType Name="InstallmentRejection">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+    <Property Name="InstallmentNo" Type="Int32" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_InstallmentRejection_BenificiaryMaster" FromRole="InstallmentRejection" ToRole="BenificiaryMaster" />
+    <NavigationProperty Name="InstallmentRejection1" Relationship="EPassBookModel.FK_InstallmentRejection_InstallmentRejection" FromRole="InstallmentRejection" ToRole="InstallmentRejection1" />
+    <NavigationProperty Name="InstallmentRejection2" Relationship="EPassBookModel.FK_InstallmentRejection_InstallmentRejection" FromRole="InstallmentRejection1" ToRole="InstallmentRejection" />
+  </EntityType>
+  <EntityType Name="InstallmentSigning">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="InstallmentId" Type="Int32" />
+    <Property Name="Sign" Type="Boolean" />
+    <Property Name="SignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InstallmentDetail" Relationship="EPassBookModel.FK_InstallmentSigning_InstallmentDetails" FromRole="InstallmentSigning" ToRole="InstallmentDetail" />
+    <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.FK_InstallmentSigning_RoleMaster" FromRole="InstallmentSigning" ToRole="RoleMaster" />
+    <NavigationProperty Name="UserMaster" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="InstallmentSigning" ToRole="UserMaster" />
+  </EntityType>
+  <EntityType Name="RoleMaster">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_RoleMaster" FromRole="RoleMaster" ToRole="Comment" />
+    <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_RoleMaster" FromRole="RoleMaster" ToRole="InstallmentSigning" />
+    <NavigationProperty Name="UserMasters" Relationship="EPassBookModel.FK_UserMaster_RoleMaster" FromRole="RoleMaster" ToRole="UserMaster" />
+  </EntityType>
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsLoggedIn" Type="Boolean" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetail" />
+    <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="UserMaster" ToRole="InstallmentSigning" />
+    <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.FK_UserMaster_RoleMaster" FromRole="UserMaster" ToRole="RoleMaster" />
+  </EntityType>
+  <Association Name="FK_CityHeadDetails_BenificiaryMaster">
+    <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="1" />
+    <End Type="EPassBookModel.InstallmentDetail" Role="InstallmentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="InstallmentDetail">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_BenificiaryMaster">
+    <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="1" />
+    <End Type="EPassBookModel.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GeoTaggingDetails_BenificiaryMaster">
+    <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="0..1" />
+    <End Type="EPassBookModel.GeoTaggingDetail" Role="GeoTaggingDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="GeoTaggingDetail">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstallmentRejection_BenificiaryMaster">
+    <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="1" />
+    <End Type="EPassBookModel.InstallmentRejection" Role="InstallmentRejection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="InstallmentRejection">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_InstallmentDetails">
+    <End Type="EPassBookModel.InstallmentDetail" Role="InstallmentDetail" Multiplicity="1" />
+    <End Type="EPassBookModel.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstallmentDetail">
+        <PropertyRef Name="InstallmentId" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="InstallementId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_RoleMaster">
+    <End Type="EPassBookModel.RoleMaster" Role="RoleMaster" Multiplicity="0..1" />
+    <End Type="EPassBookModel.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GeoTaggingDetails_InstallmentDetails">
+    <End Type="EPassBookModel.InstallmentDetail" Role="InstallmentDetail" Multiplicity="0..1" />
+    <End Type="EPassBookModel.GeoTaggingDetail" Role="GeoTaggingDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstallmentDetail">
+        <PropertyRef Name="InstallmentId" />
+      </Principal>
+      <Dependent Role="GeoTaggingDetail">
+        <PropertyRef Name="InstallmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GeoTaggingDetails_UserMaster">
+    <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="1" />
+    <End Type="EPassBookModel.GeoTaggingDetail" Role="GeoTaggingDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="GeoTaggingDetail">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstallmentSigning_InstallmentDetails">
+    <End Type="EPassBookModel.InstallmentDetail" Role="InstallmentDetail" Multiplicity="0..1" />
+    <End Type="EPassBookModel.InstallmentSigning" Role="InstallmentSigning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstallmentDetail">
+        <PropertyRef Name="InstallmentId" />
+      </Principal>
+      <Dependent Role="InstallmentSigning">
+        <PropertyRef Name="InstallmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstallmentRejection_InstallmentRejection">
+    <End Type="EPassBookModel.InstallmentRejection" Role="InstallmentRejection" Multiplicity="1" />
+    <End Type="EPassBookModel.InstallmentRejection" Role="InstallmentRejection1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="InstallmentRejection">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InstallmentRejection1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstallmentSigning_RoleMaster">
+    <End Type="EPassBookModel.RoleMaster" Role="RoleMaster" Multiplicity="0..1" />
+    <End Type="EPassBookModel.InstallmentSigning" Role="InstallmentSigning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="InstallmentSigning">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstallmentSigning_UserMaster">
+    <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="0..1" />
+    <End Type="EPassBookModel.InstallmentSigning" Role="InstallmentSigning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="InstallmentSigning">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserMaster_RoleMaster">
+    <End Type="EPassBookModel.RoleMaster" Role="RoleMaster" Multiplicity="1" />
+    <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserMaster">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EPassBookModelStoreContainer" CdmEntityContainer="EPassBookEntities">
+    <EntitySetMapping Name="BenificiaryMasters">
+      <EntityTypeMapping TypeName="EPassBookModel.BenificiaryMaster">
+        <MappingFragment StoreEntitySet="BenificiaryMaster">
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+          <ScalarProperty Name="Mother" ColumnName="Mother" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="PresentAddress" ColumnName="PresentAddress" />
+          <ScalarProperty Name="DTRNo" ColumnName="DTRNo" />
+          <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="General" ColumnName="General" />
+          <ScalarProperty Name="Single" ColumnName="Single" />
+          <ScalarProperty Name="Disabled" ColumnName="Disabled" />
+          <ScalarProperty Name="AdharNo" ColumnName="AdharNo" />
+          <ScalarProperty Name="VoterID" ColumnName="VoterID" />
+          <ScalarProperty Name="Area" ColumnName="Area" />
+          <ScalarProperty Name="MojaNo" ColumnName="MojaNo" />
+          <ScalarProperty Name="KhataNo" ColumnName="KhataNo" />
+          <ScalarProperty Name="KhasraNo" ColumnName="KhasraNo" />
+          <ScalarProperty Name="PlotNo" ColumnName="PlotNo" />
+          <ScalarProperty Name="PoliceStation" ColumnName="PoliceStation" />
+          <ScalarProperty Name="WardNo" ColumnName="WardNo" />
+          <ScalarProperty Name="District" ColumnName="District" />
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+          <ScalarProperty Name="IFSCCode" ColumnName="IFSCCode" />
+          <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CityHeadDetails">
+      <EntityTypeMapping TypeName="EPassBookModel.CityHeadDetail">
+        <MappingFragment StoreEntitySet="CityHeadDetails">
+          <ScalarProperty Name="CityHeadDetailId" ColumnName="CityHeadDetailId" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="CentralAmnt" ColumnName="CentralAmnt" />
+          <ScalarProperty Name="StateAmnt" ColumnName="StateAmnt" />
+          <ScalarProperty Name="CHSign" ColumnName="CHSign" />
+          <ScalarProperty Name="CHSignData" ColumnName="CHSignData" />
+          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+          <ScalarProperty Name="CESign" ColumnName="CESign" />
+          <ScalarProperty Name="CESignData" ColumnName="CESignData" />
+          <ScalarProperty Name="COSign" ColumnName="COSign" />
+          <ScalarProperty Name="COSignData" ColumnName="COSignData" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CityMasters">
+      <EntityTypeMapping TypeName="EPassBookModel.CityMaster">
+        <MappingFragment StoreEntitySet="CityMaster">
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="CityShortName" ColumnName="CityShortName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CorporationEngineerDetails">
+      <EntityTypeMapping TypeName="EPassBookModel.CorporationEngineerDetail">
+        <MappingFragment StoreEntitySet="CorporationEngineerDetails">
+          <ScalarProperty Name="CEdetialsId" ColumnName="CEdetialsId" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="CentralAmnt" ColumnName="CentralAmnt" />
+          <ScalarProperty Name="StateAmnt" ColumnName="StateAmnt" />
+          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+          <ScalarProperty Name="CESign" ColumnName="CESign" />
+          <ScalarProperty Name="CESignData" ColumnName="CESignData" />
+          <ScalarProperty Name="COSign" ColumnName="COSign" />
+          <ScalarProperty Name="COSignData" ColumnName="COSignData" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CostofHouseMasters">
+      <EntityTypeMapping TypeName="EPassBookModel.CostofHouseMaster">
+        <MappingFragment StoreEntitySet="CostofHouseMaster">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="HouseCost" ColumnName="HouseCost" />
+          <ScalarProperty Name="GovernContribution" ColumnName="GovernContribution" />
+          <ScalarProperty Name="BenificiaryContribution" ColumnName="BenificiaryContribution" />
+          <ScalarProperty Name="State_CentralAmnt" ColumnName="State/CentralAmnt" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GeoTaggingDetails">
+      <EntityTypeMapping TypeName="EPassBookModel.GeoTaggingDetail">
+        <MappingFragment StoreEntitySet="GeoTaggingDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Installment" ColumnName="Installment" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ObservationDetails">
+      <EntityTypeMapping TypeName="EPassBookModel.ObservationDetail">
+        <MappingFragment StoreEntitySet="ObservationDetails">
+          <ScalarProperty Name="ObservationId" ColumnName="ObservationId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="WorkProgress" ColumnName="WorkProgress" />
+          <ScalarProperty Name="CentralAmnt" ColumnName="CentralAmnt" />
+          <ScalarProperty Name="StateAmnt" ColumnName="StateAmnt" />
+          <ScalarProperty Name="CHSign" ColumnName="CHSign" />
+          <ScalarProperty Name="CHSignData" ColumnName="CHSignData" />
+          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+          <ScalarProperty Name="CESign" ColumnName="CESign" />
+          <ScalarProperty Name="CESignData" ColumnName="CESignData" />
+          <ScalarProperty Name="COSign" ColumnName="COSign" />
+          <ScalarProperty Name="COSignData" ColumnName="COSignData" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleMasters">
+      <EntityTypeMapping TypeName="EPassBookModel.RoleMaster">
+        <MappingFragment StoreEntitySet="RoleMaster">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserMasters">
+      <EntityTypeMapping TypeName="EPassBookModel.UserMaster">
+        <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

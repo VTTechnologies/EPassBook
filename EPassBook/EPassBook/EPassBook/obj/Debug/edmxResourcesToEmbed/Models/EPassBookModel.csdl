@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EPassBookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BenificiaryMaster">
+    <Key>
+      <PropertyRef Name="BeneficiaryId" />
+    </Key>
+    <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+    <Property Name="BeneficairyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="FatherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Mother" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNo" Type="Int64" />
+    <Property Name="PresentAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="DTRNo" Type="Int32" />
+    <Property Name="RecordNo" Type="Int64" />
+    <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="General" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Single" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Disabled" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="AdharNo" Type="Int64" />
+    <Property Name="VoterID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Area" Type="Int32" />
+    <Property Name="MojaNo" Type="Int32" />
+    <Property Name="KhataNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KhasraNo" Type="Int32" />
+    <Property Name="PlotNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PoliceStation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="WardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BankName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="BranchName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IFSCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AccountNo" Type="Int64" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CityHeadDetails" Relationship="Self.FK_CityHeadDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="CityHeadDetails" />
+    <NavigationProperty Name="CorporationEngineerDetails" Relationship="Self.FK_CorporationEngineerDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="CorporationEngineerDetails" />
+    <NavigationProperty Name="GeoTaggingDetails" Relationship="Self.FK_GeoTaggingDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="GeoTaggingDetails" />
+    <NavigationProperty Name="ObservationDetails" Relationship="Self.FK_ObservationDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="ObservationDetails" />
+  </EntityType>
+  <EntityType Name="CityHeadDetail">
+    <Key>
+      <PropertyRef Name="CityHeadDetailId" />
+    </Key>
+    <Property Name="CityHeadDetailId" Type="Int32" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+    <Property Name="CentralAmnt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="StateAmnt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CHSign" Type="Boolean" />
+    <Property Name="CHSignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InstallmentNo" Type="Int32" />
+    <Property Name="CESign" Type="Boolean" />
+    <Property Name="CESignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="COSign" Type="Boolean" />
+    <Property Name="COSignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BenificiaryMaster" Relationship="Self.FK_CityHeadDetails_BenificiaryMaster" FromRole="CityHeadDetails" ToRole="BenificiaryMaster" />
+    <NavigationProperty Name="UserMaster" Relationship="Self.FK_CityHeadDetails_UserMaster" FromRole="CityHeadDetails" ToRole="UserMaster" />
+  </EntityType>
+  <EntityType Name="CityMaster">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="CityShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="CostofHouseMasters" Relationship="Self.FK_CostofHouseMaster_CityMaster" FromRole="CityMaster" ToRole="CostofHouseMaster" />
+  </EntityType>
+  <EntityType Name="CorporationEngineerDetail">
+    <Key>
+      <PropertyRef Name="CEdetialsId" />
+    </Key>
+    <Property Name="CEdetialsId" Type="Int32" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="Int32" />
+    <Property Name="CentralAmnt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="StateAmnt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="InstallmentNo" Type="Int32" />
+    <Property Name="CESign" Type="Boolean" />
+    <Property Name="CESignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="COSign" Type="Boolean" />
+    <Property Name="COSignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BenificiaryMaster" Relationship="Self.FK_CorporationEngineerDetails_BenificiaryMaster" FromRole="CorporationEngineerDetails" ToRole="BenificiaryMaster" />
+    <NavigationProperty Name="UserMaster" Relationship="Self.FK_CorporationEngineerDetails_UserMaster" FromRole="CorporationEngineerDetails" ToRole="UserMaster" />
+  </EntityType>
+  <EntityType Name="CostofHouseMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="HouseCost" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GovernContribution" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BenificiaryContribution" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="State_CentralAmnt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CityId" Type="Int32" />
+    <NavigationProperty Name="CityMaster" Relationship="Self.FK_CostofHouseMaster_CityMaster" FromRole="CostofHouseMaster" ToRole="CityMaster" />
+  </EntityType>
+  <EntityType Name="GeoTaggingDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ConstructionLevel" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="BeneficiaryId" Type="Int32" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Installment" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BenificiaryMaster" Relationship="Self.FK_GeoTaggingDetails_BenificiaryMaster" FromRole="GeoTaggingDetails" ToRole="BenificiaryMaster" />
+    <NavigationProperty Name="UserMaster" Relationship="Self.FK_GeoTaggingDetails_UserMaster" FromRole="GeoTaggingDetails" ToRole="UserMaster" />
+  </EntityType>
+  <EntityType Name="ObservationDetail">
+    <Key>
+      <PropertyRef Name="ObservationId" />
+    </Key>
+    <Property Name="ObservationId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="Int32" />
+    <Property Name="WorkProgress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CentralAmnt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="StateAmnt" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CHSign" Type="Boolean" />
+    <Property Name="CHSignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InstallmentNo" Type="Int32" />
+    <Property Name="CESign" Type="Boolean" />
+    <Property Name="CESignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="COSign" Type="Boolean" />
+    <Property Name="COSignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BenificiaryMaster" Relationship="Self.FK_ObservationDetails_BenificiaryMaster" FromRole="ObservationDetails" ToRole="BenificiaryMaster" />
+    <NavigationProperty Name="UserMaster" Relationship="Self.FK_ObservationDetails_UserMaster" FromRole="ObservationDetails" ToRole="UserMaster" />
+  </EntityType>
+  <EntityType Name="RoleMaster">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="UserMasters" Relationship="Self.FK_UserMaster_RoleMaster" FromRole="RoleMaster" ToRole="UserMaster" />
+  </EntityType>
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsLoggedIn" Type="Boolean" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CityHeadDetails" Relationship="Self.FK_CityHeadDetails_UserMaster" FromRole="UserMaster" ToRole="CityHeadDetails" />
+    <NavigationProperty Name="CorporationEngineerDetails" Relationship="Self.FK_CorporationEngineerDetails_UserMaster" FromRole="UserMaster" ToRole="CorporationEngineerDetails" />
+    <NavigationProperty Name="GeoTaggingDetails" Relationship="Self.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetails" />
+    <NavigationProperty Name="ObservationDetails" Relationship="Self.FK_ObservationDetails_UserMaster" FromRole="UserMaster" ToRole="ObservationDetails" />
+    <NavigationProperty Name="RoleMaster" Relationship="Self.FK_UserMaster_RoleMaster" FromRole="UserMaster" ToRole="RoleMaster" />
+  </EntityType>
+  <Association Name="FK_CityHeadDetails_BenificiaryMaster">
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1" />
+    <End Role="CityHeadDetails" Type="Self.CityHeadDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="CityHeadDetails">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CorporationEngineerDetails_BenificiaryMaster">
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="0..1" />
+    <End Role="CorporationEngineerDetails" Type="Self.CorporationEngineerDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="CorporationEngineerDetails">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GeoTaggingDetails_BenificiaryMaster">
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="0..1" />
+    <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="GeoTaggingDetails">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ObservationDetails_BenificiaryMaster">
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="0..1" />
+    <End Role="ObservationDetails" Type="Self.ObservationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="ObservationDetails">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CityHeadDetails_UserMaster">
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1" />
+    <End Role="CityHeadDetails" Type="Self.CityHeadDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CityHeadDetails">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CostofHouseMaster_CityMaster">
+    <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
+    <End Role="CostofHouseMaster" Type="Self.CostofHouseMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityMaster">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="CostofHouseMaster">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CorporationEngineerDetails_UserMaster">
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1" />
+    <End Role="CorporationEngineerDetails" Type="Self.CorporationEngineerDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CorporationEngineerDetails">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GeoTaggingDetails_UserMaster">
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="1" />
+    <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="GeoTaggingDetails">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ObservationDetails_UserMaster">
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="1" />
+    <End Role="ObservationDetails" Type="Self.ObservationDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ObservationDetails">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserMaster_RoleMaster">
+    <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="1" />
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserMaster">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EPassBookEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BenificiaryMasters" EntityType="Self.BenificiaryMaster" />
+    <EntitySet Name="CityHeadDetails" EntityType="Self.CityHeadDetail" />
+    <EntitySet Name="CityMasters" EntityType="Self.CityMaster" />
+    <EntitySet Name="CorporationEngineerDetails" EntityType="Self.CorporationEngineerDetail" />
+    <EntitySet Name="CostofHouseMasters" EntityType="Self.CostofHouseMaster" />
+    <EntitySet Name="GeoTaggingDetails" EntityType="Self.GeoTaggingDetail" />
+    <EntitySet Name="ObservationDetails" EntityType="Self.ObservationDetail" />
+    <EntitySet Name="RoleMasters" EntityType="Self.RoleMaster" />
+    <EntitySet Name="UserMasters" EntityType="Self.UserMaster" />
+    <AssociationSet Name="FK_CityHeadDetails_BenificiaryMaster" Association="Self.FK_CityHeadDetails_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+      <End Role="CityHeadDetails" EntitySet="CityHeadDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CorporationEngineerDetails_BenificiaryMaster" Association="Self.FK_CorporationEngineerDetails_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+      <End Role="CorporationEngineerDetails" EntitySet="CorporationEngineerDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GeoTaggingDetails_BenificiaryMaster" Association="Self.FK_GeoTaggingDetails_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+      <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ObservationDetails_BenificiaryMaster" Association="Self.FK_ObservationDetails_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+      <End Role="ObservationDetails" EntitySet="ObservationDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CityHeadDetails_UserMaster" Association="Self.FK_CityHeadDetails_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMasters" />
+      <End Role="CityHeadDetails" EntitySet="CityHeadDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CostofHouseMaster_CityMaster" Association="Self.FK_CostofHouseMaster_CityMaster">
+      <End Role="CityMaster" EntitySet="CityMasters" />
+      <End Role="CostofHouseMaster" EntitySet="CostofHouseMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CorporationEngineerDetails_UserMaster" Association="Self.FK_CorporationEngineerDetails_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMasters" />
+      <End Role="CorporationEngineerDetails" EntitySet="CorporationEngineerDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GeoTaggingDetails_UserMaster" Association="Self.FK_GeoTaggingDetails_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMasters" />
+      <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ObservationDetails_UserMaster" Association="Self.FK_ObservationDetails_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMasters" />
+      <End Role="ObservationDetails" EntitySet="ObservationDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMaster_RoleMaster" Association="Self.FK_UserMaster_RoleMaster">
+      <End Role="RoleMaster" EntitySet="RoleMasters" />
+      <End Role="UserMaster" EntitySet="UserMasters" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

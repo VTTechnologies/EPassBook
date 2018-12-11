@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EPassBookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BenificiaryMaster">
+    <Key>
+      <PropertyRef Name="BeneficiaryId" />
+    </Key>
+    <Property Name="BeneficiaryId" Type="int" Nullable="false" />
+    <Property Name="BeneficairyName" Type="nvarchar" MaxLength="150" />
+    <Property Name="FatherName" Type="nvarchar" MaxLength="150" />
+    <Property Name="Mother" Type="nvarchar" MaxLength="150" />
+    <Property Name="MobileNo" Type="bigint" />
+    <Property Name="PresentAddress" Type="nvarchar" MaxLength="350" />
+    <Property Name="DTRNo" Type="int" />
+    <Property Name="RecordNo" Type="bigint" />
+    <Property Name="Class" Type="nvarchar" MaxLength="50" />
+    <Property Name="General" Type="nvarchar" MaxLength="150" />
+    <Property Name="Single" Type="nvarchar" MaxLength="50" />
+    <Property Name="Disabled" Type="nvarchar" MaxLength="150" />
+    <Property Name="Password" Type="nvarchar" MaxLength="150" />
+    <Property Name="AdharNo" Type="bigint" />
+    <Property Name="VoterID" Type="nvarchar" MaxLength="50" />
+    <Property Name="Area" Type="int" />
+    <Property Name="MojaNo" Type="int" />
+    <Property Name="KhataNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="KhasraNo" Type="int" />
+    <Property Name="PlotNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="PoliceStation" Type="nvarchar" MaxLength="150" />
+    <Property Name="WardNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="District" Type="nvarchar" MaxLength="50" />
+    <Property Name="BankName" Type="nvarchar" MaxLength="250" />
+    <Property Name="BranchName" Type="nvarchar" MaxLength="150" />
+    <Property Name="IFSCCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="AccountNo" Type="bigint" />
+    <Property Name="Photo" Type="image" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CityMaster">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="150" />
+    <Property Name="CityShortName" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Comments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="int" Nullable="false" />
+    <Property Name="InstallementId" Type="int" Nullable="false" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="GeoTaggingDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="Photo" Type="image" />
+    <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="150" />
+    <Property Name="BeneficiaryId" Type="int" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="InstallmentId" Type="int" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="InstallmentDetails">
+    <Key>
+      <PropertyRef Name="InstallmentId" />
+    </Key>
+    <Property Name="InstallmentId" Type="int" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="int" Nullable="false" />
+    <Property Name="BeneficiaryAmnt" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="LoanAmnt" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="State" Type="bit" />
+    <Property Name="Centre" Type="bit" />
+    <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsCompleted" Type="bit" />
+    <Property Name="InstallmentNo" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="InstallmentRejection">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="int" Nullable="false" />
+    <Property Name="InstallmentNo" Type="int" />
+    <Property Name="Comment" Type="nvarchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="InstallmentSigning">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="InstallmentId" Type="int" />
+    <Property Name="Sign" Type="bit" />
+    <Property Name="SignData" Type="nvarchar(max)" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="RoleMaster">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="150" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="150" />
+    <Property Name="Password" Type="nvarchar" MaxLength="150" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsLoggedIn" Type="bit" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CityHeadDetails_BenificiaryMaster">
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1" />
+    <End Role="InstallmentDetails" Type="Self.InstallmentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="InstallmentDetails">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_BenificiaryMaster">
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_InstallmentDetails">
+    <End Role="InstallmentDetails" Type="Self.InstallmentDetails" Multiplicity="1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstallmentDetails">
+        <PropertyRef Name="InstallmentId" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="InstallementId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_RoleMaster">
+    <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="0..1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GeoTaggingDetails_BenificiaryMaster">
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="0..1" />
+    <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="GeoTaggingDetails">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GeoTaggingDetails_InstallmentDetails">
+    <End Role="InstallmentDetails" Type="Self.InstallmentDetails" Multiplicity="0..1" />
+    <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstallmentDetails">
+        <PropertyRef Name="InstallmentId" />
+      </Principal>
+      <Dependent Role="GeoTaggingDetails">
+        <PropertyRef Name="InstallmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GeoTaggingDetails_UserMaster">
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="1" />
+    <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="GeoTaggingDetails">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstallmentRejection_BenificiaryMaster">
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1" />
+    <End Role="InstallmentRejection" Type="Self.InstallmentRejection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BenificiaryMaster">
+        <PropertyRef Name="BeneficiaryId" />
+      </Principal>
+      <Dependent Role="InstallmentRejection">
+        <PropertyRef Name="BeneficiaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstallmentRejection_InstallmentRejection">
+    <End Role="InstallmentRejection" Type="Self.InstallmentRejection" Multiplicity="1" />
+    <End Role="InstallmentRejection1" Type="Self.InstallmentRejection" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="InstallmentRejection">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InstallmentRejection1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstallmentSigning_InstallmentDetails">
+    <End Role="InstallmentDetails" Type="Self.InstallmentDetails" Multiplicity="0..1" />
+    <End Role="InstallmentSigning" Type="Self.InstallmentSigning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstallmentDetails">
+        <PropertyRef Name="InstallmentId" />
+      </Principal>
+      <Dependent Role="InstallmentSigning">
+        <PropertyRef Name="InstallmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstallmentSigning_RoleMaster">
+    <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="0..1" />
+    <End Role="InstallmentSigning" Type="Self.InstallmentSigning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="InstallmentSigning">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstallmentSigning_UserMaster">
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1" />
+    <End Role="InstallmentSigning" Type="Self.InstallmentSigning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="InstallmentSigning">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserMaster_RoleMaster">
+    <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="1" />
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserMaster">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EPassBookModelStoreContainer">
+    <EntitySet Name="BenificiaryMaster" EntityType="Self.BenificiaryMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CityMaster" EntityType="Self.CityMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GeoTaggingDetails" EntityType="Self.GeoTaggingDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InstallmentDetails" EntityType="Self.InstallmentDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InstallmentRejection" EntityType="Self.InstallmentRejection" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InstallmentSigning" EntityType="Self.InstallmentSigning" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoleMaster" EntityType="Self.RoleMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CityHeadDetails_BenificiaryMaster" Association="Self.FK_CityHeadDetails_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMaster" />
+      <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_BenificiaryMaster" Association="Self.FK_Comments_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMaster" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_InstallmentDetails" Association="Self.FK_Comments_InstallmentDetails">
+      <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_RoleMaster" Association="Self.FK_Comments_RoleMaster">
+      <End Role="RoleMaster" EntitySet="RoleMaster" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GeoTaggingDetails_BenificiaryMaster" Association="Self.FK_GeoTaggingDetails_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMaster" />
+      <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GeoTaggingDetails_InstallmentDetails" Association="Self.FK_GeoTaggingDetails_InstallmentDetails">
+      <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
+      <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GeoTaggingDetails_UserMaster" Association="Self.FK_GeoTaggingDetails_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMaster" />
+      <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstallmentRejection_BenificiaryMaster" Association="Self.FK_InstallmentRejection_BenificiaryMaster">
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMaster" />
+      <End Role="InstallmentRejection" EntitySet="InstallmentRejection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstallmentRejection_InstallmentRejection" Association="Self.FK_InstallmentRejection_InstallmentRejection">
+      <End Role="InstallmentRejection" EntitySet="InstallmentRejection" />
+      <End Role="InstallmentRejection1" EntitySet="InstallmentRejection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstallmentSigning_InstallmentDetails" Association="Self.FK_InstallmentSigning_InstallmentDetails">
+      <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
+      <End Role="InstallmentSigning" EntitySet="InstallmentSigning" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstallmentSigning_RoleMaster" Association="Self.FK_InstallmentSigning_RoleMaster">
+      <End Role="RoleMaster" EntitySet="RoleMaster" />
+      <End Role="InstallmentSigning" EntitySet="InstallmentSigning" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstallmentSigning_UserMaster" Association="Self.FK_InstallmentSigning_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMaster" />
+      <End Role="InstallmentSigning" EntitySet="InstallmentSigning" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMaster_RoleMaster" Association="Self.FK_UserMaster_RoleMaster">
+      <End Role="RoleMaster" EntitySet="RoleMaster" />
+      <End Role="UserMaster" EntitySet="UserMaster" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

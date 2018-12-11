@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d54d26c7046545478c67fa61edff613c" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="EPassBookModel.BenificiaryMaster" Width="1.5" PointX="0.75" PointY="5.5" />
+        <EntityTypeShape EntityType="EPassBookModel.CityMaster" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EPassBookModel.Comment" Width="1.5" PointX="5.25" PointY="10.875" />
+        <EntityTypeShape EntityType="EPassBookModel.GeoTaggingDetail" Width="1.5" PointX="8.25" PointY="7.625" />
+        <EntityTypeShape EntityType="EPassBookModel.InstallmentDetail" Width="1.5" PointX="3" PointY="5.375" />
+        <EntityTypeShape EntityType="EPassBookModel.InstallmentRejection" Width="1.5" PointX="3" PointY="10.5" />
+        <EntityTypeShape EntityType="EPassBookModel.InstallmentSigning" Width="1.5" PointX="5.25" PointY="5.75" />
+        <EntityTypeShape EntityType="EPassBookModel.RoleMaster" Width="1.5" PointX="3" PointY="15.25" />
+        <EntityTypeShape EntityType="EPassBookModel.UserMaster" Width="1.5" PointX="3" PointY="1.75" />
+        <AssociationConnector Association="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster" />
+        <AssociationConnector Association="EPassBookModel.FK_Comments_BenificiaryMaster" />
+        <AssociationConnector Association="EPassBookModel.FK_GeoTaggingDetails_BenificiaryMaster" />
+        <AssociationConnector Association="EPassBookModel.FK_InstallmentRejection_BenificiaryMaster" />
+        <AssociationConnector Association="EPassBookModel.FK_Comments_InstallmentDetails" />
+        <AssociationConnector Association="EPassBookModel.FK_Comments_RoleMaster" />
+        <AssociationConnector Association="EPassBookModel.FK_GeoTaggingDetails_InstallmentDetails" />
+        <AssociationConnector Association="EPassBookModel.FK_GeoTaggingDetails_UserMaster" />
+        <AssociationConnector Association="EPassBookModel.FK_InstallmentSigning_InstallmentDetails" />
+        <AssociationConnector Association="EPassBookModel.FK_InstallmentRejection_InstallmentRejection" />
+        <AssociationConnector Association="EPassBookModel.FK_InstallmentSigning_RoleMaster" />
+        <AssociationConnector Association="EPassBookModel.FK_InstallmentSigning_UserMaster" />
+        <AssociationConnector Association="EPassBookModel.FK_UserMaster_RoleMaster" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
