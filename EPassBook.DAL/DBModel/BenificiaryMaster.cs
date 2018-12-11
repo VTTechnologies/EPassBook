@@ -55,7 +55,6 @@ namespace EPassBook.DAL.DBModel
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
-        public Nullable<int> CityId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentDetail> InstallmentDetails { get; set; }
@@ -65,6 +64,5 @@ namespace EPassBook.DAL.DBModel
         public virtual ICollection<GeoTaggingDetail> GeoTaggingDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentRejection> InstallmentRejections { get; set; }
-        public virtual CityMaster CityMaster { get; set; }
     }
 }
