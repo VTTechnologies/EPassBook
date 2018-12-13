@@ -24,7 +24,9 @@ namespace EPassBook.DAL.DBModel
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+        public Nullable<int> CompanyID { get; set; }
     
+        public virtual CompanyMaster CompanyMaster { get; set; }
         public virtual InstallmentDetail InstallmentDetail { get; set; }
         public virtual RoleMaster RoleMaster { get; set; }
         public virtual UserMaster UserMaster { get; set; }

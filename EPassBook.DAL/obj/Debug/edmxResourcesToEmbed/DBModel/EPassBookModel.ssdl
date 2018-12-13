@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="EPassBookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="EPassBookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="BenificiaryMaster">
     <Key>
       <PropertyRef Name="BeneficiaryId" />
@@ -37,12 +37,13 @@
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyID" Type="int" />
   </EntityType>
   <EntityType Name="CityMaster">
     <Key>
       <PropertyRef Name="CityId" />
     </Key>
-    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CityName" Type="nvarchar" MaxLength="150" />
     <Property Name="CityShortName" Type="nvarchar" MaxLength="50" />
     <Property Name="IsActive" Type="bit" />
@@ -51,7 +52,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="BeneficiaryId" Type="int" Nullable="false" />
     <Property Name="InstallementId" Type="int" Nullable="false" />
     <Property Name="Reason" Type="nvarchar" MaxLength="50" />
@@ -59,12 +60,42 @@
     <Property Name="RoleId" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyID" Type="int" />
+  </EntityType>
+  <EntityType Name="CommentsHisory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CommentId" Type="int" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="int" Nullable="false" />
+    <Property Name="InstallementId" Type="int" Nullable="false" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar(max)" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyID" Type="int" />
+  </EntityType>
+  <EntityType Name="CompanyMaster">
+    <Key>
+      <PropertyRef Name="CompanyID" />
+    </Key>
+    <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="500" />
+    <Property Name="OwnerName" Type="varchar" MaxLength="500" />
+    <Property Name="MobileNo" Type="varchar" MaxLength="20" />
+    <Property Name="EmailID" Type="varchar" MaxLength="200" />
+    <Property Name="RegistrationDate" Type="datetime" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="Modifiedby" Type="datetime" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="GeoTaggingDetails">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Photo" Type="image" />
     <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="150" />
     <Property Name="BeneficiaryId" Type="int" />
@@ -75,11 +106,32 @@
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyID" Type="int" />
   </EntityType>
   <EntityType Name="InstallmentDetails">
     <Key>
       <PropertyRef Name="InstallmentId" />
     </Key>
+    <Property Name="InstallmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="int" Nullable="false" />
+    <Property Name="BeneficiaryAmnt" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="LoanAmnt" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="State" Type="bit" />
+    <Property Name="Centre" Type="bit" />
+    <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsCompleted" Type="bit" />
+    <Property Name="InstallmentNo" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyID" Type="int" />
+  </EntityType>
+  <EntityType Name="InstallmentDetailsHistory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="InstallmentId" Type="int" Nullable="false" />
     <Property Name="BeneficiaryId" Type="int" Nullable="false" />
     <Property Name="BeneficiaryAmnt" Type="decimal" Precision="18" Scale="2" />
@@ -93,12 +145,13 @@
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyID" Type="int" />
   </EntityType>
   <EntityType Name="InstallmentRejection">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="BeneficiaryId" Type="int" Nullable="false" />
     <Property Name="InstallmentNo" Type="int" />
     <Property Name="Comment" Type="nvarchar(max)" />
@@ -106,12 +159,13 @@
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyID" Type="int" />
   </EntityType>
   <EntityType Name="InstallmentSigning">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="InstallmentId" Type="int" />
     <Property Name="Sign" Type="bit" />
     <Property Name="SignData" Type="nvarchar(max)" />
@@ -121,6 +175,7 @@
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CompanyID" Type="int" />
   </EntityType>
   <EntityType Name="RoleMaster">
     <Key>
@@ -129,6 +184,14 @@
     <Property Name="RoleId" Type="int" Nullable="false" />
     <Property Name="RoleName" Type="nvarchar" MaxLength="150" />
     <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="StageInRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StageId" Type="int" />
+    <Property Name="RoleId" Type="int" />
   </EntityType>
   <EntityType Name="UserInRoles">
     <Key>
@@ -142,14 +205,50 @@
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
-    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="150" />
     <Property Name="Password" Type="nvarchar" MaxLength="150" />
+    <Property Name="Email" Type="nvarchar" MaxLength="200" />
+    <Property Name="MobileNo" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="Address" Type="nvarchar(max)" />
     <Property Name="IsActive" Type="bit" />
     <Property Name="IsLoggedIn" Type="bit" />
     <Property Name="RoleId" Type="int" Nullable="false" />
     <Property Name="CityId" Type="int" />
+    <Property Name="CompanyID" Type="int" />
   </EntityType>
+  <EntityType Name="WorkflowStages">
+    <Key>
+      <PropertyRef Name="StageId" />
+    </Key>
+    <Property Name="StageId" Type="int" Nullable="false" />
+    <Property Name="Stage" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <Association Name="benficiary_CompanyID_FK">
+    <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CompanyMaster">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="BenificiaryMaster">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="comments_CompanyID_FK">
+    <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CompanyMaster">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_BenificiaryMaster_CityMaster">
     <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
     <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="*" />
@@ -246,7 +345,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_InstallmentRejection_BenificiaryMaster">
+  <Association Name="FK_InstallmentRejection_BenificiaryMaster1">
     <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1" />
     <End Role="InstallmentRejection" Type="Self.InstallmentRejection" Multiplicity="*" />
     <ReferentialConstraint>
@@ -258,15 +357,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_InstallmentRejection_InstallmentRejection">
-    <End Role="InstallmentRejection" Type="Self.InstallmentRejection" Multiplicity="1" />
-    <End Role="InstallmentRejection1" Type="Self.InstallmentRejection" Multiplicity="0..1" />
+  <Association Name="FK_InstallmentRejection_CompanyMaster">
+    <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
+    <End Role="InstallmentRejection" Type="Self.InstallmentRejection" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="InstallmentRejection">
-        <PropertyRef Name="Id" />
+      <Principal Role="CompanyMaster">
+        <PropertyRef Name="CompanyID" />
       </Principal>
-      <Dependent Role="InstallmentRejection1">
-        <PropertyRef Name="Id" />
+      <Dependent Role="InstallmentRejection">
+        <PropertyRef Name="CompanyID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -306,6 +405,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_StageInRole_RoleMaster">
+    <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="0..1" />
+    <End Role="StageInRole" Type="Self.StageInRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="StageInRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StageInRole_WorkflowStages">
+    <End Role="WorkflowStages" Type="Self.WorkflowStages" Multiplicity="0..1" />
+    <End Role="StageInRole" Type="Self.StageInRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkflowStages">
+        <PropertyRef Name="StageId" />
+      </Principal>
+      <Dependent Role="StageInRole">
+        <PropertyRef Name="StageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserMaster_CityMaster">
     <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
     <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
@@ -327,6 +450,42 @@
       </Principal>
       <Dependent Role="UserMaster">
         <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="geotaging_CompanyID_FK">
+    <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
+    <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CompanyMaster">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="GeoTaggingDetails">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="installment_CompanyID_FK">
+    <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
+    <End Role="InstallmentDetails" Type="Self.InstallmentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CompanyMaster">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="InstallmentDetails">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="installmentsigning_CompanyID_FK">
+    <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
+    <End Role="InstallmentSigning" Type="Self.InstallmentSigning" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CompanyMaster">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="InstallmentSigning">
+        <PropertyRef Name="CompanyID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -354,17 +513,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UserMaster_CompanyID_FK">
+    <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CompanyMaster">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="UserMaster">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="EPassBookModelStoreContainer">
     <EntitySet Name="BenificiaryMaster" EntityType="Self.BenificiaryMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CityMaster" EntityType="Self.CityMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CommentsHisory" EntityType="Self.CommentsHisory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CompanyMaster" EntityType="Self.CompanyMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GeoTaggingDetails" EntityType="Self.GeoTaggingDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InstallmentDetails" EntityType="Self.InstallmentDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InstallmentDetailsHistory" EntityType="Self.InstallmentDetailsHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InstallmentRejection" EntityType="Self.InstallmentRejection" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InstallmentSigning" EntityType="Self.InstallmentSigning" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoleMaster" EntityType="Self.RoleMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StageInRole" EntityType="Self.StageInRole" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserInRoles" EntityType="Self.UserInRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkflowStages" EntityType="Self.WorkflowStages" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="benficiary_CompanyID_FK" Association="Self.benficiary_CompanyID_FK">
+      <End Role="CompanyMaster" EntitySet="CompanyMaster" />
+      <End Role="BenificiaryMaster" EntitySet="BenificiaryMaster" />
+    </AssociationSet>
+    <AssociationSet Name="comments_CompanyID_FK" Association="Self.comments_CompanyID_FK">
+      <End Role="CompanyMaster" EntitySet="CompanyMaster" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
     <AssociationSet Name="FK_BenificiaryMaster_CityMaster" Association="Self.FK_BenificiaryMaster_CityMaster">
       <End Role="CityMaster" EntitySet="CityMaster" />
       <End Role="BenificiaryMaster" EntitySet="BenificiaryMaster" />
@@ -397,13 +581,13 @@
       <End Role="UserMaster" EntitySet="UserMaster" />
       <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK_InstallmentRejection_BenificiaryMaster" Association="Self.FK_InstallmentRejection_BenificiaryMaster">
+    <AssociationSet Name="FK_InstallmentRejection_BenificiaryMaster1" Association="Self.FK_InstallmentRejection_BenificiaryMaster1">
       <End Role="BenificiaryMaster" EntitySet="BenificiaryMaster" />
       <End Role="InstallmentRejection" EntitySet="InstallmentRejection" />
     </AssociationSet>
-    <AssociationSet Name="FK_InstallmentRejection_InstallmentRejection" Association="Self.FK_InstallmentRejection_InstallmentRejection">
+    <AssociationSet Name="FK_InstallmentRejection_CompanyMaster" Association="Self.FK_InstallmentRejection_CompanyMaster">
+      <End Role="CompanyMaster" EntitySet="CompanyMaster" />
       <End Role="InstallmentRejection" EntitySet="InstallmentRejection" />
-      <End Role="InstallmentRejection1" EntitySet="InstallmentRejection" />
     </AssociationSet>
     <AssociationSet Name="FK_InstallmentSigning_InstallmentDetails" Association="Self.FK_InstallmentSigning_InstallmentDetails">
       <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
@@ -417,6 +601,14 @@
       <End Role="UserMaster" EntitySet="UserMaster" />
       <End Role="InstallmentSigning" EntitySet="InstallmentSigning" />
     </AssociationSet>
+    <AssociationSet Name="FK_StageInRole_RoleMaster" Association="Self.FK_StageInRole_RoleMaster">
+      <End Role="RoleMaster" EntitySet="RoleMaster" />
+      <End Role="StageInRole" EntitySet="StageInRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StageInRole_WorkflowStages" Association="Self.FK_StageInRole_WorkflowStages">
+      <End Role="WorkflowStages" EntitySet="WorkflowStages" />
+      <End Role="StageInRole" EntitySet="StageInRole" />
+    </AssociationSet>
     <AssociationSet Name="FK_UserMaster_CityMaster" Association="Self.FK_UserMaster_CityMaster">
       <End Role="CityMaster" EntitySet="CityMaster" />
       <End Role="UserMaster" EntitySet="UserMaster" />
@@ -425,6 +617,18 @@
       <End Role="RoleMaster" EntitySet="RoleMaster" />
       <End Role="UserMaster" EntitySet="UserMaster" />
     </AssociationSet>
+    <AssociationSet Name="geotaging_CompanyID_FK" Association="Self.geotaging_CompanyID_FK">
+      <End Role="CompanyMaster" EntitySet="CompanyMaster" />
+      <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="installment_CompanyID_FK" Association="Self.installment_CompanyID_FK">
+      <End Role="CompanyMaster" EntitySet="CompanyMaster" />
+      <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="installmentsigning_CompanyID_FK" Association="Self.installmentsigning_CompanyID_FK">
+      <End Role="CompanyMaster" EntitySet="CompanyMaster" />
+      <End Role="InstallmentSigning" EntitySet="InstallmentSigning" />
+    </AssociationSet>
     <AssociationSet Name="UserInRoles_roleid_fk" Association="Self.UserInRoles_roleid_fk">
       <End Role="RoleMaster" EntitySet="RoleMaster" />
       <End Role="UserInRoles" EntitySet="UserInRoles" />
@@ -432,6 +636,10 @@
     <AssociationSet Name="UserInRoles_userid_fk" Association="Self.UserInRoles_userid_fk">
       <End Role="UserMaster" EntitySet="UserMaster" />
       <End Role="UserInRoles" EntitySet="UserInRoles" />
+    </AssociationSet>
+    <AssociationSet Name="UserMaster_CompanyID_FK" Association="Self.UserMaster_CompanyID_FK">
+      <End Role="CompanyMaster" EntitySet="CompanyMaster" />
+      <End Role="UserMaster" EntitySet="UserMaster" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

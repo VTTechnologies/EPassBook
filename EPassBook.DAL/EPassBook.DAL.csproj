@@ -60,6 +60,12 @@
     <Compile Include="DBModel\Comment.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBModel\CommentsHisory.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\CompanyMaster.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBModel\EPassBookModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -81,6 +87,9 @@
     <Compile Include="DBModel\InstallmentDetail.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBModel\InstallmentDetailsHistory.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBModel\InstallmentRejection.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
@@ -90,10 +99,16 @@
     <Compile Include="DBModel\RoleMaster.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBModel\StageInRole.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBModel\UserInRole.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBModel\UserMaster.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\WorkflowStage.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="IService\IUserService.cs" />
@@ -104,9 +119,7 @@
     <Compile Include="UnitofWork\UnitOfWork.cs" />
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTO\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EntityDeploy Include="DBModel\EPassBookModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

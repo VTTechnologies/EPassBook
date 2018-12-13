@@ -166,3 +166,8 @@ D:\Office data\VTTech\EPassBook\EPassBook\bin\System.Web.Http.WebHost.xml
 D:\Office data\VTTech\EPassBook\EPassBook\obj\Debug\EPassBook.csprojResolveAssemblyReference.cache
 D:\Office data\VTTech\EPassBook\EPassBook\obj\Debug\EPassBook.dll
 D:\Office data\VTTech\EPassBook\EPassBook\obj\Debug\EPassBook.pdb
+D:\EPassBook\EPassBook\EPassBook\bin\AutoMapper.dll
+D:\EPassBook\EPassBook\EPassBook\bin\System.ValueTuple.dll
+D:\EPassBook\EPassBook\EPassBook\bin\AutoMapper.pdb
+D:\EPassBook\EPassBook\EPassBook\bin\AutoMapper.xml
+D:\EPassBook\EPassBook\EPassBook\bin\System.ValueTuple.xml

@@ -25,12 +25,17 @@ namespace EPassBook.DAL.DBModel
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string Email { get; set; }
+        public Nullable<decimal> MobileNo { get; set; }
+        public string Address { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsLoggedIn { get; set; }
         public int RoleId { get; set; }
         public Nullable<int> CityId { get; set; }
+        public Nullable<int> CompanyID { get; set; }
     
         public virtual CityMaster CityMaster { get; set; }
+        public virtual CompanyMaster CompanyMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GeoTaggingDetail> GeoTaggingDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
