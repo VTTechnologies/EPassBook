@@ -256,9 +256,10 @@
     <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
     <Property Name="BeneficiaryAmnt" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="LoanAmnt" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="State" Type="Boolean" />
-    <Property Name="Centre" Type="Boolean" />
+    <Property Name="IsStateAmnt" Type="Boolean" />
+    <Property Name="IsCentreAmnt" Type="Boolean" />
     <Property Name="ConstructionLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StageID" Type="Int32" />
     <Property Name="IsCompleted" Type="Boolean" />
     <Property Name="InstallmentNo" Type="Int32" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -281,9 +282,10 @@
     <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
     <Property Name="BeneficiaryAmnt" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="LoanAmnt" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="State" Type="Boolean" />
-    <Property Name="Centre" Type="Boolean" />
+    <Property Name="IsStateAmnt" Type="Boolean" />
+    <Property Name="IsCentreAmnt" Type="Boolean" />
     <Property Name="ConstructionLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StageID" Type="Int32" />
     <Property Name="IsCompleted" Type="Boolean" />
     <Property Name="InstallmentNo" Type="Int32" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />

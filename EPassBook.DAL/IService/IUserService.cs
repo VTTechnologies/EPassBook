@@ -11,8 +11,9 @@ namespace EPassBook.DAL.IService
     {
         IEnumerable<UserMaster> GetAllUsers();
         UserMaster GetUserById(int id);
-        void Add(UserMaster user);
+        void Insert(UserMaster user);
         void Update(UserMaster user);
         void Delete(int id);
+        void SaveChanges();
     }
 }

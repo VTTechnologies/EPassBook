@@ -19,7 +19,7 @@ namespace EPassBook.DAL.Service
         {
             _dbContext = new EPassBookEntities();
             unitOfWork = new UnitOfWork(_dbContext);
-            userMasterRepository = unitOfWork.GenericRepository<UserMaster>();
+            userMasterRepository = unitOfWork.GenericRepository<UserMaster>();            
         }
 
         public IEnumerable<UserMaster> GetAllUsers()
@@ -33,7 +33,7 @@ namespace EPassBook.DAL.Service
             return user;
         }
 
-        public void Add(UserMaster user)
+        public void Insert(UserMaster user)
         {
             userMasterRepository.Add(user);
         }
@@ -44,6 +44,10 @@ namespace EPassBook.DAL.Service
         public void Delete(int id)
         {
             userMasterRepository.Delete(id);
+        }
+        public void SaveChanges()
+        {
+            unitOfWork.SaveChanges();
         }
     }
 }

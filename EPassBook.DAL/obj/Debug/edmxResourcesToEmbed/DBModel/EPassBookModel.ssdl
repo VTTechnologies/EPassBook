@@ -116,9 +116,10 @@
     <Property Name="BeneficiaryId" Type="int" Nullable="false" />
     <Property Name="BeneficiaryAmnt" Type="decimal" Precision="18" Scale="2" />
     <Property Name="LoanAmnt" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="State" Type="bit" />
-    <Property Name="Centre" Type="bit" />
+    <Property Name="IsStateAmnt" Type="bit" />
+    <Property Name="IsCentreAmnt" Type="bit" />
     <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="50" />
+    <Property Name="StageID" Type="int" />
     <Property Name="IsCompleted" Type="bit" />
     <Property Name="InstallmentNo" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
@@ -136,9 +137,10 @@
     <Property Name="BeneficiaryId" Type="int" Nullable="false" />
     <Property Name="BeneficiaryAmnt" Type="decimal" Precision="18" Scale="2" />
     <Property Name="LoanAmnt" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="State" Type="bit" />
-    <Property Name="Centre" Type="bit" />
+    <Property Name="IsStateAmnt" Type="bit" />
+    <Property Name="IsCentreAmnt" Type="bit" />
     <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="50" />
+    <Property Name="StageID" Type="int" />
     <Property Name="IsCompleted" Type="bit" />
     <Property Name="InstallmentNo" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />

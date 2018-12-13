@@ -26,9 +26,10 @@ namespace EPassBook.DAL.DBModel
         public int BeneficiaryId { get; set; }
         public Nullable<decimal> BeneficiaryAmnt { get; set; }
         public Nullable<decimal> LoanAmnt { get; set; }
-        public Nullable<bool> State { get; set; }
-        public Nullable<bool> Centre { get; set; }
+        public Nullable<bool> IsStateAmnt { get; set; }
+        public Nullable<bool> IsCentreAmnt { get; set; }
         public string ConstructionLevel { get; set; }
+        public Nullable<int> StageID { get; set; }
         public Nullable<bool> IsCompleted { get; set; }
         public Nullable<int> InstallmentNo { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
