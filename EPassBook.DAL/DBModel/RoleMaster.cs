@@ -19,6 +19,7 @@ namespace EPassBook.DAL.DBModel
         {
             this.Comments = new HashSet<Comment>();
             this.InstallmentSignings = new HashSet<InstallmentSigning>();
+            this.StageInRoles = new HashSet<StageInRole>();
             this.UserMasters = new HashSet<UserMaster>();
             this.UserInRoles = new HashSet<UserInRole>();
         }
@@ -31,6 +32,8 @@ namespace EPassBook.DAL.DBModel
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentSigning> InstallmentSignings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StageInRole> StageInRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserMaster> UserMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

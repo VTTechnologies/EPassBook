@@ -4,6 +4,7 @@
     <EntitySetMapping Name="BenificiaryMasters">
       <EntityTypeMapping TypeName="EPassBookModel.BenificiaryMaster">
         <MappingFragment StoreEntitySet="BenificiaryMaster">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -53,6 +54,7 @@
     <EntitySetMapping Name="Comments">
       <EntityTypeMapping TypeName="EPassBookModel.Comment">
         <MappingFragment StoreEntitySet="Comments">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -64,9 +66,41 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CommentsHisories">
+      <EntityTypeMapping TypeName="EPassBookModel.CommentsHisory">
+        <MappingFragment StoreEntitySet="CommentsHisory">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="InstallementId" ColumnName="InstallementId" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyMasters">
+      <EntityTypeMapping TypeName="EPassBookModel.CompanyMaster">
+        <MappingFragment StoreEntitySet="CompanyMaster">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Modifiedby" ColumnName="Modifiedby" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GeoTaggingDetails">
       <EntityTypeMapping TypeName="EPassBookModel.GeoTaggingDetail">
         <MappingFragment StoreEntitySet="GeoTaggingDetails">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -84,6 +118,7 @@
     <EntitySetMapping Name="InstallmentDetails">
       <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetail">
         <MappingFragment StoreEntitySet="InstallmentDetails">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -100,9 +135,31 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="InstallmentDetailsHistories">
+      <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetailsHistory">
+        <MappingFragment StoreEntitySet="InstallmentDetailsHistory">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
+          <ScalarProperty Name="Centre" ColumnName="Centre" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
+          <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="InstallmentRejections">
       <EntityTypeMapping TypeName="EPassBookModel.InstallmentRejection">
         <MappingFragment StoreEntitySet="InstallmentRejection">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -117,6 +174,7 @@
     <EntitySetMapping Name="InstallmentSignings">
       <EntityTypeMapping TypeName="EPassBookModel.InstallmentSigning">
         <MappingFragment StoreEntitySet="InstallmentSigning">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -139,6 +197,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="StageInRoles">
+      <EntityTypeMapping TypeName="EPassBookModel.StageInRole">
+        <MappingFragment StoreEntitySet="StageInRole">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="StageId" ColumnName="StageId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="UserInRoles">
       <EntityTypeMapping TypeName="EPassBookModel.UserInRole">
         <MappingFragment StoreEntitySet="UserInRoles">
@@ -151,13 +218,26 @@
     <EntitySetMapping Name="UserMasters">
       <EntityTypeMapping TypeName="EPassBookModel.UserMaster">
         <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="CityId" ColumnName="CityId" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WorkflowStages">
+      <EntityTypeMapping TypeName="EPassBookModel.WorkflowStage">
+        <MappingFragment StoreEntitySet="WorkflowStages">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Stage" ColumnName="Stage" />
+          <ScalarProperty Name="StageId" ColumnName="StageId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
