@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EPassBook.DAL.DBModel;
 using EPassBook.DAL.IService;
+using EPassBook.Helper;
 using EPassBook.Models;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace EPassBook.Controllers
         }
         [HttpGet]
         public ActionResult Create()
-        {
+        {           
             return View();
         }
 

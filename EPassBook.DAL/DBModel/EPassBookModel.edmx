@@ -121,9 +121,10 @@
           <Property Name="BeneficiaryId" Type="int" Nullable="false" />
           <Property Name="BeneficiaryAmnt" Type="decimal" Precision="18" Scale="2" />
           <Property Name="LoanAmnt" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="State" Type="bit" />
-          <Property Name="Centre" Type="bit" />
+          <Property Name="IsStateAmnt" Type="bit" />
+          <Property Name="IsCentreAmnt" Type="bit" />
           <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="50" />
+          <Property Name="StageID" Type="int" />
           <Property Name="IsCompleted" Type="bit" />
           <Property Name="InstallmentNo" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -141,9 +142,10 @@
           <Property Name="BeneficiaryId" Type="int" Nullable="false" />
           <Property Name="BeneficiaryAmnt" Type="decimal" Precision="18" Scale="2" />
           <Property Name="LoanAmnt" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="State" Type="bit" />
-          <Property Name="Centre" Type="bit" />
+          <Property Name="IsStateAmnt" Type="bit" />
+          <Property Name="IsCentreAmnt" Type="bit" />
           <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="50" />
+          <Property Name="StageID" Type="int" />
           <Property Name="IsCompleted" Type="bit" />
           <Property Name="InstallmentNo" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -907,9 +909,10 @@
           <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
           <Property Name="BeneficiaryAmnt" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="LoanAmnt" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="State" Type="Boolean" />
-          <Property Name="Centre" Type="Boolean" />
+          <Property Name="IsStateAmnt" Type="Boolean" />
+          <Property Name="IsCentreAmnt" Type="Boolean" />
           <Property Name="ConstructionLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StageID" Type="Int32" />
           <Property Name="IsCompleted" Type="Boolean" />
           <Property Name="InstallmentNo" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -932,9 +935,10 @@
           <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
           <Property Name="BeneficiaryAmnt" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="LoanAmnt" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="State" Type="Boolean" />
-          <Property Name="Centre" Type="Boolean" />
+          <Property Name="IsStateAmnt" Type="Boolean" />
+          <Property Name="IsCentreAmnt" Type="Boolean" />
           <Property Name="ConstructionLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StageID" Type="Int32" />
           <Property Name="IsCompleted" Type="Boolean" />
           <Property Name="InstallmentNo" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -1473,9 +1477,10 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
                 <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="StageID" ColumnName="StageID" />
                 <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
-                <ScalarProperty Name="Centre" ColumnName="Centre" />
-                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
+                <ScalarProperty Name="IsStateAmnt" ColumnName="IsStateAmnt" />
                 <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
                 <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
                 <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
@@ -1493,9 +1498,10 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
                 <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="StageID" ColumnName="StageID" />
                 <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
-                <ScalarProperty Name="Centre" ColumnName="Centre" />
-                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
+                <ScalarProperty Name="IsStateAmnt" ColumnName="IsStateAmnt" />
                 <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
                 <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
                 <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />

@@ -125,9 +125,10 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
           <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="StageID" ColumnName="StageID" />
           <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
-          <ScalarProperty Name="Centre" ColumnName="Centre" />
-          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
+          <ScalarProperty Name="IsStateAmnt" ColumnName="IsStateAmnt" />
           <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
           <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
           <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
@@ -145,9 +146,10 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
           <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="StageID" ColumnName="StageID" />
           <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
-          <ScalarProperty Name="Centre" ColumnName="Centre" />
-          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
+          <ScalarProperty Name="IsStateAmnt" ColumnName="IsStateAmnt" />
           <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
           <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
           <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
