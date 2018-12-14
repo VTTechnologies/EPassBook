@@ -21,7 +21,7 @@ namespace EPassBook.DAL.Service
             unitOfWork = new UnitOfWork(_dbContext);
             userMasterRepository = unitOfWork.GenericRepository<UserMaster>();            
         }
-
+      
         public IEnumerable<UserMaster> GetAllUsers()
         {
             IEnumerable<UserMaster> users = userMasterRepository.GetAll().ToList();
