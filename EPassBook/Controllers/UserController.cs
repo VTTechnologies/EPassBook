@@ -3,9 +3,11 @@ using EPassBook.DAL.DBModel;
 using EPassBook.DAL.IService;
 using EPassBook.Helper;
 using EPassBook.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -22,7 +24,7 @@ namespace EPassBook.Controllers
         }
         // GET: User
         public ActionResult Index()
-        {            
+        {
             var users = _userService.GetAllUsers();           
             var userModel = _mapper.Map< IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
 
@@ -47,5 +49,34 @@ namespace EPassBook.Controllers
             _userService.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(UserViewModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var isExist = _userService.AuthenticateUser(user.UserName, user.Password);
+                if (isExist)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "User Does not exist");
+                    return View(user);
+                }
+            }
+            else
+            {
+                return View(user);
+            }
+        }
+
     }
 }

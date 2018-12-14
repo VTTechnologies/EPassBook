@@ -1,0 +1,60 @@
+﻿@model EPassBook.Models.UserViewModel
+@{
+    /**/
+
+    Layout = null;
+}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="~/Content/Landingpagecss/Logincss.css" rel="stylesheet" />
+
+@*@Styles.Render("~/Content/css")*@
+
+<html>
+<head>
+
+</head>
+<body>
+    <div class="jumbotron" style="background-color:#67b0d1">
+        <center><h2>E-Pass Book</h2></center>
+    </div>
+    @*<div class="container">*@
+    <section class="login-block">
+        <div class="container">
+            <div class="row ">
+                <div class="col login-sec">
+                    <h2 class="text-center">Login Now</h2>
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @id = "fmtLogin" }))
+                    {
+                        <form class="login-form">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1" class="text-uppercase">Username</label>
+                                @Html.TextBoxFor(model => model.UserName, null, new { @class = "form-control", placeholder = "Username" })
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1" class="text-uppercase">Password</label>
+                                @Html.TextBoxFor(model => model.Password, null, new { @class = "form-control", placeholder = "Password" })
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input">
+                                    <small>Remember Me</small>
+                                </label>
+                                <button type="submit" class="btn btn-login float-right">Submit</button>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    @*</div>*@
+    @*<footer class="" style="background-color:#67b0d1">
+            <div class="text-center ">
+                Copyrights © @DateTime.Now.Year All Rights Reserved by <a href="#">E-Pass Book</a>
+            </div>
+        </footer>*@
+
+</body>
+</html>

@@ -49,5 +49,10 @@ namespace EPassBook.DAL.Service
         {
             unitOfWork.SaveChanges();
         }
+
+        public bool AuthenticateUser(string userName, string password)
+        {
+            return userMasterRepository.Get(w => w.UserName == userName && w.Password == password, null, string.Empty).Any();
+        }
     }
 }
