@@ -21,6 +21,13 @@ namespace EPassBook.Controllers
           
             return View();
         }
+        //added by ather
+        public ActionResult Website()
+        {
+
+            return View();
+        }
+        //end ather code
 
         public ActionResult About()
         {
