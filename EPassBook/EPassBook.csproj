@@ -26,6 +26,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -221,12 +222,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\Common.cs" />
+    <Compile Include="Helper\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Helper\ElmahErrorAttribute.cs" />
     <Compile Include="Models\BeneficiaryViewModel.cs" />
     <Compile Include="Models\CityViewModel.cs" />
     <Compile Include="Models\CommentsViewModel.cs" />
@@ -257,6 +261,42 @@
     <Content Include="Content\DashboardTheme\js\classie.js" />
     <Content Include="Content\DashboardTheme\js\gnmenu.js" />
     <Content Include="Content\DashboardTheme\js\modernizr.custom.js" />
+    <Content Include="Content\Error.css" />
+    <Content Include="Content\img\bg1.jpg" />
+    <Content Include="Content\img\icons\button-icons.png" />
+    <Content Include="Content\img\icons\grid-menu-icons.png" />
+    <Content Include="Content\img\icons\menu-icons.png" />
+    <Content Include="Content\img\icons\menu-icons2.png" />
+    <Content Include="Content\img\icons\search.png" />
+    <Content Include="Content\img\icons\search2.png" />
+    <Content Include="Content\img\icons\service-icon-1.png" />
+    <Content Include="Content\img\icons\service-icon-2.png" />
+    <Content Include="Content\img\icons\service-icon-3.png" />
+    <Content Include="Content\img\icons\service-icon-4.png" />
+    <Content Include="Content\img\icons\social-icons2.png" />
+    <Content Include="Content\img\icons\weather-icons.png" />
+    <Content Include="Content\img\icons\weather-main.png" />
+    <Content Include="Content\img\loader.gif" />
+    <Content Include="Content\img\spinner.gif" />
+    <Content Include="Content\img\team\1.jpg" />
+    <Content Include="Content\img\team\2.jpg" />
+    <Content Include="Content\img\team\3.jpg" />
+    <Content Include="Content\img\team\4.jpg" />
+    <Content Include="Content\img\works\1.jpg" />
+    <Content Include="Content\img\works\2.jpg" />
+    <Content Include="Content\img\works\3.jpg" />
+    <Content Include="Content\img\works\4.jpg" />
+    <Content Include="Content\img\works\5.jpg" />
+    <Content Include="Content\img\works\6.jpg" />
+    <Content Include="Content\img\works\7.jpg" />
+    <Content Include="Content\img\works\8.jpg" />
+    <Content Include="Content\Landingpagecss\animate.css" />
+    <Content Include="Content\Landingpagecss\bootstrap.min.css" />
+    <Content Include="Content\Landingpagecss\default.css" />
+    <Content Include="Content\Landingpagecss\font-awesome.min.css" />
+    <Content Include="Content\Landingpagecss\Logincss.css" />
+    <Content Include="Content\Landingpagecss\style.css" />
+    <Content Include="Content\img\text.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -292,7 +332,10 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -301,7 +344,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -310,6 +352,11 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\Shared\_dashboardlayout.cshtml" />
     <Content Include="Views\Shared\.DS_Store" />
+    <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Error\ServerSideError.cshtml" />
+    <Content Include="Views\Error\CustomErrors.cshtml" />
+    <Content Include="Views\User\Test.cshtml" />
+    <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

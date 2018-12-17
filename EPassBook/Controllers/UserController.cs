@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace EPassBook.Controllers
 {
+    [ElmahError]
     public class UserController : Controller
     {
         private readonly IMapper _mapper;
@@ -56,19 +57,35 @@ namespace EPassBook.Controllers
             return View();
         }
 
+        public ActionResult Test()
+        {
+            throw new Exception();
+        }
+
         [HttpPost]
+        //[CustomAuthorize(Common.Admin)]
         public ActionResult Login(UserViewModel user)
         {
             if (ModelState.IsValid)
             {
-                var isExist = _userService.AuthenticateUser(user.UserName, user.Password);
-                if (isExist)
+                var userData = _userService.GetPassword(user.UserName);
+                //var userData = _userService.AuthenticateUser(user.UserName, user.Password);
+                if (userData != null)
                 {
-                    return RedirectToAction("Index");
+                    if(user.Password.Equals(userData.Password))
+                    {
+                        Session["CompID"] = userData.CompanyID;
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "The password provided is incorrect.");
+                        return View(user);
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "User Does not exist");
+                    ModelState.AddModelError(string.Empty, "The username or password provided is incorrect.");
                     return View(user);
                 }
             }
@@ -77,6 +94,5 @@ namespace EPassBook.Controllers
                 return View(user);
             }
         }
-
     }
 }
