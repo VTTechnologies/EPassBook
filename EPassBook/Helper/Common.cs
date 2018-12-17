@@ -18,5 +18,15 @@ namespace EPassBook.Helper
             Accountant = 7,
             LastChiefOfficer = 8
         }
+
+        public const string Admin = "Admin";
+        public const string DataEntry = "Data Entry";
+        public const string SiteEngineer = "Site Engineer";
+        public const string ProjectEngineer = "Project Engineer";
+        public const string CityEngineer = "City Engineer";
+        public const string ChiefOfficer = "Chief Officer";
+        public const string Accountant = "Accountant";
+        public const string Beneficiary = "Beneficiary";
+
     }
 }
