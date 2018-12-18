@@ -63,12 +63,14 @@ namespace EPassBook.Controllers
         }
 
         [HttpPost]
-        //[CustomAuthorize(Common.Admin)]
         public ActionResult Login(UserViewModel user)
         {
             if (ModelState.IsValid)
             {
                 var userData = _userService.GetPassword(user.UserName);
+
+                user = _mapper.Map<UserMaster, UserViewModel>(userData);
+                Session["UserDetails"] = user;
                 //var userData = _userService.AuthenticateUser(user.UserName, user.Password);
                 if (userData != null)
                 {

@@ -5,8 +5,10 @@ using EPassBook.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace EPassBook.Helper
 {
@@ -25,22 +27,22 @@ namespace EPassBook.Helper
         {
             bool authorize = false;
             UserViewModel uvm = new UserViewModel();
+            uvm = httpContext.Session["UserDetails"] as UserViewModel;
             foreach (var role in allowedroles)
             {
                 var user = context.UserMasters.Where(m => m.UserName == uvm.UserName & m.Password == uvm.Password
                 && m.RoleMaster.RoleName == role && m.IsActive == true);
 
-
                 if (user.Count() > 0)
                 {
-                    authorize = true; /* return true if Entity has current user(active) with specific role */
+                    authorize = true;
                 }
             }
             return authorize;
         }
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            filterContext.Result = new HttpUnauthorizedResult();
+            filterContext.Result = new RedirectResult("~/Error/UnauthorizedAccess");
         }
     }
 }
