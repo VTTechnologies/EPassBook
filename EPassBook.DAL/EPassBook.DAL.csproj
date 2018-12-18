@@ -66,6 +66,9 @@
     <Compile Include="DBModel\CompanyMaster.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBModel\ELMAH_Error.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBModel\EPassBookModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,6 +102,9 @@
     <Compile Include="DBModel\RoleMaster.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBModel\sp_GetSurveyDetailsByBenID_Result.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBModel\StageInRole.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
@@ -111,15 +117,21 @@
     <Compile Include="DBModel\WorkflowStage.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IService\IBenificiary.cs" />
+    <Compile Include="IService\ICommentService.cs" />
     <Compile Include="IService\IUserService.cs" />
     <Compile Include="Repository\IGenericReporsitory.cs" />
+    <Compile Include="Service\BenificiaryService.cs" />
+    <Compile Include="Service\CommentService.cs" />
     <Compile Include="UnitofWork\IUnitOfWork .cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="UnitofWork\UnitOfWork.cs" />
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DBModel\EPassBookModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

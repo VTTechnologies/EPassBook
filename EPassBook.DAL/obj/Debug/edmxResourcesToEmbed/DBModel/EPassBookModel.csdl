@@ -116,6 +116,32 @@
       <End Role="UserMaster" EntitySet="UserMasters" />
       <End Role="UserInRole" EntitySet="UserInRoles" />
     </AssociationSet>
+    <EntitySet Name="ELMAH_Error" EntityType="EPassBookModel.ELMAH_Error" />
+    <FunctionImport Name="ELMAH_GetErrorsXml" ReturnType="Collection(String)">
+      <Parameter Name="Application" Mode="In" Type="String" />
+      <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+      <Parameter Name="PageSize" Mode="In" Type="Int32" />
+      <Parameter Name="TotalCount" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="ELMAH_GetErrorXml" ReturnType="Collection(String)">
+      <Parameter Name="Application" Mode="In" Type="String" />
+      <Parameter Name="ErrorId" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="ELMAH_LogError">
+      <Parameter Name="ErrorId" Mode="In" Type="Guid" />
+      <Parameter Name="Application" Mode="In" Type="String" />
+      <Parameter Name="Host" Mode="In" Type="String" />
+      <Parameter Name="Type" Mode="In" Type="String" />
+      <Parameter Name="Source" Mode="In" Type="String" />
+      <Parameter Name="Message" Mode="In" Type="String" />
+      <Parameter Name="User" Mode="In" Type="String" />
+      <Parameter Name="AllXml" Mode="In" Type="String" />
+      <Parameter Name="StatusCode" Mode="In" Type="Int32" />
+      <Parameter Name="TimeUtc" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="sp_GetSurveyDetailsByBenID" ReturnType="Collection(EPassBookModel.sp_GetSurveyDetailsByBenID_Result)">
+      <Parameter Name="BenificiaryId" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="BenificiaryMaster">
     <Key>
@@ -694,4 +720,39 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="ELMAH_Error">
+    <Key>
+      <PropertyRef Name="ErrorId" />
+      <PropertyRef Name="Application" />
+      <PropertyRef Name="Host" />
+      <PropertyRef Name="Type" />
+      <PropertyRef Name="Source" />
+      <PropertyRef Name="Message" />
+      <PropertyRef Name="User" />
+      <PropertyRef Name="StatusCode" />
+      <PropertyRef Name="TimeUtc" />
+      <PropertyRef Name="Sequence" />
+      <PropertyRef Name="AllXml" />
+    </Key>
+    <Property Name="ErrorId" Type="Guid" Nullable="false" />
+    <Property Name="Application" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Source" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StatusCode" Type="Int32" Nullable="false" />
+    <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <ComplexType Name="sp_GetSurveyDetailsByBenID_Result">
+    <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="UserName" Nullable="true" MaxLength="150" />
+    <Property Type="Decimal" Name="MobileNo" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="String" Name="Physical_Progress" Nullable="false" MaxLength="8" />
+    <Property Type="String" Name="Comments" Nullable="true" />
+    <Property Type="Boolean" Name="Sign" Nullable="true" />
+  </ComplexType>
 </Schema>

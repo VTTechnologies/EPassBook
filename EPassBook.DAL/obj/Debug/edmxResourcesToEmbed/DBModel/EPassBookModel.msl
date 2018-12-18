@@ -243,5 +243,38 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ELMAH_Error">
+      <EntityTypeMapping TypeName="EPassBookModel.ELMAH_Error">
+        <MappingFragment StoreEntitySet="ELMAH_Error">
+          <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Host" ColumnName="Host" />
+          <ScalarProperty Name="Application" ColumnName="Application" />
+          <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ELMAH_GetErrorsXml" FunctionName="EPassBookModel.Store.ELMAH_GetErrorsXml" />
+    <FunctionImportMapping FunctionImportName="ELMAH_GetErrorXml" FunctionName="EPassBookModel.Store.ELMAH_GetErrorXml" />
+    <FunctionImportMapping FunctionImportName="ELMAH_LogError" FunctionName="EPassBookModel.Store.ELMAH_LogError" />
+    <FunctionImportMapping FunctionImportName="sp_GetSurveyDetailsByBenID" FunctionName="EPassBookModel.Store.sp_GetSurveyDetailsByBenID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EPassBookModel.sp_GetSurveyDetailsByBenID_Result">
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="Physical_Progress" ColumnName="Physical Progress" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Sign" ColumnName="Sign" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
