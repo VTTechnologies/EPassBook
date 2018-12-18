@@ -8,6 +8,12 @@ namespace EPassBook
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/DashboardTheme").Include(
+                        "~/Scripts/jquery-1.10.2.min.js",
+                        "~/Scripts/Dashboard/gnmenu.js",
+                        "~/Scripts/Dashboard/modernizr.custom.js",
+                        "~/Scripts/Dashboard/classie.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -26,6 +32,10 @@ namespace EPassBook
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/DashboardThemeCs").Include(
+                      "~/Content/DashboardTheme/css/component.css",
+                      "~/Content/DashboardTheme/css/demo.css",
+                      "~/Content/DashboardTheme/css/normalize.css"));
         }
     }
 }

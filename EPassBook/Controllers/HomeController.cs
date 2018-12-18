@@ -49,6 +49,11 @@ namespace EPassBook.Controllers
 
             return View();
         }
+        public ActionResult Beneficiary()
+        {
+            return PartialView("Beneficiary", new BeneficiaryViewModel());
+        }
+
 
         public ActionResult _InstallmentDetails()
         {
