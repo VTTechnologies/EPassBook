@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using AutoMapper;
+using EPassBook.DAL.DBModel;
 using EPassBook.DAL.IService;
 using EPassBook.Helper;
+using EPassBook.Models;
+using System;
+using System.Web.Mvc;
 
 namespace EPassBook.Controllers
 {
     [ElmahError]
     public class HomeController : Controller
     {
+        private readonly IMapper _mapper;
         IUserService _userser;
+        IBenificiary _Ibenificiary;
         
-        public HomeController(IUserService userser)
+        public HomeController(IUserService userser, IBenificiary Ibenificiary, IMapper mapper)
         {
             _userser = userser;
+            _Ibenificiary = Ibenificiary;
+            _mapper = mapper;
         }
 
         [CustomAuthorize(Common.Admin)]
@@ -44,6 +48,15 @@ namespace EPassBook.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult _InstallmentDetails()
+        {
+            var benfici = _Ibenificiary.GetBenificiaryById(1);            
+            var benficiarymodel = _mapper.Map<BenificiaryMaster, BeneficiaryViewModel>(benfici);
+            DateTime currentdate = Convert.ToDateTime(benficiarymodel.CreatedDate);            
+
+            return PartialView(benficiarymodel);
         }
     }
 }

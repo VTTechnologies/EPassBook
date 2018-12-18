@@ -1,0 +1,59 @@
+﻿@model EPassBook.Models.BeneficiaryViewModel
+@{
+    ViewBag.Title = "Beneficiary Copy (First Installment)";
+}
+<style>
+    .form-group{
+        margin-top:20px;
+    }
+</style>
+<div class="disabled">
+    <div class="form-group">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <label class="control-label" for="recno">Record No:</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 disabled">
+            @Html.TextBoxFor(m => m.RecordNo, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <label class="control-label" for="benficiid">Beneficiary ID:</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            @Html.TextBoxFor(m => m.BeneficiaryId, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <label class="control-label" for="pnalye">Plan Year:</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            @{
+                int year = Convert.ToDateTime(Model.CreatedDate).Year;
+            }
+            @Html.Label(year.ToString(), new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <label class="control-label" for="benficiname">Name of the beneficiary:</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            @Html.TextBoxFor(m => m.BeneficairyName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <label class="control-label" for="mobno">Mobile No:</label>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
