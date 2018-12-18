@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace EPassBook.Models
 {
     public class InstallmentSigningViewModel
     {
+        [Key]
         public int Id { get; set; }
         public Nullable<int> InstallmentId { get; set; }
         public Nullable<bool> Sign { get; set; }

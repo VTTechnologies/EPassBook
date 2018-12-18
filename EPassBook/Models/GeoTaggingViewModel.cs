@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPassBook.Models
 {
     public class GeoTaggingViewModel
     {
+        [Key]
         public long Id { get; set; }
         public byte[] Photo { get; set; }
         public string ConstructionLevel { get; set; }

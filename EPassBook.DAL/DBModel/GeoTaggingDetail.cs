@@ -29,7 +29,7 @@ namespace EPassBook.DAL.DBModel
     
         public virtual BenificiaryMaster BenificiaryMaster { get; set; }
         public virtual CompanyMaster CompanyMaster { get; set; }
-        public virtual InstallmentDetail InstallmentDetail { get; set; }
         public virtual UserMaster UserMaster { get; set; }
+        public virtual InstallmentDetail InstallmentDetail { get; set; }
     }
 }

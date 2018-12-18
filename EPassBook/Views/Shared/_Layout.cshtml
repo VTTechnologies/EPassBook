@@ -26,7 +26,7 @@
 
                 <ul class="nav navbar-nav">
                     <li><a id="btnDataEntry">Data Entry</a></li>
-                    <li><a>User Request</a></li>
+                    <li><a id="btnDetails">User Request</a></li>
                     <li><a>Project Manager</a></li>
                     <li><a>City Engineer</a></li>
                     <li><a>Chief Officer</a></li>
@@ -52,12 +52,27 @@
     @RenderSection("scripts", required: false)
     <script>
             var url = '@Url.Action("Beneficiary", "Home")';
-        $('#btnDataEntry').click(function ()
-        {
+            $('#btnDataEntry').click(function ()
+            {
             alert();
                 //var keyWord = $('#Keyword').val();
                 $('#BeneficiaryResult').load(url);
-            })
+        })
+
+        var url = '@Url.Action("_InstallmentDetails", "Home")';
+        $('#btnDetails').click(function ()
+            {                            
+                $('#BeneficiaryResult').load(url);
+        })
+
+        var url = '@Url.Action("_CityHead", "Home")';
+        $('#btnDetails').click(function ()
+            {                           
+
+            $('#Usersubmits').load(url);
+        })
+
+        //Usersubmits
     </script>
 </body>
 </html>

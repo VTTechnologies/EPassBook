@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPassBook.Models
 {
     public class InstallmentDetailsViewModel
     {
+        [Key]
         public int InstallmentId { get; set; }
         public int BeneficiaryId { get; set; }
         public Nullable<decimal> BeneficiaryAmnt { get; set; }
         public Nullable<decimal> LoanAmnt { get; set; }
-        public Nullable<bool> IsStateAmnt { get; set; }
         public Nullable<bool> IsCentreAmnt { get; set; }
         public string ConstructionLevel { get; set; }
         public Nullable<int> StageID { get; set; }
@@ -20,6 +21,8 @@ namespace EPassBook.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<int> CompanyID { get; set; }
+        public string _Comments { get; set; }
+        public byte[] Photo { get; set; }
 
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }
         public virtual ICollection<CommentsViewModel> Comments { get; set; }
