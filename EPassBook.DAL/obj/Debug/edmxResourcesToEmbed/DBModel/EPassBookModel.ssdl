@@ -144,7 +144,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="BeneficiaryId" Type="int" Nullable="false" />
     <Property Name="BeneficiaryAmnt" Type="decimal" Precision="18" Scale="2" />
     <Property Name="LoanAmnt" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="IsStateAmnt" Type="bit" />
     <Property Name="IsCentreAmnt" Type="bit" />
     <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="50" />
     <Property Name="StageID" Type="int" />
@@ -165,7 +164,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="BeneficiaryId" Type="int" Nullable="false" />
     <Property Name="BeneficiaryAmnt" Type="decimal" Precision="18" Scale="2" />
     <Property Name="LoanAmnt" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="IsStateAmnt" Type="bit" />
     <Property Name="IsCentreAmnt" Type="bit" />
     <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="50" />
     <Property Name="StageID" Type="int" />

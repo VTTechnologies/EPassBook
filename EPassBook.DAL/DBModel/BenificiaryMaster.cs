@@ -17,10 +17,10 @@ namespace EPassBook.DAL.DBModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BenificiaryMaster()
         {
-            this.InstallmentDetails = new HashSet<InstallmentDetail>();
             this.Comments = new HashSet<Comment>();
             this.GeoTaggingDetails = new HashSet<GeoTaggingDetail>();
             this.InstallmentRejections = new HashSet<InstallmentRejection>();
+            this.InstallmentDetails = new HashSet<InstallmentDetail>();
         }
     
         public int BeneficiaryId { get; set; }
@@ -61,12 +61,12 @@ namespace EPassBook.DAL.DBModel
         public virtual CompanyMaster CompanyMaster { get; set; }
         public virtual CityMaster CityMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InstallmentDetail> InstallmentDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GeoTaggingDetail> GeoTaggingDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentRejection> InstallmentRejections { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InstallmentDetail> InstallmentDetails { get; set; }
     }
 }

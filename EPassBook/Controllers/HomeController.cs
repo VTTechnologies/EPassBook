@@ -63,5 +63,11 @@ namespace EPassBook.Controllers
 
             return PartialView(benficiarymodel);
         }
+
+        public ActionResult _CityHead()
+        {
+            return PartialView();
+        }
+
     }
 }

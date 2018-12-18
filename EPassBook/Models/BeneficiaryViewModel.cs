@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace EPassBook.Models
 {
     public class BeneficiaryViewModel
     {
+        [Key]
         public int BeneficiaryId { get; set; }
         public string BeneficairyName { get; set; }
         public string FatherName { get; set; }

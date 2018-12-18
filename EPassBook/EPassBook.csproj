@@ -359,6 +359,10 @@
     <Content Include="Views\User\Test.cshtml" />
     <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
     <Content Include="Views\User\SurveyDetails.cshtml" />
+    <Content Include="Views\Home\_CityHead.cshtml" />
+    <Content Include="Views\Home\_InstallmentDetails.cshtml" />
+    <Content Include="Views\Home\Beneficiary.cshtml" />
+    <Content Include="Views\Home\Website.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
