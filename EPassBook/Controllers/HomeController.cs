@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EPassBook.DAL.IService;
-
+using EPassBook.Helper;
 
 namespace EPassBook.Controllers
 {
+    [ElmahError]
     public class HomeController : Controller
     {
         IUserService _userser;
@@ -16,6 +17,8 @@ namespace EPassBook.Controllers
         {
             _userser = userser;
         }
+
+        [CustomAuthorize(Common.Admin)]
         public ActionResult Index()
         {
           
