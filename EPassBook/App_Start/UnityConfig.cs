@@ -36,6 +36,7 @@ namespace EPassBook
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IBenificiary, BenificiaryService>();
+            container.RegisterType<ICommentService, CommentService>();
 
             //Created instance of mapper into unity
             container.RegisterInstance(mapper);

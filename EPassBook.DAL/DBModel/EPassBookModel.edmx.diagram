@@ -45,6 +45,7 @@
         <AssociationConnector Association="EPassBookModel.UserInRoles_roleid_fk" />
         <AssociationConnector Association="EPassBookModel.FK_StageInRole_WorkflowStages" />
         <AssociationConnector Association="EPassBookModel.UserInRoles_userid_fk" />
+        <EntityTypeShape EntityType="EPassBookModel.ELMAH_Error" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
