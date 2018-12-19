@@ -39,17 +39,17 @@ namespace EPassBook.DAL.Service
 
         public void Insert(InstallmentDetail installmentDetail)
         {
-            throw new NotImplementedException();
+            InstallmentDetailRepository.Add(installmentDetail);            
         }
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            unitOfWork.SaveChanges();
         }
 
         public void Update(InstallmentDetail installmentDetail)
         {
-            throw new NotImplementedException();
+            InstallmentDetailRepository.Update(installmentDetail);
         }
     }
 }

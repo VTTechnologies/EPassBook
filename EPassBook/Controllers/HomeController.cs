@@ -14,12 +14,14 @@ namespace EPassBook.Controllers
         private readonly IMapper _mapper;
         IUserService _userser;
         IBenificiary _Ibenificiary;
-        
-        public HomeController(IUserService userser, IBenificiary Ibenificiary, IMapper mapper)
+        IInstallmentDetailService _installmentDetailService;
+
+        public HomeController(IUserService userser, IBenificiary Ibenificiary, IMapper mapper, IInstallmentDetailService installmentDetailService)
         {
             _userser = userser;
             _Ibenificiary = Ibenificiary;
             _mapper = mapper;
+            _installmentDetailService = installmentDetailService;
         }
 
         [CustomAuthorize(Common.Admin)]
@@ -64,9 +66,47 @@ namespace EPassBook.Controllers
             return PartialView(benficiarymodel);
         }
 
+        [HttpGet]
         public ActionResult _CityHead()
         {
             return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult _CityHead(InstallmentDetailsViewModel installmentDetailViewModel)
+        {
+            var installment = new InstallmentDetail();
+
+            //if (ModelState.IsValid)
+            //{
+                installment.BeneficiaryId = 1;//installmentDetailViewModel.BeneficiaryId;
+                installment.BeneficiaryAmnt = installmentDetailViewModel.BeneficiaryAmnt;
+                installment.LoanAmnt = installmentDetailViewModel.LoanAmnt;
+                installment.IsCentreAmnt = installmentDetailViewModel.IsCentreAmnt;
+                installment.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
+                installment.StageID = 1;
+                installment.InstallmentNo = 1;
+                installment.CreatedDate = DateTime.Now;
+                installment.CreatedBy = "Admin";
+                installment.CompanyID = 1;
+
+                var comments = new Comment();
+                comments.Comments = installmentDetailViewModel._Comments;
+                comments.CreatedBy = "Admin";
+            comments.BeneficiaryId = 1;
+                comments.CreatedDate = DateTime.Now;
+                comments.CompanyID = 1;
+
+                installment.Comments.Add(comments);
+
+                _installmentDetailService.Insert(installment);
+                _installmentDetailService.SaveChanges();                
+            //}
+            //else
+            //{
+
+            //}
+            return View();
         }
 
     }
