@@ -179,13 +179,13 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                         <img id="img1" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px"/>
-                        <input type="file" value="Upload" onchange="readURL(this, 'img1')" class="btn btn-primary col-md-7" />
-                        <input type="button" id="btnimg1cencal" onclick="returntosamepage()" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
+                        <input type="file" value="Upload" id="imgupload1" onchange="readURL(this, 'img1')" class="btn btn-primary col-md-7" />
+                        <input type="button" id="btnimg1cencal" onclick="removeimg('img1','imgupload1')"  value="Cancel" class="btn btn-danger col-md-4 pull-right" />
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <img id="img2" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
-                        <input type="file" value="Upload" onchange="readURL(this,'img2');" class="btn btn-primary col-md-7" />
-                        <input type="button" id="btnimg2cencal" onclick="returntosamepage()" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
+                        <input type="file" value="Upload" id="imgupload2" onchange="readURL(this,'img2');" class="btn btn-primary col-md-7" />
+                        <input type="button" id="btnimg2cencal" onclick="removeimg('img2','imgupload2')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
                     </div>
 
                 </div>
@@ -354,7 +354,7 @@
             </div>*@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="button" id="btncreate" onclick="returntosamepage()" value="Create" class="btn btn-default" />
+                        <input type="button" id="btncreate" value="Create" class="btn btn-default" />
                     </div>
                 </div>
             </div>
@@ -391,16 +391,22 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-   @*var url = '@Url.Action("Beneficiary", "Home")';
+    @*var url = '@Url.Action("Beneficiary", "Home")';
     $('#btncreate').click(function ()
     {
         alert();
         //var keyWord = $('#Keyword').val();
         $('#BeneficiaryResult').load(url);
     })*@
-    function returntosamepage()
+    function removeimg(img,fileupld)
     {
-        var url = '@Url.Action("Beneficiary", "Home")';
-        $('#BeneficiaryResult').load(url);
+        document.getElementById(img).removeAttribute('src');
+        document.getElementById(fileupld).value = "";
+       
     }
+    //$('#btnimg1cencal').click(function ()
+    //{
+        
+    //})
+    
 </script>
