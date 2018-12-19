@@ -44,8 +44,8 @@ namespace EPassBook.DAL.Repository
             _disposed = true;
         }
         public void SaveChanges()
-        {            
-            _dbContext.SaveChanges();
+        {
+            ((IObjectContextAdapter)_dbContext).ObjectContext.SaveChanges();
         }
 
         public GenericRepository<TEntity> GenericRepository<TEntity>() where TEntity: class
