@@ -159,6 +159,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CompanyID" Type="int" />
+          <Property Name="TransactionID" Type="numeric" Precision="20" Scale="0" />
         </EntityType>
         <EntityType Name="InstallmentDetailsHistory">
           <Key>
@@ -583,6 +584,13 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
         <Function Name="sp_GetSurveyDetailsByBenID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BenificiaryId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_UpdatTransactionId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="benifciaryId" Type="int" Mode="In" />
+          <Parameter Name="sign" Type="bit" Mode="In" />
+          <Parameter Name="transactionId" Type="numeric" Mode="In" />
+          <Parameter Name="installmentId" Type="int" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="EPassBookModelStoreContainer">
           <EntitySet Name="BenificiaryMaster" EntityType="Self.BenificiaryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CityMaster" EntityType="Self.CityMaster" Schema="dbo" store:Type="Tables" />
@@ -861,6 +869,13 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
             <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
           </AssociationSet>
+          <FunctionImport Name="sp_UpdatTransactionId">
+            <Parameter Name="benifciaryId" Mode="In" Type="Int32" />
+            <Parameter Name="sign" Mode="In" Type="Boolean" />
+            <Parameter Name="transactionId" Mode="In" Type="Decimal" />
+            <Parameter Name="installmentId" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="BenificiaryMaster">
           <Key>
@@ -1411,6 +1426,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.installment_CompanyID_FK" FromRole="InstallmentDetail" ToRole="CompanyMaster" />
           <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_InstallmentDetails" FromRole="InstallmentDetail" ToRole="GeoTaggingDetail" />
           <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_InstallmentDetails" FromRole="InstallmentDetail" ToRole="InstallmentSigning" />
+          <Property Name="TransactionID" Type="Decimal" Precision="20" Scale="0" />
         </EntityType>
         <Association Name="FK_CityHeadDetails_BenificiaryMaster">
           <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="1" />
@@ -1734,6 +1750,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <EntitySetMapping Name="InstallmentDetails">
             <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetail">
               <MappingFragment StoreEntitySet="InstallmentDetails">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
@@ -1751,6 +1768,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_UpdatTransactionId" FunctionName="EPassBookModel.Store.sp_UpdatTransactionId" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

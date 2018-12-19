@@ -154,6 +154,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="CompanyID" Type="int" />
+    <Property Name="TransactionID" Type="numeric" Precision="20" Scale="0" />
   </EntityType>
   <EntityType Name="InstallmentDetailsHistory">
     <Key>
@@ -577,6 +578,13 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
   </Function>
   <Function Name="sp_GetSurveyDetailsByBenID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="BenificiaryId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_UpdatTransactionId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="benifciaryId" Type="int" Mode="In" />
+    <Parameter Name="sign" Type="bit" Mode="In" />
+    <Parameter Name="transactionId" Type="numeric" Mode="In" />
+    <Parameter Name="installmentId" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="EPassBookModelStoreContainer">
     <EntitySet Name="BenificiaryMaster" EntityType="Self.BenificiaryMaster" Schema="dbo" store:Type="Tables" />
