@@ -23,6 +23,8 @@ namespace EPassBook.Models
         public Nullable<int> CompanyID { get; set; }
         public string _Comments { get; set; }
         public byte[] Photo { get; set; }
+        public Nullable<decimal> TransactionID { get; set; }
+
 
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }
         public virtual ICollection<CommentsViewModel> Comments { get; set; }

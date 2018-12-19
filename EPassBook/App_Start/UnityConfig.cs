@@ -21,6 +21,7 @@ namespace EPassBook
                 //Create all maps here
                 cfg.CreateMap<UserMaster, UserViewModel>();
                 cfg.CreateMap<BenificiaryMaster, BeneficiaryViewModel>();
+                cfg.CreateMap<InstallmentDetail, InstallmentDetailsViewModel>();
                 //cfg.CreateMap<MyHappyEntity, MyHappyEntityDto>();
 
                 //...
@@ -37,6 +38,7 @@ namespace EPassBook
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IBenificiary, BenificiaryService>();
             container.RegisterType<ICommentService, CommentService>();
+            container.RegisterType<IInstallmentDetailService, InstallmentDetailService>();
 
             //Created instance of mapper into unity
             container.RegisterInstance(mapper);

@@ -257,6 +257,7 @@
     <EntitySetMapping Name="InstallmentDetails">
       <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetail">
         <MappingFragment StoreEntitySet="InstallmentDetails">
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
           <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
@@ -274,5 +275,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_UpdatTransactionId" FunctionName="EPassBookModel.Store.sp_UpdatTransactionId" />
   </EntityContainerMapping>
 </Mapping>

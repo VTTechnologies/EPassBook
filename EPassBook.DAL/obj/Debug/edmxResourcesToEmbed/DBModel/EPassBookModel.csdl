@@ -142,6 +142,13 @@
       <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
       <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
     </AssociationSet>
+    <FunctionImport Name="sp_UpdatTransactionId">
+      <Parameter Name="benifciaryId" Mode="In" Type="Int32" />
+      <Parameter Name="sign" Mode="In" Type="Boolean" />
+      <Parameter Name="transactionId" Mode="In" Type="Decimal" />
+      <Parameter Name="installmentId" Mode="In" Type="Int32" />
+      <Parameter Name="userid" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="BenificiaryMaster">
     <Key>
@@ -692,6 +699,7 @@
     <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.installment_CompanyID_FK" FromRole="InstallmentDetail" ToRole="CompanyMaster" />
     <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_InstallmentDetails" FromRole="InstallmentDetail" ToRole="GeoTaggingDetail" />
     <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_InstallmentDetails" FromRole="InstallmentDetail" ToRole="InstallmentSigning" />
+    <Property Name="TransactionID" Type="Decimal" Precision="20" Scale="0" />
   </EntityType>
   <Association Name="FK_CityHeadDetails_BenificiaryMaster">
     <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="1" />
