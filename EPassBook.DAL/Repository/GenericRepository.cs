@@ -13,12 +13,12 @@ namespace EPassBook.DAL.Repository
    public  class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
 
-        private EPassBookEntities dbContext = null;
+        private readonly EPassBookEntities dbContext = null;
         private DbSet<TEntity> entityTable = null;
 
-        public GenericRepository()
+        public GenericRepository(EPassBookEntities _dbContext)
         {
-            this.dbContext = new EPassBookEntities();
+            dbContext = _dbContext;            
             this.entityTable= dbContext.Set<TEntity>();
         }
         public IEnumerable<TEntity> GetAll()

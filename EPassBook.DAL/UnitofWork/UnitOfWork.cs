@@ -44,8 +44,8 @@ namespace EPassBook.DAL.Repository
             _disposed = true;
         }
         public void SaveChanges()
-        {
-            ((IObjectContextAdapter)_dbContext).ObjectContext.SaveChanges();
+        {            
+            _dbContext.SaveChanges();
         }
 
         public GenericRepository<TEntity> GenericRepository<TEntity>() where TEntity: class
@@ -60,7 +60,7 @@ namespace EPassBook.DAL.Repository
             if (!repositories.ContainsKey(type))
             {
                 var repositoryType = typeof(GenericRepository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)));
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)),_dbContext);
                 repositories.Add(type, repositoryInstance);
             }
             return (GenericRepository<TEntity>)repositories[type];
