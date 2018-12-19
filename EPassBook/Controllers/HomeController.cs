@@ -69,43 +69,44 @@ namespace EPassBook.Controllers
         [HttpGet]
         public ActionResult _CityHead()
         {
-            return PartialView();
+            InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
+            var installment = _installmentDetailService.GetInstallmentDetailById(6);
+            var installmentviewmodel = _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            installmentviewmodel._Comments = "";
+            return PartialView(installmentviewmodel);
         }
 
         [HttpPost]
         public ActionResult _CityHead(InstallmentDetailsViewModel installmentDetailViewModel)
         {
-            var installment = new InstallmentDetail();
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
 
-            //if (ModelState.IsValid)
-            //{
-                installment.BeneficiaryId = 1;//installmentDetailViewModel.BeneficiaryId;
+            if (Session["UserDetails"] != null)
+            {
+                var user = Session["UserDetails"] as UserViewModel;
+                installment.ModifiedBy = user.UserName;
+                installment.CompanyID = user.CompanyID;
+
                 installment.BeneficiaryAmnt = installmentDetailViewModel.BeneficiaryAmnt;
                 installment.LoanAmnt = installmentDetailViewModel.LoanAmnt;
                 installment.IsCentreAmnt = installmentDetailViewModel.IsCentreAmnt;
                 installment.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
-                installment.StageID = 1;
-                installment.InstallmentNo = 1;
-                installment.CreatedDate = DateTime.Now;
-                installment.CreatedBy = "Admin";
-                installment.CompanyID = 1;
+                installment.StageID = (int)Common.WorkFlowStages.ProjectManager;
+                installment.InstallmentNo = installmentDetailViewModel.InstallmentNo;
+                installment.ModifiedDate = DateTime.Now;
 
                 var comments = new Comment();
                 comments.Comments = installmentDetailViewModel._Comments;
-                comments.CreatedBy = "Admin";
-            comments.BeneficiaryId = 1;
+                comments.CreatedBy = user.UserName;
+                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
                 comments.CreatedDate = DateTime.Now;
-                comments.CompanyID = 1;
+                comments.CompanyID = user.CompanyID;
 
                 installment.Comments.Add(comments);
 
-                _installmentDetailService.Insert(installment);
-                _installmentDetailService.SaveChanges();                
-            //}
-            //else
-            //{
-
-            //}
+                _installmentDetailService.Update(installment);
+                _installmentDetailService.SaveChanges();
+            }
             return View();
         }
 
