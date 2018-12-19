@@ -48,7 +48,7 @@ namespace EPassBook.Controllers
                 return View(user);
             }
             var userModel = _mapper.Map<UserViewModel, UserMaster>(user);
-            _userService.Insert(userModel);
+            _userService.Add(userModel);
             _userService.SaveChanges();
             return RedirectToAction("Index");
         }

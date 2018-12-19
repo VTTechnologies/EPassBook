@@ -13,7 +13,7 @@ namespace EPassBook.DAL.IService
         IEnumerable<Comment> GetAllComments();
         Comment GetCommentById(int id);
         IEnumerable<sp_GetSurveyDetailsByBenID_Result> GetSurveyDetailsByBenificiaryID(int id);
-        void Insert(Comment user);
+        void Add(Comment user);
         void Update(Comment user);
         void Delete(int id);
         void SaveChanges();

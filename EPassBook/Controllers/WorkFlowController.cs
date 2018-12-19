@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EPassBook.Helper;
 
 namespace EPassBook.Controllers
 {
@@ -14,9 +15,11 @@ namespace EPassBook.Controllers
     {
         private readonly IMapper _mapper;
         IInstallmentDetailService _installmentDetailService;
+        IBenificiary _benificiaryService;
 
-        public WorkFlowController(IMapper mapper, IInstallmentDetailService installmentDetailService)
+        public WorkFlowController(IMapper mapper, IInstallmentDetailService installmentDetailService, IBenificiary benificiaryService)
         {
+            _benificiaryService = benificiaryService;
             _installmentDetailService = installmentDetailService;
             _mapper = mapper;
         }
@@ -27,32 +30,61 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateAccountant()
+        public ActionResult CreateAccountant(int id)
         {
-            return View();
+            Session["BeniId"] = id;
+            AccountDetailsViewModel advm = new AccountDetailsViewModel();
+            InstallmentSigning instS = new InstallmentSigning();
+            var installmentDetails = _installmentDetailService.GetInstallmentDetailById(installmentId);
+            var benificiaryDetails = _benificiaryService.GetBenificiaryById(installmentDetails.BeneficiaryId);
+
+            advm.LoanAmnt = Convert.ToInt32(installmentDetails.LoanAmnt);
+            advm.IFSCCode = benificiaryDetails.IFSCCode;
+            advm.AccountNo = benificiaryDetails.AccountNo.ToString();
+            advm.LoanAmtInRupees = advm.LoanAmnt.ConvertNumbertoWords();
+            return View(advm);
         }
 
         [HttpPost]
-        public ActionResult CreateAccountant(InstallmentDetailsViewModel installmentDetailViewModel)
+        public ActionResult CreateAccountant(AccountDetailsViewModel accountDetailsVM)
         {
-            var installmet = _installmentDetailService.GetInstallmentDetailById(12);
+            if(Session["UserDetails"] !=null)
+            {
+                var user = Session["UserDetails"] as UserViewModel;
+                int beniId = 0;
+                if (Session["BeniId"] != null)
+                {
+                    beniId = Convert.ToInt32(Session["BeniId"]);
+                }
+                else
+                {
+                    RedirectToAction("Login", "User");
+                }
+                var installmentDetail = _installmentDetailService.GetInstallmentDetailById(beniId); //id pass just for testing purpose
+                var instSigning = new InstallmentSigning();
+                UserInRole uir = new UserInRole();
 
-            installmet.TransactionID = installmentDetailViewModel.TransactionID;
+                instSigning.InstallmentId = accountDetailsVM.InstallmentId;
+                instSigning.Sign = accountDetailsVM.Sign;
+                instSigning.UserId = user.UserId;
+                instSigning.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                instSigning.CreatedDate = DateTime.Now;
+                instSigning.CreatedBy = user.UserName;
+                instSigning.CompanyID = user.CompanyID;
 
-            var comment = new Comment();
-            comment.Comments = installmentDetailViewModel._Comments;
-            comment.CompanyID = 1;
+                installmentDetail.InstallmentSignings.Add(instSigning);
 
-            installmet.Comments.Add(comment);
+                installmentDetail.TransactionID = Convert.ToDecimal(accountDetailsVM.TransactionId);
+                installmentDetail.ModifiedBy = user.UserName;
+                installmentDetail.ModifiedDate = DateTime.Now;
 
-            installmet.ModifiedBy = "Admin";
-            installmet.ModifiedDate = DateTime.Now;
-
-
-
-            _installmentDetailService.Update(installmet);
-            _installmentDetailService.SaveChanges();
-
+                _installmentDetailService.Update(installmentDetail);
+                _installmentDetailService.SaveChanges();
+            }
+            else
+            {
+                RedirectToAction("Login", "User");
+            }
             return View();
         }
     }

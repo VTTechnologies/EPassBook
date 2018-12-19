@@ -7,7 +7,7 @@ namespace EPassBook.DAL.IService
     {
         IEnumerable<InstallmentDetail> GetAllInstallmentDetails();
         InstallmentDetail GetInstallmentDetailById(int id);
-        void Insert(InstallmentDetail installmentDetail);
+        void Add(InstallmentDetail installmentDetail);
         void Update(InstallmentDetail installmentDetail);
         void Delete(int id);
         void SaveChanges();        

@@ -22,6 +22,8 @@ namespace EPassBook
                 cfg.CreateMap<UserMaster, UserViewModel>();
                 cfg.CreateMap<BenificiaryMaster, BeneficiaryViewModel>();
                 cfg.CreateMap<InstallmentDetail, InstallmentDetailsViewModel>();
+                cfg.CreateMap<InstallmentDetail, AccountDetailsViewModel>();
+                cfg.CreateMap<BenificiaryMaster, AccountDetailsViewModel>();
                 //cfg.CreateMap<MyHappyEntity, MyHappyEntityDto>();
 
                 //...

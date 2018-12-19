@@ -34,7 +34,7 @@ namespace EPassBook.DAL.Service
             return comment;
         }
 
-        public void Insert(Comment comment)
+        public void Add(Comment comment)
         {
             commentRepository.Add(comment);
         }

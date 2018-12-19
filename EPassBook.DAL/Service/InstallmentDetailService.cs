@@ -37,7 +37,7 @@ namespace EPassBook.DAL.Service
             return benficiaries;
         }
 
-        public void Insert(InstallmentDetail installmentDetail)
+        public void Add(InstallmentDetail installmentDetail)
         {
             InstallmentDetailRepository.Add(installmentDetail);            
         }

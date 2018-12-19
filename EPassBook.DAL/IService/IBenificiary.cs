@@ -7,7 +7,7 @@ namespace EPassBook.DAL.IService
     {
         IEnumerable<BenificiaryMaster> GetAllBenificiaries();
         BenificiaryMaster GetBenificiaryById(int id);
-        void Insert(BenificiaryMaster benificiary);
+        void Add(BenificiaryMaster benificiary);
         void Update(BenificiaryMaster benificiary);
         void Delete(int id);
         void SaveChanges();        
