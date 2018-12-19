@@ -16,9 +16,11 @@ namespace EPassBook.Controllers
         private readonly IMapper _mapper;
         IInstallmentDetailService _installmentDetailService;
         IBenificiary _benificiaryService;
+        IWorkFlowStagesService _iWorkFlowStagesService;
 
-        public WorkFlowController(IMapper mapper, IInstallmentDetailService installmentDetailService, IBenificiary benificiaryService)
+        public WorkFlowController(IMapper mapper, IInstallmentDetailService installmentDetailService, IBenificiary benificiaryService, IWorkFlowStagesService iWorkFlowStagesService)
         {
+            _iWorkFlowStagesService = iWorkFlowStagesService;
             _benificiaryService = benificiaryService;
             _installmentDetailService = installmentDetailService;
             _mapper = mapper;
@@ -26,7 +28,18 @@ namespace EPassBook.Controllers
         // GET: WorkFlow
         public ActionResult Index()
         {
-            return View();
+            int stageId = 0;
+            if (Session["UserDetails"] != null)
+            {
+                var user = Session["UserDetails"] as UserViewModel;
+                var roleId = user.UserInRoles.Select(s => s.RoleId).FirstOrDefault();
+                stageId = _iWorkFlowStagesService.GetUserStageByRoleID(roleId);
+            }
+
+            var installmentListView = _installmentDetailService.GetInstallmentForLoginUsersWithStages(stageId).ToList();
+            //var benficiarymodel = _mapper.Map<BenificiaryMaster, BeneficiaryViewModel>(benfici);
+            var resultlist = _mapper.Map<IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result>, IEnumerable<InstallmentListView>>(installmentListView);
+            return View(resultlist);
         }
 
         [HttpGet]

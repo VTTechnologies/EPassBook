@@ -152,5 +152,14 @@ namespace EPassBook.DAL.DBModel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdatTransactionId", benifciaryIdParameter, signParameter, transactionIdParameter, installmentIdParameter, useridParameter);
         }
+    
+        public virtual ObjectResult<sp_GetInstallmentListViewForUsersRoles_Result> sp_GetInstallmentListViewForUsersRoles(Nullable<int> stageid)
+        {
+            var stageidParameter = stageid.HasValue ?
+                new ObjectParameter("stageid", stageid) :
+                new ObjectParameter("stageid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInstallmentListViewForUsersRoles_Result>("sp_GetInstallmentListViewForUsersRoles", stageidParameter);
+        }
     }
 }

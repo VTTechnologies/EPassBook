@@ -10,6 +10,8 @@ namespace EPassBook.DAL.IService
         void Add(InstallmentDetail installmentDetail);
         void Update(InstallmentDetail installmentDetail);
         void Delete(int id);
-        void SaveChanges();        
+        void SaveChanges();
+        IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result> GetInstallmentForLoginUsersWithStages(int StageID);
+
     }
 }

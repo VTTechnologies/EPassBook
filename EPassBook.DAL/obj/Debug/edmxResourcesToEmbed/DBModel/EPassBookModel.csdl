@@ -149,6 +149,9 @@
       <Parameter Name="installmentId" Mode="In" Type="Int32" />
       <Parameter Name="userid" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
+      <Parameter Name="stageid" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="BenificiaryMaster">
     <Key>
@@ -761,4 +764,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
+    <Property Type="Int32" Name="InstallmentId" Nullable="false" />
+    <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
+    <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
+    <Property Type="Int64" Name="MobileNo" Nullable="true" />
+    <Property Type="String" Name="CreatedDate" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="PlanYear" Nullable="true" />
+    <Property Type="Int32" Name="StageID" Nullable="true" />
+    <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
+    <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
+    <Property Type="Int32" Name="CompanyID" Nullable="true" />
+  </ComplexType>
 </Schema>

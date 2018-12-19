@@ -576,6 +576,9 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Parameter Name="StatusCode" Type="int" Mode="In" />
     <Parameter Name="TimeUtc" Type="datetime" Mode="In" />
   </Function>
+  <Function Name="sp_GetInstallmentListViewForUsersRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="stageid" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_GetSurveyDetailsByBenID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="BenificiaryId" Type="int" Mode="In" />
   </Function>

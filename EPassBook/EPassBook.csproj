@@ -240,6 +240,7 @@
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\GeoTaggingViewModel.cs" />
     <Compile Include="Models\InstallmentDetailsViewModel.cs" />
+    <Compile Include="Models\InstallmentListView.cs" />
     <Compile Include="Models\InstallmentSigningViewModel.cs" />
     <Compile Include="Models\InstllmentRejectionViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />

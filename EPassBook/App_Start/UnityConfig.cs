@@ -24,6 +24,9 @@ namespace EPassBook
                 cfg.CreateMap<InstallmentDetail, InstallmentDetailsViewModel>();
                 cfg.CreateMap<InstallmentDetail, AccountDetailsViewModel>();
                 cfg.CreateMap<BenificiaryMaster, AccountDetailsViewModel>();
+                cfg.CreateMap<WorkflowStage, WorkFlowStagesViewModel>();
+                cfg.CreateMap<sp_GetInstallmentListViewForUsersRoles_Result, InstallmentListView>();
+
                 //cfg.CreateMap<MyHappyEntity, MyHappyEntityDto>();
 
                 //...
@@ -41,6 +44,7 @@ namespace EPassBook
             container.RegisterType<IBenificiary, BenificiaryService>();
             container.RegisterType<ICommentService, CommentService>();
             container.RegisterType<IInstallmentDetailService, InstallmentDetailService>();
+            container.RegisterType<IWorkFlowStagesService, WorkFlowStagesService>();
 
             //Created instance of mapper into unity
             container.RegisterInstance(mapper);
