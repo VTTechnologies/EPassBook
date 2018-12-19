@@ -35,7 +35,7 @@ namespace EPassBook.Controllers
             Session["BeniId"] = id;
             AccountDetailsViewModel advm = new AccountDetailsViewModel();
             InstallmentSigning instS = new InstallmentSigning();
-            var installmentDetails = _installmentDetailService.GetInstallmentDetailById(installmentId);
+            var installmentDetails = _installmentDetailService.GetInstallmentDetailById(id);
             var benificiaryDetails = _benificiaryService.GetBenificiaryById(installmentDetails.BeneficiaryId);
 
             advm.LoanAmnt = Convert.ToInt32(installmentDetails.LoanAmnt);
