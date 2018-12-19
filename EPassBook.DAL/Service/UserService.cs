@@ -33,7 +33,7 @@ namespace EPassBook.DAL.Service
             return user;
         }
 
-        public void Insert(UserMaster user)
+        public void Add(UserMaster user)
         {
             userMasterRepository.Add(user);
         }

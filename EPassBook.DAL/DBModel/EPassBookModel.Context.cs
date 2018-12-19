@@ -127,5 +127,30 @@ namespace EPassBook.DAL.DBModel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetSurveyDetailsByBenID_Result>("sp_GetSurveyDetailsByBenID", benificiaryIdParameter);
         }
+    
+        public virtual int sp_UpdatTransactionId(Nullable<int> benifciaryId, Nullable<bool> sign, Nullable<decimal> transactionId, Nullable<int> installmentId, Nullable<int> userid)
+        {
+            var benifciaryIdParameter = benifciaryId.HasValue ?
+                new ObjectParameter("benifciaryId", benifciaryId) :
+                new ObjectParameter("benifciaryId", typeof(int));
+    
+            var signParameter = sign.HasValue ?
+                new ObjectParameter("sign", sign) :
+                new ObjectParameter("sign", typeof(bool));
+    
+            var transactionIdParameter = transactionId.HasValue ?
+                new ObjectParameter("transactionId", transactionId) :
+                new ObjectParameter("transactionId", typeof(decimal));
+    
+            var installmentIdParameter = installmentId.HasValue ?
+                new ObjectParameter("installmentId", installmentId) :
+                new ObjectParameter("installmentId", typeof(int));
+    
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdatTransactionId", benifciaryIdParameter, signParameter, transactionIdParameter, installmentIdParameter, useridParameter);
+        }
     }
 }

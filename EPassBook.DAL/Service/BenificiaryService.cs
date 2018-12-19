@@ -37,7 +37,7 @@ namespace EPassBook.DAL.Service
             return benficiaries;
         }
 
-        public void Insert(BenificiaryMaster benificiary)
+        public void Add(BenificiaryMaster benificiary)
         {
             throw new NotImplementedException();
         }
