@@ -9,10 +9,16 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group" style="display:none">
+        @Html.LabelFor(model => model.InstallmentId, "InstallmentID", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(m => m.InstallmentId)            
+        </div>
+    </div>
+    
+    <div class="form-group" style="display:none">
         @Html.LabelFor(model => model.BeneficiaryId, "BeneficiaryId", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.HiddenFor(m => m.BeneficiaryId)
-            @Html.ValidationMessageFor(model => model.BeneficiaryId, "", new { @class = "text-danger" })
+            @Html.HiddenFor(m => m.BeneficiaryId)            
         </div>
     </div>
 
@@ -36,7 +42,7 @@
         @Html.LabelFor(model => model.IsCentreAmnt, "State Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="checkbox">
-                @Html.RadioButtonFor(model => model.IsCentreAmnt, false)@Html.Label("State Assistance")
+                @Html.RadioButtonFor(model => model.IsCentreAmnt,false)@Html.Label("State Assistance")
                 @Html.ValidationMessageFor(model => model.IsCentreAmnt, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -46,7 +52,7 @@
         @Html.LabelFor(model => model.IsCentreAmnt, "Central Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="checkbox">
-                @Html.RadioButtonFor(model => model.IsCentreAmnt, false)@Html.Label("Central Assistance")
+                @Html.RadioButtonFor(model => model.IsCentreAmnt,false)@Html.Label("Central Assistance")
                 @Html.ValidationMessageFor(model => model.IsCentreAmnt, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -85,7 +91,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="display:none">
         @Html.LabelFor(model => model.InstallmentNo, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.InstallmentNo, new { htmlAttributes = new { @class = "form-control" } })
