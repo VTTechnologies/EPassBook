@@ -51,5 +51,12 @@ namespace EPassBook.DAL.Service
         {
             InstallmentDetailRepository.Update(installmentDetail);
         }
+
+        IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result> IInstallmentDetailService.GetInstallmentForLoginUsersWithStages(int StageID)
+        {
+            var InstallmentDetailsViewList = _dbContext.sp_GetInstallmentListViewForUsersRoles(StageID);
+            //parameter added for testing only
+            return InstallmentDetailsViewList.ToList();
+        }
     }
 }
