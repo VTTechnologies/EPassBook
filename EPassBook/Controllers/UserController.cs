@@ -70,6 +70,14 @@ namespace EPassBook.Controllers
             if (ModelState.IsValid)
             {
                 var userData = _userService.GetPassword(user.UserName);
+                if(user.RememberMe)
+                {
+                    HttpCookie userCookie = new HttpCookie("userinfo");
+                    userCookie["user"] = user.UserName;
+                    userCookie["password"] = user.Password;
+                    userCookie.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Add(userCookie);
+                }
 
                 user = _mapper.Map<UserMaster, UserViewModel>(userData);
                 Session["UserDetails"] = user;

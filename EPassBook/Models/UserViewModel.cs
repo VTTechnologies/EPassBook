@@ -36,6 +36,8 @@ namespace EPassBook.Models
         public Nullable<int> CityId { get; set; }
         public Nullable<int> CompanyID { get; set; }
 
+        public bool RememberMe { get; set; }
+
         public virtual CityViewModel CityMaster { get; set; }
         public virtual CompanyViewModel CompanyMaster { get; set; }
         public virtual ICollection<GeoTaggingViewModel> GeoTaggingDetails { get; set; }

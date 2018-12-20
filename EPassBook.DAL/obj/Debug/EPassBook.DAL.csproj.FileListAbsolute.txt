@@ -31,3 +31,4 @@ C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj
 C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.CopyComplete
 C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
 C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csprojAssemblyReference.cache

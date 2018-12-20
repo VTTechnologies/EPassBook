@@ -32,11 +32,11 @@ namespace EPassBook.Controllers
         [HttpGet]
         public ActionResult CreateAccountant(int id)
         {
-            Session["BeniId"] = id;
             AccountDetailsViewModel advm = new AccountDetailsViewModel();
             InstallmentSigning instS = new InstallmentSigning();
             var installmentDetails = _installmentDetailService.GetInstallmentDetailById(id);
             var benificiaryDetails = _benificiaryService.GetBenificiaryById(installmentDetails.BeneficiaryId);
+            advm.InstallmentId = id;
 
             advm.LoanAmnt = Convert.ToInt32(installmentDetails.LoanAmnt);
             advm.IFSCCode = benificiaryDetails.IFSCCode;
@@ -51,16 +51,8 @@ namespace EPassBook.Controllers
             if(Session["UserDetails"] !=null)
             {
                 var user = Session["UserDetails"] as UserViewModel;
-                int beniId = 0;
-                if (Session["BeniId"] != null)
-                {
-                    beniId = Convert.ToInt32(Session["BeniId"]);
-                }
-                else
-                {
-                    RedirectToAction("Login", "User");
-                }
-                var installmentDetail = _installmentDetailService.GetInstallmentDetailById(beniId); //id pass just for testing purpose
+                
+                var installmentDetail = _installmentDetailService.GetInstallmentDetailById(accountDetailsVM.InstallmentId); //id pass just for testing purpose
                 var instSigning = new InstallmentSigning();
                 UserInRole uir = new UserInRole();
 
