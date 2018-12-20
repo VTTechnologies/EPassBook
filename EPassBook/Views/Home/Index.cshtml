@@ -1,13 +1,15 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-    
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 <style>
     .panel-heading {
-        padding-bottom:0px;
-        padding-right:15px;
-        padding-left:15px;
-        padding-top:10px;
+        padding-bottom: 0px;
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-top: 10px;
         border-bottom: 0px solid transparent;
     }
 </style>
@@ -15,27 +17,27 @@
     @Html.Action("_InstallmentDetails", "Home")
 </div>
 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-    @{
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+
 </div>
 <div class="container">
     <div class="col-md-12">
         <div class="panel with-nav-tabs panel-primary">
             <div class="panel-heading">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tabdataEngineer" data-toggle="tab">Data Entry</a></li>
-                    <li><a href="#tabUserRequest" data-toggle="tab">User Request</a></li>
-                    <li><a href="#tabSiteEngineer" data-toggle="tab">Site Engineer</a></li>
-                    <li><a href="#tabProjectManager" data-toggle="tab">Project Manager</a></li>
-                    <li><a href="#tabCityEngineer" data-toggle="tab">City Engineer</a></li>
-                    <li><a href="#tabAccountant" data-toggle="tab">Accountant</a></li>
+                    @*<li class="active"><a href="#tabdataEngineer" data-toggle="tab">Data Entry</a></li>*@
+                    <li id="li_dataeng"><a href="#tabdataEngineer" data-toggle="tab">Data Entry</a></li>
+                    <li id="li_userreq"><a href="#tabUserRequest" data-toggle="tab">User Request</a></li>
+                    <li id="li_siteengneer"><a href="#tabSiteEngineer" onclick="anchortrigger(); return false;" id="sitanchor" data-toggle="tab">Site Engineer</a></li>
+                    <li id="li_projectmanager"><a href="#tabProjectManager" data-toggle="tab">Project Manager</a></li>
+                    <li id="li_cityengineer"><a href="#tabCityEngineer" data-toggle="tab">City Engineer</a></li>
+                    <li id="li_accountant"><a href="#tabAccountant" data-toggle="tab">Accountant</a></li>
                 </ul>
             </div>
             <div class="panel-body">
                 <div class="tab-content">
-                    <div class="tab-pane fade in active" id="tabdataEngineer">@Html.Action("Beneficiary", "Home")</div>
-                    <div class="tab-pane fade" id="tabSiteEngineer">@Html.Action("_CityHead", "Home")</div>
+                    @*<div class="tab-pane fade in active" id="tabdataEngineer">@Html.Action("Beneficiary", "Home")</div>*@
+                    <div class="tab-pane fade" id="tabdataEngineer">@Html.Action("Beneficiary", "Home")</div>
+                    <div class="tab-pane fade" id="tabSiteEngineer">@{Html.RenderAction("_CityHead", "Home");}</div> @*@Html.Action("_CityHead", "Home")*@
                     <div class="tab-pane fade" id="tabUserRequest">Hi This is User Request</div>
                     <div class="tab-pane fade" id="tabProjectManager">Project Manager</div>
                     <div class="tab-pane fade" id="tabCityEngineer">City Engineer</div>
@@ -44,29 +46,46 @@
             </div>
         </div>
     </div>
+    <div class="col-lg-12 col-md-12">
+        @Html.ActionLink("Go To HomePage", "Index", "WorkFlow", htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
 </div>
 
 
 @*<div id="BeneficiaryResult" class="container col-sm-offset-0">
 
-   
-</div>
 
-<div id="Usersubmits" class="container col-sm-offset-0">
-</div>
+    </div>
 
-<div id="InstallmentDetails" class="container col-sm-offset-0">
+    <div id="Usersubmits" class="container col-sm-offset-0">
+    </div>
 
-</div>*@
-<script>
-// Add active class to the current button (highlight it)
-var header = document.getElementById("myDIV");
-var btns = header.getElementsByClassName("btn1");
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function() {
-  var current = document.getElementsByClassName("active");
-  current[0].className = current[0].className.replace("active", "");
-  this.className += " active";
-  });
-}
+    <div id="InstallmentDetails" class="container col-sm-offset-0">
+
+    </div>*@
+
+
+<script type="text/javascript">
+    $(document).ready(function () {       
+        var text = '@ViewBag.RoleName'; //Accessing the Json Object from ViewBag
+        if (text == 'SiteEngineer') {
+            //$('#li_siteengneer').addClass("active");
+            $('#li_siteengneer').addClass("active");
+            $('#tabSiteEngineer').addClass("active in");           
+
+            //$('#sitanchor').trigger('click');
+            //$('#sitanchor').click(function () {
+            //    alert('test this');
+            //});
+                      
+
+            //$('#tabSiteEngineer').load("@Url.Action("_CityHead", "Home")");
+        }      
+
+        
+        
+        //$('.nav nav-tabs a').trigger('click');
+
+    });
 </script>
+
