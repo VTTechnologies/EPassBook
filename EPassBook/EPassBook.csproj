@@ -369,6 +369,7 @@
     <Content Include="Views\Home\Website.cshtml" />
     <Content Include="Views\WorkFlow\CreateAccountant.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Home\AddUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

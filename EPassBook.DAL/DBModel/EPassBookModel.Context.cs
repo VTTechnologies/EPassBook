@@ -33,6 +33,8 @@ namespace EPassBook.DAL.DBModel
         public virtual DbSet<CommentsHisory> CommentsHisories { get; set; }
         public virtual DbSet<CompanyMaster> CompanyMasters { get; set; }
         public virtual DbSet<GeoTaggingDetail> GeoTaggingDetails { get; set; }
+        public virtual DbSet<InstallmentDetail> InstallmentDetails { get; set; }
+        public virtual DbSet<InstallmentDetailsHistory> InstallmentDetailsHistories { get; set; }
         public virtual DbSet<InstallmentRejection> InstallmentRejections { get; set; }
         public virtual DbSet<InstallmentSigning> InstallmentSignings { get; set; }
         public virtual DbSet<RoleMaster> RoleMasters { get; set; }
@@ -41,8 +43,6 @@ namespace EPassBook.DAL.DBModel
         public virtual DbSet<UserMaster> UserMasters { get; set; }
         public virtual DbSet<WorkflowStage> WorkflowStages { get; set; }
         public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
-        public virtual DbSet<InstallmentDetailsHistory> InstallmentDetailsHistories { get; set; }
-        public virtual DbSet<InstallmentDetail> InstallmentDetails { get; set; }
     
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {

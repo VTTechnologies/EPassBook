@@ -30,8 +30,22 @@ namespace EPassBook.Controllers
           
             return View();
         }
+
         //added by ather
         public ActionResult Website()
+        {
+
+            return View();
+        }
+        [CustomAuthorize(Common.Admin)]
+        [HttpGet]
+        public ActionResult AddUser()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddUser(UserViewModel userVM)
         {
 
             return View();

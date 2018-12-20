@@ -17,10 +17,10 @@ namespace EPassBook.DAL.DBModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BenificiaryMaster()
         {
+            this.InstallmentDetails = new HashSet<InstallmentDetail>();
             this.Comments = new HashSet<Comment>();
             this.GeoTaggingDetails = new HashSet<GeoTaggingDetail>();
             this.InstallmentRejections = new HashSet<InstallmentRejection>();
-            this.InstallmentDetails = new HashSet<InstallmentDetail>();
         }
     
         public int BeneficiaryId { get; set; }
@@ -51,22 +51,23 @@ namespace EPassBook.DAL.DBModel
         public string BranchName { get; set; }
         public string IFSCCode { get; set; }
         public Nullable<long> AccountNo { get; set; }
-        public byte[] Photo { get; set; }
+        public byte[] Hasband_Photo { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<int> CompanyID { get; set; }
+        public byte[] Wife_Photo { get; set; }
     
         public virtual CompanyMaster CompanyMaster { get; set; }
         public virtual CityMaster CityMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InstallmentDetail> InstallmentDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GeoTaggingDetail> GeoTaggingDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentRejection> InstallmentRejections { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InstallmentDetail> InstallmentDetails { get; set; }
     }
 }

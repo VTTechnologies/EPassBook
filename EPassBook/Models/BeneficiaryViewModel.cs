@@ -13,7 +13,7 @@ namespace EPassBook.Models
         public string BeneficairyName { get; set; }
         public string FatherName { get; set; }
         public string Mother { get; set; }
-        public string MobileNo { get; set; }
+        public Nullable<long> MobileNo { get; set; }
         public string PresentAddress { get; set; }
         public Nullable<int> CityId { get; set; }
         public Nullable<int> DTRNo { get; set; }
@@ -37,12 +37,13 @@ namespace EPassBook.Models
         public string BranchName { get; set; }
         public string IFSCCode { get; set; }
         public Nullable<long> AccountNo { get; set; }
-        public byte[] Photo { get; set; }
+        public byte[] Hasband_Photo { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<int> CompanyID { get; set; }
+        public byte[] Wife_Photo { get; set; }
 
         public virtual CompanyViewModel CompanyMaster { get; set; }
         public virtual CityViewModel CityMaster { get; set; }

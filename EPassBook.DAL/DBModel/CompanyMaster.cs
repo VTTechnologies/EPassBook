@@ -21,9 +21,9 @@ namespace EPassBook.DAL.DBModel
             this.Comments = new HashSet<Comment>();
             this.InstallmentRejections = new HashSet<InstallmentRejection>();
             this.GeoTaggingDetails = new HashSet<GeoTaggingDetail>();
+            this.InstallmentDetails = new HashSet<InstallmentDetail>();
             this.InstallmentSignings = new HashSet<InstallmentSigning>();
             this.UserMasters = new HashSet<UserMaster>();
-            this.InstallmentDetails = new HashSet<InstallmentDetail>();
         }
     
         public int CompanyID { get; set; }
@@ -45,10 +45,10 @@ namespace EPassBook.DAL.DBModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GeoTaggingDetail> GeoTaggingDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InstallmentDetail> InstallmentDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentSigning> InstallmentSignings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserMaster> UserMasters { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InstallmentDetail> InstallmentDetails { get; set; }
     }
 }

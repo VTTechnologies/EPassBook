@@ -4,7 +4,7 @@
     <Key>
       <PropertyRef Name="BeneficiaryId" />
     </Key>
-    <Property Name="BeneficiaryId" Type="int" Nullable="false" />
+    <Property Name="BeneficiaryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="BeneficairyName" Type="nvarchar" MaxLength="150" />
     <Property Name="FatherName" Type="nvarchar" MaxLength="150" />
     <Property Name="Mother" Type="nvarchar" MaxLength="150" />
@@ -32,12 +32,13 @@
     <Property Name="BranchName" Type="nvarchar" MaxLength="150" />
     <Property Name="IFSCCode" Type="nvarchar" MaxLength="50" />
     <Property Name="AccountNo" Type="bigint" />
-    <Property Name="Photo" Type="image" />
+    <Property Name="Hasband_Photo" Type="image" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="CompanyID" Type="int" />
+    <Property Name="Wife_Photo" Type="image" />
   </EntityType>
   <EntityType Name="CityMaster">
     <Key>
