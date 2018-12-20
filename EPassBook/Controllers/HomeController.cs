@@ -4,6 +4,8 @@ using EPassBook.DAL.IService;
 using EPassBook.Helper;
 using EPassBook.Models;
 using System;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
 
 namespace EPassBook.Controllers
@@ -15,6 +17,7 @@ namespace EPassBook.Controllers
         IUserService _userser;
         IBenificiary _Ibenificiary;
         IInstallmentDetailService _installmentDetailService;
+        PhotoManager pm = new PhotoManager();
 
         public HomeController(IUserService userser, IBenificiary Ibenificiary, IMapper mapper, IInstallmentDetailService installmentDetailService)
         {
@@ -65,10 +68,71 @@ namespace EPassBook.Controllers
 
             return View();
         }
+        [HttpGet]
         public ActionResult Beneficiary()
         {
             return PartialView("Beneficiary", new BeneficiaryViewModel());
         }
+        [Route("Beneficiary")]
+        [HttpPost]
+        public ActionResult Beneficiary(BeneficiaryViewModel BVM)
+        {
+            HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
+            HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
+            int i = UploadImageInDataBase(hasbandphoto, wifephoto, BVM);
+            if (i==1)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(BVM);
+            
+           
+        }
+       // private readonly DBContext db = new DBContext();
+        public int UploadImageInDataBase(HttpPostedFileBase hphoto,HttpPostedFileBase wphoto, BeneficiaryViewModel BVM)
+        {
+                BVM.Hasband_Photo = pm.ConvertToBytes(hphoto);
+                BVM.Wife_Photo = pm.ConvertToBytes(wphoto);
+                var user = Session["UserDetails"] as UserViewModel;
+                var insertbeneficiary = new BenificiaryMaster();
+                //var benficiarymodel = _mapper.Map<BeneficiaryViewModel, BenificiaryMaster>(BVM);
+                insertbeneficiary.Hasband_Photo = BVM.Hasband_Photo;
+                insertbeneficiary.Wife_Photo = BVM.Wife_Photo;
+                insertbeneficiary.BeneficairyName = BVM.BeneficairyName;
+                insertbeneficiary.FatherName = BVM.FatherName;
+                insertbeneficiary.Mother = BVM.Mother;
+                insertbeneficiary.MobileNo = BVM.MobileNo;
+                insertbeneficiary.CityId = BVM.CityId;
+                insertbeneficiary.DTRNo = BVM.DTRNo;
+                insertbeneficiary.RecordNo = BVM.RecordNo;
+                insertbeneficiary.Class = BVM.Class;
+                insertbeneficiary.General = BVM.General;
+                insertbeneficiary.Single = BVM.Single;
+                insertbeneficiary.Disabled = BVM.Disabled;
+                insertbeneficiary.Password = BVM.Password;
+                insertbeneficiary.AdharNo = BVM.AdharNo;
+                insertbeneficiary.VoterID = BVM.VoterID;
+                insertbeneficiary.Area = BVM.Area;
+                insertbeneficiary.MojaNo = BVM.MojaNo;
+                insertbeneficiary.KhataNo = BVM.KhataNo;
+                insertbeneficiary.KhasraNo = BVM.KhasraNo;
+                insertbeneficiary.PlotNo = BVM.PlotNo;
+                insertbeneficiary.PoliceStation = BVM.PoliceStation;
+                insertbeneficiary.WardNo = BVM.WardNo;
+                insertbeneficiary.District = BVM.District;
+                insertbeneficiary.BankName = BVM.BankName;
+                insertbeneficiary.BranchName = BVM.BranchName;
+                insertbeneficiary.IFSCCode = BVM.IFSCCode;
+                insertbeneficiary.AccountNo = BVM.AccountNo;
+                insertbeneficiary.CreatedBy = user.UserName;
+                insertbeneficiary.CreatedDate = DateTime.Now;
+                insertbeneficiary.CompanyID = user.CompanyID;
+                _Ibenificiary.Add(insertbeneficiary);
+                _Ibenificiary.SaveChanges();
+                return 1;
+            
+        }
+       
 
 
         public ActionResult _InstallmentDetails()
