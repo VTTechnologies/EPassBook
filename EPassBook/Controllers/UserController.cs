@@ -87,7 +87,7 @@ namespace EPassBook.Controllers
                     if(user.Password.Equals(userData.Password))
                     {
                         Session["CompID"] = userData.CompanyID;
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "WorkFlow");
                     }
                     else
                     {

@@ -4,6 +4,7 @@ using EPassBook.DAL.IService;
 using EPassBook.Helper;
 using EPassBook.Models;
 using System;
+using System.Linq;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
@@ -27,10 +28,19 @@ namespace EPassBook.Controllers
             _installmentDetailService = installmentDetailService;
         }
 
-        [CustomAuthorize(Common.Admin)]
-        public ActionResult Index()
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer)]
+        public ActionResult Index(int? id)
         {
-          
+
+            Session["InstallmentId"] = id;
+            string rolename = "";
+            if (Session["UserDetails"] != null)
+            {
+                var user = Session["UserDetails"] as UserViewModel;
+                var roleId = user.UserInRoles.Select(s => s.RoleId).FirstOrDefault();
+                rolename = Enum.GetName(typeof(Common.WorkFlowStages), roleId);
+            }
+            ViewBag.RoleName = rolename;
             return View();
         }
 
@@ -147,8 +157,13 @@ namespace EPassBook.Controllers
         [HttpGet]
         public ActionResult _CityHead()
         {
+            int installmentid = 0;
+            if (Session["InstallmentId"] != null)
+            {
+                installmentid = Convert.ToInt32(Session["InstallmentId"]);
+            }
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
-            var installment = _installmentDetailService.GetInstallmentDetailById(6);
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
             var installmentviewmodel = _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
             installmentviewmodel._Comments = "";
             return PartialView(installmentviewmodel);
@@ -184,6 +199,8 @@ namespace EPassBook.Controllers
 
                 _installmentDetailService.Update(installment);
                 _installmentDetailService.SaveChanges();
+
+                Session["InstallmentId"] = null;
             }
             return View();
         }

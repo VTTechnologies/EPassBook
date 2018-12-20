@@ -18,6 +18,12 @@ namespace EPassBook
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Website", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "WorkFlow",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "WorkFlow", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }
