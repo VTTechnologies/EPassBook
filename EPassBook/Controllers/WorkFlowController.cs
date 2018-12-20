@@ -61,13 +61,11 @@ namespace EPassBook.Controllers
         [HttpPost]
         public ActionResult CreateAccountant(AccountDetailsViewModel accountDetailsVM)
         {
-            if(Session["UserDetails"] !=null)
+            if (Session["UserDetails"] != null)
             {
                 var user = Session["UserDetails"] as UserViewModel;
-                
-                var installmentDetail = _installmentDetailService.GetInstallmentDetailById(accountDetailsVM.InstallmentId); //id pass just for testing purpose
                 var instSigning = new InstallmentSigning();
-                UserInRole uir = new UserInRole();
+                var installmentDetail = _installmentDetailService.GetInstallmentDetailById(accountDetailsVM.InstallmentId);
 
                 instSigning.InstallmentId = accountDetailsVM.InstallmentId;
                 instSigning.Sign = accountDetailsVM.Sign;
@@ -77,20 +75,34 @@ namespace EPassBook.Controllers
                 instSigning.CreatedBy = user.UserName;
                 instSigning.CompanyID = user.CompanyID;
 
-                installmentDetail.InstallmentSignings.Add(instSigning);
-
                 installmentDetail.TransactionID = Convert.ToDecimal(accountDetailsVM.TransactionId);
                 installmentDetail.ModifiedBy = user.UserName;
                 installmentDetail.ModifiedDate = DateTime.Now;
 
-                _installmentDetailService.Update(installmentDetail);
-                _installmentDetailService.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    installmentDetail.InstallmentSignings.Add(instSigning);
+                    _installmentDetailService.Update(installmentDetail);
+                    _installmentDetailService.SaveChanges();
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    var benificiaryDetails = _benificiaryService.GetBenificiaryById(installmentDetail.BeneficiaryId);
+                    accountDetailsVM.InstallmentId = Convert.ToInt32(accountDetailsVM.InstallmentId);
+
+                    accountDetailsVM.LoanAmnt = Convert.ToInt32(installmentDetail.LoanAmnt);
+                    accountDetailsVM.IFSCCode = benificiaryDetails.IFSCCode;
+                    accountDetailsVM.AccountNo = benificiaryDetails.AccountNo.ToString();
+                    accountDetailsVM.LoanAmtInRupees = accountDetailsVM.LoanAmnt.ConvertNumbertoWords();
+                    return View(accountDetailsVM);
+                }
             }
             else
             {
-                RedirectToAction("Login", "User");
+                return RedirectToAction("Login", "User");
             }
-            return View();
         }
     }
 }
