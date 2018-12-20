@@ -39,12 +39,16 @@ namespace EPassBook.DAL.Service
 
         public void Add(BenificiaryMaster benificiary)
         {
-            throw new NotImplementedException();
+            BenificiaryMasterRepository.Add(benificiary);
         }
+        //public void Add(InstallmentDetail installmentDetail)
+        //{
+        //    InstallmentDetailRepository.Add(installmentDetail);
+        //}
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            unitOfWork.SaveChanges();
         }
 
         public void Update(BenificiaryMaster benificiary)

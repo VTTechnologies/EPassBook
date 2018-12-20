@@ -1,7 +1,7 @@
 ﻿@model EPassBook.Models.BeneficiaryViewModel
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Beneficiary", "Home", FormMethod.Post, new { enctype ="multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -179,12 +179,12 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                         <img id="img1" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px"/>
-                        <input type="file" value="Upload" id="imgupload1" onchange="readURL(this, 'img1')" class="btn btn-primary col-md-7" />
+                        <input type="file" value="Upload" id="imgupload1" name="imgupload1" onchange="readURL(this, 'img1')" class="btn btn-primary col-md-7" />
                         <input type="button" id="btnimg1cencal" onclick="removeimg('img1','imgupload1')"  value="Cancel" class="btn btn-danger col-md-4 pull-right" />
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <img id="img2" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
-                        <input type="file" value="Upload" id="imgupload2" onchange="readURL(this,'img2');" class="btn btn-primary col-md-7" />
+                        <input type="file" value="Upload" id="imgupload2" name="imgupload2" onchange="readURL(this,'img2');" class="btn btn-primary col-md-7" />
                         <input type="button" id="btnimg2cencal" onclick="removeimg('img2','imgupload2')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
                     </div>
 
@@ -354,7 +354,7 @@
             </div>*@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="button" id="btncreate" value="Create" class="btn btn-default" />
+                        <input type="submit" id="btncreate" value="Create" class="btn btn-default" />
                     </div>
                 </div>
             </div>
