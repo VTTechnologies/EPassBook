@@ -26,17 +26,22 @@ namespace EPassBook.Helper
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             bool authorize = false;
-            UserViewModel uvm = new UserViewModel();
-            uvm = httpContext.Session["UserDetails"] as UserViewModel;
-            foreach (var role in allowedroles)
+            UserViewModel uvm = new UserViewModel();            
+            if(httpContext.Session["UserDetails"] !=null )
             {
-                var user = context.UserMasters.Where(m => m.UserName == uvm.UserName & m.Password == uvm.Password
-                && m.RoleMaster.RoleName == role && m.IsActive == true);
+                uvm = httpContext.Session["UserDetails"] as UserViewModel;
 
-                if (user.Count() > 0)
+                foreach (var role in allowedroles)
                 {
-                    authorize = true;
+                    var user = context.UserMasters.Where(m => m.UserName == uvm.UserName & m.Password == uvm.Password
+                    && m.UserInRoles.Where(r => r.RoleMaster.RoleName == role).Any() && m.IsActive == true);
+
+                    if (user.Count() > 0)
+                    {
+                        authorize = true;
+                    }
                 }
+                return authorize;
             }
             return authorize;
         }

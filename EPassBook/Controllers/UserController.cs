@@ -65,9 +65,9 @@ namespace EPassBook.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(UserViewModel user)
+        public ActionResult Login([Bind(Include = "UserName,Password")]UserViewModel user)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValidField("UserName")&& ModelState.IsValidField("Password"))
             {
                 var userData = _userService.GetPassword(user.UserName);
                 if(user.RememberMe)

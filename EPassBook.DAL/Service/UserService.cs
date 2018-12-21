@@ -29,7 +29,7 @@ namespace EPassBook.DAL.Service
         }
         public UserMaster GetUserById(int id)
         {
-           UserMaster user = userMasterRepository.GetById(id);
+            UserMaster user = userMasterRepository.GetById(id);
             return user;
         }
 
