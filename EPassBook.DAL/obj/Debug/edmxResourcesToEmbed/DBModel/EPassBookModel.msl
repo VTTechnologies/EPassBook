@@ -255,7 +255,6 @@
         <MappingFragment StoreEntitySet="UserMaster">
           <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="CityId" ColumnName="CityId" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="Address" ColumnName="Address" />

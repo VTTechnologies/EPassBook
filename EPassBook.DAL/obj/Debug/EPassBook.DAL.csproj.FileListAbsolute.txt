@@ -8,17 +8,6 @@ D:\EPassBook\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.SqlServer.xml
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csprojResolveAssemblyReference.cache
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll.config
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.pdb
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.dll
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.SqlServer.dll
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.xml
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.SqlServer.xml
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.CoreCompileInputs.cache
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.CopyComplete
 C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll.config
 C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll
 C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.pdb
@@ -31,3 +20,14 @@ C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj
 C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.CopyComplete
 C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
 C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll.config
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.pdb
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.dll
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.xml
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.CoreCompileInputs.cache
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.CopyComplete
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb

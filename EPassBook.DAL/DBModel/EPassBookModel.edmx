@@ -248,7 +248,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="IsLoggedIn" Type="bit" />
-          <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="CityId" Type="int" />
           <Property Name="CompanyID" Type="int" />
         </EntityType>
@@ -476,18 +475,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserMaster_RoleMaster">
-          <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="1" />
-          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoleMaster">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="UserMaster">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="geotaging_CompanyID_FK">
           <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
           <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetails" Multiplicity="*" />
@@ -698,10 +685,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <End Role="CityMaster" EntitySet="CityMaster" />
             <End Role="UserMaster" EntitySet="UserMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserMaster_RoleMaster" Association="Self.FK_UserMaster_RoleMaster">
-            <End Role="RoleMaster" EntitySet="RoleMaster" />
-            <End Role="UserMaster" EntitySet="UserMaster" />
-          </AssociationSet>
           <AssociationSet Name="geotaging_CompanyID_FK" Association="Self.geotaging_CompanyID_FK">
             <End Role="CompanyMaster" EntitySet="CompanyMaster" />
             <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
@@ -867,10 +850,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <End Role="RoleMaster" EntitySet="RoleMasters" />
             <End Role="StageInRole" EntitySet="StageInRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserMaster_RoleMaster" Association="EPassBookModel.FK_UserMaster_RoleMaster">
-            <End Role="RoleMaster" EntitySet="RoleMasters" />
-            <End Role="UserMaster" EntitySet="UserMasters" />
-          </AssociationSet>
           <AssociationSet Name="UserInRoles_roleid_fk" Association="EPassBookModel.UserInRoles_roleid_fk">
             <End Role="RoleMaster" EntitySet="RoleMasters" />
             <End Role="UserInRole" EntitySet="UserInRoles" />
@@ -883,7 +862,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <End Role="UserMaster" EntitySet="UserMasters" />
             <End Role="UserInRole" EntitySet="UserInRoles" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="sp_GetSurveyDetailsByBenID_Result">
           <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
@@ -1128,7 +1107,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_RoleMaster" FromRole="RoleMaster" ToRole="Comment" />
           <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_RoleMaster" FromRole="RoleMaster" ToRole="InstallmentSigning" />
           <NavigationProperty Name="StageInRoles" Relationship="EPassBookModel.FK_StageInRole_RoleMaster" FromRole="RoleMaster" ToRole="StageInRole" />
-          <NavigationProperty Name="UserMasters" Relationship="EPassBookModel.FK_UserMaster_RoleMaster" FromRole="RoleMaster" ToRole="UserMaster" />
           <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_roleid_fk" FromRole="RoleMaster" ToRole="UserInRole" />
         </EntityType>
         <EntityType Name="StageInRole">
@@ -1163,14 +1141,12 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="IsLoggedIn" Type="Boolean" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="CityId" Type="Int32" />
           <Property Name="CompanyID" Type="Int32" />
           <NavigationProperty Name="CityMaster" Relationship="EPassBookModel.FK_UserMaster_CityMaster" FromRole="UserMaster" ToRole="CityMaster" />
           <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.UserMaster_CompanyID_FK" FromRole="UserMaster" ToRole="CompanyMaster" />
           <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetail" />
           <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="UserMaster" ToRole="InstallmentSigning" />
-          <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.FK_UserMaster_RoleMaster" FromRole="UserMaster" ToRole="RoleMaster" />
           <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_userid_fk" FromRole="UserMaster" ToRole="UserInRole" />
         </EntityType>
         <EntityType Name="WorkflowStage">
@@ -1456,18 +1432,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
               <PropertyRef Name="RoleId" />
             </Principal>
             <Dependent Role="StageInRole">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserMaster_RoleMaster">
-          <End Type="EPassBookModel.RoleMaster" Role="RoleMaster" Multiplicity="1" />
-          <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoleMaster">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="UserMaster">
               <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1768,7 +1732,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
               <MappingFragment StoreEntitySet="UserMaster">
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1806,7 +1769,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
