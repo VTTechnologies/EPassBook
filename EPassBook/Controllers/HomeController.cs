@@ -36,10 +36,11 @@ namespace EPassBook.Controllers
             _installmentDetailService = installmentDetailService;
         }
 
-        [CustomAuthorize(Common.Admin, Common.SiteEngineer)]
+        [CustomAuthorize( Common.Admin, Common.SiteEngineer)]
         public ActionResult Index(int? id)
         {
-
+            var benificiary = _Ibenificiary.GetBenificiaryById(1);
+            var benficiarymodel = _mapper.Map<BenificiaryMaster, BeneficiaryViewModel>(benificiary);
             Session["InstallmentId"] = id;
             string rolename = "";
             if (Session["UserDetails"] != null)
@@ -49,7 +50,7 @@ namespace EPassBook.Controllers
                 rolename = Enum.GetName(typeof(Common.WorkFlowStages), roleId);
             }
             ViewBag.RoleName = rolename;
-            return View();
+            return View(benficiarymodel);
         }
 
         //added by ather
@@ -181,14 +182,14 @@ namespace EPassBook.Controllers
        
 
 
-        public ActionResult _InstallmentDetails()
-        {
-            var benfici = _Ibenificiary.GetBenificiaryById(1);            
-            var benficiarymodel = _mapper.Map<BenificiaryMaster, BeneficiaryViewModel>(benfici);
-            DateTime currentdate = Convert.ToDateTime(benficiarymodel.CreatedDate);            
+        //public ActionResult _InstallmentDetails()
+        //{
+        //    var benfici = _Ibenificiary.GetBenificiaryById(1);            
+        //    var benficiarymodel = _mapper.Map<BenificiaryMaster, BeneficiaryViewModel>(benfici);
+        //    DateTime currentdate = Convert.ToDateTime(benficiarymodel.CreatedDate);            
 
-            return PartialView(benficiarymodel);
-        }
+        //    return PartialView(benficiarymodel);
+        //}
 
         [HttpGet]
         [ChildActionOnly]

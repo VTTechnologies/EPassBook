@@ -15,7 +15,7 @@ namespace EPassBook.DAL.IService
         void Update(UserMaster user);
         void Delete(int id);
         void SaveChanges();
-        UserMaster AuthenticateUser(string userName, string password);
+        bool AuthenticateUser(string userName, string password, string roleName);
         UserMaster GetPassword(string userName);
     }
 }

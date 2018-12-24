@@ -244,6 +244,7 @@
     <Compile Include="Models\InstallmentListView.cs" />
     <Compile Include="Models\InstallmentSigningViewModel.cs" />
     <Compile Include="Models\InstllmentRejectionViewModel.cs" />
+    <Compile Include="Models\RessetPasswordViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\StageinRoleViewModel.cs" />
     <Compile Include="Models\SurveyDetailsModel.cs" />
@@ -372,6 +373,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Home\AddUser.cshtml" />
     <Content Include="Views\WorkFlow\Index.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

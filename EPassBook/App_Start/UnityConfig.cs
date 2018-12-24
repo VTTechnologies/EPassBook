@@ -19,9 +19,20 @@ namespace EPassBook
             var config = new MapperConfiguration(cfg =>
             {
                 //Create all maps here
-                //cfg.CreateMap<UserMaster, UserViewModel>();
-                cfg.CreateMap<UserMaster, UserViewModel>()
-                .ForSourceMember(source => source.CompanyMaster, opt => opt.Ignore());
+
+
+
+                //            Mapper.Map<OrderLine, OrderLineDTO>()
+                //.ForMember(m => m.Order, opt => opt.Ignore());
+
+                //            Mapper.Map<Order, OrderDTO>()
+                //                .AfterMap((src, dest) =>
+                //                {
+                //                    foreach (var i in dest.OrderLines)
+                //                        i.Order = dest;
+                //                });
+
+                //cfg.CreateMap<UserMaster, UserViewModel>().MaxDepth(5);
                 cfg.CreateMap<BenificiaryMaster, BeneficiaryViewModel>();
                 cfg.CreateMap<InstallmentDetail, InstallmentDetailsViewModel>();
                 cfg.CreateMap<InstallmentDetail, AccountDetailsViewModel>();
@@ -30,6 +41,9 @@ namespace EPassBook
                 cfg.CreateMap<sp_GetInstallmentListViewForUsersRoles_Result, InstallmentListView>();
                 cfg.CreateMap<UserViewModel, UserMaster>();
                 cfg.CreateMap<UserInRoleViewModel, UserInRole>();
+
+                cfg.CreateMap<UserMaster, UserViewModel>()
+    .ForSourceMember(source => source.CompanyMaster, opt => opt.Ignore());
 
                 //cfg.CreateMap<MyHappyEntity, MyHappyEntityDto>();
 
