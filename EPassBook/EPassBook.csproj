@@ -257,7 +257,7 @@
     <Compile Include="Models\InstallmentListView.cs" />
     <Compile Include="Models\InstallmentSigningViewModel.cs" />
     <Compile Include="Models\InstllmentRejectionViewModel.cs" />
-    <Compile Include="Models\RessetPasswordViewModel.cs" />
+    <Compile Include="Models\ResetPasswordViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\StageinRoleViewModel.cs" />
     <Compile Include="Models\SurveyDetailsModel.cs" />
