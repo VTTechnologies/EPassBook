@@ -33,12 +33,20 @@ namespace EPassBook.Models
         [Required(ErrorMessage = "Please select Company.")]
         public Nullable<int> CompanyID { get; set; }
         public bool RememberMe { get; set; }
+        public bool IsReset { get; set; }
 
         public virtual CityViewModel CityMaster { get; set; }
         public virtual CompanyViewModel CompanyMaster { get; set; }
         public virtual ICollection<GeoTaggingViewModel> GeoTaggingDetails { get; set; }
-        public virtual ICollection<InstallmentSigningViewModel> InstallmentSignings { get; set; }
-        public virtual RoleViewModel RoleMaster { get; set; }
+        public virtual ICollection<InstallmentSigningViewModel> InstallmentSignings { get; set; }     
         public virtual ICollection<UserInRoleViewModel> UserInRoles { get; set; }
+
+      
+        public Nullable<bool> IsLoggedIn { get; set; }
+       
+
+      
+     
+       
     }
 }

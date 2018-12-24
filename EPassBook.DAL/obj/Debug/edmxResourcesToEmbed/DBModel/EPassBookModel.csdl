@@ -434,6 +434,7 @@
     <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetail" />
     <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="UserMaster" ToRole="InstallmentSigning" />
     <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_userid_fk" FromRole="UserMaster" ToRole="UserInRole" />
+    <Property Name="IsReset" Type="Boolean" />
   </EntityType>
   <EntityType Name="WorkflowStage">
     <Key>
