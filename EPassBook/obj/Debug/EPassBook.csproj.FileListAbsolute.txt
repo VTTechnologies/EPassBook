@@ -58,7 +58,6 @@ D:\EPassBook\EPassBook\EPassBook\bin\Newtonsoft.Json.xml
 D:\EPassBook\EPassBook\EPassBook\bin\System.Net.Http.Formatting.xml
 D:\EPassBook\EPassBook\EPassBook\bin\System.Web.Http.xml
 D:\EPassBook\EPassBook\EPassBook\bin\System.Web.Http.WebHost.xml
-D:\EPassBook\EPassBook\EPassBook\obj\Debug\EPassBook.csprojResolveAssemblyReference.cache
 D:\EPassBook\EPassBook\EPassBook\obj\Debug\EPassBook.dll
 D:\EPassBook\EPassBook\EPassBook\obj\Debug\EPassBook.pdb
 D:\EPassBook\EPassBook\EPassBook\bin\CommonServiceLocator.dll
@@ -271,3 +270,42 @@ D:\Office data\VTTech\EPassBook\EPassBook\obj\Debug\EPassBook.csproj.CoreCompile
 D:\Office data\VTTech\EPassBook\EPassBook\obj\Debug\EPassBook.csproj.CopyComplete
 D:\Office data\VTTech\EPassBook\EPassBook\obj\Debug\EPassBook.dll
 D:\Office data\VTTech\EPassBook\EPassBook\obj\Debug\EPassBook.pdb
+D:\EPassBook\EPassBook\EPassBook\bin\Microsoft.Data.Edm.dll
+D:\EPassBook\EPassBook\EPassBook\bin\Microsoft.Data.OData.dll
+D:\EPassBook\EPassBook\EPassBook\bin\System.Spatial.dll
+D:\EPassBook\EPassBook\EPassBook\bin\System.Web.Http.OData.dll
+D:\EPassBook\EPassBook\EPassBook\bin\EPassBook.DAL.dll.config
+D:\EPassBook\EPassBook\EPassBook\bin\Microsoft.Data.Edm.xml
+D:\EPassBook\EPassBook\EPassBook\bin\Microsoft.Data.OData.xml
+D:\EPassBook\EPassBook\EPassBook\bin\System.Spatial.xml
+D:\EPassBook\EPassBook\EPassBook\bin\System.Web.Http.OData.xml
+D:\EPassBook\EPassBook\EPassBook\bin\de\Microsoft.Data.Edm.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\es\Microsoft.Data.Edm.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\fr\Microsoft.Data.Edm.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\it\Microsoft.Data.Edm.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\ja\Microsoft.Data.Edm.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\ko\Microsoft.Data.Edm.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\ru\Microsoft.Data.Edm.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\zh-Hans\Microsoft.Data.Edm.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\zh-Hant\Microsoft.Data.Edm.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\de\Microsoft.Data.OData.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\es\Microsoft.Data.OData.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\fr\Microsoft.Data.OData.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\it\Microsoft.Data.OData.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\ja\Microsoft.Data.OData.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\ko\Microsoft.Data.OData.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\ru\Microsoft.Data.OData.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\zh-Hans\Microsoft.Data.OData.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\zh-Hant\Microsoft.Data.OData.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\de\System.Spatial.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\es\System.Spatial.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\fr\System.Spatial.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\it\System.Spatial.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\ja\System.Spatial.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\ko\System.Spatial.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\ru\System.Spatial.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\zh-Hans\System.Spatial.resources.dll
+D:\EPassBook\EPassBook\EPassBook\bin\zh-Hant\System.Spatial.resources.dll
+D:\EPassBook\EPassBook\EPassBook\obj\Debug\EPassBook.csprojAssemblyReference.cache
+D:\EPassBook\EPassBook\EPassBook\obj\Debug\EPassBook.csproj.CoreCompileInputs.cache
+D:\EPassBook\EPassBook\EPassBook\obj\Debug\EPassBook.csproj.CopyComplete

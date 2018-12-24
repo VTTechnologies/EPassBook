@@ -1,0 +1,79 @@
+﻿@model EPassBook.Models.BeneficiaryViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<style>
+    .panel-heading {
+        padding-bottom: 0px;
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-top: 10px;
+        border-bottom: 0px solid transparent;
+    }
+</style>
+<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+    @Html.Partial("_InstallmentDetails", Model);
+
+</div>
+<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+
+</div>
+<div class="container">
+    <div class="col-md-12">
+        <div class="panel with-nav-tabs panel-primary">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li id="li_dataeng"><a href="#tabdataEngineer" class="nav_link" data-toggle="tab">Data Entry</a></li>
+                    <li id="li_userreq"><a href="#tabUserRequest" class="nav_link" data-toggle="tab">User Request</a></li>
+                    <li id="li_siteengneer"><a href="#tabSiteEngineer" class="nav_link" data-toggle="tab">Site Engineer</a></li>
+                    <li id="li_projectmanager"><a href="#tabProjectManager" class="nav_link" data-toggle="tab">Project Manager</a></li>
+                    <li id="li_cityengineer"><a href="#tabCityEngineer" class="nav_link" data-toggle="tab">City Engineer</a></li>
+                    <li id="li_accountant"><a href="#tabAccountant" class="nav_link" data-toggle="tab">Accountant</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    @*<div class="tab-pane fade in active" id="tabdataEngineer">@Html.Action("Beneficiary", "Home")</div>*@
+                    <div class="tab-pane fade" id="tabdataEngineer">@Html.Action("DataEntry", "WorkFlow")</div>
+                    <div class="tab-pane fade" id="tabSiteEngineer">@Html.Action("SiteEngineer", "WorkFlow")</div> 
+                    <div class="tab-pane fade" id="tabUserRequest">Hi This is User Request</div>
+                    <div class="tab-pane fade" id="tabProjectManager">Project Manager</div>
+                    <div class="tab-pane fade" id="tabCityEngineer">City Engineer</div>
+                    <div class="tab-pane fade" id="tabAccountant">@Html.Action("Accountant", "WorkFlow")</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12">
+        @Html.ActionLink("Go To HomePage", "Index", "WorkFlow", htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {        
+
+        var text = '@ViewBag.RoleName'; //Accessing the Json Object from ViewBag
+        if (text == 'SiteEngineer') {
+            //$('#li_siteengneer').addClass("active");
+            $('#li_siteengneer').addClass("active");
+            $('#tabSiteEngineer').addClass("active in");
+
+            //$('#sitanchor').trigger('click');
+            //$('#sitanchor').click(function () {
+            //    alert('test this');
+            //});
+
+
+            //$('#tabSiteEngineer').load("@Url.Action("_CityHead", "Home")");
+        }
+
+
+
+        //$('.nav nav-tabs a').trigger('click');
+
+    });
+</script>
+
