@@ -156,7 +156,7 @@ namespace EPassBook.Controllers
                         _userService.Update(user);
                         _userService.SaveChanges();
                         Session["UserDetails"] = _userService.GetUserById(userData.UserId);
-                        return RedirectToAction("Index", "WorkFlow");
+                        return RedirectToAction("Index","WorkFlow")
                     }
                 }
                 else

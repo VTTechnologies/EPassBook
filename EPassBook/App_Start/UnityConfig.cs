@@ -39,12 +39,13 @@ namespace EPassBook
                 cfg.CreateMap<BenificiaryMaster, AccountDetailsViewModel>();
                 cfg.CreateMap<WorkflowStage, WorkFlowStagesViewModel>();
                 cfg.CreateMap<sp_GetInstallmentListViewForUsersRoles_Result, InstallmentListView>();
-                cfg.CreateMap<UserViewModel, UserMaster>();
+                //cfg.CreateMap<UserViewModel, UserMaster>();
                 cfg.CreateMap<UserInRoleViewModel, UserInRole>();
 
                 cfg.CreateMap<UserMaster, UserViewModel>()
     .ForSourceMember(source => source.CompanyMaster, opt => opt.Ignore());
-
+                cfg.CreateMap<UserViewModel, UserMaster > ()
+    .ForSourceMember(source => source.CompanyMaster, opt => opt.Ignore());
                 //cfg.CreateMap<MyHappyEntity, MyHappyEntityDto>();
 
                 //...
