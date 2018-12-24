@@ -20,29 +20,21 @@ namespace EPassBook.Models
 
         [Required(ErrorMessage = "Please enter the Password.")]
         public string Password { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        //public Nullable<bool> IsLoggedIn { get; set; }
-        public int RoleId { get; set; }
 
-        public List<RoleViewModel> Roles { get; set; }
-
-      
+        public bool RememberMe { get; set; }
         public string Email { get; set; }
         public Nullable<decimal> MobileNo { get; set; }
         public string Address { get; set; }
-       
-       
-       
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> IsLoggedIn { get; set; }
         public Nullable<int> CityId { get; set; }
         public Nullable<int> CompanyID { get; set; }
-
-        public bool RememberMe { get; set; }
 
         public virtual CityViewModel CityMaster { get; set; }
         public virtual CompanyViewModel CompanyMaster { get; set; }
         public virtual ICollection<GeoTaggingViewModel> GeoTaggingDetails { get; set; }
         public virtual ICollection<InstallmentSigningViewModel> InstallmentSignings { get; set; }
-        public virtual RoleViewModel RoleMaster { get; set; }
         public virtual ICollection<UserInRoleViewModel> UserInRoles { get; set; }
+
     }
 }

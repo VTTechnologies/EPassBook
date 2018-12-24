@@ -243,7 +243,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="Address" Type="nvarchar(max)" />
     <Property Name="IsActive" Type="bit" />
     <Property Name="IsLoggedIn" Type="bit" />
-    <Property Name="RoleId" Type="int" Nullable="false" />
     <Property Name="CityId" Type="int" />
     <Property Name="CompanyID" Type="int" />
   </EntityType>
@@ -471,18 +470,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserMaster_RoleMaster">
-    <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="1" />
-    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RoleMaster">
-        <PropertyRef Name="RoleId" />
-      </Principal>
-      <Dependent Role="UserMaster">
-        <PropertyRef Name="RoleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="geotaging_CompanyID_FK">
     <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
     <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetails" Multiplicity="*" />
@@ -691,10 +678,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     </AssociationSet>
     <AssociationSet Name="FK_UserMaster_CityMaster" Association="Self.FK_UserMaster_CityMaster">
       <End Role="CityMaster" EntitySet="CityMaster" />
-      <End Role="UserMaster" EntitySet="UserMaster" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserMaster_RoleMaster" Association="Self.FK_UserMaster_RoleMaster">
-      <End Role="RoleMaster" EntitySet="RoleMaster" />
       <End Role="UserMaster" EntitySet="UserMaster" />
     </AssociationSet>
     <AssociationSet Name="geotaging_CompanyID_FK" Association="Self.geotaging_CompanyID_FK">

@@ -15,28 +15,28 @@ namespace EPassBook.Helper
     public class CustomAuthorizeAttribute : AuthorizeAttribute
     {
         private readonly string[] allowedroles;
-        EPassBookEntities context = new EPassBookEntities();
-
         IUserService _userService;
 
         public CustomAuthorizeAttribute(params string[] roles)
         {
+            _userService = DependencyResolver.Current.GetService<IUserService>();
             this.allowedroles = roles;
         }
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             bool authorize = false;
-            UserViewModel uvm = new UserViewModel();
-            uvm = httpContext.Session["UserDetails"] as UserViewModel;
+            UserViewModel userDetail = new UserViewModel();
+            userDetail = httpContext.Session["UserDetails"] as UserViewModel;
             foreach (var role in allowedroles)
             {
-                var user = context.UserMasters.Where(m => m.UserName == uvm.UserName & m.Password == uvm.Password
-                && m.RoleMaster.RoleName == role && m.IsActive == true);
-
-                if (user.Count() > 0)
+                if (userDetail != null)
                 {
-                    authorize = true;
+                    if (_userService.AuthenticateUser(userDetail.UserName, userDetail.Password, role))
+                    {
+                        authorize = true;
+                    }
                 }
+
             }
             return authorize;
         }

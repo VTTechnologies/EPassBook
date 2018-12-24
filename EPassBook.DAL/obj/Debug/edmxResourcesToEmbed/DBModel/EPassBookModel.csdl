@@ -136,10 +136,6 @@
       <End Role="RoleMaster" EntitySet="RoleMasters" />
       <End Role="StageInRole" EntitySet="StageInRoles" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserMaster_RoleMaster" Association="EPassBookModel.FK_UserMaster_RoleMaster">
-      <End Role="RoleMaster" EntitySet="RoleMasters" />
-      <End Role="UserMaster" EntitySet="UserMasters" />
-    </AssociationSet>
     <AssociationSet Name="UserInRoles_roleid_fk" Association="EPassBookModel.UserInRoles_roleid_fk">
       <End Role="RoleMaster" EntitySet="RoleMasters" />
       <End Role="UserInRole" EntitySet="UserInRoles" />
@@ -397,7 +393,6 @@
     <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_RoleMaster" FromRole="RoleMaster" ToRole="Comment" />
     <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_RoleMaster" FromRole="RoleMaster" ToRole="InstallmentSigning" />
     <NavigationProperty Name="StageInRoles" Relationship="EPassBookModel.FK_StageInRole_RoleMaster" FromRole="RoleMaster" ToRole="StageInRole" />
-    <NavigationProperty Name="UserMasters" Relationship="EPassBookModel.FK_UserMaster_RoleMaster" FromRole="RoleMaster" ToRole="UserMaster" />
     <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_roleid_fk" FromRole="RoleMaster" ToRole="UserInRole" />
   </EntityType>
   <EntityType Name="StageInRole">
@@ -432,14 +427,12 @@
     <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" />
     <Property Name="IsLoggedIn" Type="Boolean" />
-    <Property Name="RoleId" Type="Int32" Nullable="false" />
     <Property Name="CityId" Type="Int32" />
     <Property Name="CompanyID" Type="Int32" />
     <NavigationProperty Name="CityMaster" Relationship="EPassBookModel.FK_UserMaster_CityMaster" FromRole="UserMaster" ToRole="CityMaster" />
     <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.UserMaster_CompanyID_FK" FromRole="UserMaster" ToRole="CompanyMaster" />
     <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetail" />
     <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="UserMaster" ToRole="InstallmentSigning" />
-    <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.FK_UserMaster_RoleMaster" FromRole="UserMaster" ToRole="RoleMaster" />
     <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_userid_fk" FromRole="UserMaster" ToRole="UserInRole" />
   </EntityType>
   <EntityType Name="WorkflowStage">
@@ -725,18 +718,6 @@
         <PropertyRef Name="RoleId" />
       </Principal>
       <Dependent Role="StageInRole">
-        <PropertyRef Name="RoleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserMaster_RoleMaster">
-    <End Type="EPassBookModel.RoleMaster" Role="RoleMaster" Multiplicity="1" />
-    <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RoleMaster">
-        <PropertyRef Name="RoleId" />
-      </Principal>
-      <Dependent Role="UserMaster">
         <PropertyRef Name="RoleId" />
       </Dependent>
     </ReferentialConstraint>
