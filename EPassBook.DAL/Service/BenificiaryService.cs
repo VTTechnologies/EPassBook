@@ -4,47 +4,46 @@ using EPassBook.DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace EPassBook.DAL.Service
 {
-    public class BenificiaryService : IBenificiary
+    public class BenificiaryService : IBenificiaryService
     {
         private readonly EPassBookEntities _dbContext;
         private UnitOfWork unitOfWork;
-        private GenericRepository<BenificiaryMaster> BenificiaryMasterRepository;
+        private GenericRepository<BenificiaryMaster> benificiaryMasterRepository;
 
         public BenificiaryService()
         {
             _dbContext = new EPassBookEntities();
             unitOfWork = new UnitOfWork(_dbContext);
-            BenificiaryMasterRepository = unitOfWork.GenericRepository<BenificiaryMaster>();
+            benificiaryMasterRepository = unitOfWork.GenericRepository<BenificiaryMaster>();
         }
-
-        public void Delete(int id)
+        public IEnumerable<BenificiaryMaster> Get(Expression<Func<BenificiaryMaster, bool>> filter = null,
+          Func<IQueryable<BenificiaryMaster>, IOrderedQueryable<BenificiaryMaster>> orderBy = null,
+          string includeProperties = "")
         {
-            throw new NotImplementedException();
+            IEnumerable<BenificiaryMaster> benificiaries = benificiaryMasterRepository.Get(filter, orderBy, includeProperties).ToList();
+            return benificiaries;
         }
 
         public IEnumerable<BenificiaryMaster> GetAllBenificiaries()
         {
-            IEnumerable<BenificiaryMaster> benficimaster = BenificiaryMasterRepository.GetAll().ToList();
-            return benficimaster;
+            IEnumerable<BenificiaryMaster> benificiaries = benificiaryMasterRepository.GetAll().ToList();
+            return benificiaries;
         }
 
         public BenificiaryMaster GetBenificiaryById(int id)
         {
-            BenificiaryMaster benficiaries = BenificiaryMasterRepository.GetById(id);
-            return benficiaries;
+            BenificiaryMaster benficiary = benificiaryMasterRepository.GetById(id);
+            return benficiary;
         }
 
         public void Add(BenificiaryMaster benificiary)
         {
-            BenificiaryMasterRepository.Add(benificiary);
-        }
-        //public void Add(InstallmentDetail installmentDetail)
-        //{
-        //    InstallmentDetailRepository.Add(installmentDetail);
-        //}
+            benificiaryMasterRepository.Add(benificiary);
+        }       
 
         public void SaveChanges()
         {
@@ -53,7 +52,17 @@ namespace EPassBook.DAL.Service
 
         public void Update(BenificiaryMaster benificiary)
         {
-            throw new NotImplementedException();
+            benificiaryMasterRepository.Update(benificiary);
+        }
+
+        public void Delete(int id)
+        {
+            benificiaryMasterRepository.Delete(id);
+        }
+
+        public BenificiaryMaster AuthenticateBeneficiary(int userName, string password)
+        {
+            return benificiaryMasterRepository.Get(w => w.AdharNo == userName && w.Password == password , null, string.Empty).FirstOrDefault();
         }
     }
 }

@@ -4,6 +4,7 @@ using EPassBook.DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,35 +14,43 @@ namespace EPassBook.DAL.Service
     {
         private readonly EPassBookEntities _dbContext;
         private UnitOfWork unitOfWork;
-        private GenericRepository<CompanyMaster> CompanyMasterRepository;
+        private GenericRepository<CompanyMaster> companyMasterRepository;
 
         public CompanyMasterService()
         {
             _dbContext = new EPassBookEntities();
             unitOfWork = new UnitOfWork(_dbContext);
-            CompanyMasterRepository = unitOfWork.GenericRepository<CompanyMaster>();
+            companyMasterRepository = unitOfWork.GenericRepository<CompanyMaster>();
+        }
+
+        public IEnumerable<CompanyMaster> Get(Expression<Func<CompanyMaster, bool>> filter = null,
+         Func<IQueryable<CompanyMaster>, IOrderedQueryable<CompanyMaster>> orderBy = null,
+         string includeProperties = "")
+        {
+            IEnumerable<CompanyMaster> compamies = companyMasterRepository.Get(filter, orderBy, includeProperties).ToList();
+            return compamies;
         }
 
         public void Delete(int id)
         {
-            CompanyMasterRepository.Delete(id);
+            companyMasterRepository.Delete(id);
         }
 
         public IEnumerable<CompanyMaster> GetAllCompanies()
         {
-            IEnumerable<CompanyMaster> Allcompany = CompanyMasterRepository.GetAll().ToList();
-            return Allcompany;
+            IEnumerable<CompanyMaster> compamies = companyMasterRepository.GetAll().ToList();
+            return compamies;
         }
 
         public CompanyMaster GetCompanyById(int id)
         {
-            CompanyMaster company = CompanyMasterRepository.GetById(id);
+            CompanyMaster company = companyMasterRepository.GetById(id);
             return company;
         }
 
         public void Add(CompanyMaster company)
         {
-            CompanyMasterRepository.Add(company);
+            companyMasterRepository.Add(company);
         }
 
         public void SaveChanges()
@@ -51,7 +60,7 @@ namespace EPassBook.DAL.Service
 
         public void Update(CompanyMaster company)
         {
-            CompanyMasterRepository.Update(company);
+            companyMasterRepository.Update(company);
         }
     }
 }

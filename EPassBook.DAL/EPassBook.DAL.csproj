@@ -124,7 +124,7 @@
     <Compile Include="IService\ICityService.cs" />
     <Compile Include="IService\IWorkFlowStagesService.cs" />
     <Compile Include="IService\IInstallmentDetailService.cs" />
-    <Compile Include="IService\IBenificiary.cs" />
+    <Compile Include="IService\IBenificiaryService.cs" />
     <Compile Include="IService\ICommentService.cs" />
     <Compile Include="IService\IUserService.cs" />
     <Compile Include="Repository\IGenericReporsitory.cs" />

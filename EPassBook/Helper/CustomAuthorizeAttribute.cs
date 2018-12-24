@@ -31,7 +31,7 @@ namespace EPassBook.Helper
             {
                 if (userDetail != null)
                 {
-                    if (_userService.AuthenticateUser(userDetail.UserName, userDetail.Password, role))
+                    if (_userService.Get(w => w.UserName == userDetail.UserName && w.Password == userDetail.Password && w.UserInRoles.Where(r => r.RoleMaster.RoleName == role).Any() && w.IsActive == true, null, string.Empty).Any())
                     {
                         authorize = true;
                     }

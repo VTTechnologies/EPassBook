@@ -4,6 +4,7 @@ using EPassBook.DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,35 +14,43 @@ namespace EPassBook.DAL.Service
     {
         private readonly EPassBookEntities _dbContext;
         private UnitOfWork unitOfWork;
-        private GenericRepository<RoleMaster> RoleMasterRepository;
+        private GenericRepository<RoleMaster> roleMasterRepository;
 
         public RoleMasterService()
         {
             _dbContext = new EPassBookEntities();
             unitOfWork = new UnitOfWork(_dbContext);
-            RoleMasterRepository = unitOfWork.GenericRepository<RoleMaster>();
+            roleMasterRepository = unitOfWork.GenericRepository<RoleMaster>();
+        }
+
+        public IEnumerable<RoleMaster> Get(Expression<Func<RoleMaster, bool>> filter = null,
+       Func<IQueryable<RoleMaster>, IOrderedQueryable<RoleMaster>> orderBy = null,
+       string includeProperties = "")
+        {
+            IEnumerable<RoleMaster> roles = roleMasterRepository.Get(filter, orderBy, includeProperties).ToList();
+            return roles;
         }
 
         public void Delete(int id)
         {
-            RoleMasterRepository.Delete(id);
+            roleMasterRepository.Delete(id);
         }
 
         public IEnumerable<RoleMaster> GetAllRoles()
         {
-            IEnumerable<RoleMaster> Allroles = RoleMasterRepository.GetAll().ToList();
+            IEnumerable<RoleMaster> Allroles = roleMasterRepository.GetAll().ToList();
             return Allroles;
         }
 
         public RoleMaster GetRoleById(int id)
         {
-            RoleMaster role = RoleMasterRepository.GetById(id);
+            RoleMaster role = roleMasterRepository.GetById(id);
             return role;
         }
 
         public void Add(RoleMaster role)
         {
-            RoleMasterRepository.Add(role);
+            roleMasterRepository.Add(role);
         }
 
         public void SaveChanges()
@@ -51,7 +60,7 @@ namespace EPassBook.DAL.Service
 
         public void Update(RoleMaster role)
         {
-            RoleMasterRepository.Update(role);
+            roleMasterRepository.Update(role);
         }
         //public IEnumerable<RoleMaster> GetAllActiveRoles()
         //{
