@@ -367,7 +367,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\WorkFlow\Workflow.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\Shared\_dashboardlayout.cshtml" />
@@ -377,12 +377,12 @@
     <Content Include="Views\Error\CustomErrors.cshtml" />
     <Content Include="Views\User\Test.cshtml" />
     <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
-    <Content Include="Views\User\SurveyDetails.cshtml" />
-    <Content Include="Views\Home\_CityHead.cshtml" />
-    <Content Include="Views\Home\_InstallmentDetails.cshtml" />
-    <Content Include="Views\Home\Beneficiary.cshtml" />
+    <Content Include="Views\WorkFlow\SurveyDetails.cshtml" />
+    <Content Include="Views\Shared\_SiteEngineer.cshtml" />
+    <Content Include="Views\Shared\_InstallmentDetails.cshtml" />
+    <Content Include="Views\Shared\_DataEntry.cshtml" />
     <Content Include="Views\Home\Website.cshtml" />
-    <Content Include="Views\WorkFlow\CreateAccountant.cshtml" />
+    <Content Include="Views\Shared\_Accountant.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Home\AddUser.cshtml" />
     <Content Include="Views\WorkFlow\Index.cshtml" />

@@ -15,7 +15,6 @@
     }
 </style>
 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-    @*@Html.Action("_InstallmentDetails", "Home")*@
     @Html.Partial("_InstallmentDetails", Model);
 
 </div>
@@ -27,7 +26,6 @@
         <div class="panel with-nav-tabs panel-primary">
             <div class="panel-heading">
                 <ul class="nav nav-tabs">
-                    @*<li class="active"><a href="#tabdataEngineer" data-toggle="tab">Data Entry</a></li>*@
                     <li id="li_dataeng"><a href="#tabdataEngineer" class="nav_link" data-toggle="tab">Data Entry</a></li>
                     <li id="li_userreq"><a href="#tabUserRequest" class="nav_link" data-toggle="tab">User Request</a></li>
                     <li id="li_siteengneer"><a href="#tabSiteEngineer" class="nav_link" data-toggle="tab">Site Engineer</a></li>
@@ -39,12 +37,12 @@
             <div class="panel-body">
                 <div class="tab-content">
                     @*<div class="tab-pane fade in active" id="tabdataEngineer">@Html.Action("Beneficiary", "Home")</div>*@
-                    <div class="tab-pane fade" id="tabdataEngineer"></div>@*@Html.Action("Beneficiary", "Home")*@
-                    <div class="tab-pane fade" id="tabSiteEngineer"></div> @*@Html.Action("_CityHead", "Home")*@
+                    <div class="tab-pane fade" id="tabdataEngineer">@Html.Action("DataEntry", "WorkFlow")</div>
+                    <div class="tab-pane fade" id="tabSiteEngineer">@Html.Action("SiteEngineer", "WorkFlow")</div> 
                     <div class="tab-pane fade" id="tabUserRequest">Hi This is User Request</div>
                     <div class="tab-pane fade" id="tabProjectManager">Project Manager</div>
                     <div class="tab-pane fade" id="tabCityEngineer">City Engineer</div>
-                    <div class="tab-pane fade" id="tabAccountant">Accountant</div>
+                    <div class="tab-pane fade" id="tabAccountant">@Html.Action("Accountant", "WorkFlow")</div>
                 </div>
             </div>
         </div>
@@ -54,44 +52,8 @@
     </div>
 </div>
 
-
-@*<div id="BeneficiaryResult" class="container col-sm-offset-0">
-
-
-    </div>
-
-    <div id="Usersubmits" class="container col-sm-offset-0">
-    </div>
-
-    <div id="InstallmentDetails" class="container col-sm-offset-0">
-
-    </div>*@
-
-
 <script type="text/javascript">
-    $(document).ready(function () {
-
-        $(".nav_link").click(function () {
-            //Custom attribute data_id is used to store the ID
-            //Get the ID
-            $.ajax({
-                url: '@Url.Action("_CityHead", "Home")',
-                type: "post",
-                dataType: "html",
-                contentType: 'application/json; charset=utf-8',
-              // data: JSON.stringify({ id: id }), //add parameter
-                success: function (data) {
-                    //success
-                    $('#tabdataEngineer').html(data); //populate the tab content.
-                },
-                error: function () {
-                    alert("error");
-                }
-            });
-        });
-
-
-
+    $(document).ready(function () {        
 
         var text = '@ViewBag.RoleName'; //Accessing the Json Object from ViewBag
         if (text == 'SiteEngineer') {

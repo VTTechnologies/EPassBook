@@ -68,7 +68,7 @@
                 @Html.DisplayFor(modelItem => item.CompanyID)
             </td>
             <td>
-                @Html.ActionLink("View Benificiary", "Index", "Home", new { id = item.InstallmentId }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("View Benificiary", "Workflow", "WorkFlow", new { id = item.InstallmentId }, htmlAttributes: new { @class = "btn btn-primary" })
                 
                 @*<input type="submit" value="View Benificiary" class="btn btn-success" />*@
             </td>

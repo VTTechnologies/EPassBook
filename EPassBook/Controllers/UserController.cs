@@ -17,12 +17,10 @@ namespace EPassBook.Controllers
     public class UserController : Controller
     {
         private readonly IMapper _mapper;
-        IUserService _userService;
-        ICommentService _icommentService;
+        IUserService _userService;        
 
-        public UserController(IUserService userService, IMapper mapper,ICommentService commentService)
+        public UserController(IUserService userService, IMapper mapper)
         {
-            _icommentService = commentService;
             _userService = userService;
             _mapper = mapper;
         }
@@ -112,24 +110,8 @@ namespace EPassBook.Controllers
                 return View(user);
             }
         }
-
         //ather code start frm here
-        [HttpGet]
-        public ActionResult SurveyDetails()
-        {
-            try
-            {
-                IEnumerable<sp_GetSurveyDetailsByBenID_Result> commentlist = _icommentService.GetSurveyDetailsByBenificiaryID(1);
-                
-                var mappedCommentList = _mapper.Map<IEnumerable<sp_GetSurveyDetailsByBenID_Result>, IEnumerable<SurveyDetailsModel>>(commentlist);
-                
-                return View(mappedCommentList);
-            }
-            catch (Exception ex)
-            {
-                return View();
-            }
-        }
+        
         [HttpGet]
         public ActionResult ResetPassword()
         {
