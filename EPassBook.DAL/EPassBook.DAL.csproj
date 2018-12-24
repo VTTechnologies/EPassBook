@@ -120,12 +120,18 @@
     <Compile Include="DBModel\WorkflowStage.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IService\IRoleMasterService .cs" />
+    <Compile Include="IService\ICityService.cs" />
     <Compile Include="IService\IWorkFlowStagesService.cs" />
     <Compile Include="IService\IInstallmentDetailService.cs" />
     <Compile Include="IService\IBenificiary.cs" />
     <Compile Include="IService\ICommentService.cs" />
     <Compile Include="IService\IUserService.cs" />
     <Compile Include="Repository\IGenericReporsitory.cs" />
+    <Compile Include="Service\CompanyMasterService.cs" />
+    <Compile Include="IService\ICompanyMasterService.cs" />
+    <Compile Include="Service\RoleMasterService.cs" />
+    <Compile Include="Service\CityMasterService.cs" />
     <Compile Include="Service\WorkFlowStagesService.cs" />
     <Compile Include="Service\InstallmentDetailService.cs" />
     <Compile Include="Service\BenificiaryService.cs" />

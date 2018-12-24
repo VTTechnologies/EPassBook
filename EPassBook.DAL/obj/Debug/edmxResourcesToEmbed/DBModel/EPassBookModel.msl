@@ -253,6 +253,7 @@
     <EntitySetMapping Name="UserMasters">
       <EntityTypeMapping TypeName="EPassBookModel.UserMaster">
         <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="IsReset" ColumnName="IsReset" />
           <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="CityId" ColumnName="CityId" />
           <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />

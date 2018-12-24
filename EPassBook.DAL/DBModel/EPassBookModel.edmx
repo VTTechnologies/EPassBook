@@ -250,6 +250,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="IsLoggedIn" Type="bit" />
           <Property Name="CityId" Type="int" />
           <Property Name="CompanyID" Type="int" />
+          <Property Name="IsReset" Type="bit" />
         </EntityType>
         <EntityType Name="WorkflowStages">
           <Key>
@@ -1148,6 +1149,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetail" />
           <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="UserMaster" ToRole="InstallmentSigning" />
           <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_userid_fk" FromRole="UserMaster" ToRole="UserInRole" />
+          <Property Name="IsReset" Type="Boolean" />
         </EntityType>
         <EntityType Name="WorkflowStage">
           <Key>
@@ -1730,6 +1732,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <EntitySetMapping Name="UserMasters">
             <EntityTypeMapping TypeName="EPassBookModel.UserMaster">
               <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="IsReset" ColumnName="IsReset" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
