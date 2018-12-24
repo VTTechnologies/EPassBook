@@ -7,8 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Http.Filters;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Security;
+using System.Web.Mvc.Filters;
 
 namespace EPassBook.Helper
 {
@@ -17,6 +20,11 @@ namespace EPassBook.Helper
         private readonly string[] allowedroles;
         IUserService _userService;
 
+        //public void OnAuthentication(AuthenticationContext filterContext)
+        //{
+        //    bool _auth = (filterContext.ActionDescriptor.GetCustomAttributes(
+        //        typeof(OverrideAuthenticationAttribute), true).Length == 0);
+        //}
         public CustomAuthorizeAttribute(params string[] roles)
         {
             _userService = DependencyResolver.Current.GetService<IUserService>();
