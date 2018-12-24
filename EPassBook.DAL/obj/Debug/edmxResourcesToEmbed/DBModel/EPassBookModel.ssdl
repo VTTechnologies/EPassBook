@@ -245,6 +245,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="IsLoggedIn" Type="bit" />
     <Property Name="CityId" Type="int" />
     <Property Name="CompanyID" Type="int" />
+    <Property Name="IsReset" Type="bit" />
   </EntityType>
   <EntityType Name="WorkflowStages">
     <Key>

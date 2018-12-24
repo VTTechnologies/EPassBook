@@ -29,7 +29,7 @@ namespace EPassBook.Controllers
         // GET: User
         public ActionResult Index()
         {
-            var users = _userService.GetAllUsers();           
+            var users = _userService.GetAllUsers();
             var userModel = _mapper.Map< IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
 
             return View(userModel);
@@ -79,6 +79,7 @@ namespace EPassBook.Controllers
                     Response.Cookies.Add(userCookie);
                 }
 
+
                 user = _mapper.Map<UserMaster, UserViewModel>(userData);
                 Session["UserDetails"] = user;
                 //var userData = _userService.AuthenticateUser(user.UserName, user.Password);
@@ -118,6 +119,40 @@ namespace EPassBook.Controllers
                 var mappedCommentList = _mapper.Map<IEnumerable<sp_GetSurveyDetailsByBenID_Result>, IEnumerable<SurveyDetailsModel>>(commentlist);
                 
                 return View(mappedCommentList);
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+        [HttpGet]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ResetPassword(ResetPasswordViewModel resetPassVM)
+        {
+            try
+            {
+                if (Session["UserDetails"] !=null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var userData = Session["UserDetails"] as UserViewModel;
+                        userData.Password = resetPassVM.newPassword;
+                        userData.IsReset = true;
+                        var userMaster = _mapper.Map<UserViewModel, UserMaster>(userData);
+                        _userService.Update(userMaster);
+
+                        return View();
+                    }
+                }
+                else
+                {
+                    RedirectToAction("Login");
+                }
+                return View();
             }
             catch (Exception ex)
             {
