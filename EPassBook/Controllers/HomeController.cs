@@ -191,8 +191,10 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
+        [ChildActionOnly]
         public ActionResult _CityHead()
         {
+           
             int installmentid = 0;
             if (Session["InstallmentId"] != null)
             {
@@ -206,8 +208,10 @@ namespace EPassBook.Controllers
         }
 
         [HttpPost]
+        
         public ActionResult _CityHead(InstallmentDetailsViewModel installmentDetailViewModel)
         {
+            HttpPostedFileBase hasbandphoto = Request.Files["imguploadsiteeng"];
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
 
             if (Session["UserDetails"] != null)
@@ -223,7 +227,8 @@ namespace EPassBook.Controllers
                 installment.StageID = (int)Common.WorkFlowStages.ProjectManager;
                 installment.InstallmentNo = installmentDetailViewModel.InstallmentNo;
                 installment.ModifiedDate = DateTime.Now;
-
+                
+                // Insert reocrd in comment table 
                 var comments = new Comment();
                 comments.Comments = installmentDetailViewModel._Comments;
                 comments.CreatedBy = user.UserName;
@@ -231,12 +236,37 @@ namespace EPassBook.Controllers
                 comments.CreatedDate = DateTime.Now;
                 comments.CompanyID = user.CompanyID;
 
-                installment.Comments.Add(comments);
+                // Insert reocrd in GeoTaggingDetail table 
+                var geotaging = new GeoTaggingDetail();
+                geotaging.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                geotaging.CompanyID = user.CompanyID;
+                geotaging.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
+                geotaging.UserId = user.UserId;
+                geotaging.CreatedBy = user.UserName;
+                geotaging.CreatedDate = DateTime.Now;
+                geotaging.Photo = pm.ConvertToBytes(hasbandphoto);
 
+                // Insert reocrd in GeoTaggingDetail table 
+                var signing = new InstallmentSigning();
+                signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                signing.UserId = user.UserId;
+                signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                signing.Sign = true;
+                signing.CreatedDate = DateTime.Now;
+                signing.CompanyID = user.CompanyID;
+
+                // Applying changes to database tables
+                installment.Comments.Add(comments);
+                installment.GeoTaggingDetails.Add(geotaging);
+                installment.InstallmentSignings.Add(signing);
                 _installmentDetailService.Update(installment);
+
+
                 _installmentDetailService.SaveChanges();
 
                 Session["InstallmentId"] = null;
+                ViewBag.Message = "sussess message";
+                //return RedirectToAction("Index", "WorkFlow");
             }
             return View();
         }

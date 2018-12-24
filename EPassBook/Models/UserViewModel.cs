@@ -35,7 +35,7 @@ namespace EPassBook.Models
         public bool RememberMe { get; set; }
 
         public virtual CityViewModel CityMaster { get; set; }
-        public virtual CompanyViewModel CompanyMaster { get; set; }
+        //public virtual CompanyViewModel CompanyMaster { get; set; }
         public virtual ICollection<GeoTaggingViewModel> GeoTaggingDetails { get; set; }
         public virtual ICollection<InstallmentSigningViewModel> InstallmentSignings { get; set; }
         public virtual RoleViewModel RoleMaster { get; set; }

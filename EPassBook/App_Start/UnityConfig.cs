@@ -19,7 +19,9 @@ namespace EPassBook
             var config = new MapperConfiguration(cfg =>
             {
                 //Create all maps here
-                cfg.CreateMap<UserMaster, UserViewModel>();
+                //cfg.CreateMap<UserMaster, UserViewModel>();
+                cfg.CreateMap<UserMaster, UserViewModel>()
+                .ForSourceMember(source => source.CompanyMaster, opt => opt.Ignore());
                 cfg.CreateMap<BenificiaryMaster, BeneficiaryViewModel>();
                 cfg.CreateMap<InstallmentDetail, InstallmentDetailsViewModel>();
                 cfg.CreateMap<InstallmentDetail, AccountDetailsViewModel>();
