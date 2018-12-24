@@ -13,6 +13,7 @@ using System.Collections.Generic;
 namespace EPassBook.Controllers
 {
     [ElmahError]
+    [AuthorizeAttribute]
     public class HomeController : Controller
     {
         private readonly IMapper _mapper;
