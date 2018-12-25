@@ -50,11 +50,11 @@ namespace EPassBook.Controllers
                 PlanYear=s.PlanYear,
                 StageID=s.StageID
             }).ToList();  //_mapper.Map<IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result>, IEnumerable<InstallmentListView>>(installmentListView);
-            return View();
+            return View(resultlist);
         }
 
 
-        [CustomAuthorize(Common.Admin, Common.SiteEngineer)]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.ProjectEngineer, Common.Accountant)]
         public ActionResult Workflow(int? id)
         {
             var benificiary = _benificiaryService.GetBenificiaryById(1);
@@ -309,6 +309,21 @@ namespace EPassBook.Controllers
             _benificiaryService.SaveChanges();
             return 1;
 
+        }
+
+        [HttpGet]
+        public ActionResult ProjectEngineer()
+        {
+            int installmentid = 0;
+            if (Session["InstallmentId"] != null)
+            {
+                installmentid = Convert.ToInt32(Session["InstallmentId"]);
+            }
+            InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            installmentviewmodel.Comments = null;
+            return PartialView("_ProjectEngineer", installmentviewmodel);
         }
     }
 }

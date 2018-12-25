@@ -748,9 +748,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <Parameter Name="installmentId" Mode="In" Type="Int32" />
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
-          <Parameter Name="stageid" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="BenificiaryMasters" EntityType="EPassBookModel.BenificiaryMaster" />
           <EntitySet Name="CityMasters" EntityType="EPassBookModel.CityMaster" />
           <EntitySet Name="Comments" EntityType="EPassBookModel.Comment" />
@@ -863,6 +860,9 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <End Role="UserMaster" EntitySet="UserMasters" />
             <End Role="UserInRole" EntitySet="UserInRoles" />
           </AssociationSet>
+          <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
+            <Parameter Name="stageid" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_GetSurveyDetailsByBenID_Result">
           <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
@@ -872,18 +872,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Type="String" Name="Physical_Progress" Nullable="false" MaxLength="8" />
           <Property Type="String" Name="Comments" Nullable="true" />
           <Property Type="Boolean" Name="Sign" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
-          <Property Type="Int32" Name="InstallmentId" Nullable="false" />
-          <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
-          <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
-          <Property Type="Int64" Name="MobileNo" Nullable="true" />
-          <Property Type="String" Name="CreatedDate" Nullable="true" MaxLength="20" />
-          <Property Type="Int32" Name="PlanYear" Nullable="true" />
-          <Property Type="Int32" Name="StageID" Nullable="true" />
-          <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
-          <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
-          <Property Type="Int32" Name="CompanyID" Nullable="true" />
         </ComplexType>
         <EntityType Name="BenificiaryMaster">
           <Key>
@@ -1474,6 +1462,18 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
+          <Property Type="Int32" Name="InstallmentId" Nullable="false" />
+          <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
+          <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CreatedDate" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="PlanYear" Nullable="true" />
+          <Property Type="Int32" Name="StageID" Nullable="true" />
+          <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
+          <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
+          <Property Type="Int32" Name="CompanyID" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1497,22 +1497,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_UpdatTransactionId" FunctionName="EPassBookModel.Store.sp_UpdatTransactionId" />
-          <FunctionImportMapping FunctionImportName="sp_GetInstallmentListViewForUsersRoles" FunctionName="EPassBookModel.Store.sp_GetInstallmentListViewForUsersRoles">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result">
-                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-                <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
-                <ScalarProperty Name="StageID" ColumnName="StageID" />
-                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-                <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="BenificiaryMasters">
             <EntityTypeMapping TypeName="EPassBookModel.BenificiaryMaster">
               <MappingFragment StoreEntitySet="BenificiaryMaster">
@@ -1772,6 +1756,22 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetInstallmentListViewForUsersRoles" FunctionName="EPassBookModel.Store.sp_GetInstallmentListViewForUsersRoles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result">
+                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+                <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
+                <ScalarProperty Name="StageID" ColumnName="StageID" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

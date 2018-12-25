@@ -33,9 +33,6 @@
       <Parameter Name="installmentId" Mode="In" Type="Int32" />
       <Parameter Name="userid" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
-      <Parameter Name="stageid" Mode="In" Type="Int32" />
-    </FunctionImport>
     <EntitySet Name="BenificiaryMasters" EntityType="EPassBookModel.BenificiaryMaster" />
     <EntitySet Name="CityMasters" EntityType="EPassBookModel.CityMaster" />
     <EntitySet Name="Comments" EntityType="EPassBookModel.Comment" />
@@ -148,6 +145,9 @@
       <End Role="UserMaster" EntitySet="UserMasters" />
       <End Role="UserInRole" EntitySet="UserInRoles" />
     </AssociationSet>
+    <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
+      <Parameter Name="stageid" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_GetSurveyDetailsByBenID_Result">
     <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
@@ -157,18 +157,6 @@
     <Property Type="String" Name="Physical_Progress" Nullable="false" MaxLength="8" />
     <Property Type="String" Name="Comments" Nullable="true" />
     <Property Type="Boolean" Name="Sign" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
-    <Property Type="Int32" Name="InstallmentId" Nullable="false" />
-    <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
-    <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
-    <Property Type="Int64" Name="MobileNo" Nullable="true" />
-    <Property Type="String" Name="CreatedDate" Nullable="true" MaxLength="20" />
-    <Property Type="Int32" Name="PlanYear" Nullable="true" />
-    <Property Type="Int32" Name="StageID" Nullable="true" />
-    <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
-    <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
-    <Property Type="Int32" Name="CompanyID" Nullable="true" />
   </ComplexType>
   <EntityType Name="BenificiaryMaster">
     <Key>
@@ -759,4 +747,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
+    <Property Type="Int32" Name="InstallmentId" Nullable="false" />
+    <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
+    <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="CreatedDate" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="PlanYear" Nullable="true" />
+    <Property Type="Int32" Name="StageID" Nullable="true" />
+    <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
+    <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
+    <Property Type="Int32" Name="CompanyID" Nullable="true" />
+  </ComplexType>
 </Schema>
