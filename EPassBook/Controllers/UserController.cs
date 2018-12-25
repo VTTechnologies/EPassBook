@@ -17,31 +17,40 @@ namespace EPassBook.Controllers
     public class UserController : Controller
     {
         private readonly IMapper _mapper;
-        IUserService _userService;        
+        IUserService _userService;
+        IRoleMasterService _roleMasterService;
+        ICityService _cityMasterService;
+        ICompanyMasterService _companyMasterService;
+        IUserInRoleService _userInRoleService;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper, ICityService cityMasterService,
+            IRoleMasterService roleMasterService, ICompanyMasterService companyMasterService, IUserInRoleService userInRoleService)
         {
+            _userInRoleService = userInRoleService;
+            _companyMasterService = companyMasterService;
+            _roleMasterService = roleMasterService;
+            _cityMasterService = cityMasterService;
             _userService = userService;
             _mapper = mapper;
         }
         // GET: User
-        public ActionResult Index()
+        public ActionResult IndexOld()
         {
             var users = _userService.GetAllUsers();
-            var userModel = _mapper.Map< IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
+            var userModel = _mapper.Map<IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
 
             return View(userModel);
         }
+
         [HttpGet]
-        public ActionResult Create()
-        {           
+        public ActionResult CreateOld()
+        {
             return View();
         }
-
         [HttpPost]
-        public ActionResult Create(UserViewModel user)
+        public ActionResult CreateOld(UserViewModel user)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(user);
             }
@@ -56,12 +65,6 @@ namespace EPassBook.Controllers
         {
             return View();
         }
-
-        public ActionResult Test()
-        {
-            throw new Exception();
-        }
-
         [HttpPost]
         public ActionResult Login([Bind(Include = "UserName,Password")]UserViewModel user)
         {
@@ -69,7 +72,7 @@ namespace EPassBook.Controllers
             {
                 var userData = _userService.GetPassword(user.UserName);
 
-                if(user.RememberMe)
+                if (user.RememberMe)
                 {
                     HttpCookie userCookie = new HttpCookie("userinfo");
                     userCookie["user"] = user.UserName;
@@ -77,11 +80,26 @@ namespace EPassBook.Controllers
                     userCookie.Expires = DateTime.Now.AddDays(1);
                     Response.Cookies.Add(userCookie);
                 }
+                
                 user = _mapper.Map<UserMaster, UserViewModel>(userData);
+
+                var userDb = new UserMaster();
+
+                //user.UserId = userDb.UserId;
+                //user.UserName = userDb.UserName;
+                //user.Password = userDb.Password;
+                //user.Email = userDb.Email;
+                //user.MobileNo = userDb.MobileNo.ToString();
+                //user.IsActive = userDb.IsActive;
+                //user.IsLoggedIn = userDb.IsLoggedIn;
+                //user.CityId = userDb.CityId;
+                //user.CompanyID = userDb.CompanyID;
+                //user.IsReset = userDb.IsReset.Value;
+
                 Session["UserDetails"] = user;
                 if (userData != null)
                 {
-                    if(user.Password.Equals(userData.Password))
+                    if (user.Password.Equals(userData.Password))
                     {
                         Session["CompID"] = userData.CompanyID;
                         if (userData.IsReset != true)
@@ -111,7 +129,7 @@ namespace EPassBook.Controllers
             }
         }
         //ather code start frm here
-        
+
         [HttpGet]
         public ActionResult ResetPassword()
         {
@@ -122,7 +140,7 @@ namespace EPassBook.Controllers
         {
             try
             {
-                if (Session["UserDetails"] !=null)
+                if (Session["UserDetails"] != null)
                 {
                     if (ModelState.IsValid)
                     {
@@ -143,11 +161,113 @@ namespace EPassBook.Controllers
                 }
                 else
                 {
-                   return RedirectToAction("Login");
+                    return RedirectToAction("Login");
                 }
                 return View();
             }
             catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+
+        [CustomAuthorize(Common.Admin)]
+        [HttpGet]
+        public ActionResult Create()
+        {
+            //added all Roles in list
+            List<RoleMaster> roleList = _roleMasterService.GetAllRoles().ToList();
+            //added all cities in list
+            List<CityMaster> cityList = _cityMasterService.GetAllCities().ToList();
+            //added all companies in list
+            List<CompanyMaster> companyList = _companyMasterService.GetAllCompanies().ToList();
+
+            // passed RoleList to viewdata for binding to Role dropdown
+            TempData["roles"] = new SelectList(roleList, "RoleId", "RoleName");
+            // passed City List to viewdata for binding to city dropdown
+            TempData["Cities"] = new SelectList(cityList, "CityId", "CityName");
+            // passed Company list to viewdata for binding to Role dropdown
+            TempData["companies"] = new SelectList(companyList, "CompanyID", "CompanyName");
+            TempData.Keep();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(UserViewModel userVM)
+        {
+            var userData = _mapper.Map<UserViewModel, UserMaster>(userVM);
+            var userInRole = new UserInRoleViewModel();
+            _userService.Add(userData);
+            _userService.SaveChanges();
+            int id = userVM.UserId;
+            userInRole.UserId = id;
+            userInRole.RoleId = userVM.RoleId;
+            var roleData = _mapper.Map<UserInRoleViewModel, UserInRole>(userInRole);
+            userData.UserInRoles.Add(roleData);
+            _userService.SaveChanges();
+            return RedirectToAction("userDetails");
+        }
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var users = _userService.Get(u => u.IsActive == true);
+            var mappedUser = _mapper.Map<IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
+
+            return View(mappedUser);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var user = _userService.GetUserById(id);
+            var userInRole = _userInRoleService.Get().Where(w => w.UserMaster.UserInRoles.Where(we => we.RoleId == user.UserInRoles.Select(a => a.RoleId).FirstOrDefault()).Select(s => s.RoleId).Any()).FirstOrDefault().RoleId;
+            Session["roleId"] = userInRole;
+            var mappedUser = _mapper.Map<UserMaster, UserViewModel>(user);
+            var roles = _roleMasterService.Get(r => r.IsActive == true);
+            var cities = _cityMasterService.Get(r => r.IsActive == true);
+            var companies = _companyMasterService.Get(r => r.IsActive == true);
+
+            mappedUser.RoleId = Convert.ToInt32(userInRole);
+            ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+            ViewBag.Cities = new SelectList(cities, "CityId", "CityName");
+            ViewBag.Companies = new SelectList(companies, "CompanyId", "CompanyName");
+
+            return View(mappedUser);
+        }
+        [HttpPost]
+        public ActionResult Edit(UserViewModel userVM)
+        {
+            if(ModelState.IsValid)
+            {
+                if(Session["roleId"] == null)
+                {
+                    return RedirectToAction("userDetails");
+                }
+                var userInRoleVM = new UserInRoleViewModel();
+                var userInRoleMaster = new UserInRole();
+                var userData = _userService.GetUserById(userVM.UserId);
+                var userInRole = _userInRoleService.Get().Where(r => r.RoleId == Convert.ToInt32(Session["roleId"])).FirstOrDefault();
+
+                userData.UserName = userVM.UserName;
+                userData.Password = userVM.Password;
+                userData.Email = userVM.Email;
+                userData.MobileNo = Convert.ToDecimal(userVM.MobileNo);
+                userData.Address = userVM.Address;
+                userData.CityId = userVM.CityId;
+                userData.CompanyID = userVM.CompanyID;
+
+                userInRole.RoleId = userVM.RoleId;
+                userInRole.UserId = userVM.UserId;
+
+                _userInRoleService.Update(userInRole);
+                _userInRoleService.SaveChanges();
+                _userService.Update(userData);
+                _userService.SaveChanges();
+
+                return RedirectToAction("userDetails");
+            }
+            else
             {
                 return View();
             }

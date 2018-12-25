@@ -1,63 +1,51 @@
 ﻿@model IEnumerable<EPassBook.Models.UserViewModel>
 
-@{
-    ViewBag.Title = "Index";
-}
+<div>
+    <h4>UserMaster</h4>
+    <hr />
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.IsLoggedIn)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.RoleId)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.IsLoggedIn)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.RoleId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
-
-</table>
+    @if (Model != null)
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <div style="height: auto; overflow: auto;">
+            <!-- Your Table Here -->
+            <table class="table table-responsive table-bordered" style="margin-top:50px">
+                <tr>
+                    <th>ID</th>
+                    <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Password)</th>
+                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+                    <th>@Html.DisplayNameFor(model => model.MobileNo)</th>
+                    <th>@Html.DisplayNameFor(model => model.Address)</th>
+                    @*<th>@Html.DisplayNameFor(model => model.IsActive)</th>*@
+                    @*<th>@Html.DisplayNameFor(model => model.IsReset)</th>*@
+                    <th>@Html.DisplayNameFor(model => model.CityMaster.CityName)</th>
+                    <th>@Html.DisplayNameFor(model => model.CompanyMaster.CompanyName)</th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                @foreach (var items in Model)
+                {
+                    <tr>
+                        <td>@items.UserId</td>
+                        <td>@items.UserName</td>
+                        <td>@items.Password</td>
+                        <td>@items.Email</td>
+                        <td>@items.MobileNo</td>
+                        <td>@items.Address</td>
+                        @*<td>@Html.CheckBoxFor(m => items.IsActive, new { @disabled = "disabled" })</td>*@
+                        @*<td>@Html.CheckBoxFor(m => items.IsReset, new { @disabled = "disabled" })</td>*@
+                        <td>@items.CityMaster.CityName</td>
+                        <td>@items.CompanyMaster.CompanyName</td>
+                        <td>@Html.ActionLink("Edit", "Details", new { id = @items.UserId })</td>
+                        <td>@Html.ActionLink("Edit", "Edit", new { id = @items.UserId })</td>
+                        <td>@Html.ActionLink("Edit", "Delete", new { id = @items.UserId })</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</div>

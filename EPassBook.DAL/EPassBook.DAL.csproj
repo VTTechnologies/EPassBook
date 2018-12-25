@@ -120,6 +120,7 @@
     <Compile Include="DBModel\WorkflowStage.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IService\IUserInRolService.cs" />
     <Compile Include="IService\IRoleMasterService .cs" />
     <Compile Include="IService\ICityService.cs" />
     <Compile Include="IService\IWorkFlowStagesService.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="IService\ICompanyMasterService.cs" />
     <Compile Include="Service\RoleMasterService.cs" />
     <Compile Include="Service\CityMasterService.cs" />
+    <Compile Include="Service\UserInRoleService.cs" />
     <Compile Include="Service\WorkFlowStagesService.cs" />
     <Compile Include="Service\InstallmentDetailService.cs" />
     <Compile Include="Service\BenificiaryService.cs" />

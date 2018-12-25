@@ -13,8 +13,8 @@ namespace EPassBook.DAL.IService
        string includeProperties = "");
         IEnumerable<RoleMaster> GetAllRoles();
         RoleMaster GetRoleById(int id);
-        void Add(RoleMaster city);
-        void Update(RoleMaster city);
+        void Add(RoleMaster role);
+        void Update(RoleMaster role);
         void Delete(int id);
         void SaveChanges();        
     }

@@ -368,14 +368,13 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\WorkFlow\Workflow.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\IndexOld.cshtml" />
+    <Content Include="Views\User\CreateOld.cshtml" />
     <Content Include="Views\Shared\_dashboardlayout.cshtml" />
     <Content Include="Views\Shared\.DS_Store" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\Error\ServerSideError.cshtml" />
     <Content Include="Views\Error\CustomErrors.cshtml" />
-    <Content Include="Views\User\Test.cshtml" />
     <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
     <Content Include="Views\WorkFlow\SurveyDetails.cshtml" />
     <Content Include="Views\Shared\_SiteEngineer.cshtml" />
@@ -384,9 +383,11 @@
     <Content Include="Views\Home\Website.cshtml" />
     <Content Include="Views\Shared\_Accountant.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\Home\AddUser.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\WorkFlow\Index.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

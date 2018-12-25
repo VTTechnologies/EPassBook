@@ -26,7 +26,7 @@ namespace EPassBook.Models
         [Required(ErrorMessage = "Email is required.")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Mobile No is required.")]
-        public Nullable<decimal> MobileNo { get; set; }
+        public string MobileNo { get; set; }
         public string Address { get; set; }
         [Required(ErrorMessage = "Please select City.")]
         public Nullable<int> CityId { get; set; }
@@ -34,6 +34,7 @@ namespace EPassBook.Models
         public Nullable<int> CompanyID { get; set; }
         public bool RememberMe { get; set; }
         public bool IsReset { get; set; }
+        public bool CityName { get; set; }
 
         public virtual CityViewModel CityMaster { get; set; }
         public virtual CompanyViewModel CompanyMaster { get; set; }
@@ -42,7 +43,7 @@ namespace EPassBook.Models
         public virtual ICollection<UserInRoleViewModel> UserInRoles { get; set; }
 
       
-        public Nullable<bool> IsLoggedIn { get; set; }
+        public bool IsLoggedIn { get; set; }
        
 
       

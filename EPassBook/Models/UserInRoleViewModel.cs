@@ -10,7 +10,7 @@ namespace EPassBook.Models
     {
         [Key]
         public int id { get; set; }
-        public Nullable<int> RoleId { get; set; }
+        public int RoleId { get; set; }
         public Nullable<int> UserId { get; set; }
 
         public virtual RoleViewModel RoleMaster { get; set; }

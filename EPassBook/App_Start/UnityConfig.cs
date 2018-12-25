@@ -67,6 +67,7 @@ namespace EPassBook
             container.RegisterType<ICityService, CityMasterService>();
             container.RegisterType<IRoleMasterService, RoleMasterService>();
             container.RegisterType<ICompanyMasterService, CompanyMasterService>();
+            container.RegisterType<IUserInRoleService, UserInRoleService>();
 
             //Created instance of mapper into unity
             container.RegisterInstance(mapper);
