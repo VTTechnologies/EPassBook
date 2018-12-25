@@ -36,7 +36,7 @@ namespace EPassBook.Models
         public bool? IsReset { get; set; }
 
         public virtual CityViewModel CityMaster { get; set; }
-        public virtual CompanyViewModel CompanyMaster { get; set; }
+        //public virtual CompanyViewModel CompanyMaster { get; set; }
         public virtual ICollection<GeoTaggingViewModel> GeoTaggingDetails { get; set; }
         public virtual ICollection<InstallmentSigningViewModel> InstallmentSignings { get; set; }     
         public virtual ICollection<UserInRoleViewModel> UserInRoles { get; set; }

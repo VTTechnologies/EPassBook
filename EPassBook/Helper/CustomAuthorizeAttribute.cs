@@ -18,12 +18,6 @@ namespace EPassBook.Helper
     {
         private readonly string[] allowedroles;
         IUserService _userService;
-
-        //public void OnAuthentication(AuthenticationContext filterContext)
-        //{
-        //    bool _auth = (filterContext.ActionDescriptor.GetCustomAttributes(
-        //        typeof(OverrideAuthenticationAttribute), true).Length == 0);
-        //}
         public CustomAuthorizeAttribute(params string[] roles)
         {
             _userService = DependencyResolver.Current.GetService<IUserService>();
