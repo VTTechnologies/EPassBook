@@ -9,7 +9,7 @@ namespace EPassBook.Models
     public class CityViewModel
     {
         [Key]
-        public int CityID { get; set; }
+        public int CityId { get; set; }
         public string CityName { get; set; }
         public string CityShortName { get; set; } 
         public Nullable<bool> IsActive { get; set; }

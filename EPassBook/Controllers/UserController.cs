@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using EPassBook.DAL.DBModel;
+﻿using EPassBook.DAL.DBModel;
 using EPassBook.DAL.IService;
 using EPassBook.Helper;
 using EPassBook.Models;
@@ -16,19 +15,19 @@ namespace EPassBook.Controllers
     [ElmahError]
     public class UserController : Controller
     {
-        private readonly IMapper _mapper;
         IUserService _userService;        
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _mapper = mapper;
         }
         // GET: User
         public ActionResult Index()
         {
             var users = _userService.GetAllUsers();
-            var userModel = _mapper.Map< IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
+
+            var userModel = users.Select(s => new UserViewModel { UserId = s.UserId, UserName = s.UserName, Password = s.Password, IsActive = s.IsActive }).ToList();
+            //var userModel = _mapper.Map< IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
 
             return View(userModel);
         }
@@ -45,7 +44,9 @@ namespace EPassBook.Controllers
             {
                 return View(user);
             }
-            var userModel = _mapper.Map<UserViewModel, UserMaster>(user);
+
+            var userModel = Mapper.UserMapper.Attach(user);
+            //var userModel = _mapper.Map<UserViewModel, UserMaster>(user);
             _userService.Add(userModel);
             _userService.SaveChanges();
             return RedirectToAction("Index");
@@ -77,8 +78,8 @@ namespace EPassBook.Controllers
                     userCookie.Expires = DateTime.Now.AddDays(1);
                     Response.Cookies.Add(userCookie);
                 }
-                user = _mapper.Map<UserMaster, UserViewModel>(userData);
-                Session["UserDetails"] = user;
+                user = Mapper.UserMapper.Detach(userData);//_mapper.Map<UserMaster, UserViewModel>(userData);
+                Session["UserDetails"] = "";
                 if (userData != null)
                 {
                     if(user.Password.Equals(userData.Password))

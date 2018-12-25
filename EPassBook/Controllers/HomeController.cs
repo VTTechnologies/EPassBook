@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using EPassBook.DAL.DBModel;
+﻿using EPassBook.DAL.DBModel;
 using EPassBook.DAL.IService;
 using EPassBook.Helper;
 using EPassBook.Models;
@@ -16,21 +15,19 @@ namespace EPassBook.Controllers
     [AuthorizeAttribute]
     public class HomeController : Controller
     {
-        private readonly IMapper _mapper;
         IUserService _userserService;
         ICityService _cityMasterService;
         IRoleMasterService _roleMasterService;
         ICompanyMasterService _companyMasterService;
         
 
-        public HomeController(IUserService userserService, IMapper mapper, ICityService cityMasterService,
+        public HomeController(IUserService userserService, ICityService cityMasterService,
             IRoleMasterService roleMasterService, ICompanyMasterService companyMasterService)
         {
             _companyMasterService = companyMasterService;
             _roleMasterService = roleMasterService;
             _cityMasterService = cityMasterService;
             _userserService = userserService;
-            _mapper = mapper;
         }
 
         //added by ather
@@ -64,7 +61,7 @@ namespace EPassBook.Controllers
         [HttpPost]
         public ActionResult AddUser(UserViewModel userVM)
         {
-            var userData = _mapper.Map<UserViewModel, UserMaster>(userVM);
+            var userData = Mapper.UserMapper.Attach(userVM);//; _mapper.Map<UserViewModel, UserMaster>(userVM);
             
             var userInRole = new UserInRoleViewModel();
 
@@ -74,7 +71,7 @@ namespace EPassBook.Controllers
 
             userInRole.UserId = id;
             userInRole.RoleId = userVM.RoleId;
-            var roleData = _mapper.Map<UserInRoleViewModel, UserInRole>(userInRole);
+            var roleData = Mapper.UserInRoleMapper.Attach(userInRole); // _mapper.Map<UserInRoleViewModel, UserInRole>(userInRole);
             userData.UserInRoles.Add(roleData);
             _userserService.SaveChanges();
 
