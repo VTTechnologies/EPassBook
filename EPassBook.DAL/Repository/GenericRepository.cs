@@ -25,10 +25,7 @@ namespace EPassBook.DAL.Repository
         {
             return entityTable.ToList();
         }
-        public virtual IEnumerable<TEntity> Get(
-           Expression<Func<TEntity, bool>> filter = null,
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           string includeProperties = "")
+        public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null,Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,string includeProperties = "")
         {
             IQueryable<TEntity> query = entityTable;
 

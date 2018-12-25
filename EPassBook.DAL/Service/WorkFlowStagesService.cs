@@ -4,6 +4,7 @@ using EPassBook.DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace EPassBook.DAL.Service
 {
@@ -19,6 +20,15 @@ namespace EPassBook.DAL.Service
             unitOfWork = new UnitOfWork(_dbContext);
             workflowStageRepository = unitOfWork.GenericRepository<WorkflowStage>();
         }
+
+        public IEnumerable<WorkflowStage> Get(Expression<Func<WorkflowStage, bool>> filter = null,
+       Func<IQueryable<WorkflowStage>, IOrderedQueryable<WorkflowStage>> orderBy = null,
+       string includeProperties = "")
+        {
+            IEnumerable<WorkflowStage> workflowStages = workflowStageRepository.Get(filter, orderBy, includeProperties).ToList();
+            return workflowStages;
+        }
+
 
         public void Add(WorkflowStage WorkflowStage)
         {

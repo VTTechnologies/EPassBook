@@ -4,6 +4,7 @@ using EPassBook.DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,13 @@ namespace EPassBook.DAL.Service
             unitOfWork = new UnitOfWork(_dbContext);
             userMasterRepository = unitOfWork.GenericRepository<UserMaster>();
         }
-      
+        public IEnumerable<UserMaster> Get(Expression<Func<UserMaster, bool>> filter = null,
+           Func<IQueryable<UserMaster>, IOrderedQueryable<UserMaster>> orderBy = null,
+           string includeProperties = "")
+        {
+            IEnumerable<UserMaster> users = userMasterRepository.Get(filter,orderBy, includeProperties).ToList();
+            return users;
+        }
         public IEnumerable<UserMaster> GetAllUsers()
         {
             IEnumerable<UserMaster> users = userMasterRepository.GetAll().ToList();
@@ -52,10 +59,6 @@ namespace EPassBook.DAL.Service
         public UserMaster GetPassword(string userName)
         {
             return userMasterRepository.Get(w => w.UserName == userName && w.IsActive==true, null, string.Empty).FirstOrDefault();
-        }
-        public bool AuthenticateUser(string userName, string password,string roleName)
-        {   
-            return userMasterRepository.Get(w => w.UserName == userName && w.Password == password &&  w.UserInRoles.Where(r=>r.RoleMaster.RoleName==roleName).Any() && w.IsActive==true, null, string.Empty).Any();
-        }
+        }        
     }
 }

@@ -103,12 +103,21 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
       <Private>True</Private>
@@ -121,6 +130,9 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=5.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.3.1\lib\net45\System.Web.Http.OData.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -222,6 +234,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\APIWorkFlowController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -244,7 +257,7 @@
     <Compile Include="Models\InstallmentListView.cs" />
     <Compile Include="Models\InstallmentSigningViewModel.cs" />
     <Compile Include="Models\InstllmentRejectionViewModel.cs" />
-    <Compile Include="Models\RessetPasswordViewModel.cs" />
+    <Compile Include="Models\ResetPasswordViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\StageinRoleViewModel.cs" />
     <Compile Include="Models\SurveyDetailsModel.cs" />
@@ -354,7 +367,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\WorkFlow\Workflow.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\Shared\_dashboardlayout.cshtml" />
@@ -364,12 +377,12 @@
     <Content Include="Views\Error\CustomErrors.cshtml" />
     <Content Include="Views\User\Test.cshtml" />
     <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
-    <Content Include="Views\User\SurveyDetails.cshtml" />
-    <Content Include="Views\Home\_CityHead.cshtml" />
-    <Content Include="Views\Home\_InstallmentDetails.cshtml" />
-    <Content Include="Views\Home\Beneficiary.cshtml" />
+    <Content Include="Views\WorkFlow\SurveyDetails.cshtml" />
+    <Content Include="Views\Shared\_SiteEngineer.cshtml" />
+    <Content Include="Views\Shared\_InstallmentDetails.cshtml" />
+    <Content Include="Views\Shared\_DataEntry.cshtml" />
     <Content Include="Views\Home\Website.cshtml" />
-    <Content Include="Views\WorkFlow\CreateAccountant.cshtml" />
+    <Content Include="Views\Shared\_Accountant.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Home\AddUser.cshtml" />
     <Content Include="Views\WorkFlow\Index.cshtml" />

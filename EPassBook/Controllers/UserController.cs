@@ -17,12 +17,10 @@ namespace EPassBook.Controllers
     public class UserController : Controller
     {
         private readonly IMapper _mapper;
-        IUserService _userService;
-        ICommentService _icommentService;
+        IUserService _userService;        
 
-        public UserController(IUserService userService, IMapper mapper,ICommentService commentService)
+        public UserController(IUserService userService, IMapper mapper)
         {
-            _icommentService = commentService;
             _userService = userService;
             _mapper = mapper;
         }
@@ -67,9 +65,10 @@ namespace EPassBook.Controllers
         [HttpPost]
         public ActionResult Login([Bind(Include = "UserName,Password")]UserViewModel user)
         {
-            if (ModelState.IsValidField("UserName")&& ModelState.IsValidField("Password"))
+            if (ModelState.IsValidField("UserName") && ModelState.IsValidField("Password"))
             {
                 var userData = _userService.GetPassword(user.UserName);
+
                 if(user.RememberMe)
                 {
                     HttpCookie userCookie = new HttpCookie("userinfo");
@@ -78,17 +77,21 @@ namespace EPassBook.Controllers
                     userCookie.Expires = DateTime.Now.AddDays(1);
                     Response.Cookies.Add(userCookie);
                 }
-
-
                 user = _mapper.Map<UserMaster, UserViewModel>(userData);
                 Session["UserDetails"] = user;
-                //var userData = _userService.AuthenticateUser(user.UserName, user.Password);
                 if (userData != null)
                 {
                     if(user.Password.Equals(userData.Password))
                     {
                         Session["CompID"] = userData.CompanyID;
-                        return RedirectToAction("Index", "WorkFlow");
+                        if (userData.IsReset != true)
+                        {
+                            return RedirectToAction("ResetPassword", "User");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "WorkFlow");
+                        }
                     }
                     else
                     {
@@ -107,24 +110,8 @@ namespace EPassBook.Controllers
                 return View(user);
             }
         }
-
         //ather code start frm here
-        [HttpGet]
-        public ActionResult SurveyDetails()
-        {
-            try
-            {
-                IEnumerable<sp_GetSurveyDetailsByBenID_Result> commentlist = _icommentService.GetSurveyDetailsByBenificiaryID(1);
-                
-                var mappedCommentList = _mapper.Map<IEnumerable<sp_GetSurveyDetailsByBenID_Result>, IEnumerable<SurveyDetailsModel>>(commentlist);
-                
-                return View(mappedCommentList);
-            }
-            catch (Exception ex)
-            {
-                return View();
-            }
-        }
+        
         [HttpGet]
         public ActionResult ResetPassword()
         {
@@ -140,17 +127,23 @@ namespace EPassBook.Controllers
                     if (ModelState.IsValid)
                     {
                         var userData = Session["UserDetails"] as UserViewModel;
-                        userData.Password = resetPassVM.newPassword;
-                        userData.IsReset = true;
-                        var userMaster = _mapper.Map<UserViewModel, UserMaster>(userData);
-                        _userService.Update(userMaster);
-
-                        return View();
+                        var user = _userService.GetUserById(userData.UserId);
+                        if (resetPassVM.oldPassword != userData.Password)
+                        {
+                            ModelState.AddModelError(string.Empty, "Wrong old password");
+                            return View(resetPassVM);
+                        }
+                        user.Password = resetPassVM.newPassword;
+                        user.IsReset = true;
+                        _userService.Update(user);
+                        _userService.SaveChanges();
+                        Session["UserDetails"] = _userService.GetUserById(userData.UserId);
+                        return RedirectToAction("Index", "WorkFlow");
                     }
                 }
                 else
                 {
-                    RedirectToAction("Login");
+                   return RedirectToAction("Login");
                 }
                 return View();
             }
