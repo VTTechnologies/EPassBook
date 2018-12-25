@@ -172,7 +172,7 @@ namespace EPassBook.Controllers
                     installment.LoanAmnt = installmentDetailViewModel.LoanAmnt;
                     installment.IsCentreAmnt = iscenter;
                     installment.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
-                    installment.StageID = (int)Common.WorkFlowStages.ProjectManager;
+                    installment.StageID = (int)Common.WorkFlowStages.ProjectEngineer;
                     installment.InstallmentNo = installmentDetailViewModel.InstallmentNo;
                     installment.ModifiedDate = DateTime.Now;
 

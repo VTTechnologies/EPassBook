@@ -13,7 +13,7 @@ namespace EPassBook.Models
         public string BeneficairyName { get; set; }
         public string FatherName { get; set; }
         public string Mother { get; set; }
-        public Nullable<long> MobileNo { get; set; }
+        public string MobileNo { get; set; }
         public string PresentAddress { get; set; }
         public Nullable<int> CityId { get; set; }
         public Nullable<int> DTRNo { get; set; }

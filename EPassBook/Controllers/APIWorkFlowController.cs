@@ -61,7 +61,7 @@ namespace EPassBook.Controllers
         [HttpPost]
         public HttpResponseMessage UpdateInstallmentStatus(int beneficiaryId,int installmentNo)
         {
-            var installmentDetail = _installmentDetailService.GetInstallmentDetailById(beneficiaryId);
+            var installmentDetail = _installmentDetailService.GetAllInstallmentDetails().Where(w=>w.BeneficiaryId==beneficiaryId && w.InstallmentNo== installmentNo ).FirstOrDefault();
             installmentDetail.StageID = Convert.ToInt32(WorkFlowStages.UserRequest);
             installmentDetail.ModifiedBy = "Beneficiary";
             installmentDetail.ModifiedDate = DateTime.Now;
