@@ -13,7 +13,7 @@
           <Property Name="BeneficairyName" Type="nvarchar" MaxLength="150" />
           <Property Name="FatherName" Type="nvarchar" MaxLength="150" />
           <Property Name="Mother" Type="nvarchar" MaxLength="150" />
-          <Property Name="MobileNo" Type="bigint" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
           <Property Name="PresentAddress" Type="nvarchar" MaxLength="350" />
           <Property Name="CityId" Type="int" />
           <Property Name="DTRNo" Type="int" />
@@ -893,7 +893,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="BeneficairyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="FatherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Mother" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="Int64" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PresentAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
           <Property Name="CityId" Type="Int32" />
           <Property Name="DTRNo" Type="Int32" />
@@ -1144,12 +1144,12 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="IsLoggedIn" Type="Boolean" />
           <Property Name="CityId" Type="Int32" />
           <Property Name="CompanyID" Type="Int32" />
+          <Property Name="IsReset" Type="Boolean" />
           <NavigationProperty Name="CityMaster" Relationship="EPassBookModel.FK_UserMaster_CityMaster" FromRole="UserMaster" ToRole="CityMaster" />
           <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.UserMaster_CompanyID_FK" FromRole="UserMaster" ToRole="CompanyMaster" />
           <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetail" />
           <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="UserMaster" ToRole="InstallmentSigning" />
           <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_userid_fk" FromRole="UserMaster" ToRole="UserInRole" />
-          <Property Name="IsReset" Type="Boolean" />
         </EntityType>
         <EntityType Name="WorkflowStage">
           <Key>

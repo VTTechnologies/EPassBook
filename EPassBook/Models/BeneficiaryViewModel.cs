@@ -13,7 +13,7 @@ namespace EPassBook.Models
         public string BeneficairyName { get; set; }
         public string FatherName { get; set; }
         public string Mother { get; set; }
-        public Nullable<long> MobileNo { get; set; }
+        public string MobileNo { get; set; }
         public string PresentAddress { get; set; }
         public Nullable<int> CityId { get; set; }
         public Nullable<int> DTRNo { get; set; }
@@ -50,6 +50,8 @@ namespace EPassBook.Models
         public virtual ICollection<InstallmentDetailsViewModel> InstallmentDetails { get; set; }
         public virtual ICollection<CommentsViewModel> Comments { get; set; }
         public virtual ICollection<GeoTaggingViewModel> GeoTaggingDetails { get; set; }
-        public virtual ICollection<InstllmentRejectionViewModel> InstallmentRejections { get; set; }
+        public virtual ICollection<InstllmentRejectionViewModel> InstallmentRejections { get; set; }    
+
+       
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using EPassBook.DAL.DBModel;
+﻿using EPassBook.DAL.DBModel;
 using EPassBook.DAL.IService;
 using EPassBook.Helper;
 using EPassBook.Models;
@@ -16,21 +15,19 @@ namespace EPassBook.Controllers
     [AuthorizeAttribute]
     public class HomeController : Controller
     {
-        private readonly IMapper _mapper;
         IUserService _userserService;
         ICityService _cityMasterService;
         IRoleMasterService _roleMasterService;
         ICompanyMasterService _companyMasterService;
         
 
-        public HomeController(IUserService userserService, IMapper mapper, ICityService cityMasterService,
+        public HomeController(IUserService userserService, ICityService cityMasterService,
             IRoleMasterService roleMasterService, ICompanyMasterService companyMasterService)
         {
             _companyMasterService = companyMasterService;
             _roleMasterService = roleMasterService;
             _cityMasterService = cityMasterService;
             _userserService = userserService;
-            _mapper = mapper;
         }
 
         //added by ather
@@ -51,7 +48,7 @@ namespace EPassBook.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }           
-
+        }
+        
     }
 }

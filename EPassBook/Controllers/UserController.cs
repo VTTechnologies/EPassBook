@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using EPassBook.DAL.DBModel;
+﻿using EPassBook.DAL.DBModel;
 using EPassBook.DAL.IService;
 using EPassBook.Helper;
 using EPassBook.Models;
@@ -31,13 +30,15 @@ namespace EPassBook.Controllers
             _roleMasterService = roleMasterService;
             _cityMasterService = cityMasterService;
             _userService = userService;
-            _mapper = mapper;
         }
         // GET: User
         public ActionResult IndexOld()
         {
             var users = _userService.GetAllUsers();
-            var userModel = _mapper.Map<IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
+
+            var userModel = users.Select(s => new UserViewModel { UserId = s.UserId, UserName = s.UserName, Password = s.Password, IsActive = s.IsActive }).ToList();
+            //var userModel = _mapper.Map< IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
+           
 
             return View(userModel);
         }
@@ -54,7 +55,9 @@ namespace EPassBook.Controllers
             {
                 return View(user);
             }
-            var userModel = _mapper.Map<UserViewModel, UserMaster>(user);
+
+            var userModel = Mapper.UserMapper.Attach(user);
+            //var userModel = _mapper.Map<UserViewModel, UserMaster>(user);
             _userService.Add(userModel);
             _userService.SaveChanges();
             return RedirectToAction("Index");
@@ -80,24 +83,10 @@ namespace EPassBook.Controllers
                     userCookie.Expires = DateTime.Now.AddDays(1);
                     Response.Cookies.Add(userCookie);
                 }
-                
-                user = _mapper.Map<UserMaster, UserViewModel>(userData);
-
-                var userDb = new UserMaster();
-
-                //user.UserId = userDb.UserId;
-                //user.UserName = userDb.UserName;
-                //user.Password = userDb.Password;
-                //user.Email = userDb.Email;
-                //user.MobileNo = userDb.MobileNo.ToString();
-                //user.IsActive = userDb.IsActive;
-                //user.IsLoggedIn = userDb.IsLoggedIn;
-                //user.CityId = userDb.CityId;
-                //user.CompanyID = userDb.CompanyID;
-                //user.IsReset = userDb.IsReset.Value;
-
+                user = Mapper.UserMapper.Detach(userData);//_mapper.Map<UserMaster, UserViewModel>(userData);
+                Session["UserDetails"] = "";
                 Session["UserDetails"] = user;
-                if (userData != null)
+                 if (userData != null)
                 {
                     if (user.Password.Equals(userData.Password))
                     {

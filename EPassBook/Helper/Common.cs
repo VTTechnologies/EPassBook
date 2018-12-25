@@ -12,11 +12,12 @@ namespace EPassBook.Helper
             DataEntry = 1,
             UserRequest = 2,
             SiteEngineer = 3,
-            ProjectManager = 4,
+            ProjectEngineer = 4,
             CityEngineer = 5,
             ChiefOfficer = 6,
             Accountant = 7,
-            LastChiefOfficer = 8
+            LastChiefOfficer = 8,
+            Rejected = 9
         }
 
         public const string Admin = "Admin";

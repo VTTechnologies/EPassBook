@@ -11,11 +11,12 @@ namespace EPassBook.Helper
         public byte[] ConvertToBytes(HttpPostedFileBase image)
         {
             byte[] imageBytes = null;
+            if (image != null)
+            {
+                BinaryReader reader = new BinaryReader(image.InputStream);
 
-            BinaryReader reader = new BinaryReader(image.InputStream);
-
-            imageBytes = reader.ReadBytes((int)image.ContentLength);
-
+                imageBytes = reader.ReadBytes((int)image.ContentLength);
+            }
             return imageBytes;
 
         }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using EPassBook.DAL.DBModel;
+﻿using EPassBook.DAL.DBModel;
 using EPassBook.DAL.IService;
 using EPassBook.Models;
 using System;
@@ -13,21 +12,18 @@ namespace EPassBook.Controllers
 {
     public class WorkFlowController : Controller
     {
-        private readonly IMapper _mapper;
         IInstallmentDetailService _installmentDetailService;
         IBenificiaryService _benificiaryService;
         IWorkFlowStagesService _iWorkFlowStagesService;
         ICommentService _icommentService;
 
         PhotoManager pm = new PhotoManager();
-        public WorkFlowController(IMapper mapper, IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService, IWorkFlowStagesService iWorkFlowStagesService, ICommentService icommentService)
+        public WorkFlowController(IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService, IWorkFlowStagesService iWorkFlowStagesService, ICommentService icommentService)
         {
             _iWorkFlowStagesService = iWorkFlowStagesService;
             _benificiaryService = benificiaryService;
             _installmentDetailService = installmentDetailService;
             _icommentService= icommentService;
-            _mapper = mapper;
-
         }
         // GET: WorkFlow
         public ActionResult Index()
@@ -41,9 +37,20 @@ namespace EPassBook.Controllers
             }
 
             var installmentListView = _installmentDetailService.GetInstallmentForLoginUsersWithStages(stageId).ToList();
-            //var benficiarymodel = _mapper.Map<BenificiaryMaster, BeneficiaryViewModel>(benfici);
-            var resultlist = _mapper.Map<IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result>, IEnumerable<InstallmentListView>>(installmentListView);
-            return View(resultlist);
+            var resultlist = installmentListView.Select(s => new InstallmentListView
+            {
+                BeneficiaryId = s.BeneficiaryId,
+                BeneficairyName=s.BeneficairyName,
+                CompanyID=s.CompanyID,
+                InstallmentId=s.InstallmentId,
+                InstallmentNo=s.InstallmentNo,
+                CreatedDate=Convert.ToDateTime(s.CreatedDate),
+                IsCompleted=s.IsCompleted,
+                MobileNo=Convert.ToString(s.MobileNo),
+                PlanYear=s.PlanYear,
+                StageID=s.StageID
+            }).ToList();  //_mapper.Map<IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result>, IEnumerable<InstallmentListView>>(installmentListView);
+            return View();
         }
 
 
@@ -51,7 +58,7 @@ namespace EPassBook.Controllers
         public ActionResult Workflow(int? id)
         {
             var benificiary = _benificiaryService.GetBenificiaryById(1);
-            var benficiarymodel = _mapper.Map<BenificiaryMaster, BeneficiaryViewModel>(benificiary);
+            var benficiarymodel = Mapper.BeneficiaryMapper.Detach(benificiary);  //_mapper.Map<BeneficiaryViewModel>(benificiary);
             Session["InstallmentId"] = id;
             string rolename = "";
             if (Session["UserDetails"] != null)
@@ -136,45 +143,82 @@ namespace EPassBook.Controllers
             }
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
-            var installmentviewmodel = _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
-            installmentviewmodel._Comments = "";
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            installmentviewmodel.Comments = null;
             return PartialView("_SiteEngineer", installmentviewmodel);
         }
 
         [HttpPost]
-        public ActionResult SiteEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
+        public ActionResult SiteEngineer(InstallmentDetailsViewModel installmentDetailViewModel, string IsRadioButton)
         {
+            HttpPostedFileBase hasbandphoto = Request.Files["imguploadsiteeng"];
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
-
-            if (Session["UserDetails"] != null)
+            if (ModelState.IsValid)
             {
-                var user = Session["UserDetails"] as UserViewModel;
-                installment.ModifiedBy = user.UserName;
-                installment.CompanyID = user.CompanyID;
+                if (Session["UserDetails"] != null)
+                {
+                    bool iscenter = true;
 
-                installment.BeneficiaryAmnt = installmentDetailViewModel.BeneficiaryAmnt;
-                installment.LoanAmnt = installmentDetailViewModel.LoanAmnt;
-                installment.IsCentreAmnt = installmentDetailViewModel.IsCentreAmnt;
-                installment.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
-                installment.StageID = (int)Common.WorkFlowStages.ProjectManager;
-                installment.InstallmentNo = installmentDetailViewModel.InstallmentNo;
-                installment.ModifiedDate = DateTime.Now;
+                    if (IsRadioButton == "State Assistance")
+                    {
+                        iscenter = false;
+                    }
 
-                var comments = new Comment();
-                comments.Comments = installmentDetailViewModel._Comments;
-                comments.CreatedBy = user.UserName;
-                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
-                comments.CreatedDate = DateTime.Now;
-                comments.CompanyID = user.CompanyID;
+                    var user = Session["UserDetails"] as UserViewModel;
+                    installment.ModifiedBy = user.UserName;
+                    installment.CompanyID = user.CompanyID;
 
-                installment.Comments.Add(comments);
+                    installment.BeneficiaryAmnt = installmentDetailViewModel.BeneficiaryAmnt;
+                    installment.LoanAmnt = installmentDetailViewModel.LoanAmnt;
+                    installment.IsCentreAmnt = iscenter;
+                    installment.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
+                    installment.StageID = (int)Common.WorkFlowStages.ProjectEngineer;
+                    installment.InstallmentNo = installmentDetailViewModel.InstallmentNo;
+                    installment.ModifiedDate = DateTime.Now;
 
-                _installmentDetailService.Update(installment);
-                _installmentDetailService.SaveChanges();
+                    // Insert reocrd in comment table 
+                    var comments = new Comment();
+                    comments.Comments = installmentDetailViewModel._Comments;
+                    comments.CreatedBy = user.UserName;
+                    comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    comments.CreatedDate = DateTime.Now;
+                    comments.CompanyID = user.CompanyID;
 
-                Session["InstallmentId"] = null;
+                    // Insert reocrd in GeoTaggingDetail table 
+                    var geotaging = new GeoTaggingDetail();
+                    geotaging.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    geotaging.CompanyID = user.CompanyID;
+                    geotaging.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
+                    geotaging.UserId = user.UserId;
+                    geotaging.CreatedBy = user.UserName;
+                    geotaging.CreatedDate = DateTime.Now;
+                    geotaging.Photo = pm.ConvertToBytes(hasbandphoto);
+
+                    // Insert reocrd in GeoTaggingDetail table 
+                    var signing = new InstallmentSigning();
+                    signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                    signing.UserId = user.UserId;
+                    signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                    signing.Sign = true;
+                    signing.CreatedDate = DateTime.Now;
+                    signing.CompanyID = user.CompanyID;
+
+                    // Applying changes to database tables
+                    installment.Comments.Add(comments);
+                    installment.GeoTaggingDetails.Add(geotaging);
+                    installment.InstallmentSignings.Add(signing);
+                    _installmentDetailService.Update(installment);
+
+
+                    _installmentDetailService.SaveChanges();
+
+                    Session["InstallmentId"] = null;
+                    ViewBag.Message = "sussess message";
+                    //return RedirectToAction("Index", "WorkFlow");
+                }
             }
-            return View();
+
+            return PartialView("_SiteEngineer", installmentDetailViewModel);
         }
 
         [HttpGet]
@@ -184,9 +228,18 @@ namespace EPassBook.Controllers
             {
                 IEnumerable<sp_GetSurveyDetailsByBenID_Result> commentlist = _icommentService.GetSurveyDetailsByBenificiaryID(1);
 
-                var mappedCommentList = _mapper.Map<IEnumerable<sp_GetSurveyDetailsByBenID_Result>, IEnumerable<SurveyDetailsModel>>(commentlist);
+                var mappedCommentList = commentlist.Select(s=> new SurveyDetailsModel {
+                    BeneficiaryId =s.BeneficiaryId,
+                    Comments =s.Comments,
+                    UserName =s.UserName,
+                    CreatedDate =s.CreatedDate,
+                    MobileNo =s.MobileNo,
+                    Sign =s.Sign,
+                    Physical_Progress =s.Physical_Progress
 
-                return View(mappedCommentList);
+                }).ToList();// _mapper.Map<IEnumerable<sp_GetSurveyDetailsByBenID_Result>, IEnumerable<SurveyDetailsModel>>(commentlist);
+
+                return View();
             }
             catch (Exception ex)
             {

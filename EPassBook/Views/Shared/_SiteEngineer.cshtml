@@ -1,9 +1,15 @@
 ﻿@model EPassBook.Models.InstallmentDetailsViewModel
-
-@using (Html.BeginForm()) 
+@{ 
+    if (ViewBag.Message != null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+@*FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+@using (Html.BeginForm("SiteEngineer", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>InstallmentDetailsViewModel</h4>
     <hr />
@@ -11,14 +17,14 @@
     <div class="form-group" style="display:none">
         @Html.LabelFor(model => model.InstallmentId, "InstallmentID", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.HiddenFor(m => m.InstallmentId)            
+            @Html.HiddenFor(m => m.InstallmentId)
         </div>
     </div>
-    
+
     <div class="form-group" style="display:none">
         @Html.LabelFor(model => model.BeneficiaryId, "BeneficiaryId", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.HiddenFor(m => m.BeneficiaryId)            
+            @Html.HiddenFor(m => m.BeneficiaryId)
         </div>
     </div>
 
@@ -42,7 +48,8 @@
         @Html.LabelFor(model => model.IsCentreAmnt, "State Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="checkbox">
-                @Html.RadioButtonFor(model => model.IsCentreAmnt,false)@Html.Label("State Assistance")
+                @*@Html.RadioButton("IsRadioButton", "State Assistance")*@
+                <input type="radio" name="IsRadioButton" id="isrdo_1" value="State Assistance">@Html.Label("State Assistance")
                 @Html.ValidationMessageFor(model => model.IsCentreAmnt, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +59,8 @@
         @Html.LabelFor(model => model.IsCentreAmnt, "Central Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="checkbox">
-                @Html.RadioButtonFor(model => model.IsCentreAmnt,false)@Html.Label("Central Assistance")
+                @*@Html.RadioButton("IsRadioButton", "Central Assistance")*@
+                <input type="radio" name="IsRadioButton" id="isrdo_2" value="Central Assistance">@Html.Label("Central Assistance")
                 @Html.ValidationMessageFor(model => model.IsCentreAmnt, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -102,7 +110,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model._Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model._Comments,5,100, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextAreaFor(model => model._Comments, 5, 100, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model._Comments, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -146,15 +154,115 @@
             @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ModifiedBy, "Upload Photo", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            <img id="imgsite" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
+            <input type="file" value="Upload" id="imguploadsiteeng" name="imguploadsiteeng" onchange="readURL(this, 'imgsite')" class="btn btn-primary col-md-7" />
+            <input type="button" id="btnimg1cencal" onclick="removeimg('imgsite','imguploadsiteeng')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
+        </div>
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            @Html.CheckBox("ChkSign", "no") @Html.Label("Central Assistance")
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+               <label id="lblmsg" class="text-danger"></label>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input id="hiddforRadio"
+                   name="hiddforRadio"
+                   type="hidden"
+                   value="no" />
+            <input id="hiddforCheckbox"
+                   name="hiddforCheckbox"
+                   type="hidden"
+                   value="no" />
+            <input type="submit" value="Create" onclick="return validation();" class="btn btn-default" />
         </div>
     </div>
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+
+
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            debugger
+            alert("submited successfully");
+            window.location.href = "/WorkFlow/Index/";
+        };
+    </script>
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#isrdo_1, #isrdo_2").change(function () {
+            if ($("#isrdo_1").is(":checked")) {
+                $("#hiddforRadio").val("Checked");
+            }
+            else if ($("#isrdo_2").is(":checked")) {
+                $("#hiddforRadio").val("Checked");
+            }            
+        });
+
+        $("#ChkSign").change(function () {
+            if ($("#ChkSign").is(":checked")) {
+                $("#hiddforCheckbox").val("Checked");
+            }
+        })
+    });
+
+    function validation() {
+        if ($("#LoanAmnt").val().trim() == "") {
+            $("#lblmsg").text("Please Enter Loan Amount");
+            return false;
+        }
+        if ($("#hiddforRadio").val() == "no") {
+            $("#lblmsg").text("Please select State Assistance or Center Assistance");
+            return false;
+        }
+        if ($("#hiddforCheckbox").val() == "no") {
+            $("#lblmsg").text("Please sign in to confirm your submission");
+            return false;
+        }
+       
+        return true;
+    }
+
+    function readURL(input, id) {
+        //alert(id);
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            if (id == 'imgsite') {
+                reader.onload = function (e) {
+                    $('#imgsite')
+                        .attr('src', e.target.result);
+                };
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function removeimg(img, fileupld) {
+        document.getElementById(img).removeAttribute('src');
+        document.getElementById(fileupld).value = "";
+
+    }
+
+</script>

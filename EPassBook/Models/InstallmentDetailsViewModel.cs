@@ -10,6 +10,7 @@ namespace EPassBook.Models
         public int InstallmentId { get; set; }
         public int BeneficiaryId { get; set; }
         public Nullable<decimal> BeneficiaryAmnt { get; set; }
+        [Required(ErrorMessage ="Please enter Loan Amount")]
         public Nullable<decimal> LoanAmnt { get; set; }
         public Nullable<bool> IsCentreAmnt { get; set; }
         public string ConstructionLevel { get; set; }

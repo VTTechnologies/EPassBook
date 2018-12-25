@@ -18,7 +18,7 @@ namespace EPassBook.Models
         [Required(ErrorMessage = "Please enter the Password.")]
         public string Password { get; set; }
         [Display(Name = "Active:")]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
         //public Nullable<bool> IsLoggedIn { get; set; }
         [Required(ErrorMessage = "Please select user role.")]
         public int RoleId { get; set; }
@@ -33,6 +33,7 @@ namespace EPassBook.Models
         [Required(ErrorMessage = "Please select Company.")]
         public Nullable<int> CompanyID { get; set; }
         public bool RememberMe { get; set; }
+      
         public bool IsReset { get; set; }
         public bool CityName { get; set; }
 
