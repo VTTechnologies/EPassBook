@@ -8,7 +8,7 @@
     <Property Name="BeneficairyName" Type="nvarchar" MaxLength="150" />
     <Property Name="FatherName" Type="nvarchar" MaxLength="150" />
     <Property Name="Mother" Type="nvarchar" MaxLength="150" />
-    <Property Name="MobileNo" Type="bigint" />
+    <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
     <Property Name="PresentAddress" Type="nvarchar" MaxLength="350" />
     <Property Name="CityId" Type="int" />
     <Property Name="DTRNo" Type="int" />
@@ -239,7 +239,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="UserName" Type="nvarchar" MaxLength="150" />
     <Property Name="Password" Type="nvarchar" MaxLength="150" />
     <Property Name="Email" Type="nvarchar" MaxLength="200" />
-    <Property Name="MobileNo" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
     <Property Name="Address" Type="nvarchar(max)" />
     <Property Name="IsActive" Type="bit" />
     <Property Name="IsLoggedIn" Type="bit" />

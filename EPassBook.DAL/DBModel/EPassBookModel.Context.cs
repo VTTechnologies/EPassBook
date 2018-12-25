@@ -161,6 +161,5 @@ namespace EPassBook.DAL.DBModel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInstallmentListViewForUsersRoles_Result>("sp_GetInstallmentListViewForUsersRoles", stageidParameter);
         }
-
     }
 }

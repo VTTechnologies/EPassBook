@@ -178,7 +178,7 @@
     <Property Name="BeneficairyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="FatherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="Mother" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="MobileNo" Type="Int64" />
+    <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="PresentAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
     <Property Name="CityId" Type="Int32" />
     <Property Name="DTRNo" Type="Int32" />
@@ -423,18 +423,18 @@
     <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="MobileNo" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IsActive" Type="Boolean" />
     <Property Name="IsLoggedIn" Type="Boolean" />
     <Property Name="CityId" Type="Int32" />
     <Property Name="CompanyID" Type="Int32" />
+    <Property Name="IsReset" Type="Boolean" />
     <NavigationProperty Name="CityMaster" Relationship="EPassBookModel.FK_UserMaster_CityMaster" FromRole="UserMaster" ToRole="CityMaster" />
     <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.UserMaster_CompanyID_FK" FromRole="UserMaster" ToRole="CompanyMaster" />
     <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetail" />
     <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="UserMaster" ToRole="InstallmentSigning" />
     <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_userid_fk" FromRole="UserMaster" ToRole="UserInRole" />
-    <Property Name="IsReset" Type="Boolean" />
   </EntityType>
   <EntityType Name="WorkflowStage">
     <Key>

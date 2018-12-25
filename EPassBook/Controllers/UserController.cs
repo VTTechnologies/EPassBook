@@ -15,14 +15,13 @@ namespace EPassBook.Controllers
     [ElmahError]
     public class UserController : Controller
     {
-        private readonly IMapper _mapper;
         IUserService _userService;
         IRoleMasterService _roleMasterService;
         ICityService _cityMasterService;
         ICompanyMasterService _companyMasterService;
         IUserInRoleService _userInRoleService;
 
-        public UserController(IUserService userService, IMapper mapper, ICityService cityMasterService,
+        public UserController(IUserService userService, ICityService cityMasterService,
             IRoleMasterService roleMasterService, ICompanyMasterService companyMasterService, IUserInRoleService userInRoleService)
         {
             _userInRoleService = userInRoleService;
@@ -184,14 +183,14 @@ namespace EPassBook.Controllers
         [HttpPost]
         public ActionResult Create(UserViewModel userVM)
         {
-            var userData = _mapper.Map<UserViewModel, UserMaster>(userVM);
+            var userData = Mapper.UserMapper.Attach(userVM);
             var userInRole = new UserInRoleViewModel();
             _userService.Add(userData);
             _userService.SaveChanges();
             int id = userVM.UserId;
             userInRole.UserId = id;
             userInRole.RoleId = userVM.RoleId;
-            var roleData = _mapper.Map<UserInRoleViewModel, UserInRole>(userInRole);
+            var roleData = Mapper.UserInRoleMapper.Attach(userInRole);
             userData.UserInRoles.Add(roleData);
             _userService.SaveChanges();
             return RedirectToAction("userDetails");
@@ -201,7 +200,22 @@ namespace EPassBook.Controllers
         public ActionResult Index()
         {
             var users = _userService.Get(u => u.IsActive == true);
-            var mappedUser = _mapper.Map<IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
+            var mappedUser = users.Select(s => new UserViewModel
+            {
+                UserId = s.UserId,
+                UserName = s.UserName,
+                Password = s.Password,
+                Email = s.Email,
+                MobileNo = Convert.ToString(s.MobileNo),
+                CityName = s.CityMaster.CityName,
+                CompanyMaster= s.CompanyMaster == null ? null : new CompanyViewModel()
+                {
+                    CompanyID = s.CompanyMaster.CompanyID,
+                    CompanyName = s.CompanyMaster.CompanyName,
+                    MobileNo = s.CompanyMaster.MobileNo,
+
+                }
+        }).ToList();           
 
             return View(mappedUser);
         }
@@ -212,7 +226,7 @@ namespace EPassBook.Controllers
             var user = _userService.GetUserById(id);
             var userInRole = _userInRoleService.Get().Where(w => w.UserMaster.UserInRoles.Where(we => we.RoleId == user.UserInRoles.Select(a => a.RoleId).FirstOrDefault()).Select(s => s.RoleId).Any()).FirstOrDefault().RoleId;
             Session["roleId"] = userInRole;
-            var mappedUser = _mapper.Map<UserMaster, UserViewModel>(user);
+            var mappedUser = Mapper.UserMapper.Detach(user);
             var roles = _roleMasterService.Get(r => r.IsActive == true);
             var cities = _cityMasterService.Get(r => r.IsActive == true);
             var companies = _companyMasterService.Get(r => r.IsActive == true);
@@ -241,7 +255,7 @@ namespace EPassBook.Controllers
                 userData.UserName = userVM.UserName;
                 userData.Password = userVM.Password;
                 userData.Email = userVM.Email;
-                userData.MobileNo = Convert.ToDecimal(userVM.MobileNo);
+                userData.MobileNo = userVM.MobileNo;
                 userData.Address = userVM.Address;
                 userData.CityId = userVM.CityId;
                 userData.CompanyID = userVM.CompanyID;

@@ -34,8 +34,8 @@ namespace EPassBook.Models
         public Nullable<int> CompanyID { get; set; }
         public bool RememberMe { get; set; }
       
-        public bool IsReset { get; set; }
-        public bool CityName { get; set; }
+        public bool? IsReset { get; set; }
+        public string CityName { get; set; }
 
         public virtual CityViewModel CityMaster { get; set; }
         public virtual CompanyViewModel CompanyMaster { get; set; }
@@ -44,7 +44,7 @@ namespace EPassBook.Models
         public virtual ICollection<UserInRoleViewModel> UserInRoles { get; set; }
 
       
-        public bool IsLoggedIn { get; set; }
+        public bool? IsLoggedIn { get; set; }
        
 
       

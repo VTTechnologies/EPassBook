@@ -67,14 +67,13 @@ namespace EPassBook.Mapper
                 IsActive = userMaster.CityMaster.IsActive,
 
             };
-            userViewModel.CompanyMaster = userMaster.CityMaster == null ? null : new CompanyViewModel()
+            userViewModel.CompanyMaster = userMaster.CompanyMaster == null ? null : new CompanyViewModel()
             {
                 CompanyID = userMaster.CompanyMaster.CompanyID,
                 CompanyName = userMaster.CompanyMaster.CompanyName,
                 MobileNo = userMaster.CompanyMaster.MobileNo,
 
             };
-            userViewModel.IsReset = userMaster.IsReset;
 
             return userViewModel;
         }
