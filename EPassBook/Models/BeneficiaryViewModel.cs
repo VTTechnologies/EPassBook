@@ -50,6 +50,8 @@ namespace EPassBook.Models
         public virtual ICollection<InstallmentDetailsViewModel> InstallmentDetails { get; set; }
         public virtual ICollection<CommentsViewModel> Comments { get; set; }
         public virtual ICollection<GeoTaggingViewModel> GeoTaggingDetails { get; set; }
-        public virtual ICollection<InstllmentRejectionViewModel> InstallmentRejections { get; set; }
+        public virtual ICollection<InstllmentRejectionViewModel> InstallmentRejections { get; set; }    
+
+       
     }
 }

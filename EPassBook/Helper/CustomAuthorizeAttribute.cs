@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using EPassBook.DAL.DBModel;
+﻿using EPassBook.DAL.DBModel;
 using EPassBook.DAL.IService;
 using EPassBook.Models;
 using System;

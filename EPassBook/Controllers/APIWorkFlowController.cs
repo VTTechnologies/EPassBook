@@ -1,30 +1,28 @@
-﻿using AutoMapper;
-using EPassBook.DAL.IService;
+﻿using EPassBook.DAL.IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using static EPassBook.Helper.Common;
 
 namespace EPassBook.Controllers
 {
     public class APIWorkFlowController : ApiController
     {
-        private readonly IMapper _mapper;
         IUserService _userService;
         IBenificiaryService _benificiaryService;
         IInstallmentDetailService _installmentDetailService;
 
-        public APIWorkFlowController(IUserService userService, IBenificiaryService benificiaryService, IInstallmentDetailService installmentDetailService, IMapper mapper)
+        public APIWorkFlowController(IUserService userService, IBenificiaryService benificiaryService, IInstallmentDetailService installmentDetailService)
         {
             _benificiaryService = benificiaryService;
             _userService = userService;
             _installmentDetailService = installmentDetailService;
-            _mapper = mapper;
         }
 
-        // GET api/product
+        [HttpGet]
         public HttpResponseMessage Get()
         {
             var beneficiaries = _benificiaryService.GetAllBenificiaries();
@@ -36,7 +34,7 @@ namespace EPassBook.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Products not found");
         }
 
-        // GET api/product/5
+        [HttpGet]
         public HttpResponseMessage Get(int beneficiaryId)
         {
             var benificiary = _benificiaryService.GetBenificiaryById(beneficiaryId);
@@ -46,7 +44,7 @@ namespace EPassBook.Controllers
         }
 
 
-        // GET api/product/5
+        [HttpGet]
         public HttpResponseMessage ValidatedUser(int userName,string password)
         {
             var benificiary = _benificiaryService.AuthenticateBeneficiary(userName, password);
@@ -57,16 +55,19 @@ namespace EPassBook.Controllers
             else
             {
                 return Request.CreateResponse(HttpStatusCode.Forbidden,"You are not having access application, Please contact administrator.");
-
             }
         }
 
-        // GET api/product/5
+        [HttpPost]
         public HttpResponseMessage UpdateInstallmentStatus(int beneficiaryId,int installmentNo)
         {
-            var benificiary = _installmentDetailService.GetInstallmentDetailById(beneficiaryId);
-            if (benificiary != null)
-                return Request.CreateResponse(HttpStatusCode.OK, benificiary);
+            var installmentDetail = _installmentDetailService.GetInstallmentDetailById(beneficiaryId);
+            installmentDetail.StageID = Convert.ToInt32(WorkFlowStages.UserRequest);
+            installmentDetail.ModifiedBy = "Beneficiary";
+            installmentDetail.ModifiedDate = DateTime.Now;
+
+            if (installmentDetail != null)
+                return Request.CreateResponse(HttpStatusCode.OK, installmentDetail);
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No product found for this id");
         }
     }
