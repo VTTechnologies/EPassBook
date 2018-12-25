@@ -41,6 +41,9 @@ namespace EPassBook.Mapper
                 IsActive = userViewModel.CompanyMaster.IsActive,
 
             };
+
+            userMaster.UserInRoles = userViewModel.UserInRoles.Select(s => new UserInRole { id = s.id, RoleId = s.RoleId, UserId = s.UserId }).ToList();           
+
             userMaster.IsReset = userViewModel.IsReset;       
         
             return userMaster;
@@ -74,7 +77,7 @@ namespace EPassBook.Mapper
                 MobileNo = userMaster.CompanyMaster.MobileNo,
 
             };
-
+            userViewModel.UserInRoles = userMaster.UserInRoles.Select(s => new UserInRoleViewModel { id = s.id, RoleId = s.RoleId.Value, UserId = s.UserId }).ToList();
             return userViewModel;
         }
     }
