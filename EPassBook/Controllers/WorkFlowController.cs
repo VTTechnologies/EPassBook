@@ -142,39 +142,76 @@ namespace EPassBook.Controllers
         }
 
         [HttpPost]
-        public ActionResult SiteEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
+        public ActionResult SiteEngineer(InstallmentDetailsViewModel installmentDetailViewModel, string IsRadioButton)
         {
+            HttpPostedFileBase hasbandphoto = Request.Files["imguploadsiteeng"];
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
-
-            if (Session["UserDetails"] != null)
+            if (ModelState.IsValid)
             {
-                var user = Session["UserDetails"] as UserViewModel;
-                installment.ModifiedBy = user.UserName;
-                installment.CompanyID = user.CompanyID;
+                if (Session["UserDetails"] != null)
+                {
+                    bool iscenter = true;
 
-                installment.BeneficiaryAmnt = installmentDetailViewModel.BeneficiaryAmnt;
-                installment.LoanAmnt = installmentDetailViewModel.LoanAmnt;
-                installment.IsCentreAmnt = installmentDetailViewModel.IsCentreAmnt;
-                installment.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
-                installment.StageID = (int)Common.WorkFlowStages.ProjectManager;
-                installment.InstallmentNo = installmentDetailViewModel.InstallmentNo;
-                installment.ModifiedDate = DateTime.Now;
+                    if (IsRadioButton == "State Assistance")
+                    {
+                        iscenter = false;
+                    }
 
-                var comments = new Comment();
-                comments.Comments = installmentDetailViewModel._Comments;
-                comments.CreatedBy = user.UserName;
-                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
-                comments.CreatedDate = DateTime.Now;
-                comments.CompanyID = user.CompanyID;
+                    var user = Session["UserDetails"] as UserViewModel;
+                    installment.ModifiedBy = user.UserName;
+                    installment.CompanyID = user.CompanyID;
 
-                installment.Comments.Add(comments);
+                    installment.BeneficiaryAmnt = installmentDetailViewModel.BeneficiaryAmnt;
+                    installment.LoanAmnt = installmentDetailViewModel.LoanAmnt;
+                    installment.IsCentreAmnt = iscenter;
+                    installment.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
+                    installment.StageID = (int)Common.WorkFlowStages.ProjectManager;
+                    installment.InstallmentNo = installmentDetailViewModel.InstallmentNo;
+                    installment.ModifiedDate = DateTime.Now;
 
-                _installmentDetailService.Update(installment);
-                _installmentDetailService.SaveChanges();
+                    // Insert reocrd in comment table 
+                    var comments = new Comment();
+                    comments.Comments = installmentDetailViewModel._Comments;
+                    comments.CreatedBy = user.UserName;
+                    comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    comments.CreatedDate = DateTime.Now;
+                    comments.CompanyID = user.CompanyID;
 
-                Session["InstallmentId"] = null;
+                    // Insert reocrd in GeoTaggingDetail table 
+                    var geotaging = new GeoTaggingDetail();
+                    geotaging.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    geotaging.CompanyID = user.CompanyID;
+                    geotaging.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
+                    geotaging.UserId = user.UserId;
+                    geotaging.CreatedBy = user.UserName;
+                    geotaging.CreatedDate = DateTime.Now;
+                    geotaging.Photo = pm.ConvertToBytes(hasbandphoto);
+
+                    // Insert reocrd in GeoTaggingDetail table 
+                    var signing = new InstallmentSigning();
+                    signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                    signing.UserId = user.UserId;
+                    signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                    signing.Sign = true;
+                    signing.CreatedDate = DateTime.Now;
+                    signing.CompanyID = user.CompanyID;
+
+                    // Applying changes to database tables
+                    installment.Comments.Add(comments);
+                    installment.GeoTaggingDetails.Add(geotaging);
+                    installment.InstallmentSignings.Add(signing);
+                    _installmentDetailService.Update(installment);
+
+
+                    _installmentDetailService.SaveChanges();
+
+                    Session["InstallmentId"] = null;
+                    ViewBag.Message = "sussess message";
+                    //return RedirectToAction("Index", "WorkFlow");
+                }
             }
-            return View();
+
+            return PartialView("_SiteEngineer", installmentDetailViewModel);
         }
 
         [HttpGet]
