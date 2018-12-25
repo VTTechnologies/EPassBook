@@ -4,6 +4,7 @@ using EPassBook.DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace EPassBook.DAL.Service
 {
@@ -11,14 +12,23 @@ namespace EPassBook.DAL.Service
     {
         private readonly EPassBookEntities _dbContext;
         private UnitOfWork unitOfWork;
-        private GenericRepository<InstallmentDetail> InstallmentDetailRepository;
+        private GenericRepository<InstallmentDetail> installmentDetailRepository;
 
         public InstallmentDetailService()
         {
             _dbContext = new EPassBookEntities();
             unitOfWork = new UnitOfWork(_dbContext);
-            InstallmentDetailRepository = unitOfWork.GenericRepository<InstallmentDetail>();
+            installmentDetailRepository = unitOfWork.GenericRepository<InstallmentDetail>();
         }
+
+        public IEnumerable<InstallmentDetail> Get(Expression<Func<InstallmentDetail, bool>> filter = null,
+        Func<IQueryable<InstallmentDetail>, IOrderedQueryable<InstallmentDetail>> orderBy = null,
+        string includeProperties = "")
+        {
+            IEnumerable<InstallmentDetail> installmentDetails = installmentDetailRepository.Get(filter, orderBy, includeProperties).ToList();
+            return installmentDetails;
+        }
+
 
         public void Delete(int id)
         {
@@ -27,19 +37,19 @@ namespace EPassBook.DAL.Service
 
         public IEnumerable<InstallmentDetail> GetAllInstallmentDetails()
         {
-            IEnumerable<InstallmentDetail> benficimaster = InstallmentDetailRepository.GetAll().ToList();
+            IEnumerable<InstallmentDetail> benficimaster = installmentDetailRepository.GetAll().ToList();
             return benficimaster;
         }
 
         public InstallmentDetail GetInstallmentDetailById(int id)
         {
-            InstallmentDetail benficiaries = InstallmentDetailRepository.GetById(id);
+            InstallmentDetail benficiaries = installmentDetailRepository.GetById(id);
             return benficiaries;
         }
 
         public void Add(InstallmentDetail installmentDetail)
         {
-            InstallmentDetailRepository.Add(installmentDetail);            
+            installmentDetailRepository.Add(installmentDetail);            
         }
 
         public void SaveChanges()
@@ -49,7 +59,7 @@ namespace EPassBook.DAL.Service
 
         public void Update(InstallmentDetail installmentDetail)
         {
-            InstallmentDetailRepository.Update(installmentDetail);
+            installmentDetailRepository.Update(installmentDetail);
         }
 
         IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result> IInstallmentDetailService.GetInstallmentForLoginUsersWithStages(int StageID)

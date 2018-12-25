@@ -15,12 +15,12 @@ namespace EPassBook.Controllers
     {
         private readonly IMapper _mapper;
         IInstallmentDetailService _installmentDetailService;
-        IBenificiary _benificiaryService;
+        IBenificiaryService _benificiaryService;
         IWorkFlowStagesService _iWorkFlowStagesService;
         ICommentService _icommentService;
 
         PhotoManager pm = new PhotoManager();
-        public WorkFlowController(IMapper mapper, IInstallmentDetailService installmentDetailService, IBenificiary benificiaryService, IWorkFlowStagesService iWorkFlowStagesService, ICommentService icommentService)
+        public WorkFlowController(IMapper mapper, IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService, IWorkFlowStagesService iWorkFlowStagesService, ICommentService icommentService)
         {
             _iWorkFlowStagesService = iWorkFlowStagesService;
             _benificiaryService = benificiaryService;
@@ -67,17 +67,17 @@ namespace EPassBook.Controllers
         [HttpGet]
         public ActionResult Accountant(int id)
         {
-            AccountDetailsViewModel advm = new AccountDetailsViewModel();
+            AccountDetailsViewModel accountDetailsViewModel = new AccountDetailsViewModel();
             InstallmentSigning instS = new InstallmentSigning();
             var installmentDetails = _installmentDetailService.GetInstallmentDetailById(id);
             var benificiaryDetails = _benificiaryService.GetBenificiaryById(installmentDetails.BeneficiaryId);
-            advm.InstallmentId = id;
+            accountDetailsViewModel.InstallmentId = id;
 
-            advm.LoanAmnt = Convert.ToInt32(installmentDetails.LoanAmnt);
-            advm.IFSCCode = benificiaryDetails.IFSCCode;
-            advm.AccountNo = benificiaryDetails.AccountNo.ToString();
-            advm.LoanAmtInRupees = advm.LoanAmnt.ConvertNumbertoWords();
-            return View(advm);
+            accountDetailsViewModel.LoanAmnt = Convert.ToInt32(installmentDetails.LoanAmnt);
+            accountDetailsViewModel.IFSCCode = benificiaryDetails.IFSCCode;
+            accountDetailsViewModel.AccountNo = benificiaryDetails.AccountNo.ToString();
+            accountDetailsViewModel.LoanAmtInRupees = accountDetailsViewModel.LoanAmnt.ConvertNumbertoWords();
+            return PartialView("_Accountant", accountDetailsViewModel);
         }
 
         [HttpPost]

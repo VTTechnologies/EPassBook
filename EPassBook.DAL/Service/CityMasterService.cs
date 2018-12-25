@@ -4,6 +4,7 @@ using EPassBook.DAL.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,35 +14,42 @@ namespace EPassBook.DAL.Service
     {
         private readonly EPassBookEntities _dbContext;
         private UnitOfWork unitOfWork;
-        private GenericRepository<CityMaster> CityMasterRepository;
+        private GenericRepository<CityMaster> cityMasterRepository;
 
         public CityMasterService()
         {
             _dbContext = new EPassBookEntities();
             unitOfWork = new UnitOfWork(_dbContext);
-            CityMasterRepository = unitOfWork.GenericRepository<CityMaster>();
+            cityMasterRepository = unitOfWork.GenericRepository<CityMaster>();
+        }
+        public IEnumerable<CityMaster> Get(Expression<Func<CityMaster, bool>> filter = null,
+        Func<IQueryable<CityMaster>, IOrderedQueryable<CityMaster>> orderBy = null,
+        string includeProperties = "")
+        {
+            IEnumerable<CityMaster> cities = cityMasterRepository.Get(filter, orderBy, includeProperties).ToList();
+            return cities;
         }
 
         public void Delete(int id)
         {
-            CityMasterRepository.Delete(id);
+            cityMasterRepository.Delete(id);
         }
 
         public IEnumerable<CityMaster> GetAllCities()
         {
-            IEnumerable<CityMaster> Allcities = CityMasterRepository.GetAll().ToList();
+            IEnumerable<CityMaster> Allcities = cityMasterRepository.GetAll().ToList();
             return Allcities;
         }
 
         public CityMaster GetCityById(int id)
         {
-            CityMaster city = CityMasterRepository.GetById(id);
+            CityMaster city = cityMasterRepository.GetById(id);
             return city;
         }
 
         public void Add(CityMaster city)
         {
-            CityMasterRepository.Add(city);
+            cityMasterRepository.Add(city);
         }
 
         public void SaveChanges()
@@ -51,7 +59,7 @@ namespace EPassBook.DAL.Service
 
         public void Update(CityMaster city)
         {
-            CityMasterRepository.Update(city);
+            cityMasterRepository.Update(city);
         }
     }
 }

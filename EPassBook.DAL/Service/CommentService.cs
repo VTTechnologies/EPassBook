@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace EPassBook.DAL.Service
 {
@@ -22,6 +23,14 @@ namespace EPassBook.DAL.Service
             _dbContext = new EPassBookEntities();
             unitOfWork = new UnitOfWork(_dbContext);
             commentRepository = unitOfWork.GenericRepository<Comment>();
+        }
+
+        public IEnumerable<Comment> Get(Expression<Func<Comment, bool>> filter = null,
+          Func<IQueryable<Comment>, IOrderedQueryable<Comment>> orderBy = null,
+          string includeProperties = "")
+        {
+            IEnumerable<Comment> comments = commentRepository.Get(filter, orderBy, includeProperties).ToList();
+            return comments;
         }
         public IEnumerable<Comment> GetAllComments()
         {

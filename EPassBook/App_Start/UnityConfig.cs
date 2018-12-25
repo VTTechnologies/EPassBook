@@ -60,7 +60,7 @@ namespace EPassBook
 
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType<IUserService, UserService>();
-            container.RegisterType<IBenificiary, BenificiaryService>();
+            container.RegisterType<IBenificiaryService, BenificiaryService>();
             container.RegisterType<ICommentService, CommentService>();
             container.RegisterType<IInstallmentDetailService, InstallmentDetailService>();
             container.RegisterType<IWorkFlowStagesService, WorkFlowStagesService>();
