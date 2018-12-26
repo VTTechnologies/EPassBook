@@ -18,14 +18,15 @@ namespace EPassBook
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
             // configure json formatter
             JsonMediaTypeFormatter jsonFormatter = config.Formatters.JsonFormatter;
-
-            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.XmlFormatter.UseXmlSerializer = true;
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling =
+            Newtonsoft.Json.PreserveReferencesHandling.Objects;
         }
     }
 }

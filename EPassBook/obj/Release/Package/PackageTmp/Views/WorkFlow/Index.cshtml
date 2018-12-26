@@ -1,0 +1,79 @@
+﻿@model IEnumerable<EPassBook.Models.InstallmentListView>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("Index","WorkFlow",FormMethod.Post))
+{
+    <table class="table">
+        <tr>            
+            <th>
+                @Html.DisplayNameFor(model => model.BeneficiaryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BeneficairyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlanYear)
+            </th>
+            <th style="display:none">
+                @Html.DisplayNameFor(model => model.StageID)
+            </th>
+            <th style="display:none">
+                @Html.DisplayNameFor(model => model.IsCompleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InstallmentNo)
+            </th>
+            <th style="display:none">
+                @Html.DisplayNameFor(model => model.CompanyID)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>            
+            <td>
+                @Html.DisplayFor(modelItem => item.BeneficiaryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BeneficairyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlanYear)
+            </td>
+            <td style="display:none">
+                @Html.DisplayFor(modelItem => item.StageID)
+            </td>
+            <td style="display:none">
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstallmentNo)
+            </td>
+            <td style="display:none">
+                @Html.DisplayFor(modelItem => item.CompanyID)
+            </td>
+            <td>
+                @Html.ActionLink("View Benificiary", "Workflow", "WorkFlow", new { id = item.InstallmentId }, htmlAttributes: new { @class = "btn btn-primary" })
+                
+                @*<input type="submit" value="View Benificiary" class="btn btn-success" />*@
+            </td>
+        </tr>
+        }
+
+    </table>
+}

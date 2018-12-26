@@ -1,0 +1,12 @@
+D:\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EPassBook.DAL.dll.config
+D:\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EPassBook.DAL.dll
+D:\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EPassBook.DAL.pdb
+D:\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.dll
+D:\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.SqlServer.dll
+D:\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.xml
+D:\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.SqlServer.xml
+D:\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.csprojAssemblyReference.cache
+D:\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.csproj.CoreCompileInputs.cache
+D:\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.csproj.CopyComplete
+D:\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.dll
+D:\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.pdb

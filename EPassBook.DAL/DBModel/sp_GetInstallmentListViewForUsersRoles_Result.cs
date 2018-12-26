@@ -16,7 +16,7 @@ namespace EPassBook.DAL.DBModel
         public int InstallmentId { get; set; }
         public int BeneficiaryId { get; set; }
         public string BeneficairyName { get; set; }
-        public Nullable<long> MobileNo { get; set; }
+        public string MobileNo { get; set; }
         public string CreatedDate { get; set; }
         public Nullable<int> PlanYear { get; set; }
         public Nullable<int> StageID { get; set; }

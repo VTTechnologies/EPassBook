@@ -82,7 +82,7 @@ namespace EPassBook.Controllers
                     userCookie.Expires = DateTime.Now.AddDays(1);
                     Response.Cookies.Add(userCookie);
                 }
-                user = Mapper.UserMapper.Detach(userData);//_mapper.Map<UserMaster, UserViewModel>(userData);
+                user = Mapper.UserMapper.Detach(userData);
                 Session["UserDetails"] = "";
                 Session["UserDetails"] = user;
                  if (userData != null)

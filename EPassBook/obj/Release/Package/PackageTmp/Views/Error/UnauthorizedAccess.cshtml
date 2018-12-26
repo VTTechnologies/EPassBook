@@ -1,0 +1,27 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>Oops!</title>
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:700,900" rel="stylesheet">
+    <link href="~/Content/Error.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div id="notfound">
+        <div class="notfound">
+            <div class="notfound-404">
+                <h1>403</h1>
+            </div>
+            <h2>Access Denied</h2>
+            <p>You don't have permissions to access/on this server</p>
+            @Html.ActionLink("Go To Login", "Login", "User")
+        </div>
+    </div>
+</body>
+</html>
+

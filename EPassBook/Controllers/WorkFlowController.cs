@@ -10,6 +10,7 @@ using EPassBook.Helper;
 
 namespace EPassBook.Controllers
 {
+    [ElmahError]
     public class WorkFlowController : Controller
     {
         IInstallmentDetailService _installmentDetailService;
@@ -26,6 +27,8 @@ namespace EPassBook.Controllers
             _icommentService= icommentService;
         }
         // GET: WorkFlow
+        [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult Index()
         {
             int stageId = 0;
@@ -49,16 +52,16 @@ namespace EPassBook.Controllers
                 MobileNo=Convert.ToString(s.MobileNo),
                 PlanYear=s.PlanYear,
                 StageID=s.StageID
-            }).ToList();  //_mapper.Map<IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result>, IEnumerable<InstallmentListView>>(installmentListView);
+            }).ToList();  
             return View();
         }
 
-
-        [CustomAuthorize(Common.Admin, Common.SiteEngineer)]
+        [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer,Common.Accountant,Common.ChiefOfficer,Common.CityEngineer,Common.ProjectEngineer)]
         public ActionResult Workflow(int? id)
         {
             var benificiary = _benificiaryService.GetBenificiaryById(1);
-            var benficiarymodel = Mapper.BeneficiaryMapper.Detach(benificiary);  //_mapper.Map<BeneficiaryViewModel>(benificiary);
+            var benficiarymodel = Mapper.BeneficiaryMapper.Detach(benificiary); 
             Session["InstallmentId"] = id;
             string rolename = "";
             if (Session["UserDetails"] != null)
@@ -71,7 +74,9 @@ namespace EPassBook.Controllers
             return View(benficiarymodel);
         }
 
+        
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult Accountant(int id)
         {
             AccountDetailsViewModel accountDetailsViewModel = new AccountDetailsViewModel();
@@ -133,7 +138,9 @@ namespace EPassBook.Controllers
                 return RedirectToAction("Login", "User");
             }
         }
+
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult SiteEngineer()
         {
             int installmentid = 0;
@@ -143,7 +150,7 @@ namespace EPassBook.Controllers
             }
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
-            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
             installmentviewmodel.Comments = null;
             return PartialView("_SiteEngineer", installmentviewmodel);
         }
@@ -192,7 +199,7 @@ namespace EPassBook.Controllers
                     geotaging.UserId = user.UserId;
                     geotaging.CreatedBy = user.UserName;
                     geotaging.CreatedDate = DateTime.Now;
-                    geotaging.Photo = pm.ConvertToBytes(hasbandphoto);
+                    geotaging.Photo = "";//pm.ConvertToBytes(hasbandphoto);
 
                     // Insert reocrd in GeoTaggingDetail table 
                     var signing = new InstallmentSigning();
@@ -222,6 +229,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult SurveyDetails()
         {
             try
@@ -237,7 +245,7 @@ namespace EPassBook.Controllers
                     Sign =s.Sign,
                     Physical_Progress =s.Physical_Progress
 
-                }).ToList();// _mapper.Map<IEnumerable<sp_GetSurveyDetailsByBenID_Result>, IEnumerable<SurveyDetailsModel>>(commentlist);
+                }).ToList();
 
                 return View();
             }
@@ -248,10 +256,12 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult DataEntry()
         {
             return PartialView("_DataEntry", new BeneficiaryViewModel());
         }
+
         [HttpPost]
         public ActionResult DataEntry(BeneficiaryViewModel BVM)
         {
@@ -269,13 +279,12 @@ namespace EPassBook.Controllers
         [NonAction]
         public int UploadImageInDataBase(HttpPostedFileBase hphoto, HttpPostedFileBase wphoto, BeneficiaryViewModel BVM)
         {
-            BVM.Hasband_Photo = pm.ConvertToBytes(hphoto);
-            BVM.Wife_Photo = pm.ConvertToBytes(wphoto);
+            BVM.Hasband_Photo = "";//pm.ConvertToBytes(hphoto);
+            BVM.Wife_Photo = "";//pm.ConvertToBytes(wphoto);
             var user = Session["UserDetails"] as UserViewModel;
             var insertbeneficiary = new BenificiaryMaster();
-            //var benficiarymodel = _mapper.Map<BeneficiaryViewModel, BenificiaryMaster>(BVM);
-            insertbeneficiary.Hasband_Photo = BVM.Hasband_Photo;
-            insertbeneficiary.Wife_Photo = BVM.Wife_Photo;
+            insertbeneficiary.Hasband_Photo = "";//BVM.Hasband_Photo;
+            insertbeneficiary.Wife_Photo = "";//BVM.Wife_Photo;
             insertbeneficiary.BeneficairyName = BVM.BeneficairyName;
             insertbeneficiary.FatherName = BVM.FatherName;
             insertbeneficiary.Mother = BVM.Mother;
