@@ -6,9 +6,9 @@ using System.Web;
 
 namespace EPassBook.Helper
 {
-    public class PhotoManager
+    public static class PhotoManager
     {
-        public byte[] ConvertToBytes(HttpPostedFileBase image)
+        public static byte[] ConvertToBytes(HttpPostedFileBase image)
         {
             byte[] imageBytes = null;
             if (image != null)

@@ -18,22 +18,6 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_UpdatTransactionId" FunctionName="EPassBookModel.Store.sp_UpdatTransactionId" />
-    <FunctionImportMapping FunctionImportName="sp_GetInstallmentListViewForUsersRoles" FunctionName="EPassBookModel.Store.sp_GetInstallmentListViewForUsersRoles">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result">
-          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-          <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
-          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
-          <ScalarProperty Name="StageID" ColumnName="StageID" />
-          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <EntitySetMapping Name="BenificiaryMasters">
       <EntityTypeMapping TypeName="EPassBookModel.BenificiaryMaster">
         <MappingFragment StoreEntitySet="BenificiaryMaster">
@@ -293,5 +277,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetInstallmentListViewForUsersRoles" FunctionName="EPassBookModel.Store.sp_GetInstallmentListViewForUsersRoles">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result">
+          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
+          <ScalarProperty Name="StageID" ColumnName="StageID" />
+          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
