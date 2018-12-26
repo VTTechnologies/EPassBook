@@ -17,7 +17,7 @@ namespace EPassBook.Controllers
         IWorkFlowStagesService _iWorkFlowStagesService;
         ICommentService _icommentService;
 
-        PhotoManager pm = new PhotoManager();
+       
         public WorkFlowController(IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService, IWorkFlowStagesService iWorkFlowStagesService, ICommentService icommentService)
         {
             _iWorkFlowStagesService = iWorkFlowStagesService;
@@ -192,7 +192,7 @@ namespace EPassBook.Controllers
                     geotaging.UserId = user.UserId;
                     geotaging.CreatedBy = user.UserName;
                     geotaging.CreatedDate = DateTime.Now;
-                    geotaging.Photo = pm.ConvertToBytes(hasbandphoto);
+                    geotaging.Photo = PhotoManager.ConvertToBytes(hasbandphoto);
 
                     // Insert reocrd in GeoTaggingDetail table 
                     var signing = new InstallmentSigning();
@@ -253,64 +253,23 @@ namespace EPassBook.Controllers
             return PartialView("_DataEntry", new BeneficiaryViewModel());
         }
         [HttpPost]
-        public ActionResult DataEntry(BeneficiaryViewModel BVM)
+        public ActionResult DataEntry(BeneficiaryViewModel beneficiaryViewModel)
         {
             HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
             HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
-            int i = UploadImageInDataBase(hasbandphoto, wifephoto, BVM);
-            if (i == 1)
-            {
-                return RedirectToAction("Index");
-            }
-            return View(BVM);
-
-
-        }
-        [NonAction]
-        public int UploadImageInDataBase(HttpPostedFileBase hphoto, HttpPostedFileBase wphoto, BeneficiaryViewModel BVM)
-        {
-            BVM.Hasband_Photo = pm.ConvertToBytes(hphoto);
-            BVM.Wife_Photo = pm.ConvertToBytes(wphoto);
             var user = Session["UserDetails"] as UserViewModel;
-            var insertbeneficiary = new BenificiaryMaster();
-            //var benficiarymodel = _mapper.Map<BeneficiaryViewModel, BenificiaryMaster>(BVM);
-            insertbeneficiary.Hasband_Photo = BVM.Hasband_Photo;
-            insertbeneficiary.Wife_Photo = BVM.Wife_Photo;
-            insertbeneficiary.BeneficairyName = BVM.BeneficairyName;
-            insertbeneficiary.FatherName = BVM.FatherName;
-            insertbeneficiary.Mother = BVM.Mother;
-            insertbeneficiary.MobileNo = BVM.MobileNo;
-            insertbeneficiary.CityId = BVM.CityId;
-            insertbeneficiary.DTRNo = BVM.DTRNo;
-            insertbeneficiary.RecordNo = BVM.RecordNo;
-            insertbeneficiary.Class = BVM.Class;
-            insertbeneficiary.General = BVM.General;
-            insertbeneficiary.Single = BVM.Single;
-            insertbeneficiary.Disabled = BVM.Disabled;
-            insertbeneficiary.Password = BVM.Password;
-            insertbeneficiary.AdharNo = BVM.AdharNo;
-            insertbeneficiary.VoterID = BVM.VoterID;
-            insertbeneficiary.Area = BVM.Area;
-            insertbeneficiary.MojaNo = BVM.MojaNo;
-            insertbeneficiary.KhataNo = BVM.KhataNo;
-            insertbeneficiary.KhasraNo = BVM.KhasraNo;
-            insertbeneficiary.PlotNo = BVM.PlotNo;
-            insertbeneficiary.PoliceStation = BVM.PoliceStation;
-            insertbeneficiary.WardNo = BVM.WardNo;
-            insertbeneficiary.District = BVM.District;
-            insertbeneficiary.BankName = BVM.BankName;
-            insertbeneficiary.BranchName = BVM.BranchName;
-            insertbeneficiary.IFSCCode = BVM.IFSCCode;
-            insertbeneficiary.AccountNo = BVM.AccountNo;
-            insertbeneficiary.CreatedBy = user.UserName;
-            insertbeneficiary.CreatedDate = DateTime.Now;
-            insertbeneficiary.CompanyID = user.CompanyID;
+            beneficiaryViewModel.Hasband_Photo = PhotoManager.ConvertToBytes(hasbandphoto);
+            beneficiaryViewModel.Wife_Photo = PhotoManager.ConvertToBytes(wifephoto);
+            beneficiaryViewModel.CreatedBy = user.UserName;
+            var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
             _benificiaryService.Add(insertbeneficiary);
             _benificiaryService.SaveChanges();
-            return 1;
+           
+                return RedirectToAction("Index");
+           
 
         }
-
+       
         [HttpGet]
         public ActionResult ProjectEngineer()
         {
