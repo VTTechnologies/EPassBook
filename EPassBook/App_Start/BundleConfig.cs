@@ -36,6 +36,15 @@ namespace EPassBook
                       "~/Content/DashboardTheme/css/component.css",
                       "~/Content/DashboardTheme/css/demo.css",
                       "~/Content/DashboardTheme/css/normalize.css"));
+
+            bundles.Add(new StyleBundle("~/Content/DataTablecss").Include(
+                      "~/Content/DataTables/dataTables.bootstrap.min.css",
+                      "~/Content/DataTables/responsive.bootstrap.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/DataTablejs").Include(
+                       "~/Scripts/DataTables/dataTables.bootstrap.min.js",
+                       "~/Scripts/DataTables/jquery.dataTables.min.js",
+                       "~/Scripts/DataTables/dataTables.bootstrap4.js"));
         }
     }
 }

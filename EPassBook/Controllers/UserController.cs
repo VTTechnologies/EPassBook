@@ -96,7 +96,14 @@ namespace EPassBook.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Index", "WorkFlow");
+                            if (user.UserInRoles.FirstOrDefault().RoleId == Convert.ToInt32(Common.Roles.DataEntry))
+                            {
+                                return RedirectToAction("Index", "Beneficiary");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "WorkFlow");
+                            }
                         }
                     }
                     else
