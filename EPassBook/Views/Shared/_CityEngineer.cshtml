@@ -7,7 +7,7 @@
     }
 }
 @*FormMethod.Post, new { enctype = "multipart/form-data" }))*@
-@using (Html.BeginForm("ProjectEngineer", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CityEngineer", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -50,7 +50,7 @@
             <div class="col-md-10">
                 <div class="checkbox">
                     @*@Html.RadioButton("IsRadioButton", "State Assistance")*@
-                    <input type="radio" name="IsRadioButton" disabled id="isrdo_1_PM" value="State Assistance">@Html.Label("State Assistance")
+                    <input type="radio" name="IsRadioButton" disabled id="isrdo_1_CE" value="State Assistance">@Html.Label("State Assistance")
                     @Html.ValidationMessageFor(model => model.IsCentreAmnt, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -61,7 +61,7 @@
             <div class="col-md-10">
                 <div class="checkbox">
                     @*@Html.RadioButton("IsRadioButton", "Central Assistance")*@
-                    <input type="radio" name="IsRadioButton" disabled id="isrdo_2_PM" value="Central Assistance">@Html.Label("Central Assistance")
+                    <input type="radio" name="IsRadioButton" disabled id="isrdo_2_CE" value="Central Assistance">@Html.Label("Central Assistance")
                     @Html.ValidationMessageFor(model => model.IsCentreAmnt, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -156,34 +156,34 @@
             </div>
         </div>
         @*<div class="form-group">
-            @Html.LabelFor(model => model.ModifiedBy, "Upload Photo", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                <img id="imgsite_PM" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
-                <input type="file" value="Upload" id="imguploadsiteeng_PM" name="imguploadsiteeng_PM" onchange="readURL(this, 'imgsite_PM')" class="btn btn-primary col-md-7" />
-                <input type="button" id="btnimg1cencal_PM" onclick="removeimg('imgsite_PM','imguploadsiteeng_PM')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
-            </div>
-        </div>*@
+                @Html.LabelFor(model => model.ModifiedBy, "Upload Photo", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    <img id="imgsite_PM" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
+                    <input type="file" value="Upload" id="imguploadsiteeng_PM" name="imguploadsiteeng_PM" onchange="readURL(this, 'imgsite_PM')" class="btn btn-primary col-md-7" />
+                    <input type="button" id="btnimg1cencal_PM" onclick="removeimg('imgsite_PM','imguploadsiteeng_PM')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
+                </div>
+            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @Html.CheckBox("ChkSign_PM", "no") @Html.Label("Project Engineer")
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <label id="lblmsg_PM" class="text-danger"></label>
+                @Html.CheckBox("ChkSign_CE", "no") @Html.Label("City Engineer")
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @Html.HiddenFor(x => x.IsCentreAmnt, new { id = "iscenterhdn" })
-                <input id="hiddforCheckbox_PM"
-                       name="hiddforCheckbox_PM"
+                <label id="lblmsg_CE" class="text-danger"></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.HiddenFor(x => x.IsCentreAmnt, new { id = "iscenterhdn_CE" })
+                <input id="hiddforCheckbox_CE"
+                       name="hiddforCheckbox_CE"
                        type="hidden"
                        value="no" />
-                <input type="submit" value="Create" onclick="return validation_PM();" class="btn btn-default" />
+                <input type="submit" value="Create" onclick="return validation_CE();" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -195,6 +195,7 @@
 {
     <script type="text/javascript">
         window.onload = function () {
+            $("#ChkSign_CE").attr("checked", true)
             alert("submited successfully");
             window.location.href = "/WorkFlow/Index/";
         };
@@ -205,31 +206,32 @@
 
     $(document).ready(function () {
 
-        if ($("#iscenterhdn").val() == "False") {
-            $("#isrdo_1_PM").attr("checked", true);
-            $("#isrdo_2_PM").attr("checked", false);
+        if ($("#iscenterhdn_CE").val() == "False") {
+            $("#isrdo_1_CE").attr("checked", true);
+            $("#isrdo_2_CE").attr("checked", false);
         }
         else {
-            $("#isrdo_1_PM").attr("checked", false);
-            $("#isrdo_2_PM").attr("checked", true);
+            $("#isrdo_1_CE").attr("checked", false);
+            $("#isrdo_2_CE").attr("checked", true);
         }
 
-        $("#ChkSign_PM").change(function () {
-            if ($("#ChkSign_PM").is(":checked")) {
-                $("#hiddforCheckbox_PM").val("Checked");
+        $("#ChkSign_CE").change(function () {
+            if ($("#ChkSign_CE").is(":checked")) {
+                $("#hiddforCheckbox_CE").val("Checked");
             }
             else {
-                $("#hiddforCheckbox_PM").val("no");
+                $("#hiddforCheckbox_CE").val("no");
             }
         })
     });
 
-    function validation_PM() {
-        if ($("#hiddforCheckbox_PM").val() == "no") {
-            $("#lblmsg_PM").text("Please sign in to confirm your submission");
+    function validation_CE() {
+        if ($("#hiddforCheckbox_CE").val() == "no") {
+            $("#lblmsg_CE").text("Please sign in to confirm your submission");
             return false;
         }
         return true;
     }
 
 </script>
+

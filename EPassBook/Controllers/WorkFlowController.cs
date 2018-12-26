@@ -54,7 +54,7 @@ namespace EPassBook.Controllers
         }
 
 
-        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.ProjectEngineer, Common.Accountant)]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.ProjectEngineer, Common.CityEngineer, Common.ChiefOfficer, Common.Accountant)]
         public ActionResult Workflow(int? id)
         {
             var benificiary = _benificiaryService.GetBenificiaryById(1);
@@ -323,7 +323,202 @@ namespace EPassBook.Controllers
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
             installmentviewmodel.Comments = null;
+            installmentviewmodel._Comments = null;
             return PartialView("_ProjectEngineer", installmentviewmodel);
+        }
+
+        [HttpPost]
+        public ActionResult ProjectEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
+        {
+            
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
+            //if (ModelState.IsValid)
+            //{
+                if (Session["UserDetails"] != null)
+                {                    
+                    var user = Session["UserDetails"] as UserViewModel;
+                    installment.ModifiedBy = user.UserName;
+                    installment.StageID = (int)Common.WorkFlowStages.CityEngineer;                    
+                    installment.ModifiedDate = DateTime.Now;
+
+                    // Insert reocrd in comment table 
+                    var comments = new Comment();
+                    comments.Comments = installmentDetailViewModel._Comments;
+                    comments.CreatedBy = user.UserName;
+                    comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    comments.CreatedDate = DateTime.Now;
+                    comments.CompanyID = user.CompanyID;                    
+
+                    // Insert reocrd in GeoTaggingDetail table 
+                    var signing = new InstallmentSigning();
+                    signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                    signing.UserId = user.UserId;
+                    signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                    signing.Sign = true;
+                    signing.CreatedDate = DateTime.Now;
+                    signing.CompanyID = user.CompanyID;
+
+                    // Applying changes to database tables
+                    installment.Comments.Add(comments);
+                    
+                    installment.InstallmentSignings.Add(signing);
+                    _installmentDetailService.Update(installment);
+
+
+                    _installmentDetailService.SaveChanges();
+
+                    Session["InstallmentId"] = null;
+                    ViewBag.Message = "sussess message";
+
+                installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
+                installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
+                installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
+
+                    //return RedirectToAction("Index", "WorkFlow");
+                }
+            //}
+
+            return PartialView("_ProjectEngineer", installmentDetailViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult CityEngineer()
+        {
+            int installmentid = 0;
+            if (Session["InstallmentId"] != null)
+            {
+                installmentid = Convert.ToInt32(Session["InstallmentId"]);
+            }
+            InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            installmentviewmodel.Comments = null;
+            installmentviewmodel._Comments = null;
+            return PartialView("_CityEngineer", installmentviewmodel);
+        }
+
+        [HttpPost]
+        public ActionResult CityEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
+        {
+
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
+            //if (ModelState.IsValid)
+            //{
+            if (Session["UserDetails"] != null)
+            {
+                var user = Session["UserDetails"] as UserViewModel;
+                installment.ModifiedBy = user.UserName;
+                installment.StageID = (int)Common.WorkFlowStages.ChiefOfficer;
+                installment.ModifiedDate = DateTime.Now;
+
+                // Insert reocrd in comment table 
+                var comments = new Comment();
+                comments.Comments = installmentDetailViewModel._Comments;
+                comments.CreatedBy = user.UserName;
+                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                comments.CreatedDate = DateTime.Now;
+                comments.CompanyID = user.CompanyID;
+
+                // Insert reocrd in GeoTaggingDetail table 
+                var signing = new InstallmentSigning();
+                signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                signing.UserId = user.UserId;
+                signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                signing.Sign = true;
+                signing.CreatedDate = DateTime.Now;
+                signing.CompanyID = user.CompanyID;
+
+                // Applying changes to database tables
+                installment.Comments.Add(comments);
+
+                installment.InstallmentSignings.Add(signing);
+                _installmentDetailService.Update(installment);
+
+
+                _installmentDetailService.SaveChanges();
+
+                Session["InstallmentId"] = null;
+                ViewBag.Message = "sussess message";
+
+                installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
+                installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
+                installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
+
+                //return RedirectToAction("Index", "WorkFlow");
+            }
+            //}
+
+            return PartialView("_CityEngineer", installmentDetailViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ChiefOfficer()
+        {
+            int installmentid = 0;
+            if (Session["InstallmentId"] != null)
+            {
+                installmentid = Convert.ToInt32(Session["InstallmentId"]);
+            }
+            InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            installmentviewmodel.Comments = null;
+            installmentviewmodel._Comments = null;
+            return PartialView("_ChiefOfficer", installmentviewmodel);
+        }
+
+        [HttpPost]
+        public ActionResult ChiefOfficer(InstallmentDetailsViewModel installmentDetailViewModel)
+        {
+
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
+            //if (ModelState.IsValid)
+            //{
+            if (Session["UserDetails"] != null)
+            {
+                var user = Session["UserDetails"] as UserViewModel;
+                installment.ModifiedBy = user.UserName;
+                installment.StageID = (int)Common.WorkFlowStages.Accountant;
+                installment.ModifiedDate = DateTime.Now;
+
+                // Insert reocrd in comment table 
+                var comments = new Comment();
+                comments.Comments = installmentDetailViewModel._Comments;
+                comments.CreatedBy = user.UserName;
+                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                comments.CreatedDate = DateTime.Now;
+                comments.CompanyID = user.CompanyID;
+
+                // Insert reocrd in GeoTaggingDetail table 
+                var signing = new InstallmentSigning();
+                signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                signing.UserId = user.UserId;
+                signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                signing.Sign = true;
+                signing.CreatedDate = DateTime.Now;
+                signing.CompanyID = user.CompanyID;
+
+                // Applying changes to database tables
+                installment.Comments.Add(comments);
+
+                installment.InstallmentSignings.Add(signing);
+                _installmentDetailService.Update(installment);
+
+
+                _installmentDetailService.SaveChanges();
+
+                Session["InstallmentId"] = null;
+                ViewBag.Message = "sussess message";
+
+                installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
+                installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
+                installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
+
+                //return RedirectToAction("Index", "WorkFlow");
+            }
+            //}
+
+            return PartialView("_ChiefOfficer", installmentDetailViewModel);
         }
     }
 }
