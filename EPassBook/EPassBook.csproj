@@ -748,6 +748,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Shared\_ProjectEngineer.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\Beneficiary\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
