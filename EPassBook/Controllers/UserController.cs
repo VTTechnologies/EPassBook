@@ -206,16 +206,24 @@ namespace EPassBook.Controllers
                 UserName = s.UserName,
                 Password = s.Password,
                 Email = s.Email,
+                Address=s.Address,
                 MobileNo = Convert.ToString(s.MobileNo),
                 CityName = s.CityMaster.CityName,
+                RoleName=s.UserInRoles.Select(u=>u.RoleMaster.RoleName).FirstOrDefault(),
                 CompanyMaster= s.CompanyMaster == null ? null : new CompanyViewModel()
                 {
                     CompanyID = s.CompanyMaster.CompanyID,
                     CompanyName = s.CompanyMaster.CompanyName,
                     MobileNo = s.CompanyMaster.MobileNo,
 
+                },
+                CityMaster = s.CityMaster == null ? null : new CityViewModel()
+                {
+                    CityId = s.CityMaster.CityId,
+                    CityName = s.CityMaster.CityName,
+                    CityShortName = s.CityMaster.CityShortName,
                 }
-        }).ToList();           
+            }).ToList();           
 
             return View(mappedUser);
         }
@@ -245,7 +253,7 @@ namespace EPassBook.Controllers
             {
                 if(Session["roleId"] == null)
                 {
-                    return RedirectToAction("userDetails");
+                    return RedirectToAction("Index");
                 }
                 var userInRoleVM = new UserInRoleViewModel();
                 var userInRoleMaster = new UserInRole();
@@ -268,12 +276,21 @@ namespace EPassBook.Controllers
                 _userService.Update(userData);
                 _userService.SaveChanges();
 
-                return RedirectToAction("userDetails");
+                return RedirectToAction("Index");
             }
             else
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            var users = _userService.Get(u => u.UserId == id).FirstOrDefault();
+            var userModel = Mapper.UserMapper.Detach(users);
+            userModel.RoleName = users.UserInRoles.Select(u => u.RoleMaster.RoleName).FirstOrDefault();
+            return View(userModel);
         }
     }
 }
