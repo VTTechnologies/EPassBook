@@ -10,6 +10,7 @@ using EPassBook.Helper;
 
 namespace EPassBook.Controllers
 {
+    [ElmahError]
     public class WorkFlowController : Controller
     {
         IInstallmentDetailService _installmentDetailService;
@@ -17,7 +18,7 @@ namespace EPassBook.Controllers
         IWorkFlowStagesService _iWorkFlowStagesService;
         ICommentService _icommentService;
 
-        PhotoManager pm = new PhotoManager();
+       
         public WorkFlowController(IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService, IWorkFlowStagesService iWorkFlowStagesService, ICommentService icommentService)
         {
             _iWorkFlowStagesService = iWorkFlowStagesService;
@@ -26,6 +27,8 @@ namespace EPassBook.Controllers
             _icommentService= icommentService;
         }
         // GET: WorkFlow
+        [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult Index()
         {
             int stageId = 0;
@@ -49,16 +52,16 @@ namespace EPassBook.Controllers
                 MobileNo=Convert.ToString(s.MobileNo),
                 PlanYear=s.PlanYear,
                 StageID=s.StageID
-            }).ToList();  //_mapper.Map<IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result>, IEnumerable<InstallmentListView>>(installmentListView);
+            }).ToList();  
             return View(resultlist);
         }
 
-
-        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.ProjectEngineer, Common.Accountant)]
+        [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer,Common.Accountant,Common.ChiefOfficer,Common.CityEngineer,Common.ProjectEngineer)]
         public ActionResult Workflow(int? id)
         {
             var benificiary = _benificiaryService.GetBenificiaryById(1);
-            var benficiarymodel = Mapper.BeneficiaryMapper.Detach(benificiary);  //_mapper.Map<BeneficiaryViewModel>(benificiary);
+            var benficiarymodel = Mapper.BeneficiaryMapper.Detach(benificiary); 
             Session["InstallmentId"] = id;
             string rolename = "";
             if (Session["UserDetails"] != null)
@@ -71,7 +74,9 @@ namespace EPassBook.Controllers
             return View(benficiarymodel);
         }
 
+        
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult Accountant(int id)
         {
             AccountDetailsViewModel accountDetailsViewModel = new AccountDetailsViewModel();
@@ -133,7 +138,9 @@ namespace EPassBook.Controllers
                 return RedirectToAction("Login", "User");
             }
         }
+
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult SiteEngineer()
         {
             int installmentid = 0;
@@ -143,7 +150,7 @@ namespace EPassBook.Controllers
             }
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
-            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
             installmentviewmodel.Comments = null;
             return PartialView("_SiteEngineer", installmentviewmodel);
         }
@@ -192,7 +199,7 @@ namespace EPassBook.Controllers
                     geotaging.UserId = user.UserId;
                     geotaging.CreatedBy = user.UserName;
                     geotaging.CreatedDate = DateTime.Now;
-                    geotaging.Photo = pm.ConvertToBytes(hasbandphoto);
+                    geotaging.Photo = "";//pm.ConvertToBytes(hasbandphoto);
 
                     // Insert reocrd in GeoTaggingDetail table 
                     var signing = new InstallmentSigning();
@@ -222,6 +229,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult SurveyDetails()
         {
             try
@@ -237,7 +245,7 @@ namespace EPassBook.Controllers
                     Sign =s.Sign,
                     Physical_Progress =s.Physical_Progress
 
-                }).ToList();// _mapper.Map<IEnumerable<sp_GetSurveyDetailsByBenID_Result>, IEnumerable<SurveyDetailsModel>>(commentlist);
+                }).ToList();
 
                 return View();
             }
@@ -248,69 +256,30 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult DataEntry()
         {
             return PartialView("_DataEntry", new BeneficiaryViewModel());
         }
+
         [HttpPost]
-        public ActionResult DataEntry(BeneficiaryViewModel BVM)
+        public ActionResult DataEntry(BeneficiaryViewModel beneficiaryViewModel)
         {
             HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
             HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
-            int i = UploadImageInDataBase(hasbandphoto, wifephoto, BVM);
-            if (i == 1)
-            {
-                return RedirectToAction("Index");
-            }
-            return View(BVM);
-
-
-        }
-        [NonAction]
-        public int UploadImageInDataBase(HttpPostedFileBase hphoto, HttpPostedFileBase wphoto, BeneficiaryViewModel BVM)
-        {
-            BVM.Hasband_Photo = pm.ConvertToBytes(hphoto);
-            BVM.Wife_Photo = pm.ConvertToBytes(wphoto);
             var user = Session["UserDetails"] as UserViewModel;
-            var insertbeneficiary = new BenificiaryMaster();
-            //var benficiarymodel = _mapper.Map<BeneficiaryViewModel, BenificiaryMaster>(BVM);
-            insertbeneficiary.Hasband_Photo = BVM.Hasband_Photo;
-            insertbeneficiary.Wife_Photo = BVM.Wife_Photo;
-            insertbeneficiary.BeneficairyName = BVM.BeneficairyName;
-            insertbeneficiary.FatherName = BVM.FatherName;
-            insertbeneficiary.Mother = BVM.Mother;
-            insertbeneficiary.MobileNo = BVM.MobileNo;
-            insertbeneficiary.CityId = BVM.CityId;
-            insertbeneficiary.DTRNo = BVM.DTRNo;
-            insertbeneficiary.RecordNo = BVM.RecordNo;
-            insertbeneficiary.Class = BVM.Class;
-            insertbeneficiary.General = BVM.General;
-            insertbeneficiary.Single = BVM.Single;
-            insertbeneficiary.Disabled = BVM.Disabled;
-            insertbeneficiary.Password = BVM.Password;
-            insertbeneficiary.AdharNo = BVM.AdharNo;
-            insertbeneficiary.VoterID = BVM.VoterID;
-            insertbeneficiary.Area = BVM.Area;
-            insertbeneficiary.MojaNo = BVM.MojaNo;
-            insertbeneficiary.KhataNo = BVM.KhataNo;
-            insertbeneficiary.KhasraNo = BVM.KhasraNo;
-            insertbeneficiary.PlotNo = BVM.PlotNo;
-            insertbeneficiary.PoliceStation = BVM.PoliceStation;
-            insertbeneficiary.WardNo = BVM.WardNo;
-            insertbeneficiary.District = BVM.District;
-            insertbeneficiary.BankName = BVM.BankName;
-            insertbeneficiary.BranchName = BVM.BranchName;
-            insertbeneficiary.IFSCCode = BVM.IFSCCode;
-            insertbeneficiary.AccountNo = BVM.AccountNo;
-            insertbeneficiary.CreatedBy = user.UserName;
-            insertbeneficiary.CreatedDate = DateTime.Now;
-            insertbeneficiary.CompanyID = user.CompanyID;
+            beneficiaryViewModel.Hasband_Photo = ""; //PhotoManager.ConvertToBytes(hasbandphoto);
+            beneficiaryViewModel.Wife_Photo = ""; PhotoManager.ConvertToBytes(wifephoto);
+            beneficiaryViewModel.CreatedBy = user.UserName;
+            var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
             _benificiaryService.Add(insertbeneficiary);
             _benificiaryService.SaveChanges();
-            return 1;
+           
+                return RedirectToAction("Index");
+           
 
         }
-
+       
         [HttpGet]
         public ActionResult ProjectEngineer()
         {
@@ -323,7 +292,202 @@ namespace EPassBook.Controllers
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
             installmentviewmodel.Comments = null;
+            installmentviewmodel._Comments = null;
             return PartialView("_ProjectEngineer", installmentviewmodel);
+        }
+
+        [HttpPost]
+        public ActionResult ProjectEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
+        {
+            
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
+            //if (ModelState.IsValid)
+            //{
+                if (Session["UserDetails"] != null)
+                {                    
+                    var user = Session["UserDetails"] as UserViewModel;
+                    installment.ModifiedBy = user.UserName;
+                    installment.StageID = (int)Common.WorkFlowStages.CityEngineer;                    
+                    installment.ModifiedDate = DateTime.Now;
+
+                    // Insert reocrd in comment table 
+                    var comments = new Comment();
+                    comments.Comments = installmentDetailViewModel._Comments;
+                    comments.CreatedBy = user.UserName;
+                    comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    comments.CreatedDate = DateTime.Now;
+                    comments.CompanyID = user.CompanyID;                    
+
+                    // Insert reocrd in GeoTaggingDetail table 
+                    var signing = new InstallmentSigning();
+                    signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                    signing.UserId = user.UserId;
+                    signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                    signing.Sign = true;
+                    signing.CreatedDate = DateTime.Now;
+                    signing.CompanyID = user.CompanyID;
+
+                    // Applying changes to database tables
+                    installment.Comments.Add(comments);
+                    
+                    installment.InstallmentSignings.Add(signing);
+                    _installmentDetailService.Update(installment);
+
+
+                    _installmentDetailService.SaveChanges();
+
+                    Session["InstallmentId"] = null;
+                    ViewBag.Message = "sussess message";
+
+                installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
+                installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
+                installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
+
+                    //return RedirectToAction("Index", "WorkFlow");
+                }
+            //}
+
+            return PartialView("_ProjectEngineer", installmentDetailViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult CityEngineer()
+        {
+            int installmentid = 0;
+            if (Session["InstallmentId"] != null)
+            {
+                installmentid = Convert.ToInt32(Session["InstallmentId"]);
+            }
+            InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            installmentviewmodel.Comments = null;
+            installmentviewmodel._Comments = null;
+            return PartialView("_CityEngineer", installmentviewmodel);
+        }
+
+        [HttpPost]
+        public ActionResult CityEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
+        {
+
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
+            //if (ModelState.IsValid)
+            //{
+            if (Session["UserDetails"] != null)
+            {
+                var user = Session["UserDetails"] as UserViewModel;
+                installment.ModifiedBy = user.UserName;
+                installment.StageID = (int)Common.WorkFlowStages.ChiefOfficer;
+                installment.ModifiedDate = DateTime.Now;
+
+                // Insert reocrd in comment table 
+                var comments = new Comment();
+                comments.Comments = installmentDetailViewModel._Comments;
+                comments.CreatedBy = user.UserName;
+                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                comments.CreatedDate = DateTime.Now;
+                comments.CompanyID = user.CompanyID;
+
+                // Insert reocrd in GeoTaggingDetail table 
+                var signing = new InstallmentSigning();
+                signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                signing.UserId = user.UserId;
+                signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                signing.Sign = true;
+                signing.CreatedDate = DateTime.Now;
+                signing.CompanyID = user.CompanyID;
+
+                // Applying changes to database tables
+                installment.Comments.Add(comments);
+
+                installment.InstallmentSignings.Add(signing);
+                _installmentDetailService.Update(installment);
+
+
+                _installmentDetailService.SaveChanges();
+
+                Session["InstallmentId"] = null;
+                ViewBag.Message = "sussess message";
+
+                installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
+                installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
+                installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
+
+                //return RedirectToAction("Index", "WorkFlow");
+            }
+            //}
+
+            return PartialView("_CityEngineer", installmentDetailViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ChiefOfficer()
+        {
+            int installmentid = 0;
+            if (Session["InstallmentId"] != null)
+            {
+                installmentid = Convert.ToInt32(Session["InstallmentId"]);
+            }
+            InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            installmentviewmodel.Comments = null;
+            installmentviewmodel._Comments = null;
+            return PartialView("_ChiefOfficer", installmentviewmodel);
+        }
+
+        [HttpPost]
+        public ActionResult ChiefOfficer(InstallmentDetailsViewModel installmentDetailViewModel)
+        {
+
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
+            //if (ModelState.IsValid)
+            //{
+            if (Session["UserDetails"] != null)
+            {
+                var user = Session["UserDetails"] as UserViewModel;
+                installment.ModifiedBy = user.UserName;
+                installment.StageID = (int)Common.WorkFlowStages.Accountant;
+                installment.ModifiedDate = DateTime.Now;
+
+                // Insert reocrd in comment table 
+                var comments = new Comment();
+                comments.Comments = installmentDetailViewModel._Comments;
+                comments.CreatedBy = user.UserName;
+                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                comments.CreatedDate = DateTime.Now;
+                comments.CompanyID = user.CompanyID;
+
+                // Insert reocrd in GeoTaggingDetail table 
+                var signing = new InstallmentSigning();
+                signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                signing.UserId = user.UserId;
+                signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                signing.Sign = true;
+                signing.CreatedDate = DateTime.Now;
+                signing.CompanyID = user.CompanyID;
+
+                // Applying changes to database tables
+                installment.Comments.Add(comments);
+
+                installment.InstallmentSignings.Add(signing);
+                _installmentDetailService.Update(installment);
+
+
+                _installmentDetailService.SaveChanges();
+
+                Session["InstallmentId"] = null;
+                ViewBag.Message = "sussess message";
+
+                installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
+                installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
+                installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
+
+                //return RedirectToAction("Index", "WorkFlow");
+            }
+            //}
+
+            return PartialView("_ChiefOfficer", installmentDetailViewModel);
         }
     }
 }

@@ -31,8 +31,8 @@ namespace EPassBook
             container.RegisterType<ICompanyMasterService, CompanyMasterService>();
             container.RegisterType<IUserInRoleService, UserInRoleService>();
 
-
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(container));
+            System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
         }
     }
 }

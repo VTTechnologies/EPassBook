@@ -1,0 +1,42 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>Oops!</title>
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:700,900" rel="stylesheet">
+    <link href="~/Content/Error.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="list-header clearfix">
+        <span>Error</span>
+    </div>
+    <div class="list-sfs-holder">
+        <div class="alert alert-error">
+            An unexpected error has occurred. Please contact the system administrator.
+        </div>
+        @if (Model != null && HttpContext.Current.IsDebuggingEnabled)
+        {
+            <div>
+                <p>
+                    <b>Exception:</b> @Model.Exception.Message<br />
+                    <b>Controller:</b> @Model.ControllerName<br />
+                    <b>Action:</b> @Model.ActionName
+                </p>
+                <div style="overflow:scroll">
+                    <pre>
+                    @Model.Exception.StackTrace
+                </pre>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,27 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>Oops!</title>
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:700,900" rel="stylesheet">
+    <link href="~/Content/Error.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div id="notfound">
+        <div class="notfound">
+            <div class="notfound-404">
+                <h1>500</h1>
+            </div>
+            <h2>Oops! Internal Error</h2>
+            <p>Sorry, Somthing went terribly wrong</p>
+            @Html.ActionLink("Go To Homepage", "Index", "Home")
+        </div>
+    </div>
+</body>
+</html>
+

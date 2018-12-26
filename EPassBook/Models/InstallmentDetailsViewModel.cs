@@ -23,7 +23,7 @@ namespace EPassBook.Models
         public string ModifiedBy { get; set; }
         public Nullable<int> CompanyID { get; set; }
         public string _Comments { get; set; }
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
         public Nullable<decimal> TransactionID { get; set; }
 
 

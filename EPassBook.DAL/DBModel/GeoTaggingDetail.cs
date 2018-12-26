@@ -15,7 +15,7 @@ namespace EPassBook.DAL.DBModel
     public partial class GeoTaggingDetail
     {
         public long Id { get; set; }
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
         public string ConstructionLevel { get; set; }
         public Nullable<int> BeneficiaryId { get; set; }
         public int UserId { get; set; }

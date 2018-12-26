@@ -1,0 +1,51 @@
+﻿@model IEnumerable<EPassBook.Models.UserViewModel>
+
+<div>
+    <h4>UserMaster</h4>
+    <hr />
+
+    @if (Model != null)
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <div style="height: auto; overflow: auto;">
+            <!-- Your Table Here -->
+            <table class="table table-responsive table-bordered" style="margin-top:50px">
+                <tr>
+                    <th>ID</th>
+                    <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Password)</th>
+                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+                    <th>@Html.DisplayNameFor(model => model.MobileNo)</th>
+                    <th>@Html.DisplayNameFor(model => model.Address)</th>
+                    @*<th>@Html.DisplayNameFor(model => model.IsActive)</th>*@
+                    @*<th>@Html.DisplayNameFor(model => model.IsReset)</th>*@
+                    <th>@Html.DisplayNameFor(model => model.CityMaster.CityName)</th>
+                    <th>@Html.DisplayNameFor(model => model.CompanyMaster.CompanyName)</th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                @foreach (var items in Model)
+                {
+                    <tr>
+                        <td>@items.UserId</td>
+                        <td>@items.UserName</td>
+                        <td>@items.Password</td>
+                        <td>@items.Email</td>
+                        <td>@items.MobileNo</td>
+                        <td>@items.Address</td>
+                        @*<td>@Html.CheckBoxFor(m => items.IsActive, new { @disabled = "disabled" })</td>*@
+                        @*<td>@Html.CheckBoxFor(m => items.IsReset, new { @disabled = "disabled" })</td>*@
+                        <td>@items.CityMaster.CityName</td>
+                        <td>@items.CompanyMaster.CompanyName</td>
+                        <td>@Html.ActionLink("Edit", "Details", new { id = @items.UserId })</td>
+                        <td>@Html.ActionLink("Edit", "Edit", new { id = @items.UserId })</td>
+                        <td>@Html.ActionLink("Edit", "Delete", new { id = @items.UserId })</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</div>

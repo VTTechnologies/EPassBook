@@ -16,7 +16,7 @@ namespace EPassBook.DAL.DBModel
         public int BeneficiaryId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string UserName { get; set; }
-        public Nullable<decimal> MobileNo { get; set; }
+        public string MobileNo { get; set; }
         public string Physical_Progress { get; set; }
         public string Comments { get; set; }
         public Nullable<bool> Sign { get; set; }

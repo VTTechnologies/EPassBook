@@ -83,7 +83,7 @@ namespace EPassBook.Controllers
                     userCookie.Expires = DateTime.Now.AddDays(1);
                     Response.Cookies.Add(userCookie);
                 }
-                user = Mapper.UserMapper.Detach(userData);//_mapper.Map<UserMaster, UserViewModel>(userData);
+                user = Mapper.UserMapper.Detach(userData);
                 Session["UserDetails"] = "";
                 Session["UserDetails"] = user;
                  if (userData != null)
@@ -97,7 +97,14 @@ namespace EPassBook.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Index", "WorkFlow");
+                            if (user.UserInRoles.FirstOrDefault().RoleId == Convert.ToInt32(Common.Roles.DataEntry))
+                            {
+                                return RedirectToAction("Index", "Beneficiary");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "WorkFlow");
+                            }
                         }
                     }
                     else
