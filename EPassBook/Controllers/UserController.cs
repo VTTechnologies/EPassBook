@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace EPassBook.Controllers
 {
@@ -291,6 +292,29 @@ namespace EPassBook.Controllers
             var userModel = Mapper.UserMapper.Detach(users);
             userModel.RoleName = users.UserInRoles.Select(u => u.RoleMaster.RoleName).FirstOrDefault();
             return View(userModel);
+        }
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            if (id > 0 || !string.IsNullOrWhiteSpace(id.ToString()))
+            {
+                var users = _userService.Get(u => u.UserId == id).FirstOrDefault();
+                var roleId = users.UserInRoles.Select(r => r.RoleId).FirstOrDefault();
+                var roleName = users.UserInRoles.Select(r => r.RoleMaster.RoleName).FirstOrDefault();
+                if (roleId == 1 || roleName == "Admin")
+                {
+                    //show popup here
+                }
+                else
+                {
+                    users.IsActive = false;
+                    _userService.Update(users);
+                    _userService.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            return RedirectToAction("Index");
+
         }
     }
 }
