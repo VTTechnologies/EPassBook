@@ -102,6 +102,9 @@
     <Compile Include="DBModel\RoleMaster.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBModel\Split_Result.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBModel\sp_GetInstallmentListViewForUsersRoles_Result.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>

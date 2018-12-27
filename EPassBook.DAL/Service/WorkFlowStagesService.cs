@@ -50,9 +50,17 @@ namespace EPassBook.DAL.Service
           return  workflowStageRepository.Get().Where(w=>w.StageInRoles.Where(we=>we.RoleId== roleId).Select(s=>s.StageId).Any()).FirstOrDefault().StageId;
         }
 
-        public WorkflowStage GetWorkflowStageById(int id)
+        public List<int> GetWorkflowStageById(List<int> roleIds)
         {
-            return workflowStageRepository.GetById(id);
+            List<StageInRole> lststageInRoles = new List<StageInRole>();
+            StageInRole stageInRole = new StageInRole();
+            foreach (var item in roleIds)
+            {
+                stageInRole.RoleId = item;
+                lststageInRoles.Add(stageInRole);
+            }
+            var a = workflowStageRepository.GetAll().Where(w => w.StageInRoles.Intersect(lststageInRoles).Any()).Select(s=>s.StageId);
+            return a.ToList(); 
         }
 
        

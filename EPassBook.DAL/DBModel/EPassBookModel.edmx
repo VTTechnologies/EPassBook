@@ -571,7 +571,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Parameter Name="TimeUtc" Type="datetime" Mode="In" />
         </Function>
         <Function Name="sp_GetInstallmentListViewForUsersRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="stageid" Type="int" Mode="In" />
+          <Parameter Name="stageids" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="sp_GetSurveyDetailsByBenID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BenificiaryId" Type="int" Mode="In" />
@@ -582,6 +582,18 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Parameter Name="transactionId" Type="numeric" Mode="In" />
           <Parameter Name="installmentId" Type="int" Mode="In" />
           <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="List" Type="nvarchar" Mode="In" />
+          <Parameter Name="SplitOn" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Id" Type="int" Nullable="false" />
+                <Property Name="Value" Type="nvarchar" MaxLength="100" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
         </Function>
         <EntityContainer Name="EPassBookModelStoreContainer">
           <EntitySet Name="BenificiaryMaster" EntityType="Self.BenificiaryMaster" Schema="dbo" store:Type="Tables" />
@@ -749,7 +761,11 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
-          <Parameter Name="stageid" Mode="In" Type="Int32" />
+          <Parameter Name="stageids" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Split" IsComposable="true" ReturnType="Collection(EPassBookModel.Split_Result)">
+            <Parameter Name="List" Mode="In" Type="String" />
+            <Parameter Name="SplitOn" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="BenificiaryMasters" EntityType="EPassBookModel.BenificiaryMaster" />
           <EntitySet Name="CityMasters" EntityType="EPassBookModel.CityMaster" />
@@ -863,7 +879,32 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <End Role="UserMaster" EntitySet="UserMasters" />
             <End Role="UserInRole" EntitySet="UserInRoles" />
           </AssociationSet>
-          </EntityContainer>
+        </EntityContainer>
+        <ComplexType Name="sp_GetSurveyDetailsByBenID_Result">
+          <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="UserName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Physical_Progress" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="Comments" Nullable="true" />
+          <Property Type="Boolean" Name="Sign" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
+          <Property Type="Int32" Name="InstallmentId" Nullable="false" />
+          <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
+          <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CreatedDate" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="PlanYear" Nullable="true" />
+          <Property Type="Int32" Name="StageID" Nullable="true" />
+          <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
+          <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
+          <Property Type="Int32" Name="CompanyID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Split_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Value" Nullable="true" MaxLength="100" />
+        </ComplexType>
         <EntityType Name="BenificiaryMaster">
           <Key>
             <PropertyRef Name="BeneficiaryId" />
@@ -1453,27 +1494,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
-          <Property Type="Int32" Name="InstallmentId" Nullable="false" />
-          <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
-          <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="CreatedDate" Nullable="true" MaxLength="20" />
-          <Property Type="Int32" Name="PlanYear" Nullable="true" />
-          <Property Type="Int32" Name="StageID" Nullable="true" />
-          <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
-          <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
-          <Property Type="Int32" Name="CompanyID" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_GetSurveyDetailsByBenID_Result">
-          <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="UserName" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Physical_Progress" Nullable="false" MaxLength="8" />
-          <Property Type="String" Name="Comments" Nullable="true" />
-          <Property Type="Boolean" Name="Sign" Nullable="true" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1510,6 +1530,14 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
                 <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Split" FunctionName="EPassBookModel.Store.Split">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EPassBookModel.Split_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1772,7 +1800,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

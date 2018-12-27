@@ -31,15 +31,16 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult Index()
         {
-            int stageId = 0;
+            List<int> stageIds;
+            string strStageIds = "";
             if (Session["UserDetails"] != null)
             {
                 var user = Session["UserDetails"] as UserViewModel;
-                var roleId = user.UserInRoles.Select(s => s.RoleId).FirstOrDefault();
-                stageId = _iWorkFlowStagesService.GetUserStageByRoleID(roleId);
+                var roleId = user.UserInRoles.Select(s => s.RoleId).ToList();
+                stageIds = _iWorkFlowStagesService.GetWorkflowStageById(roleId).ToList();
+                strStageIds = string.Join(",", stageIds.ToArray());
             }
-
-            var installmentListView = _installmentDetailService.GetInstallmentForLoginUsersWithStages(stageId).ToList();
+            var installmentListView = _installmentDetailService.GetInstallmentForLoginUsersWithStages(strStageIds).ToList();
             var resultlist = installmentListView.Select(s => new InstallmentListView
             {
                 BeneficiaryId = s.BeneficiaryId,
@@ -47,7 +48,7 @@ namespace EPassBook.Controllers
                 CompanyID = s.CompanyID,
                 InstallmentId = s.InstallmentId,
                 InstallmentNo = s.InstallmentNo,
-                CreatedDate = Convert.ToDateTime(s.CreatedDate),
+                CreatedDate = s.CreatedDate,
                 IsCompleted = s.IsCompleted,
                 MobileNo = Convert.ToString(s.MobileNo),
                 PlanYear = s.PlanYear,
@@ -112,24 +113,25 @@ namespace EPassBook.Controllers
                 installmentDetail.TransactionID = Convert.ToDecimal(accountDetailsVM.TransactionId);
                 installmentDetail.ModifiedBy = user.UserName;
                 installmentDetail.ModifiedDate = DateTime.Now;
+                installmentDetail.StageID = (int)Common.WorkFlowStages.LastChiefOfficer;
 
                 if (ModelState.IsValid)
                 {
                     installmentDetail.InstallmentSignings.Add(instSigning);
                     _installmentDetailService.Update(installmentDetail);
                     _installmentDetailService.SaveChanges();
-
-                    return RedirectToAction("Index", "Workflow");
+                    ViewBag.Message = "sussess message";
+                    return View("_Accountant", accountDetailsVM);
                 }
                 else
                 {
                     var benificiaryDetails = _benificiaryService.GetBenificiaryById(installmentDetail.BeneficiaryId);
                     accountDetailsVM.InstallmentId = Convert.ToInt32(accountDetailsVM.InstallmentId);
-
                     accountDetailsVM.LoanAmnt = Convert.ToInt32(installmentDetail.LoanAmnt);
                     accountDetailsVM.IFSCCode = benificiaryDetails.IFSCCode;
                     accountDetailsVM.AccountNo = benificiaryDetails.AccountNo.ToString();
                     accountDetailsVM.LoanAmtInRupees = accountDetailsVM.LoanAmnt.ConvertNumbertoWords();
+                    
                     return View("_Accountant", accountDetailsVM);
                 }
             }
