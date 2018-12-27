@@ -1,6 +1,11 @@
 ﻿@using System.Web.Mvc.Html
 @model EPassBook.Models.AccountDetailsViewModel
-
+@{
+    if (ViewBag.Message != null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>E-Passbook</title>
@@ -10,7 +15,7 @@
     <div class="form-horizontal">
         <h4>Account Details</h4>
         <hr />
-        @using (@Html.BeginForm("CreateAccountant", "WorkFlow", FormMethod.Post))
+        @using (@Html.BeginForm("Accountant", "WorkFlow", FormMethod.Post))
         {
             @Html.HiddenFor(model => model.InstallmentId)
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -24,7 +29,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
                                     @Html.DisplayFor(model => model.AccountNo, new { htmlAttributes = new { @class = "form-control" } })
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -36,7 +41,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
                                     @Html.DisplayFor(model => model.IFSCCode, new { htmlAttributes = new { @class = "form-control" } })
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -46,7 +51,7 @@
                             <div class="form-group">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <p class="control-label col-md-12">
-                                        Has been transferred Rs @Html.DisplayFor(model => model.LoanAmnt, new { @class = "" }) (Rupees @Html.DisplayFor(model => model.LoanAmtInRupees, new { @class = "" }))
+                                        Has been transferred Rs @Html.DisplayFor(model => model.LoanAmnt) (Rupees @Html.DisplayFor(model => model.LoanAmtInRupees))
                                         Through RTGS/DBT
                                     </p>
                                 </div>
@@ -61,7 +66,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                                     @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control" } })
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -72,16 +77,28 @@
                                     @Html.LabelFor(model => model.Sign, new { @class = "col-md-2" })
                                 </div>
                                 <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                    @Html.EditorFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control" } })
-                                    
+                                    @Html.EditorFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control",@id= "Sign" } })
+
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input id="hiddforCheckbox"
+                                       name="hiddforCheckbox"
+                                       value="no"
+                                       type="hidden" />
+                                <label id="lblTransaction" class="text-danger"></label><br />
+                                <label id="lblSign" class="text-danger"></label>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                <input type="submit" value="Submit" class="btn btn-primary" />
+                                <input type="submit" onclick="return validationAcountant();" value="Submit" class="btn btn-primary" />
                             </div>
                         </div>
                     </div>
@@ -89,5 +106,54 @@
             </div>
         }
     </div>
+
+    <script>
+        function validationAcountant() {
+            debugger;
+            if ($("#TransactionId").val().trim() == "" && $("#hiddforCheckbox").val() == "no")
+            {
+                $("#lblTransaction").text("Please Enter Transaction no");
+                $("#lblSign").text("Please sign in to confirm your submission");
+                return false;
+            }
+            else {
+                if (($("#TransactionId").val().trim() == "") || ($("#hiddforCheckbox").val() == "no"))
+                {
+                    if ($("#TransactionId").val().trim() == "")
+                    {
+                        $("#lblSign").text("");
+                        $("#lblTransaction").text("Please Enter Transaction no");
+                        return false;
+                    }
+                    if ($("#hiddforCheckbox").val() == "no")
+                    {
+                        $("#lblTransaction").text("");
+                        $("#lblSign").text("Please sign in to confirm your submission");
+                        return false;
+                    }
+                }
+            }
+            $("#lblSign").text("");
+            $("#lblTransaction").text("");
+            return true;
+        }
+
+        $("#Sign").change(function ()
+        {
+            debugger
+            if ($("#Sign").is(":checked"))
+            {
+                $("#hiddforCheckbox").val("Checked");
+                $("#hiddforCheckbox").val("yes");
+            }
+            else
+            {
+                $("#hiddforCheckbox").val("Unchecked");
+                $("#hiddforCheckbox").val("no");
+            }
+        })
+
+    </script>
 </body>
+
 </html>

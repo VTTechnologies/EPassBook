@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<EPassBook.Models.UserViewModel>
-
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <div>
 
     <style>
@@ -39,120 +42,109 @@
 
     <h4>Users</h4>
     <hr />
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+</div>
 
-    @if (Model != null)
+@*@if (Model != null)
+    {*@
+@*<div style="height: auto; overflow: auto;">*@
+<table id="userGrid" class="table table-responsive dt-responsive nowrap table-striped table-bordered" style="border-radius:1em;">
+    <thead>
+        <tr>
+            <th style="display:none;">ID</th>
+            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.MobileNo)</th>
+            <th>@Html.DisplayNameFor(model => model.Address)</th>
+            <th>City</th>
+            <th>Company</th>
+            <th>@Html.DisplayNameFor(model => model.RoleName)</th>
+            <th>Details</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    @foreach (var items in Model)
     {
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
-        <div style="height: auto; overflow: auto;">
-            <!-- Your Table Here -->
-            <table id="userGrid" class="table table-responsive table-sm table-striped table-bordered" style="border-radius:1em;">
-                <tr>
-                    <th style="display:none;">ID</th>
-                    <th>@Html.DisplayNameFor(model => model.UserName)</th>
-                    <th>@Html.DisplayNameFor(model => model.Email)</th>
-                    <th>@Html.DisplayNameFor(model => model.MobileNo)</th>
-                    <th>@Html.DisplayNameFor(model => model.Address)</th>
-                    <th>City</th>
-                    <th>Company</th>
-                    <th>@Html.DisplayNameFor(model => model.RoleName)</th>
-                    <th>Details</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                @foreach (var items in Model)
-                {
-                    <tr>
-                        <td style="display:none;">@items.UserId</td>
-                        <td>@items.UserName</td>
-                        <td>@items.Email</td>
-                        <td>@items.MobileNo</td>
-                        <td>@items.Address</td>
-                        <td>@items.CityMaster.CityName</td>
-                        <td>@items.CompanyMaster.CompanyName</td>
-                        <th>@items.RoleName</th>
-                        <td>@Html.ActionLink("Details", "Details", new { id = @items.UserId }, new { @class = "btn alert-info" })</td>
-                        <td>@Html.ActionLink("Edit", "Edit", new { id = @items.UserId }, new { @class = "btn btn-default" })</td>
-                        <td>@Html.ActionLink("Delete", "Delete", new { id = @items.UserId }, new { @class = "btn alert-danger", onclick = "return IsManager('" + @items.RoleName + "','" + @items.UserId + "');" })</td>
+        <tr>
+            <td style="display:none;">@items.UserId</td>
+            <td>@items.UserName</td>
+            <td>@items.Email</td>
+            <td>@items.MobileNo</td>
+            <td>@items.Address</td>
+            <td>@items.CityMaster.CityName</td>
+            <td>@items.CompanyMaster.CompanyName</td>
+            <th>@items.RoleName</th>
+            <td>@Html.ActionLink("Details", "Details", new { id = @items.UserId }, new { @class = "btn alert-info" })</td>
+            <td>@Html.ActionLink("Edit", "Edit", new { id = @items.UserId }, new { @class = "btn btn-default" })</td>
+            <td>@Html.ActionLink("Delete", "Delete", new { id = @items.UserId }, new { @class = "btn alert-danger", onclick = "return IsManager('" + @items.RoleName + "','" + @items.UserId + "');" })</td>
 
-                    </tr>
-                }
-            </table>
-        </div>
+        </tr>
     }
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</table>
+@*</div>*@
+@*}*@
 
-
-
-    <div>
-        <fieldset>
-            @*<legend style="color:orangered">Click On Satyaprakash Bootstrap PopUp</legend>*@
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        @*<button id="btnShowModal" type="button" class="btn btn-sm btn-default pull-left col-lg-11 button button4">
-                                Modals
-                            </button>*@
-
-
-                    </div>
-                </div>
+@*modal*@
+<div class="modal fade" tabindex="-1" id="AlertModal"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Alert</h4>
             </div>
-        </fieldset>
-    </div>
-
-    <div class="modal fade" tabindex="-1" id="AlertModal"
-         data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h4 class="modal-title">Alert</h4>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <p id="AlertMessage"></p>
-                            <label id="IdForDelete" style="display:none"></label>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer" id="footer">
-                    <button type="button" id="btnYes" class="btn btn-primary button button4">
-                        Yes
-                    </button>
-                    <button type="button" id="btnNo" class="btn btn-danger button button4">
-                        No
-                    </button>
-                </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <p id="AlertMessage"></p>
+                        <label id="IdForDelete" style="display:none"></label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" id="footer">
+                <button type="button" id="btnOk" class="btn btn-primary button button4" onclick="ReloadPage()">
+                    Ok
+                </button>
+                <button type="button" id="btnYes" class="btn btn-primary button button4">
+                    Yes
+                </button>
+                <button type="button" id="btnNo" class="btn btn-danger button button4">
+                    No
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script type="text/javascript">
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>*@
 
+<script type="text/javascript">
         function IsManager(role, id) {
             if (role == 'Admin') {
                 $("#AlertMessage").text("Admin cannot be deleted");
+                $("#btnNo").hide();
+                $("#btnYes").hide();
+                $("#btnOk").hide();
                 $("#AlertModal").modal('show');
-                //$("#footer").attr("display", "none");
-                $("#footer").hide();
-
                 return false
             }
             else {
-                $("#footer").show();
                 $("#AlertMessage").text("Are you sure you wish to delete this user?");
+                $("#btnNo").show();
+                $("#btnYes").show();
+                $("#btnOk").hide();
                 $("#AlertModal").modal('show');
                 $("#IdForDelete").val(id);
                 return false
             }
+        }
+
+        function ReloadPage() {
+            window.location = '@Url.Action("Index")';
         }
 
         $("#btnYes").click(function () {
@@ -168,7 +160,11 @@
                     data: data,
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
-                        window.location = '@Url.Action("Index")';
+                        $("#AlertMessage").text("User deleted successfully");
+                        $("#btnNo").hide();
+                        $("#btnYes").hide();
+                        $("#btnOk").show();
+                        $("#AlertModal").modal('show');
                     },
                     failure: function (response) {
                         alert(response.responseText);
@@ -182,6 +178,10 @@
         $("#btnNo").click(function () {
             $("#AlertModal").modal('hide');
         });
-    </script>
+</script>
 
-</div>
+<script type="text/javascript">
+    $('#userGrid').dataTable({
+
+    });
+</script>

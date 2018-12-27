@@ -305,23 +305,13 @@ namespace EPassBook.Controllers
         {
             if (id > 0 || !string.IsNullOrWhiteSpace(id.ToString()))
             {
-                var users = _userService.Get(u => u.UserId == id).FirstOrDefault();
-                var roleId = users.UserInRoles.Select(r => r.RoleId).FirstOrDefault();
-                var roleName = users.UserInRoles.Select(r => r.RoleMaster.RoleName).FirstOrDefault();
-                if (roleId == 1 || roleName == "Admin")
-                {
-                    //show popup here
-                }
-                else
-                {
-                    users.IsActive = false;
-                    _userService.Update(users);
-                    _userService.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+                var user = _userService.Get(u => u.UserId == id).FirstOrDefault();
+                user.IsActive = false;
+                _userService.Update(user);
+                _userService.SaveChanges();
+                return RedirectToAction("Index");                
             }
             return RedirectToAction("Index");
-
         }
     }
 }
