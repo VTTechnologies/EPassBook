@@ -268,8 +268,8 @@ namespace EPassBook.Controllers
             HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
             HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
             var user = Session["UserDetails"] as UserViewModel;
-            beneficiaryViewModel.Hasband_Photo = PhotoManager.ConvertToBytes(hasbandphoto);
-            beneficiaryViewModel.Wife_Photo = PhotoManager.ConvertToBytes(wifephoto);
+            beneficiaryViewModel.Hasband_Photo = "";//PhotoManager.ConvertToBytes(hasbandphoto);
+            beneficiaryViewModel.Wife_Photo = "";//PhotoManager.ConvertToBytes(wifephoto);
             beneficiaryViewModel.CreatedBy = user.UserName;
             var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
             _benificiaryService.Add(insertbeneficiary);

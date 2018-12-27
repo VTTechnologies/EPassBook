@@ -48,7 +48,7 @@ namespace EPassBook.Controllers
         [HttpGet]
         public HttpResponseMessage GetInstallmentDetails(int beneficiaryId)
         {
-            var benificiary = _installmentDetailService.Get(w=>w.BeneficiaryId==beneficiaryId,o=>o.OrderByDescending(p=>p.InstallmentNo), "BenificiaryMaster,Comments,GeoTaggingDetails,InstallmentSignings");
+            var benificiary = _installmentDetailService.Get(w => w.BeneficiaryId == beneficiaryId, o => o.OrderByDescending(p => p.InstallmentNo), "BenificiaryMaster,Comments,GeoTaggingDetails,InstallmentSignings");
             if (benificiary != null)
                 return Request.CreateResponse(HttpStatusCode.OK, benificiary);
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Beneficiary found.");
@@ -56,52 +56,79 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [Route("Validate/{userName}/{password}")]
-        public HttpResponseMessage ValidatedUser(int userName,string password)
+        public HttpResponseMessage ValidatedUser(int userName, string password)
         {
-            var benificiary = _benificiaryService.AuthenticateBeneficiary(userName, password);
-            if (benificiary != null)
+            var benificiaryId = _benificiaryService.AuthenticateBeneficiary(userName, password);
+            if (benificiaryId != 0)
+            {                              
+                    return Request.CreateResponse(HttpStatusCode.OK, benificiaryId);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.Forbidden, "You are not having access application, Please contact administrator.");
+            }
+        }
+
+        [HttpGet]
+        [Route("Beneficiary/{beneficiaryId}")]
+        public HttpResponseMessage GetBeneficiaryDetails(int beneficiaryId)
+        {
+            var installmentDetail = _installmentDetailService.Get(w => w.BeneficiaryId == beneficiaryId, o => o.OrderByDescending(ob => ob.InstallmentId), "BenificiaryMaster,Comments,GeoTaggingDetails,InstallmentSignings").FirstOrDefault();
+            if (installmentDetail != null)
             {
                 BeneficiaryAPIViewModel beneficiaryAPIViewModel = new BeneficiaryAPIViewModel();
-                beneficiaryAPIViewModel.BeneficiaryId = benificiary.BeneficiaryId;
-                beneficiaryAPIViewModel.BeneficiaryName = benificiary.BeneficairyName;
-                beneficiaryAPIViewModel.AdharNo = Convert.ToInt32(benificiary.AdharNo);
-                beneficiaryAPIViewModel.Address = benificiary.PresentAddress;
-                beneficiaryAPIViewModel.GeoTaggingDetails = benificiary.GeoTaggingDetails.Select(s => new GeoTaggingViewModel
+                beneficiaryAPIViewModel.BeneficiaryId = installmentDetail.BeneficiaryId;
+                beneficiaryAPIViewModel.BeneficiaryName = installmentDetail.BenificiaryMaster.BeneficairyName;
+                beneficiaryAPIViewModel.MotherName = installmentDetail.BenificiaryMaster.Mother;
+                beneficiaryAPIViewModel.FatherName = installmentDetail.BenificiaryMaster.FatherName;
+                beneficiaryAPIViewModel.HasbandPhoto = installmentDetail.BenificiaryMaster.Hasband_Photo;
+                beneficiaryAPIViewModel.WifePhoto = installmentDetail.BenificiaryMaster.Wife_Photo;
+                beneficiaryAPIViewModel.AdharNo = Convert.ToInt32(installmentDetail.BenificiaryMaster.AdharNo);
+                beneficiaryAPIViewModel.MobileNo = installmentDetail.BenificiaryMaster.MobileNo;
+                beneficiaryAPIViewModel.Address = installmentDetail.BenificiaryMaster.PresentAddress;
+
+                beneficiaryAPIViewModel.IsCompleted = installmentDetail.IsCompleted;
+                beneficiaryAPIViewModel.LoanAmnt = installmentDetail.LoanAmnt;
+                beneficiaryAPIViewModel.BeneficiaryAmnt = installmentDetail.BeneficiaryAmnt;
+                beneficiaryAPIViewModel.CompanyID = installmentDetail.CompanyID;
+                beneficiaryAPIViewModel.InstallmentId = installmentDetail.InstallmentId;
+                beneficiaryAPIViewModel.InstallmentNo = installmentDetail.InstallmentNo;
+                beneficiaryAPIViewModel.ConstructionLevel = installmentDetail.ConstructionLevel;
+                beneficiaryAPIViewModel.StageID = installmentDetail.StageID;
+                beneficiaryAPIViewModel.IsCentreAmnt = installmentDetail.IsCentreAmnt;
+                beneficiaryAPIViewModel.CreatedBy = installmentDetail.CreatedBy;
+
+                beneficiaryAPIViewModel.GeoTaggingDetails = installmentDetail.GeoTaggingDetails.Select(s => new GeoTaggingViewModel
                 {
-                    BeneficiaryId = s.BeneficiaryId,
                     Date = s.Date,
-                    Photo = "",//s.Photo,
-                    InstallmentId = s.InstallmentId,
-                    ConstructionLevel = s.ConstructionLevel
+                    Photo = "",
+                    ConstructionLevel = s.ConstructionLevel,
+                    UserId=s.UserId
                 }).ToList();
-                beneficiaryAPIViewModel.Comments = benificiary.Comments.Select(s => new CommentsViewModel
+
+                beneficiaryAPIViewModel.Comments = installmentDetail.Comments.Select(s => new CommentsViewModel
                 {
                     Comments = s.Comments,
-                    InstallementId = s.InstallementId,
                     Reason = s.Reason,
                     RoleId = s.RoleId
                 }).ToList();
 
-                beneficiaryAPIViewModel.InstallmentDetails = benificiary.InstallmentDetails.Select(s => new InstallmentDetailsViewModel
+                beneficiaryAPIViewModel.InstallmentSignings = installmentDetail.InstallmentSignings.Select(i => new InstallmentSigningViewModel
                 {
-                    BeneficiaryAmnt = s.BeneficiaryAmnt,
-                    CompanyID = s.CompanyID,
-                    InstallmentId = s.InstallmentId,
-                    InstallmentNo = s.InstallmentNo,
-                    InstallmentSignings = s.InstallmentSignings.Select(i => new InstallmentSigningViewModel { RoleId = i.RoleId, Sign = i.Sign, CreatedDate = i.CreatedDate }).ToList()
-                }).ToList();
-                beneficiaryAPIViewModel.InstallmentNo = Convert.ToInt32(benificiary.InstallmentDetails.OrderByDescending(o => o.InstallmentId).Select(s => s.InstallmentNo).FirstOrDefault());
-                if (benificiary != null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, beneficiaryAPIViewModel);
+                    RoleId = i.RoleId,
+                    Sign = i.Sign,
+                    CreatedDate = i.CreatedDate
                 }
+                ).ToList();
 
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.Forbidden, "You are not having access application, Please contact administrator.");
-                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, beneficiaryAPIViewModel);
             }
-            return Request.CreateResponse(HttpStatusCode.NotFound, "User does not exist.");
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.Forbidden, "You are not having access application, Please contact administrator.");
+            }
+
         }
 
         [HttpPost]
