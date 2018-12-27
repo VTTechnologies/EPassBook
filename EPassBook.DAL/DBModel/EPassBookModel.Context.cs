@@ -119,24 +119,6 @@ namespace EPassBook.DAL.DBModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ELMAH_LogError", errorIdParameter, applicationParameter, hostParameter, typeParameter, sourceParameter, messageParameter, userParameter, allXmlParameter, statusCodeParameter, timeUtcParameter);
         }
     
-        public virtual ObjectResult<sp_GetInstallmentListViewForUsersRoles_Result> sp_GetInstallmentListViewForUsersRoles(Nullable<int> stageid)
-        {
-            var stageidParameter = stageid.HasValue ?
-                new ObjectParameter("stageid", stageid) :
-                new ObjectParameter("stageid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInstallmentListViewForUsersRoles_Result>("sp_GetInstallmentListViewForUsersRoles", stageidParameter);
-        }
-    
-        public virtual ObjectResult<sp_GetSurveyDetailsByBenID_Result> sp_GetSurveyDetailsByBenID(Nullable<int> benificiaryId)
-        {
-            var benificiaryIdParameter = benificiaryId.HasValue ?
-                new ObjectParameter("BenificiaryId", benificiaryId) :
-                new ObjectParameter("BenificiaryId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetSurveyDetailsByBenID_Result>("sp_GetSurveyDetailsByBenID", benificiaryIdParameter);
-        }
-    
         public virtual int sp_UpdatTransactionId(Nullable<int> benifciaryId, Nullable<bool> sign, Nullable<decimal> transactionId, Nullable<int> installmentId, Nullable<int> userid)
         {
             var benifciaryIdParameter = benifciaryId.HasValue ?
@@ -160,6 +142,24 @@ namespace EPassBook.DAL.DBModel
                 new ObjectParameter("userid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdatTransactionId", benifciaryIdParameter, signParameter, transactionIdParameter, installmentIdParameter, useridParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetInstallmentListViewForUsersRoles_Result> sp_GetInstallmentListViewForUsersRoles(Nullable<int> stageid)
+        {
+            var stageidParameter = stageid.HasValue ?
+                new ObjectParameter("stageid", stageid) :
+                new ObjectParameter("stageid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInstallmentListViewForUsersRoles_Result>("sp_GetInstallmentListViewForUsersRoles", stageidParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetSurveyDetailsByBenID_Result> sp_GetSurveyDetailsByBenID(Nullable<int> benificiaryId)
+        {
+            var benificiaryIdParameter = benificiaryId.HasValue ?
+                new ObjectParameter("BenificiaryId", benificiaryId) :
+                new ObjectParameter("BenificiaryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetSurveyDetailsByBenID_Result>("sp_GetSurveyDetailsByBenID", benificiaryIdParameter);
         }
     }
 }

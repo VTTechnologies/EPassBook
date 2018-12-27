@@ -32,13 +32,13 @@
     <Property Name="BranchName" Type="nvarchar" MaxLength="150" />
     <Property Name="IFSCCode" Type="nvarchar" MaxLength="50" />
     <Property Name="AccountNo" Type="bigint" />
-    <Property Name="Hasband_Photo" Type="image" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="CompanyID" Type="int" />
-    <Property Name="Wife_Photo" Type="image" />
+    <Property Name="Wife_Photo" Type="nvarchar(max)" />
+    <Property Name="Hasband_Photo" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="CityMaster">
     <Key>
@@ -125,7 +125,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Photo" Type="image" />
+    <Property Name="Photo" Type="nvarchar(max)" />
     <Property Name="ConstructionLevel" Type="nvarchar" MaxLength="150" />
     <Property Name="BeneficiaryId" Type="int" />
     <Property Name="UserId" Type="int" Nullable="false" />

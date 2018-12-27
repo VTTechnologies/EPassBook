@@ -23,18 +23,12 @@
       <Parameter Name="StatusCode" Mode="In" Type="Int32" />
       <Parameter Name="TimeUtc" Mode="In" Type="DateTime" />
     </FunctionImport>
-    <FunctionImport Name="sp_GetSurveyDetailsByBenID" ReturnType="Collection(EPassBookModel.sp_GetSurveyDetailsByBenID_Result)">
-      <Parameter Name="BenificiaryId" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="sp_UpdatTransactionId">
       <Parameter Name="benifciaryId" Mode="In" Type="Int32" />
       <Parameter Name="sign" Mode="In" Type="Boolean" />
       <Parameter Name="transactionId" Mode="In" Type="Decimal" />
       <Parameter Name="installmentId" Mode="In" Type="Int32" />
       <Parameter Name="userid" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
-      <Parameter Name="stageid" Mode="In" Type="Int32" />
     </FunctionImport>
     <EntitySet Name="BenificiaryMasters" EntityType="EPassBookModel.BenificiaryMaster" />
     <EntitySet Name="CityMasters" EntityType="EPassBookModel.CityMaster" />
@@ -148,28 +142,13 @@
       <End Role="UserMaster" EntitySet="UserMasters" />
       <End Role="UserInRole" EntitySet="UserInRoles" />
     </AssociationSet>
+    <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
+      <Parameter Name="stageid" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_GetSurveyDetailsByBenID" ReturnType="Collection(EPassBookModel.sp_GetSurveyDetailsByBenID_Result)">
+      <Parameter Name="BenificiaryId" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
-  <ComplexType Name="sp_GetSurveyDetailsByBenID_Result">
-    <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
-    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
-    <Property Type="String" Name="UserName" Nullable="true" MaxLength="150" />
-    <Property Type="Decimal" Name="MobileNo" Nullable="true" Precision="18" Scale="0" />
-    <Property Type="String" Name="Physical_Progress" Nullable="false" MaxLength="8" />
-    <Property Type="String" Name="Comments" Nullable="true" />
-    <Property Type="Boolean" Name="Sign" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
-    <Property Type="Int32" Name="InstallmentId" Nullable="false" />
-    <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
-    <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
-    <Property Type="Int64" Name="MobileNo" Nullable="true" />
-    <Property Type="String" Name="CreatedDate" Nullable="true" MaxLength="20" />
-    <Property Type="Int32" Name="PlanYear" Nullable="true" />
-    <Property Type="Int32" Name="StageID" Nullable="true" />
-    <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
-    <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
-    <Property Type="Int32" Name="CompanyID" Nullable="true" />
-  </ComplexType>
   <EntityType Name="BenificiaryMaster">
     <Key>
       <PropertyRef Name="BeneficiaryId" />
@@ -202,13 +181,13 @@
     <Property Name="BranchName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="IFSCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="AccountNo" Type="Int64" />
-    <Property Name="Hasband_Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CompanyID" Type="Int32" />
-    <Property Name="Wife_Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Wife_Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Hasband_Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.benficiary_CompanyID_FK" FromRole="BenificiaryMaster" ToRole="CompanyMaster" />
     <NavigationProperty Name="CityMaster" Relationship="EPassBookModel.FK_BenificiaryMaster_CityMaster" FromRole="BenificiaryMaster" ToRole="CityMaster" />
     <NavigationProperty Name="InstallmentDetails" Relationship="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="InstallmentDetail" />
@@ -286,7 +265,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ConstructionLevel" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="BeneficiaryId" Type="Int32" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
@@ -759,4 +738,25 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
+    <Property Type="Int32" Name="InstallmentId" Nullable="false" />
+    <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
+    <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="CreatedDate" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="PlanYear" Nullable="true" />
+    <Property Type="Int32" Name="StageID" Nullable="true" />
+    <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
+    <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
+    <Property Type="Int32" Name="CompanyID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_GetSurveyDetailsByBenID_Result">
+    <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="UserName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Physical_Progress" Nullable="false" MaxLength="8" />
+    <Property Type="String" Name="Comments" Nullable="true" />
+    <Property Type="Boolean" Name="Sign" Nullable="true" />
+  </ComplexType>
 </Schema>
