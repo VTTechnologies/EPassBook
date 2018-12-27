@@ -77,7 +77,7 @@
                                     @Html.LabelFor(model => model.Sign, new { @class = "col-md-2" })
                                 </div>
                                 <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                    @Html.EditorFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control",@id= "Sign" } })
+                                    @Html.EditorFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control", @id = "Sign" } })
 
                                 </div>
                             </div>
@@ -110,23 +110,19 @@
     <script>
         function validationAcountant() {
             debugger;
-            if ($("#TransactionId").val().trim() == "" && $("#hiddforCheckbox").val() == "no")
-            {
+            if ($("#TransactionId").val().trim() == "" && $("#hiddforCheckbox").val() == "no") {
                 $("#lblTransaction").text("Please Enter Transaction no");
                 $("#lblSign").text("Please sign in to confirm your submission");
                 return false;
             }
             else {
-                if (($("#TransactionId").val().trim() == "") || ($("#hiddforCheckbox").val() == "no"))
-                {
-                    if ($("#TransactionId").val().trim() == "")
-                    {
+                if (($("#TransactionId").val().trim() == "") || ($("#hiddforCheckbox").val() == "no")) {
+                    if ($("#TransactionId").val().trim() == "") {
                         $("#lblSign").text("");
                         $("#lblTransaction").text("Please Enter Transaction no");
                         return false;
                     }
-                    if ($("#hiddforCheckbox").val() == "no")
-                    {
+                    if ($("#hiddforCheckbox").val() == "no") {
                         $("#lblTransaction").text("");
                         $("#lblSign").text("Please sign in to confirm your submission");
                         return false;
@@ -138,22 +134,30 @@
             return true;
         }
 
-        $("#Sign").change(function ()
-        {
+        $("#Sign").change(function () {
             debugger
-            if ($("#Sign").is(":checked"))
-            {
+            if ($("#Sign").is(":checked")) {
                 $("#hiddforCheckbox").val("Checked");
                 $("#hiddforCheckbox").val("yes");
             }
-            else
-            {
+            else {
                 $("#hiddforCheckbox").val("Unchecked");
                 $("#hiddforCheckbox").val("no");
             }
         })
-
     </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                debugger
+                alert("submited successfully");
+                window.location.href = "/WorkFlow/Index/";
+            };
+        </script>
+    }
+
 </body>
 
 </html>

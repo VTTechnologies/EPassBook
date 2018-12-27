@@ -17,7 +17,7 @@ namespace EPassBook.DAL.IService
         void Update(InstallmentDetail installmentDetail);
         void Delete(int id);
         void SaveChanges();
-        IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result> GetInstallmentForLoginUsersWithStages(int StageID);
+        IEnumerable<sp_GetInstallmentListViewForUsersRoles_Result> GetInstallmentForLoginUsersWithStages(string StageID);
 
     }
 }

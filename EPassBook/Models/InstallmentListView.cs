@@ -19,9 +19,9 @@ namespace EPassBook.Models
         public string MobileNo { get; set; }
 
         [Display(Name = "Date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public string CreatedDate { get; set; }
 
         [Display(Name = "Plan Year")]
         public Nullable<int> PlanYear { get; set; }
