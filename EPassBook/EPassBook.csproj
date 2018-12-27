@@ -276,7 +276,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Antlr3.Runtime.dll" />
-    <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\CommonServiceLocator.dll" />
     <Content Include="bin\CommonServiceLocator.pdb" />
     <Content Include="bin\de\Microsoft.Data.Edm.resources.dll" />
@@ -751,6 +750,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\BeneficiaryImages\" />
+    <Folder Include="Uploads\SiteEngPhotos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

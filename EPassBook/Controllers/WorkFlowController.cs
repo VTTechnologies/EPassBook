@@ -17,7 +17,7 @@ namespace EPassBook.Controllers
         IBenificiaryService _benificiaryService;
         IWorkFlowStagesService _iWorkFlowStagesService;
         ICommentService _icommentService;
-
+        
 
         public WorkFlowController(IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService, IWorkFlowStagesService iWorkFlowStagesService, ICommentService icommentService)
         {
@@ -162,6 +162,9 @@ namespace EPassBook.Controllers
         public ActionResult SiteEngineer(InstallmentDetailsViewModel installmentDetailViewModel, string IsRadioButton)
         {
             HttpPostedFileBase hasbandphoto = Request.Files["imguploadsiteeng"];
+
+            string photourl = PhotoManager.savePhoto(hasbandphoto, installmentDetailViewModel.InstallmentId, "SiteEngineer");
+
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
             if (ModelState.IsValid)
             {
@@ -202,7 +205,11 @@ namespace EPassBook.Controllers
                     geotaging.UserId = user.UserId;
                     geotaging.CreatedBy = user.UserName;
                     geotaging.CreatedDate = DateTime.Now;
-                    geotaging.Photo = "";//pm.ConvertToBytes(hasbandphoto);
+
+                    if (photourl != "empty" && photourl != "fail")
+                    {
+                        geotaging.Photo = photourl;
+                    }
 
                     // Insert reocrd in GeoTaggingDetail table 
                     var signing = new InstallmentSigning();
@@ -273,8 +280,8 @@ namespace EPassBook.Controllers
             HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
             HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
             var user = Session["UserDetails"] as UserViewModel;
-            beneficiaryViewModel.Hasband_Photo = ""; //PhotoManager.ConvertToBytes(hasbandphoto);
-            beneficiaryViewModel.Wife_Photo = ""; PhotoManager.ConvertToBytes(wifephoto);
+            beneficiaryViewModel.Hasband_Photo = "";//PhotoManager.ConvertToBytes(hasbandphoto);
+            beneficiaryViewModel.Wife_Photo = "";//PhotoManager.ConvertToBytes(wifephoto);
             beneficiaryViewModel.CreatedBy = user.UserName;
             var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
             _benificiaryService.Add(insertbeneficiary);

@@ -10,3 +10,15 @@ D:\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.csproj.CoreCompil
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.csproj.CopyComplete
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.dll
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.pdb
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EPassBook.DAL.dll.config
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EPassBook.DAL.dll
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EPassBook.DAL.pdb
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.dll
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.xml
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.csprojAssemblyReference.cache
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.csproj.CoreCompileInputs.cache
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.csproj.CopyComplete
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.dll
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.pdb
