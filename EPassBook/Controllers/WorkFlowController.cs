@@ -18,13 +18,13 @@ namespace EPassBook.Controllers
         IWorkFlowStagesService _iWorkFlowStagesService;
         ICommentService _icommentService;
 
-       
+
         public WorkFlowController(IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService, IWorkFlowStagesService iWorkFlowStagesService, ICommentService icommentService)
         {
             _iWorkFlowStagesService = iWorkFlowStagesService;
             _benificiaryService = benificiaryService;
             _installmentDetailService = installmentDetailService;
-            _icommentService= icommentService;
+            _icommentService = icommentService;
         }
         // GET: WorkFlow
         [HttpGet]
@@ -43,25 +43,25 @@ namespace EPassBook.Controllers
             var resultlist = installmentListView.Select(s => new InstallmentListView
             {
                 BeneficiaryId = s.BeneficiaryId,
-                BeneficairyName=s.BeneficairyName,
-                CompanyID=s.CompanyID,
-                InstallmentId=s.InstallmentId,
-                InstallmentNo=s.InstallmentNo,
-                CreatedDate=Convert.ToDateTime(s.CreatedDate),
-                IsCompleted=s.IsCompleted,
-                MobileNo=Convert.ToString(s.MobileNo),
-                PlanYear=s.PlanYear,
-                StageID=s.StageID
-            }).ToList();  
+                BeneficairyName = s.BeneficairyName,
+                CompanyID = s.CompanyID,
+                InstallmentId = s.InstallmentId,
+                InstallmentNo = s.InstallmentNo,
+                CreatedDate = Convert.ToDateTime(s.CreatedDate),
+                IsCompleted = s.IsCompleted,
+                MobileNo = Convert.ToString(s.MobileNo),
+                PlanYear = s.PlanYear,
+                StageID = s.StageID
+            }).ToList();
             return View(resultlist);
         }
 
         [HttpGet]
-        [CustomAuthorize(Common.Admin, Common.SiteEngineer,Common.Accountant,Common.ChiefOfficer,Common.CityEngineer,Common.ProjectEngineer)]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult Workflow(int? id)
         {
             var benificiary = _benificiaryService.GetBenificiaryById(1);
-            var benficiarymodel = Mapper.BeneficiaryMapper.Detach(benificiary); 
+            var benficiarymodel = Mapper.BeneficiaryMapper.Detach(benificiary);
             Session["InstallmentId"] = id;
             string rolename = "";
             if (Session["UserDetails"] != null)
@@ -74,7 +74,6 @@ namespace EPassBook.Controllers
             return View(benficiarymodel);
         }
 
-        
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult Accountant(int id)
@@ -93,6 +92,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Common.Accountant)]
         public ActionResult Accountant(AccountDetailsViewModel accountDetailsVM)
         {
             if (Session["UserDetails"] != null)
@@ -119,7 +119,7 @@ namespace EPassBook.Controllers
                     _installmentDetailService.Update(installmentDetail);
                     _installmentDetailService.SaveChanges();
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Workflow");
                 }
                 else
                 {
@@ -130,7 +130,7 @@ namespace EPassBook.Controllers
                     accountDetailsVM.IFSCCode = benificiaryDetails.IFSCCode;
                     accountDetailsVM.AccountNo = benificiaryDetails.AccountNo.ToString();
                     accountDetailsVM.LoanAmtInRupees = accountDetailsVM.LoanAmnt.ConvertNumbertoWords();
-                    return View(accountDetailsVM);
+                    return View("_Accountant", accountDetailsVM);
                 }
             }
             else
@@ -156,6 +156,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Common.SiteEngineer)]
         public ActionResult SiteEngineer(InstallmentDetailsViewModel installmentDetailViewModel, string IsRadioButton)
         {
             HttpPostedFileBase hasbandphoto = Request.Files["imguploadsiteeng"];
@@ -236,14 +237,15 @@ namespace EPassBook.Controllers
             {
                 IEnumerable<sp_GetSurveyDetailsByBenID_Result> commentlist = _icommentService.GetSurveyDetailsByBenificiaryID(1);
 
-                var mappedCommentList = commentlist.Select(s=> new SurveyDetailsModel {
-                    BeneficiaryId =s.BeneficiaryId,
-                    Comments =s.Comments,
-                    UserName =s.UserName,
-                    CreatedDate =s.CreatedDate,
-                    MobileNo =s.MobileNo,
-                    Sign =s.Sign,
-                    Physical_Progress =s.Physical_Progress
+                var mappedCommentList = commentlist.Select(s => new SurveyDetailsModel
+                {
+                    BeneficiaryId = s.BeneficiaryId,
+                    Comments = s.Comments,
+                    UserName = s.UserName,
+                    CreatedDate = s.CreatedDate,
+                    MobileNo = s.MobileNo,
+                    Sign = s.Sign,
+                    Physical_Progress = s.Physical_Progress
 
                 }).ToList();
 
@@ -263,6 +265,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Common.DataEntry)]
         public ActionResult DataEntry(BeneficiaryViewModel beneficiaryViewModel)
         {
             HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
@@ -274,13 +277,11 @@ namespace EPassBook.Controllers
             var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
             _benificiaryService.Add(insertbeneficiary);
             _benificiaryService.SaveChanges();
-           
-                return RedirectToAction("Index");
-           
-
+            return RedirectToAction("Index");
         }
-       
+
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult ProjectEngineer()
         {
             int installmentid = 0;
@@ -297,60 +298,62 @@ namespace EPassBook.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Common.ProjectEngineer)]
         public ActionResult ProjectEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
-            
+
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
             //if (ModelState.IsValid)
             //{
-                if (Session["UserDetails"] != null)
-                {                    
-                    var user = Session["UserDetails"] as UserViewModel;
-                    installment.ModifiedBy = user.UserName;
-                    installment.StageID = (int)Common.WorkFlowStages.CityEngineer;                    
-                    installment.ModifiedDate = DateTime.Now;
+            if (Session["UserDetails"] != null)
+            {
+                var user = Session["UserDetails"] as UserViewModel;
+                installment.ModifiedBy = user.UserName;
+                installment.StageID = (int)Common.WorkFlowStages.CityEngineer;
+                installment.ModifiedDate = DateTime.Now;
 
-                    // Insert reocrd in comment table 
-                    var comments = new Comment();
-                    comments.Comments = installmentDetailViewModel._Comments;
-                    comments.CreatedBy = user.UserName;
-                    comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
-                    comments.CreatedDate = DateTime.Now;
-                    comments.CompanyID = user.CompanyID;                    
+                // Insert reocrd in comment table 
+                var comments = new Comment();
+                comments.Comments = installmentDetailViewModel._Comments;
+                comments.CreatedBy = user.UserName;
+                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                comments.CreatedDate = DateTime.Now;
+                comments.CompanyID = user.CompanyID;
 
-                    // Insert reocrd in GeoTaggingDetail table 
-                    var signing = new InstallmentSigning();
-                    signing.InstallmentId = installmentDetailViewModel.InstallmentId;
-                    signing.UserId = user.UserId;
-                    signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
-                    signing.Sign = true;
-                    signing.CreatedDate = DateTime.Now;
-                    signing.CompanyID = user.CompanyID;
+                // Insert reocrd in GeoTaggingDetail table 
+                var signing = new InstallmentSigning();
+                signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                signing.UserId = user.UserId;
+                signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                signing.Sign = true;
+                signing.CreatedDate = DateTime.Now;
+                signing.CompanyID = user.CompanyID;
 
-                    // Applying changes to database tables
-                    installment.Comments.Add(comments);
-                    
-                    installment.InstallmentSignings.Add(signing);
-                    _installmentDetailService.Update(installment);
+                // Applying changes to database tables
+                installment.Comments.Add(comments);
+
+                installment.InstallmentSignings.Add(signing);
+                _installmentDetailService.Update(installment);
 
 
-                    _installmentDetailService.SaveChanges();
+                _installmentDetailService.SaveChanges();
 
-                    Session["InstallmentId"] = null;
-                    ViewBag.Message = "sussess message";
+                Session["InstallmentId"] = null;
+                ViewBag.Message = "sussess message";
 
                 installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
                 installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
                 installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
 
-                    //return RedirectToAction("Index", "WorkFlow");
-                }
+                //return RedirectToAction("Index", "WorkFlow");
+            }
             //}
 
             return PartialView("_ProjectEngineer", installmentDetailViewModel);
         }
 
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult CityEngineer()
         {
             int installmentid = 0;
@@ -367,6 +370,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Common.CityEngineer)]
         public ActionResult CityEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
 
@@ -421,6 +425,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult ChiefOfficer()
         {
             int installmentid = 0;
@@ -437,6 +442,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpPost]
+        [CustomAuthorize(Common.ChiefOfficer)]
         public ActionResult ChiefOfficer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
 
