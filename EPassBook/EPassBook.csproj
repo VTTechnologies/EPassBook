@@ -594,6 +594,7 @@
     <Content Include="Content\Landingpagecss\Logincss.css" />
     <Content Include="Content\Landingpagecss\style.css" />
     <Content Include="Content\img\text.png" />
+    <Content Include="Content\LeftMenu.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -747,6 +748,7 @@
     <Content Include="Views\Beneficiary\Index.cshtml" />
     <Content Include="Views\Shared\_ChiefOfficer.cshtml" />
     <Content Include="Views\Shared\_CityEngineer.cshtml" />
+    <Content Include="Views\Shared\_LeftMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
