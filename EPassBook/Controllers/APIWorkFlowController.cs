@@ -108,6 +108,8 @@ namespace EPassBook.Controllers
 
                 beneficiaryAPIViewModel.Comments = installmentDetail.Comments.Select(s => new CommentsViewModel
                 {
+                    CreatedDate=s.CreatedDate,
+                    CreatedBy=s.CreatedBy,
                     Comments = s.Comments,
                     Reason = s.Reason,
                     RoleId = s.RoleId
@@ -117,10 +119,10 @@ namespace EPassBook.Controllers
                 {
                     RoleId = i.RoleId,
                     Sign = i.Sign,
+                    CreatedBy=i.CreatedBy,
                     CreatedDate = i.CreatedDate
                 }
                 ).ToList();
-
 
                 return Request.CreateResponse(HttpStatusCode.OK, beneficiaryAPIViewModel);
             }
