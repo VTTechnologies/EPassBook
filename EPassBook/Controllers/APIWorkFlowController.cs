@@ -133,7 +133,8 @@ namespace EPassBook.Controllers
 
         }
 
-        [HttpPost]
+        
+        [Route("UpdateStatus/{installmentId}/{installmentNo}"),HttpPost]
         public HttpResponseMessage UpdateInstallmentStatus(int installmentId, int installmentNo)
         {
             var installmentDetail = _installmentDetailService.GetAllInstallmentDetails().Where(w => w.InstallmentId == installmentId && w.InstallmentNo == installmentNo).FirstOrDefault();
@@ -145,7 +146,7 @@ namespace EPassBook.Controllers
                 _installmentDetailService.Update(installmentDetail);
                 _installmentDetailService.SaveChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, installmentDetail);
+                return Request.CreateResponse(HttpStatusCode.OK, "Request send successfully.");
             }
             else
             {
