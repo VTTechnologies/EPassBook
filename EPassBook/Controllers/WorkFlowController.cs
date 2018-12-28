@@ -504,5 +504,6 @@ namespace EPassBook.Controllers
 
             return PartialView("_ChiefOfficer", installmentDetailViewModel);
         }
+        
     }
 }

@@ -566,7 +566,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Parameter Name="TimeUtc" Type="datetime" Mode="In" />
   </Function>
   <Function Name="sp_GetInstallmentListViewForUsersRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="stageid" Type="int" Mode="In" />
+    <Parameter Name="stageids" Type="nvarchar(max)" Mode="In" />
   </Function>
   <Function Name="sp_GetSurveyDetailsByBenID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="BenificiaryId" Type="int" Mode="In" />
@@ -577,6 +577,18 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Parameter Name="transactionId" Type="numeric" Mode="In" />
     <Parameter Name="installmentId" Type="int" Mode="In" />
     <Parameter Name="userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="List" Type="nvarchar" Mode="In" />
+    <Parameter Name="SplitOn" Type="nvarchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="100" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
   </Function>
   <EntityContainer Name="EPassBookModelStoreContainer">
     <EntitySet Name="BenificiaryMaster" EntityType="Self.BenificiaryMaster" Schema="dbo" store:Type="Tables" />

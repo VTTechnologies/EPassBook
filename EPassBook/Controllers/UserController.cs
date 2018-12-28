@@ -5,6 +5,7 @@ using EPassBook.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -167,6 +168,75 @@ namespace EPassBook.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ForgetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ForgetPassword(FormCollection formCollection)
+        {
+            var Email = Request["Email"].ToString();
+            if(Email==null)
+            {
+                Email = formCollection["Email"].ToString();
+            }
+
+            var user = new UserMaster();
+            user = _userService.Get().Where(u => u.Email == Email).FirstOrDefault();
+
+            if(user == null)
+            {
+                ViewData["Error"] = "Email does not exist";
+                return RedirectToAction("ForgetPassword");
+            }
+
+            GMailer.GmailUsername = "athersayed.vtt@gmail.com";
+            GMailer.GmailPassword = "rahtasayed..";
+
+            GMailer mailer = new GMailer();
+            mailer.ToEmail = user.Email;
+            mailer.Body = PopulateBody(user);
+            mailer.IsHtml = true;
+            mailer.Send();
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult sendMail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult sendMail(Mail mail)
+        {
+            //GMailer.GmailUsername = "athersayed.vtt@gmail.com";
+            //GMailer.GmailPassword = "rahtasayed..";
+
+            //GMailer mailer = new GMailer();
+            //mailer.ToEmail = mail.ToEmail;
+            //mailer.Subject = mail.Subject;
+            //mailer.Body = PopulateBody(mail);
+            //mailer.IsHtml = true;
+            //mailer.Send();
+            return View();
+        }
+        public string PopulateBody(UserMaster user)
+        {
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/Shared/MailBody.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{UserName}", user.UserName);
+            body = body.Replace("{Title}", "Click here to reset your password");
+            body = body.Replace("{Url}", "http://localhost:23488//User/ResetPassword");
+            //body = body.Replace("{Description}", user.Description);
+            return body;
+        }
+
 
         [CustomAuthorize(Common.Admin)]
         [HttpGet]
@@ -313,5 +383,7 @@ namespace EPassBook.Controllers
             }
             return RedirectToAction("Index");
         }
+
+
     }
 }

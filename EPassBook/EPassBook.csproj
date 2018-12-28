@@ -246,6 +246,8 @@
     <Compile Include="Helper\CustomAuthorizeAttribute.cs" />
     <Compile Include="Helper\ElmahErrorAttribute.cs" />
     <Compile Include="Helper\HTMLHelperExtensions.cs" />
+    <Compile Include="Helper\GMailer.cs" />
+    <Compile Include="Helper\Mail.cs" />
     <Compile Include="Helper\NumbersToWords.cs" />
     <Compile Include="Helper\PhotoManager.cs" />
     <Compile Include="Mapper\UserInRoleMapper.cs" />
@@ -4392,6 +4394,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\MailBody.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -4432,6 +4435,8 @@
     <Content Include="Views\Beneficiary\Index.cshtml" />
     <Content Include="Views\Shared\_ChiefOfficer.cshtml" />
     <Content Include="Views\Shared\_CityEngineer.cshtml" />
+    <Content Include="Views\WorkFlow\sendMail.cshtml" />
+    <Content Include="Views\User\ForgetPassword.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
