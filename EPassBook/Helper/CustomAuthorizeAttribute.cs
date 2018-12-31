@@ -18,15 +18,17 @@ namespace EPassBook.Helper
     {
         private readonly string[] allowedroles;
         IUserService _userService;
+        UserViewModel userDetail;
         public CustomAuthorizeAttribute(params string[] roles)
         {
             _userService = DependencyResolver.Current.GetService<IUserService>();
             this.allowedroles = roles;
+            userDetail= new UserViewModel();
         }
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             bool authorize = false;
-            UserViewModel userDetail = new UserViewModel();
+           
             userDetail = httpContext.Session["UserDetails"] as UserViewModel;
             foreach (var role in allowedroles)
             {
@@ -43,7 +45,15 @@ namespace EPassBook.Helper
         }
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            filterContext.Result = new RedirectResult("~/Error/UnauthorizedAccess");
+            //userDetail
+            if (filterContext.HttpContext.Session["UserDetails"] == null)
+            {
+                filterContext.Result = new RedirectResult("~/User/Login");
+            }
+            else
+            {
+                filterContext.Result = new RedirectResult("~/Error/UnauthorizedAccess");
+            }
         }
     }
 }
