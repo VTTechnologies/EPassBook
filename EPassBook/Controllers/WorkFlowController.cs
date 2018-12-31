@@ -31,7 +31,7 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult Index()
         {
-            List<int> stageIds;
+            List<int?> stageIds;
             string strStageIds = "";
             if (Session["UserDetails"] != null)
             {

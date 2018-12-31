@@ -17,6 +17,6 @@ namespace EPassBook.DAL.IService
         void Update(WorkflowStage WorkflowStage);
         void Delete(int id);
         void SaveChanges();
-        List<int> GetWorkflowStageById(List<int> roleIds);
+        List<int?> GetWorkflowStageById(List<int> roleIds);
     }
 }
