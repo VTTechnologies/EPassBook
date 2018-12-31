@@ -25,6 +25,8 @@ namespace EPassBook.Models
         public string _Comments { get; set; }
         public string Photo { get; set; }
         public Nullable<decimal> TransactionID { get; set; }
+        public string lInRupees { get; set; }
+        public string beniInRupees { get; set; }
 
 
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }
