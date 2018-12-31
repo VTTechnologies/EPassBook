@@ -13,15 +13,17 @@ namespace EPassBook.Controllers
     [RoutePrefix("api/Workflow")]
     public class APIWorkFlowController : ApiController
     {
-        IUserService _userService;
-        IBenificiaryService _benificiaryService;
-        IInstallmentDetailService _installmentDetailService;
+        private readonly IUserService _userService;
+        private readonly IBenificiaryService _benificiaryService;
+        private readonly IInstallmentDetailService _installmentDetailService;
+        private readonly ICommentService _iCommentService;
 
-        public APIWorkFlowController(IUserService userService, IBenificiaryService benificiaryService, IInstallmentDetailService installmentDetailService)
+        public APIWorkFlowController(IUserService userService, IBenificiaryService benificiaryService, IInstallmentDetailService installmentDetailService, ICommentService iCommentService)
         {
             _benificiaryService = benificiaryService;
             _userService = userService;
             _installmentDetailService = installmentDetailService;
+            _iCommentService = iCommentService;
         }
 
         [HttpGet]
@@ -143,6 +145,35 @@ namespace EPassBook.Controllers
                 installmentDetail.StageID = Convert.ToInt32(WorkFlowStages.UserRequest);
                 installmentDetail.ModifiedBy = "Beneficiary";
                 installmentDetail.ModifiedDate = DateTime.Now;
+                _installmentDetailService.Update(installmentDetail);
+                _installmentDetailService.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Request send successfully.");
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "There is some problem, Please contact administrator.");
+            }
+        }
+
+        [Route("AddComment/{installmentId}/{comment}"), HttpPost]
+        public HttpResponseMessage AddComment(int installmentId, string comment)
+        {
+            var installmentDetail = _installmentDetailService.GetInstallmentDetailById(installmentId);           
+
+            if (installmentDetail != null)
+            {
+                installmentDetail.Comments.Add(new DAL.DBModel.Comment()
+                {
+                    InstallementId= installmentDetail.InstallmentId,
+                    BeneficiaryId = installmentDetail.BeneficiaryId,
+                    Comments = comment,
+                    RoleId = Convert.ToInt32(Roles.Beneficiary),
+                    CompanyID = installmentDetail.CompanyID,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = installmentDetail.CreatedBy
+                });                    
+                   
                 _installmentDetailService.Update(installmentDetail);
                 _installmentDetailService.SaveChanges();
 
