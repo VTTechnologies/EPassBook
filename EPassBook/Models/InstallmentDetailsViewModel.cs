@@ -9,8 +9,10 @@ namespace EPassBook.Models
         [Key]
         public int InstallmentId { get; set; }
         public int BeneficiaryId { get; set; }
+        [Range(0, 100000000000)]
         public Nullable<decimal> BeneficiaryAmnt { get; set; }
         [Required(ErrorMessage ="Please enter Loan Amount")]
+        [Range(0,100000000000)]
         public Nullable<decimal> LoanAmnt { get; set; }
         public Nullable<bool> IsCentreAmnt { get; set; }
         public string ConstructionLevel { get; set; }
@@ -25,6 +27,8 @@ namespace EPassBook.Models
         public string _Comments { get; set; }
         public string Photo { get; set; }
         public Nullable<decimal> TransactionID { get; set; }
+        public string lInRupees { get; set; }
+        public string beniInRupees { get; set; }
 
 
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }

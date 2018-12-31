@@ -303,6 +303,16 @@ namespace EPassBook.Controllers
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel._Comments = null;
+            installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
+            installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+            if(installmentviewmodel.lInRupees == "ZERO")
+            {
+                installmentviewmodel.lInRupees = null;
+            }
+            if (installmentviewmodel.beniInRupees == "ZERO")
+            {
+                installmentviewmodel.beniInRupees = null;
+            }
             return PartialView("_ProjectEngineer", installmentviewmodel);
         }
 
@@ -375,6 +385,16 @@ namespace EPassBook.Controllers
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel._Comments = null;
+            installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
+            installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+            if (installmentviewmodel.lInRupees == "ZERO")
+            {
+                installmentviewmodel.lInRupees = null;
+            }
+            if (installmentviewmodel.beniInRupees == "ZERO")
+            {
+                installmentviewmodel.beniInRupees = null;
+            }
             return PartialView("_CityEngineer", installmentviewmodel);
         }
 
@@ -447,6 +467,16 @@ namespace EPassBook.Controllers
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel._Comments = null;
+            installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
+            installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+            if (installmentviewmodel.lInRupees == "ZERO")
+            {
+                installmentviewmodel.lInRupees = null;
+            }
+            if (installmentviewmodel.beniInRupees == "ZERO")
+            {
+                installmentviewmodel.beniInRupees = null;
+            }
             return PartialView("_ChiefOfficer", installmentviewmodel);
         }
 
@@ -504,6 +534,12 @@ namespace EPassBook.Controllers
 
             return PartialView("_ChiefOfficer", installmentDetailViewModel);
         }
-        
+
+        [HttpPost]
+        public string ToWords(long number)
+        {
+            var Rupees = number.ConvertNumbertoWords();
+            return Rupees;
+        }
     }
 }
