@@ -36,6 +36,17 @@
 {
     @Html.AntiForgeryToken()
 
+
+<div class="box box-primary">
+    <h4>InstallmentDetailsViewModel</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group" style="display:none">
+        @Html.LabelFor(model => model.InstallmentId, "InstallmentID", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.HiddenFor(m => m.InstallmentId)
+        </div>
+    </div>
     <div class="form-horizontal" id="secondDiv">
         <h4>InstallmentDetailsViewModel</h4>
         <hr />
@@ -204,11 +215,11 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <label id="lblmsg" class="text-danger"></label>
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <label id="lblmsg" class="text-danger"></label>
         </div>
+    </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
