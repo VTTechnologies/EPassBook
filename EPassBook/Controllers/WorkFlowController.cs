@@ -150,8 +150,55 @@ namespace EPassBook.Controllers
 
         [HttpPost]
         [CustomAuthorize(Common.SiteEngineer)]
-        public ActionResult Recommend(FormCollection formCollection)
+        public ActionResult Recommend(FormCollection formCollection, InstallmentDetailsViewModel installmentDetailsViewModel)
         {
+            if (ModelState.IsValid)
+            {
+                if (Session["UserDetails"] != null)
+                {
+                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailsViewModel.InstallmentId);
+
+                    var comments = new Comment();
+                    var user = Session["UserDetails"] as UserViewModel;
+                    comments.Comments = formCollection["txtFirstComment"].ToString();
+                    comments.CreatedBy = user.UserName;
+                    comments.BeneficiaryId = installmentDetailsViewModel.BeneficiaryId;
+                    comments.CreatedDate = DateTime.Now;
+                    comments.CompanyID = user.CompanyID;
+                    installment.IsRecommended = true;
+                    installment.Comments.Add(comments);
+                    _installmentDetailService.Update(installment);
+                    _installmentDetailService.SaveChanges();
+                    return PartialView("_SiteEngineer", formCollection);
+                }
+            }
+            return PartialView("_SiteEngineer", formCollection);
+        }
+
+        [HttpPost]
+        [CustomAuthorize(Common.SiteEngineer)]
+        public ActionResult Reject(FormCollection formCollection, InstallmentDetailsViewModel installmentDetailsViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Session["UserDetails"] != null)
+                {
+                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailsViewModel.InstallmentId);
+
+                    var comments = new Comment();
+                    var user = Session["UserDetails"] as UserViewModel;
+                    comments.Comments = formCollection["txtFirstComment"].ToString();
+                    comments.CreatedBy = user.UserName;
+                    comments.BeneficiaryId = installmentDetailsViewModel.BeneficiaryId;
+                    comments.CreatedDate = DateTime.Now;
+                    comments.CompanyID = user.CompanyID;
+                    installment.IsRecommended = false;
+                    installment.StageID = Convert.ToInt32(Common.WorkFlowStages.Rejected);
+                    installment.Comments.Add(comments);
+                    _installmentDetailService.SaveChanges();
+                    return PartialView("_SiteEngineer", formCollection);
+                }
+            }
             return PartialView("_SiteEngineer", formCollection);
         }
 
@@ -179,6 +226,7 @@ namespace EPassBook.Controllers
             {
                 installmentviewmodel.beniInRupees = null;
             }
+            ViewBag.isRecommended = installment.IsRecommended.ToString().ToLower();
             return PartialView("_SiteEngineer", installmentviewmodel);
         }
 

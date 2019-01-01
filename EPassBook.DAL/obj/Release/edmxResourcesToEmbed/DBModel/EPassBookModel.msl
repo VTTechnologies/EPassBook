@@ -4,7 +4,44 @@
     <FunctionImportMapping FunctionImportName="ELMAH_GetErrorsXml" FunctionName="EPassBookModel.Store.ELMAH_GetErrorsXml" />
     <FunctionImportMapping FunctionImportName="ELMAH_GetErrorXml" FunctionName="EPassBookModel.Store.ELMAH_GetErrorXml" />
     <FunctionImportMapping FunctionImportName="ELMAH_LogError" FunctionName="EPassBookModel.Store.ELMAH_LogError" />
+    <FunctionImportMapping FunctionImportName="sp_GetSurveyDetailsByBenID" FunctionName="EPassBookModel.Store.sp_GetSurveyDetailsByBenID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EPassBookModel.sp_GetSurveyDetailsByBenID_Result">
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="Physical_Progress" ColumnName="Physical Progress" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Sign" ColumnName="Sign" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_UpdatTransactionId" FunctionName="EPassBookModel.Store.sp_UpdatTransactionId" />
+    <FunctionImportMapping FunctionImportName="sp_GetInstallmentListViewForUsersRoles" FunctionName="EPassBookModel.Store.sp_GetInstallmentListViewForUsersRoles">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result">
+          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
+          <ScalarProperty Name="StageID" ColumnName="StageID" />
+          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Split" FunctionName="EPassBookModel.Store.Split">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EPassBookModel.Split_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <EntitySetMapping Name="BenificiaryMasters">
       <EntityTypeMapping TypeName="EPassBookModel.BenificiaryMaster">
         <MappingFragment StoreEntitySet="BenificiaryMaster">
@@ -102,6 +139,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DefaultComments">
+      <EntityTypeMapping TypeName="EPassBookModel.DefaultComment">
+        <MappingFragment StoreEntitySet="DefaultComments">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GeoTaggingDetails">
       <EntityTypeMapping TypeName="EPassBookModel.GeoTaggingDetail">
         <MappingFragment StoreEntitySet="GeoTaggingDetails">
@@ -123,6 +169,7 @@
     <EntitySetMapping Name="InstallmentDetails">
       <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetail">
         <MappingFragment StoreEntitySet="InstallmentDetails">
+          <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
           <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
           <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
@@ -264,34 +311,5 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="sp_GetInstallmentListViewForUsersRoles" FunctionName="EPassBookModel.Store.sp_GetInstallmentListViewForUsersRoles">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result">
-          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-          <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
-          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
-          <ScalarProperty Name="StageID" ColumnName="StageID" />
-          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_GetSurveyDetailsByBenID" FunctionName="EPassBookModel.Store.sp_GetSurveyDetailsByBenID">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="EPassBookModel.sp_GetSurveyDetailsByBenID_Result">
-          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-          <ScalarProperty Name="Physical_Progress" ColumnName="Physical Progress" />
-          <ScalarProperty Name="Comments" ColumnName="Comments" />
-          <ScalarProperty Name="Sign" ColumnName="Sign" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
