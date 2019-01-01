@@ -17,11 +17,10 @@
     <section class="content-header">
         <h1>
             Beneficiary Request
-            <small>Control panel</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> Beneficiary Request Box</a></li>
+            @*<li class="active">Dashboard</li>*@
         </ol>
     </section>
     <!-- Main content -->
@@ -33,7 +32,7 @@
                         @*<h3 class="box-title">Beneficiary Request</h3>*@
                     </div>
                     <div class="box-body">
-                        <table id="lst" class="table table-bordered table-striped">
+                        <table id="Beneficiary" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th style="display:none">
@@ -42,13 +41,13 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.BeneficairyName)
                                     </th>
-                                    <th class="hidden-xs">
+                                    <th class="hidden-sm hidden-xs hidden-md">
                                         @Html.DisplayNameFor(model => model.MobileNo)
                                     </th>
-                                    <th class="hidden-xs">
+                                    <th class="hidden-sm hidden-xs hidden-md">
                                         @Html.DisplayNameFor(model => model.CreatedDate)
                                     </th>
-                                    <th class="hidden-xs"> 
+                                    <th class="hidden-sm hidden-xs hidden-md">  
                                         @Html.DisplayNameFor(model => model.PlanYear)
                                     </th>  
                                     <th>
@@ -67,13 +66,13 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.BeneficairyName)
                                         </td>
-                                        <td class="hidden-xs">
+                                        <td class="hidden-sm hidden-xs hidden-md">
                                             @Html.DisplayFor(modelItem => item.MobileNo)
                                         </td>
                                         <td class="hidden-xs">
                                             @Html.DisplayFor(modelItem => item.CreatedDate)
                                         </td>
-                                        <td class="hidden-xs">
+                                        <td class="hidden-sm hidden-xs hidden-md">
                                             @Html.DisplayFor(modelItem => item.PlanYear)
                                         </td>                                       
                                         <td>
@@ -99,6 +98,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#lst').DataTable();
+        $('#Beneficiary').DataTable();
     });
 </script>

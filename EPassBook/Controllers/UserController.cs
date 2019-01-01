@@ -65,6 +65,14 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
+        public ActionResult SignOut()
+        {
+            Session.Clear();
+            return RedirectToAction("Login");
+
+        }
+
+        [HttpGet]
         public ActionResult Login()
         {
             return View();

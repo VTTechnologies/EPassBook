@@ -16,12 +16,18 @@
             <ul class="nav navbar-nav">               
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" id="signout" class="dropdown-toggle" data-toggle="dropdown">
                         Sign Out
                     </a>
-                  
+
                 </li>                
             </ul>
         </div>
     </nav>
 </header>
+
+<script type="text/javascript">
+    $('#signout').on('click', function () {
+        window.location.href = "/User/SignOut/";
+    });
+</script>

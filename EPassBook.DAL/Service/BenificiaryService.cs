@@ -60,9 +60,9 @@ namespace EPassBook.DAL.Service
             benificiaryMasterRepository.Delete(id);
         }
 
-        public int AuthenticateBeneficiary(long? userName, string password)
+        public BenificiaryMaster AuthenticateBeneficiary(long? userName, string password)
         {
-            return benificiaryMasterRepository.GetAll().Where(w=>w.AdharNo==userName &&  w.Password==password).FirstOrDefault().BeneficiaryId;
+            return benificiaryMasterRepository.GetAll().Where(w=>w.AdharNo==userName &&  w.Password==password).FirstOrDefault();
         }
     }
 }

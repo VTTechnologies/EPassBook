@@ -17,18 +17,45 @@
     {@RenderSection("Styles", required: false)}
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue layout-top-nav">
     <div class="wrapper">
-        @Html.Partial("_Header")
-        @Html.Partial("_LeftMenu")
-        @RenderBody()
-        @Html.Partial("_Footer")
-        <div class="control-sidebar-bg"></div>
-    </div>
-    
-    @Scripts.Render("~/bundles/lib")
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="@Url.Action("Index", "WorkFlow")" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>E</b>Book</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>E </b>PassBook</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <div class="container pull-right">
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <!-- User Account: style can be found in dropdown.less -->
+                            <li class="dropdown user user-menu ">
+                                <a href="#" id="signout" class="dropdown-toggle" data-toggle="dropdown">
+                                    Sign Out
+                                </a>
 
-    @RenderSection("scripts", required: false)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+                            @RenderBody()
+                            @Html.Partial("_Footer")
+                            <div class="control-sidebar-bg"></div>
+                    </div>
+
+                    @Scripts.Render("~/bundles/lib")
+
+                    @RenderSection("scripts", required: false)
 
 </body>
 </html>
+
+<script type="text/javascript">$('#signout').on('click', function () {
+        window.location.href = "/User/SignOut/";
+    });</script>

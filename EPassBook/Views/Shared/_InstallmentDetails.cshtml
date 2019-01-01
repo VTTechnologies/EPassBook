@@ -2,60 +2,67 @@
 @{
     ViewBag.Title = "Beneficiary Copy (First Installment)";
 }
-<div class="container">
-    <div class="panel panel-info">
-        <div class="panel-heading" style="background-color:#428bca;color:white">
-            <div class="panel-title">Installment Deatils</div>
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3>Beneficiary Details</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <label class="control-label" for="recno">Record No:</label>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 disabled">
+                                @Html.TextBoxFor(m => m.RecordNo, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <label class="control-label" for="benficiid">Beneficiary ID:</label>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                @Html.TextBoxFor(m => m.BeneficiaryId, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <label class="control-label" for="pnalye">Plan Year:</label>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                @{
+                                    int year = Convert.ToDateTime(Model.CreatedDate).Year;
+                                }
+                                @Html.Label(year.ToString(), new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <label class="control-label" for="benficiname">Name of the beneficiary:</label>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                @Html.TextBoxFor(m => m.BeneficairyName, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <label class="control-label" for="mobno">Mobile No:</label>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
         </div>
-        <div class="form-horizontal" style="margin-top:20px;padding-left:20px;padding-right:20px" >
-
-            <div class="form-group">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <label class="control-label" for="recno">Record No:</label>
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 disabled">
-                    @Html.TextBoxFor(m => m.RecordNo, new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <label class="control-label" for="benficiid">Beneficiary ID:</label>
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    @Html.TextBoxFor(m => m.BeneficiaryId, new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <label class="control-label" for="pnalye">Plan Year:</label>
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    @{
-                        int year = Convert.ToDateTime(Model.CreatedDate).Year;
-                    }
-                    @Html.Label(year.ToString(), new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <label class="control-label" for="benficiname">Name of the beneficiary:</label>
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    @Html.TextBoxFor(m => m.BeneficairyName, new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <label class="control-label" for="mobno">Mobile No:</label>
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control" })
-                </div>
-            </div>
-        </div>
-</div>
-    </div>
+    </section>

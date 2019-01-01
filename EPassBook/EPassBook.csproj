@@ -4336,7 +4336,6 @@
     </Content>
     <Content Include="Content\adminlte\css\adminlte.css.map" />
     <Content Include="Content\adminlte\css\adminlte.min.css.map" />
-    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\adminlte\components\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.css.map" />
     <Content Include="Scripts\adminlte\components\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.min.css.map" />
@@ -4411,7 +4410,6 @@
     <Content Include="Views\WorkFlow\Workflow.cshtml" />
     <Content Include="Views\User\IndexOld.cshtml" />
     <Content Include="Views\User\CreateOld.cshtml" />
-    <Content Include="Views\Shared\_dashboardlayout.cshtml" />
     <Content Include="Views\Shared\.DS_Store" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\Error\ServerSideError.cshtml" />
@@ -4439,6 +4437,8 @@
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Shared\_AdminLeftMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
