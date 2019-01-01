@@ -145,8 +145,6 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult Recommend()
         {
-            List<string> cmntsList = new List<string>(); // bind comments here
-            ViewBag["defaultComments"] = cmntsList;
             return View();
         }
 

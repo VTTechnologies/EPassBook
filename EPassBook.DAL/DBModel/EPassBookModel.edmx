@@ -97,6 +97,14 @@
           <Property Name="Modifiedby" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="DefaultComments">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ELMAH_Error">
@@ -161,6 +169,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CompanyID" Type="int" />
           <Property Name="TransactionID" Type="numeric" Precision="20" Scale="0" />
+          <Property Name="IsRecommended" Type="bit" />
         </EntityType>
         <EntityType Name="InstallmentDetailsHistory">
           <Key>
@@ -601,6 +610,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CommentsHisory" EntityType="Self.CommentsHisory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyMaster" EntityType="Self.CompanyMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DefaultComments" EntityType="Self.DefaultComments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GeoTaggingDetails" EntityType="Self.GeoTaggingDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InstallmentDetails" EntityType="Self.InstallmentDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InstallmentDetailsHistory" EntityType="Self.InstallmentDetailsHistory" Schema="dbo" store:Type="Tables" />
@@ -772,6 +782,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <EntitySet Name="Comments" EntityType="EPassBookModel.Comment" />
           <EntitySet Name="CommentsHisories" EntityType="EPassBookModel.CommentsHisory" />
           <EntitySet Name="CompanyMasters" EntityType="EPassBookModel.CompanyMaster" />
+          <EntitySet Name="DefaultComments" EntityType="EPassBookModel.DefaultComment" />
           <EntitySet Name="GeoTaggingDetails" EntityType="EPassBookModel.GeoTaggingDetail" />
           <EntitySet Name="InstallmentDetails" EntityType="EPassBookModel.InstallmentDetail" />
           <EntitySet Name="InstallmentDetailsHistories" EntityType="EPassBookModel.InstallmentDetailsHistory" />
@@ -879,7 +890,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <End Role="UserMaster" EntitySet="UserMasters" />
             <End Role="UserInRole" EntitySet="UserInRoles" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="sp_GetSurveyDetailsByBenID_Result">
           <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
@@ -1016,6 +1027,14 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.installmentsigning_CompanyID_FK" FromRole="CompanyMaster" ToRole="InstallmentSigning" />
           <NavigationProperty Name="UserMasters" Relationship="EPassBookModel.UserMaster_CompanyID_FK" FromRole="CompanyMaster" ToRole="UserMaster" />
         </EntityType>
+        <EntityType Name="DefaultComment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
         <EntityType Name="GeoTaggingDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -1056,6 +1075,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CompanyID" Type="Int32" />
           <Property Name="TransactionID" Type="Decimal" Precision="20" Scale="0" />
+          <Property Name="IsRecommended" Type="Boolean" />
           <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster" FromRole="InstallmentDetail" ToRole="BenificiaryMaster" />
           <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_InstallmentDetails" FromRole="InstallmentDetail" ToRole="Comment" />
           <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.installment_CompanyID_FK" FromRole="InstallmentDetail" ToRole="CompanyMaster" />
@@ -1638,6 +1658,15 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DefaultComments">
+            <EntityTypeMapping TypeName="EPassBookModel.DefaultComment">
+              <MappingFragment StoreEntitySet="DefaultComments">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="GeoTaggingDetails">
             <EntityTypeMapping TypeName="EPassBookModel.GeoTaggingDetail">
               <MappingFragment StoreEntitySet="GeoTaggingDetails">
@@ -1659,6 +1688,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <EntitySetMapping Name="InstallmentDetails">
             <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetail">
               <MappingFragment StoreEntitySet="InstallmentDetails">
+                <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
@@ -1800,7 +1830,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -32,6 +32,7 @@ namespace EPassBook.DAL.DBModel
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<CommentsHisory> CommentsHisories { get; set; }
         public virtual DbSet<CompanyMaster> CompanyMasters { get; set; }
+        public virtual DbSet<DefaultComment> DefaultComments { get; set; }
         public virtual DbSet<GeoTaggingDetail> GeoTaggingDetails { get; set; }
         public virtual DbSet<InstallmentDetail> InstallmentDetails { get; set; }
         public virtual DbSet<InstallmentDetailsHistory> InstallmentDetailsHistories { get; set; }

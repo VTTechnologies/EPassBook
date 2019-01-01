@@ -66,6 +66,9 @@
     <Compile Include="DBModel\CompanyMaster.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBModel\DefaultComment.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBModel\ELMAH_Error.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
