@@ -1,19 +1,23 @@
-﻿
-@model EPassBook.Models.InstallmentDetailsViewModel
+﻿@model EPassBook.Models.InstallmentDetailsViewModel
 @{
     if (ViewBag.Message != null)
     {
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
-@*FormMethod.Post, new { enctype = "multipart/form-data" }))*@
-@using (Html.BeginForm("CityEngineer", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+<section class="content" id="firstDiv">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+
+                </div>
+                @using (Html.BeginForm("CityEngineer", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" } ))
+                    {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>InstallmentDetailsViewModel</h4>
-        <hr />
+    <div class="box-body">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group" style="display:none">
             @Html.LabelFor(model => model.InstallmentId, "InstallmentID", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -31,19 +35,15 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.BeneficiaryAmnt, htmlAttributes: new { @class = "control-label col-md-2", @disabled = "disabled" })
-            <div class="col-md-10">
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.BeneficiaryAmnt, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
                 @Html.ValidationMessageFor(model => model.BeneficiaryAmnt, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LoanAmnt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LoanAmnt, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.LoanAmnt, "", new { @class = "text-danger" })
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.beniInRupees, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
             </div>
         </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.IsCentreAmnt, "State Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -66,6 +66,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LoanAmnt, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.LoanAmnt, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.LoanAmnt, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.lInRupees, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.ConstructionLevel, "Via RTGS/DBT to the beneficiary for the plan as first instalmentafter digging of the foundation.", htmlAttributes: new { @class = "control-label col-md-7" })
@@ -187,20 +199,23 @@
             </div>
         </div>
     </div>
-}
-
+                    }
+            </div>
+        </div>
+    </div>
+</section>
 
 
 @if (ViewBag.Message != null)
-{
-    <script type="text/javascript">
-        window.onload = function () {
-            $("#ChkSign_CE").attr("checked", true)
-            alert("submited successfully");
-            window.location.href = "/WorkFlow/Index/";
-        };
-    </script>
-}
+                {
+<script type="text/javascript">
+    window.onload = function () {
+        $("#ChkSign_CE").attr("checked", true)
+        alert("submited successfully");
+        window.location.href = "/WorkFlow/Index/";
+    };
+</script>
+                }
 
 <script type="text/javascript">
 

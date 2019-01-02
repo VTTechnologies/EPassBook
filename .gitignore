@@ -5,3 +5,4 @@
 /.vs/EPassBook/v15/Server/sqlite3
 /EPassBook/obj/Release/Package/PackageTmp
 /EPassBook/obj/Release
+/EPassBook/libman.json

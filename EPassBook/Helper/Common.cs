@@ -17,7 +17,8 @@ namespace EPassBook.Helper
             ChiefOfficer = 6,
             Accountant = 7,
             LastChiefOfficer = 8,
-            Rejected = 9
+            Rejected = 9,
+            Recommended = 10
         }
       public enum Roles
       {
@@ -28,7 +29,7 @@ namespace EPassBook.Helper
           CityEngineer = 5,
           ChiefOfficer = 6,
           Accountant = 7,
-          User = 8
+          Beneficiary = 8
       }
 
         public const string Admin = "Admin";

@@ -37,6 +37,7 @@ namespace EPassBook.DAL.DBModel
         public string ModifiedBy { get; set; }
         public Nullable<int> CompanyID { get; set; }
         public Nullable<decimal> TransactionID { get; set; }
+        public Nullable<bool> IsRecommended { get; set; }
     
         public virtual BenificiaryMaster BenificiaryMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

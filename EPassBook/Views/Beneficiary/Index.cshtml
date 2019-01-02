@@ -1,237 +1,262 @@
 ﻿@model IEnumerable<EPassBook.Models.BeneficiaryViewModel>
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Beneficiary List
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Beneficiary</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.ActionLink("Create New", "Create",null, htmlAttributes :new {@class="btn btn-primary"})
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            @*<h3 class="box-title">Beneficiary Request</h3>*@
+                        </div>
+                        <div class="box-body">
+                            <table id="beneficiarylist" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="hidden">
+                                            BeneficiaryID
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.BeneficairyName)
+                                        </th>
+                                        @*<th>
+                                        @Html.DisplayNameFor(model => model.FatherName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Mother)
+                                    </th>*@
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MobileNo)
+                                        </th>
+                                        @*<th>
+                                        @Html.DisplayNameFor(model => model.PresentAddress)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CityId)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DTRNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.RecordNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Class)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.General)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Single)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Disabled)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Password)
+                                    </th>*@
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.AdharNo)
+                                        </th>
+                                        @*<th>
+                                        @Html.DisplayNameFor(model => model.VoterID)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Area)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.MojaNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.KhataNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.KhasraNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.PlotNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.PoliceStation)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.WardNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.District)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.BankName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.BranchName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.IFSCCode)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AccountNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CreatedDate)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CreatedBy)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ModifiedDate)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ModifiedBy)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CompanyID)
+                                    </th>*@
+                                        <th></th>
+                                    </tr>
+                                </thead>
 
-<h2>Index</h2>
+                                @foreach (var item in Model)
+                                {
 
-<p>
-    @Html.ActionLink("Create New", "Create",new { id = "id" },new { @class = "btn btn-primary" }) 
-</p>
-<table id="beneficiarylist" class="table table-striped table-bordered dt-responsive nowrap">
-    <thead>
-        <tr>
-            <th class="hidden">
-                BeneficiaryID
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BeneficairyName)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.FatherName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mother)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.MobileNo)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.PresentAddress)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CityId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DTRNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RecordNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Class)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.General)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Single)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Disabled)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Password)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.AdharNo)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.VoterID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Area)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MojaNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.KhataNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.KhasraNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PlotNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PoliceStation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.WardNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.District)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BankName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BranchName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IFSCCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AccountNo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedBy)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ModifiedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ModifiedBy)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CompanyID)
-                </th>*@
-            <th></th>
-        </tr>
-    </thead>
+                                    <tr>
+                                        <td class="hidden">
+                                            @Html.HiddenFor(modelItem => item.BeneficiaryId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BeneficairyName)
+                                        </td>
+                                        @*<td>
+                                        @Html.DisplayFor(modelItem => item.FatherName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Mother)
+                                    </td>*@
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MobileNo)
+                                        </td>
+                                        @*<td>
+                                        @Html.DisplayFor(modelItem => item.PresentAddress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CityId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DTRNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RecordNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Class)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.General)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Single)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Disabled)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Password)
+                                    </td>*@
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AdharNo)
+                                        </td>
+                                        @*<td>
+                                        @Html.DisplayFor(modelItem => item.VoterID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Area)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MojaNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.KhataNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.KhasraNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PlotNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PoliceStation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WardNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.District)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BankName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BranchName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IFSCCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AccountNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModifiedBy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompanyID)
+                                    </td>*@
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                            @Html.ActionLink("Details", "Details", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-success" })
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-danger" })
+                                        </td>
+                                    </tr>
 
-@foreach (var item in Model) {
-   
-    <tr>
-        <td class="hidden">
-            @Html.HiddenFor(modelItem => item.BeneficiaryId)
-        </td>
-        <td >
-            @Html.DisplayFor(modelItem => item.BeneficairyName)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.FatherName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mother)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.MobileNo)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.PresentAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CityId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DTRNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RecordNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Class)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.General)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Single)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Disabled)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.AdharNo)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.VoterID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Area)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MojaNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KhataNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KhasraNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PlotNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PoliceStation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WardNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.District)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BankName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BranchName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IFSCCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccountNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyID)
-        </td>*@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-warning" }) 
-            @Html.ActionLink("Details", "Details", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-success" }) 
-            @Html.ActionLink("Delete", "Delete", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-danger" })
-        </td>
-    </tr>
-   
-}
+                                }
 
-</table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+</section>
+</div>
 
 <script type="text/javascript">
     $('#beneficiarylist').dataTable({
-        
+
     });
 </script>

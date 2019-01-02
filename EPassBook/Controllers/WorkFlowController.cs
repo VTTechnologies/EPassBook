@@ -31,15 +31,16 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult Index()
         {
-            int stageId = 0;
+            List<int?> stageIds;
+            string strStageIds = "";
             if (Session["UserDetails"] != null)
             {
                 var user = Session["UserDetails"] as UserViewModel;
-                var roleId = user.UserInRoles.Select(s => s.RoleId).FirstOrDefault();
-                stageId = _iWorkFlowStagesService.GetUserStageByRoleID(roleId);
+                var roleId = user.UserInRoles.Select(s => s.RoleId).ToList();
+                stageIds = _iWorkFlowStagesService.GetWorkflowStageById(roleId).ToList();
+                strStageIds = string.Join(",", stageIds.ToArray());
             }
-
-            var installmentListView = _installmentDetailService.GetInstallmentForLoginUsersWithStages(stageId).ToList();
+            var installmentListView = _installmentDetailService.GetInstallmentForLoginUsersWithStages(strStageIds).ToList();
             var resultlist = installmentListView.Select(s => new InstallmentListView
             {
                 BeneficiaryId = s.BeneficiaryId,
@@ -47,7 +48,7 @@ namespace EPassBook.Controllers
                 CompanyID = s.CompanyID,
                 InstallmentId = s.InstallmentId,
                 InstallmentNo = s.InstallmentNo,
-                CreatedDate = Convert.ToDateTime(s.CreatedDate),
+                CreatedDate = s.CreatedDate,
                 IsCompleted = s.IsCompleted,
                 MobileNo = Convert.ToString(s.MobileNo),
                 PlanYear = s.PlanYear,
@@ -112,24 +113,25 @@ namespace EPassBook.Controllers
                 installmentDetail.TransactionID = Convert.ToDecimal(accountDetailsVM.TransactionId);
                 installmentDetail.ModifiedBy = user.UserName;
                 installmentDetail.ModifiedDate = DateTime.Now;
+                installmentDetail.StageID = (int)Common.WorkFlowStages.LastChiefOfficer;
 
                 if (ModelState.IsValid)
                 {
                     installmentDetail.InstallmentSignings.Add(instSigning);
                     _installmentDetailService.Update(installmentDetail);
                     _installmentDetailService.SaveChanges();
-
-                    return RedirectToAction("Index", "Workflow");
+                    ViewBag.Message = "sussess message";
+                    return View("_Accountant", accountDetailsVM);
                 }
                 else
                 {
                     var benificiaryDetails = _benificiaryService.GetBenificiaryById(installmentDetail.BeneficiaryId);
                     accountDetailsVM.InstallmentId = Convert.ToInt32(accountDetailsVM.InstallmentId);
-
                     accountDetailsVM.LoanAmnt = Convert.ToInt32(installmentDetail.LoanAmnt);
                     accountDetailsVM.IFSCCode = benificiaryDetails.IFSCCode;
                     accountDetailsVM.AccountNo = benificiaryDetails.AccountNo.ToString();
                     accountDetailsVM.LoanAmtInRupees = accountDetailsVM.LoanAmnt.ConvertNumbertoWords();
+                    
                     return View("_Accountant", accountDetailsVM);
                 }
             }
@@ -138,6 +140,68 @@ namespace EPassBook.Controllers
                 return RedirectToAction("Login", "User");
             }
         }
+
+        [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
+        public ActionResult Recommend()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [CustomAuthorize(Common.SiteEngineer)]
+        public ActionResult Recommend(FormCollection formCollection, InstallmentDetailsViewModel installmentDetailsViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Session["UserDetails"] != null)
+                {
+                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailsViewModel.InstallmentId);
+
+                    var comments = new Comment();
+                    var user = Session["UserDetails"] as UserViewModel;
+                    comments.Comments = formCollection["txtFirstComment"].ToString();
+                    comments.CreatedBy = user.UserName;
+                    comments.BeneficiaryId = installmentDetailsViewModel.BeneficiaryId;
+                    comments.CreatedDate = DateTime.Now;
+                    comments.CompanyID = user.CompanyID;
+                    installment.IsRecommended = true;
+                    installment.Comments.Add(comments);
+                    _installmentDetailService.Update(installment);
+                    _installmentDetailService.SaveChanges();
+                    return PartialView("_SiteEngineer", formCollection);
+                }
+            }
+            return PartialView("_SiteEngineer", formCollection);
+        }
+
+        [HttpPost]
+        [CustomAuthorize(Common.SiteEngineer)]
+        public ActionResult Reject(FormCollection formCollection, InstallmentDetailsViewModel installmentDetailsViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Session["UserDetails"] != null)
+                {
+                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailsViewModel.InstallmentId);
+
+                    var comments = new Comment();
+                    var user = Session["UserDetails"] as UserViewModel;
+                    comments.Comments = formCollection["txtFirstComment"].ToString();
+                    comments.CreatedBy = user.UserName;
+                    comments.BeneficiaryId = installmentDetailsViewModel.BeneficiaryId;
+                    comments.CreatedDate = DateTime.Now;
+                    comments.CompanyID = user.CompanyID;
+                    installment.IsRecommended = false;
+                    installment.StageID = Convert.ToInt32(Common.WorkFlowStages.Rejected);
+                    installment.Comments.Add(comments);
+                    _installmentDetailService.SaveChanges();
+                    return PartialView("_SiteEngineer", formCollection);
+                }
+            }
+            return PartialView("_SiteEngineer", formCollection);
+        }
+
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
@@ -152,6 +216,17 @@ namespace EPassBook.Controllers
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
             installmentviewmodel.Comments = null;
+            installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
+            installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+            if (installmentviewmodel.lInRupees == "ZERO")
+            {
+                installmentviewmodel.lInRupees = null;
+            }
+            if (installmentviewmodel.beniInRupees == "ZERO")
+            {
+                installmentviewmodel.beniInRupees = null;
+            }
+            ViewBag.isRecommended = installment.IsRecommended.ToString().ToLower();
             return PartialView("_SiteEngineer", installmentviewmodel);
         }
 
@@ -301,6 +376,16 @@ namespace EPassBook.Controllers
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel._Comments = null;
+            installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
+            installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+            if(installmentviewmodel.lInRupees == "ZERO")
+            {
+                installmentviewmodel.lInRupees = null;
+            }
+            if (installmentviewmodel.beniInRupees == "ZERO")
+            {
+                installmentviewmodel.beniInRupees = null;
+            }
             return PartialView("_ProjectEngineer", installmentviewmodel);
         }
 
@@ -373,6 +458,16 @@ namespace EPassBook.Controllers
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel._Comments = null;
+            installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
+            installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+            if (installmentviewmodel.lInRupees == "ZERO")
+            {
+                installmentviewmodel.lInRupees = null;
+            }
+            if (installmentviewmodel.beniInRupees == "ZERO")
+            {
+                installmentviewmodel.beniInRupees = null;
+            }
             return PartialView("_CityEngineer", installmentviewmodel);
         }
 
@@ -445,6 +540,16 @@ namespace EPassBook.Controllers
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel._Comments = null;
+            installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
+            installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+            if (installmentviewmodel.lInRupees == "ZERO")
+            {
+                installmentviewmodel.lInRupees = null;
+            }
+            if (installmentviewmodel.beniInRupees == "ZERO")
+            {
+                installmentviewmodel.beniInRupees = null;
+            }
             return PartialView("_ChiefOfficer", installmentviewmodel);
         }
 
@@ -501,6 +606,13 @@ namespace EPassBook.Controllers
             //}
 
             return PartialView("_ChiefOfficer", installmentDetailViewModel);
+        }
+
+        [HttpPost]
+        public string ToWords(long number)
+        {
+            var Rupees = number.ConvertNumbertoWords();
+            return Rupees;
         }
     }
 }

@@ -12,11 +12,11 @@ namespace EPassBook.DAL.IService
        Func<IQueryable<WorkflowStage>, IOrderedQueryable<WorkflowStage>> orderBy = null,
        string includeProperties = "");
         IEnumerable<WorkflowStage> GetAllWorkflowStages();
-        WorkflowStage GetWorkflowStageById(int id);
+        //WorkflowStage GetWorkflowStageById(int id);
         void Add(WorkflowStage WorkflowStage);
         void Update(WorkflowStage WorkflowStage);
         void Delete(int id);
         void SaveChanges();
-        int GetUserStageByRoleID(int? roleId);
+        List<int?> GetWorkflowStageById(List<int> roleIds);
     }
 }

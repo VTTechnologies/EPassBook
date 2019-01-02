@@ -13,12 +13,13 @@ namespace EPassBook.DAL.Service
         private readonly EPassBookEntities _dbContext;
         private UnitOfWork unitOfWork;
         private GenericRepository<WorkflowStage> workflowStageRepository;
-
+        private GenericRepository<StageInRole> stageInRoleRepository;
         public WorkFlowStagesService()
         {
             _dbContext = new EPassBookEntities();
             unitOfWork = new UnitOfWork(_dbContext);
             workflowStageRepository = unitOfWork.GenericRepository<WorkflowStage>();
+            stageInRoleRepository= unitOfWork.GenericRepository<StageInRole>();
         }
 
         public IEnumerable<WorkflowStage> Get(Expression<Func<WorkflowStage, bool>> filter = null,
@@ -50,9 +51,16 @@ namespace EPassBook.DAL.Service
           return  workflowStageRepository.Get().Where(w=>w.StageInRoles.Where(we=>we.RoleId== roleId).Select(s=>s.StageId).Any()).FirstOrDefault().StageId;
         }
 
-        public WorkflowStage GetWorkflowStageById(int id)
+        public List<int?> GetWorkflowStageById(List<int> roleIds)
         {
-            return workflowStageRepository.GetById(id);
+            List<StageInRole> lststageInRoles = new List<StageInRole>();
+            List<int?> stages = new List<int?>();
+            foreach (var role in roleIds)
+            {
+                var stage = stageInRoleRepository.Get(w=>w.RoleId==role).Select(s => s.StageId).ToList();
+                stages.AddRange(stage);               
+            }
+            return stages; 
         }
 
        
