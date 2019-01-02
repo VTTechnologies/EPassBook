@@ -8,7 +8,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create",new { id = "id" },new { @class = "btn btn-primary" }) 
 </p>
 <table id="beneficiarylist" class="table table-striped table-bordered dt-responsive nowrap">
     <thead>
@@ -219,7 +219,7 @@
             @Html.DisplayFor(modelItem => item.CompanyID)
         </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-primary" }) 
+            @Html.ActionLink("Edit", "Edit", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-warning" }) 
             @Html.ActionLink("Details", "Details", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-success" }) 
             @Html.ActionLink("Delete", "Delete", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-danger" })
         </td>

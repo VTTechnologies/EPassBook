@@ -1,4 +1,5 @@
 ﻿using EPassBook.DAL.IService;
+using EPassBook.Helper;
 using EPassBook.Models;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,12 @@ namespace EPassBook.Controllers
     public class BeneficiaryController : Controller
     {
         IBenificiaryService _benificiaryService;
+        IInstallmentDetailService _installmentDetailService;
 
-        public BeneficiaryController(IBenificiaryService benificiaryService)
+        public BeneficiaryController(IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService)
         {
             _benificiaryService = benificiaryService;
-            
-            
-
+            _installmentDetailService = installmentDetailService;
         }
         // GET: Beneficiary
         public ActionResult Index()
@@ -46,34 +46,70 @@ namespace EPassBook.Controllers
 
         // POST: Beneficiary/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [CustomAuthorize(Common.DataEntry)]
+        public ActionResult Create(BeneficiaryViewModel beneficiaryViewModel)
         {
             try
             {
-                // TODO: Add insert logic here
+                HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
+                HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
+                var user = Session["UserDetails"] as UserViewModel;
+                string hphoto = PhotoManager.savePhoto(hasbandphoto, 0, "Benificiary");
+                string wphoto = PhotoManager.savePhoto(wifephoto, 0, "Benificiary");
+                beneficiaryViewModel.Hasband_Photo = hphoto; //PhotoManager.ConvertToBytes(hasbandphoto);
+                beneficiaryViewModel.Wife_Photo = wphoto; //PhotoManager.ConvertToBytes(wifephoto);
+                beneficiaryViewModel.CreatedBy = user.UserName;
+                var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
+                
+                _benificiaryService.Add(insertbeneficiary);
+                _benificiaryService.SaveChanges();
 
-                return RedirectToAction("Index");
+                ViewBag.Message = "sussess message";
+                
+                //return RedirectToAction("Index");
+
             }
             catch
             {
-                return View();
+                
             }
+            return View();
         }
 
         // GET: Beneficiary/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            BeneficiaryViewModel beneficiaryViewModel = new BeneficiaryViewModel();
+            var beneficiarybyid = _benificiaryService.GetBenificiaryById(id);
+            var beneficiaryvm = Mapper.BeneficiaryMapper.Detach(beneficiarybyid);
+            
+
+            ViewBag.hsbphoto = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Hasband_Photo;
+            ViewBag.wfphoto = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Wife_Photo;
+            return View("Edit", beneficiaryvm);
         }
 
         // POST: Beneficiary/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [CustomAuthorize(Common.DataEntry)]
+        public ActionResult Edit(int id, BeneficiaryViewModel beneficiaryViewModel)
         {
             try
             {
-                // TODO: Add update logic here
+                HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
+                HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
+                var user = Session["UserDetails"] as UserViewModel;
+                string hphoto = PhotoManager.savePhoto(hasbandphoto, 0, "Benificiary");
+                string wphoto = PhotoManager.savePhoto(wifephoto, 0, "Benificiary");
+                beneficiaryViewModel.Hasband_Photo = hphoto; //PhotoManager.ConvertToBytes(hasbandphoto);
+                beneficiaryViewModel.Wife_Photo = wphoto; //PhotoManager.ConvertToBytes(wifephoto);
+                beneficiaryViewModel.CreatedBy = user.UserName;
+                var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
 
+
+                _benificiaryService.Update(insertbeneficiary);
+
+                ViewBag.Message = "sussess message";
                 return RedirectToAction("Index");
             }
             catch
