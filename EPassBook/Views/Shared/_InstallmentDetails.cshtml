@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Beneficiary Copy (First Installment)";
 }
-<section class="content">
+<section class="content" id="installmentDetails">
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
@@ -63,6 +63,12 @@
                     </div>
                 </div>
             </div>
-            </div>
         </div>
-    </section>
+    </div>
+</section>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#installmentDetails').find(':input').prop('disabled', true);
+        });
+    </script>

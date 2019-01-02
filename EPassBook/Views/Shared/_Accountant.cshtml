@@ -7,7 +7,7 @@
     }
 }
 
-<section class="content" id="firstDiv">
+<section class="content" id="accountant">
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
@@ -87,6 +87,16 @@
         </div>
     </div>
 </section>
+
+@if (!User.IsInRole(EPassBook.Helper.Common.Accountant))
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger;
+            $('#accountant').find(':input').prop('disabled', true);
+        });
+    </script>
+}
 
 <script type="text/javascript">
     function validationAcountant() {

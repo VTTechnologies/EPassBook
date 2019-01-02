@@ -6,7 +6,7 @@
         //Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
-<section class="content" id="firstDiv">
+<section class="content" id="chiefofficer">
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
@@ -198,6 +198,15 @@
 </section>
 
 
+@if (!User.IsInRole(EPassBook.Helper.Common.ChiefOfficer))
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger;
+            $('#chiefofficer').find(':input').prop('disabled', true);
+        });
+    </script>
+}
 
 @if (ViewBag.Message != null)
 {
