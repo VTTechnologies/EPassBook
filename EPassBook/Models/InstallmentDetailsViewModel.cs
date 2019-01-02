@@ -29,7 +29,7 @@ namespace EPassBook.Models
         public Nullable<decimal> TransactionID { get; set; }
         public string lInRupees { get; set; }
         public string beniInRupees { get; set; }
-
+        public bool IsRecommended { get; set; }
 
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }
         public virtual ICollection<CommentsViewModel> Comments { get; set; }
