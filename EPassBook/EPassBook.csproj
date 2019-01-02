@@ -4432,6 +4432,10 @@
     <Content Include="Views\Beneficiary\Index.cshtml" />
     <Content Include="Views\Shared\_ChiefOfficer.cshtml" />
     <Content Include="Views\Shared\_CityEngineer.cshtml" />
+    <Content Include="Views\Beneficiary\Edit.cshtml" />
+    <Content Include="Views\Beneficiary\Create.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Views\WorkFlow\sendMail.cshtml" />
     <Content Include="Views\User\ForgetPassword.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />

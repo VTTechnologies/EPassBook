@@ -10,9 +10,12 @@ namespace EPassBook.Models
     {
         [Key]
         public int BeneficiaryId { get; set; }
+        [Required(ErrorMessage = "Beneficairy Name is required.")]
         public string BeneficairyName { get; set; }
+        [Required(ErrorMessage = "Father Name is required.")]
         public string FatherName { get; set; }
         public string Mother { get; set; }
+        [Required(ErrorMessage = "MobileNo is required.")]
         public string MobileNo { get; set; }
         public string PresentAddress { get; set; }
         public Nullable<int> CityId { get; set; }
@@ -23,6 +26,7 @@ namespace EPassBook.Models
         public string Single { get; set; }
         public string Disabled { get; set; }
         public string Password { get; set; }
+        [Required(ErrorMessage = "Adhar No is required.")]
         public Nullable<long> AdharNo { get; set; }
         public string VoterID { get; set; }
         public Nullable<int> Area { get; set; }
@@ -34,8 +38,11 @@ namespace EPassBook.Models
         public string WardNo { get; set; }
         public string District { get; set; }
         public string BankName { get; set; }
+        [Required(ErrorMessage = "Branch Name is required.")]
         public string BranchName { get; set; }
+        [Required(ErrorMessage = "IFSC Code is required.")]
         public string IFSCCode { get; set; }
+        [Required(ErrorMessage = "Account No is required.")]
         public Nullable<long> AccountNo { get; set; }
         public string Hasband_Photo { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

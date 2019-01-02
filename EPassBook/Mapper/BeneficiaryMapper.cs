@@ -14,6 +14,7 @@ namespace EPassBook.Mapper
         public static BenificiaryMaster Attach(BeneficiaryViewModel beneficiaryViewModel)
         {
             BenificiaryMaster beneficiaryMaster = new BenificiaryMaster();
+
             beneficiaryMaster.Hasband_Photo = beneficiaryViewModel.Hasband_Photo;
             beneficiaryMaster.Wife_Photo = beneficiaryViewModel.Wife_Photo;
             beneficiaryMaster.BeneficairyName = beneficiaryViewModel.BeneficairyName;
@@ -45,6 +46,8 @@ namespace EPassBook.Mapper
             beneficiaryMaster.CreatedBy = beneficiaryViewModel.CreatedBy;
             beneficiaryMaster.CreatedDate = DateTime.Now;
             beneficiaryMaster.CompanyID = beneficiaryViewModel.CompanyID;
+
+            //beneficiaryMaster.InstallmentDetails = beneficiaryViewModel.InstallmentDetails.Select(s => new InstallmentDetail { BeneficiaryId = s.BeneficiaryId, StageID = s.StageID, CreatedDate = DateTime.Now, CreatedBy= s.CreatedBy }).ToList();           
             return beneficiaryMaster;
         }
 
