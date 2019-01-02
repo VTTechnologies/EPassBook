@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EPassBook.Models.BeneficiaryViewModel>
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="content-wrapper">
     <section class="content-header">
@@ -256,7 +256,7 @@
 </div>
 
 <script type="text/javascript">
-    $('#beneficiarylist').dataTable({
-
+    $(document).ready(function () {
+    $('#beneficiarylist').dataTable();
     });
 </script>

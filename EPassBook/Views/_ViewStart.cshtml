@@ -4,9 +4,11 @@
     string layout = layout = "~/Views/Shared/_Layout.cshtml";
     if (userDetails != null)
     {
-        if (userDetails.RoleName == EPassBook.Helper.Common.Roles.Admin.ToString())
+        if (userDetails.UserInRoles.FirstOrDefault().RoleId == Convert.ToInt32(EPassBook.Helper.Common.Roles.Admin))
         {
             layout = "~/Views/Shared/_AdminLayout.cshtml";
         }
     }
+
+    Layout = layout;
 }

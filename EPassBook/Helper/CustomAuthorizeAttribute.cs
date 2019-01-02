@@ -45,14 +45,31 @@ namespace EPassBook.Helper
         }
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            //userDetail
-            if (filterContext.HttpContext.Session["UserDetails"] == null)
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                filterContext.Result = new RedirectResult("~/User/Login");
+                var urlHelper = new UrlHelper(filterContext.RequestContext);
+                filterContext.HttpContext.Response.StatusCode = 403;
+                filterContext.Result = new JsonResult
+                {
+                    Data = new
+                    {
+                        Error = "NotAuthorized",
+                        LogOnUrl = urlHelper.Action("Login", "User")
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
             }
             else
             {
-                filterContext.Result = new RedirectResult("~/Error/UnauthorizedAccess");
+                //userDetail
+                if (filterContext.HttpContext.Session["UserDetails"] == null)
+                {
+                    filterContext.Result = new RedirectResult("~/User/Login");
+                }
+                else
+                {
+                    filterContext.Result = new RedirectResult("~/Error/UnauthorizedAccess");
+                }
             }
         }
     }
