@@ -10,7 +10,9 @@
         color: red;
     }
 </style>
-<section class="content" id="firstDiv">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<section class="content">
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
@@ -18,33 +20,44 @@
                 <div class="box-header with-border">
 
                 </div>
-                @using (Html.BeginForm("Recommend", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+                @using (Ajax.BeginForm("Recommend", "WorkFlow", new AjaxOptions { UpdateTargetId = "firstDiv", OnFailure = "failed" }))
                 {
-                    if (!ViewBag.isRecommended)
+                    if (!Convert.ToBoolean(ViewBag.isRecommended))
                     {
-                        <div class="box-body">
+                        <div class="box-body" id="firstDiv">
                             <div class="form-group">
-                                @Html.Label("Select Comment", "SelectComment", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-8">
-                                    @Html.DropDownList("ddlComments", new List<SelectListItem>{
-                                    new SelectListItem { Text = "SELECT", Value = "0" },
-                                    new SelectListItem {Text= "Centre line is not proper", Value ="1"},
-                                    new SelectListItem { Text = "Foundation state to rest doundation in not hard", Value = "2" },
-                                    new SelectListItem { Text = "Column footing reinfornment is not as per design/properly laid", Value = "3" },},
-                                    htmlAttributes: new { @class = "form-control" })
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.Label("Select Comment", "Select Comment", htmlAttributes: new { @class = "control-label" })
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select class="selectpicker form-control" multiple data-live-search="false">
+                                            <option>Centre line is not proper</option>
+                                            <option>Foundation state to rest foundation in not hard</option>
+                                            <option>Column footing reinforcement is not as per design/properly laid</option>
+                                        </select>
+                                    </div>
                                 </div>
+
                             </div>
                             <div class="form-group">
-                                @Html.Label("Comment", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-8">
-                                    @Html.TextBox("txtFirstComment", null, new { @class = "form-control" })
-                                    <span id="commentError" class="errmsg"></span>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.Label("Comment", htmlAttributes: new { @class = "control-label" })
+                                    </div>
+                                    <div class="col-md-9">
+                                        @Html.TextArea("txtFirstComment", null, 5, 5, new { @class = "form-control" })
+                                        <div style="height:20px">
+                                            <span id="commentError" class="errmsg"></span>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-offset-4 col-md-10">
-                                    <input type="button" value="Recommend" id="recommend" class="btn btn-primary" />
+                                    <input type="submit" value="Recommend" id="recommend" class="btn btn-primary" />
                                     <input type="submit" value="Reject" id="reject" class="btn btn-danger" />
                                 </div>
                             </div>
@@ -58,7 +71,7 @@
 </section>
 
 
-<section class="content" id="firstDiv">
+<section class="content" id="secondDiv">
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
@@ -291,15 +304,18 @@
 {
     <script type="text/javascript">
         window.onload = function () {
-        var check = '@ViewBag.isRecommended'
 
-            if (check.toLowerCase()) {
+            debugger;
+        var check = '@ViewBag.isRecommended'
+            if (check == 'true')
+            {
+                $('#secondDiv').show();
+                $('#firstDiv').hide();
+            }
+            else
+            {
                 $('#secondDiv').hide();
                 $('#firstDiv').show();
-        }
-        else {
-            $('#secondDiv').show();
-            $('#firstDiv').hide();
             }
         };
     </script>
@@ -309,6 +325,15 @@
 
     $(document).ready(function () {
 
+        $(".selectpicker").change(function () {
+            var countries = [];
+            $.each($(".selectpicker option:selected"), function () {
+                countries.push($(this).val());
+            });
+            $("#txtFirstComment").val(countries.join(", "));
+            //alert("You have selected the country - " + countries.join(", "));
+        });
+
         $("#recommend").click(function () {
             debugger;
             var comment = $("#txtFirstComment").val();
@@ -316,8 +341,21 @@
                 $("#commentError").html("Comment is required").show().fadeOut("slow");
                 return false;
             }
-            //$('#secondDiv').show();
-            //$('#firstDiv').hide();
+            $.ajax({
+                type: "POST",
+                url: "/WorkFlow/Recommend?comment=" + comment,
+                success: (function (response) {
+                    $('#secondDiv').show();
+                    $('#firstDiv').hide();
+                }),
+                failure: (function (response) {
+                    return false;
+                }),
+
+                error: (function (response) {
+                    return false;
+                })
+            });;
             return true;
         });
 
@@ -328,8 +366,21 @@
                 $("#commentError").html("Comment is required").show().fadeOut("slow");
                 return false;
             }
-            //$('#firstDiv').show();
-            //$('#secondDiv').hide();
+            $.ajax({
+                type: "POST",
+                url: "/WorkFlow/Reject?comment=" + comment,
+                success: (function (response) {
+                    $('#firstDiv').show();
+                    $('#secondDiv').hide()
+                }),
+                failure: (function (response) {
+                    return false;
+                }),
+
+                error: (function (response) {
+                    return false;
+                })
+            });;
             return true;
         });
 

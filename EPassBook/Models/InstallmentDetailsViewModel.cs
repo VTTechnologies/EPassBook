@@ -30,6 +30,7 @@ namespace EPassBook.Models
         public string lInRupees { get; set; }
         public string beniInRupees { get; set; }
         public bool IsRecommended { get; set; }
+        public string firstComment { get; set; }
 
 
 
