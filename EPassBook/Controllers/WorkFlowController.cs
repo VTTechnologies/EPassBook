@@ -342,7 +342,7 @@ namespace EPassBook.Controllers
                     UserName = s.UserName,
                     CreatedDate = s.CreatedDate,
                     MobileNo = s.MobileNo,
-                    Sign = s.Sign,
+                    Sign =Convert.ToBoolean(s.Sign),
                     Physical_Progress = s.Physical_Progress
 
                 }).ToList();
