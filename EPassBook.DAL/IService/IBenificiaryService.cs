@@ -15,7 +15,7 @@ namespace EPassBook.DAL.IService
         BenificiaryMaster GetBenificiaryById(int id);
         void Add(BenificiaryMaster benificiary);
         void Update(BenificiaryMaster benificiary);
-        int AuthenticateBeneficiary(long? userName, string password);
+        BenificiaryMaster AuthenticateBeneficiary(long? userName, string password);
         void Delete(int id);
         void SaveChanges();        
     }

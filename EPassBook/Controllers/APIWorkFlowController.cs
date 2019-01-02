@@ -60,10 +60,17 @@ namespace EPassBook.Controllers
         [Route("Validate/{userName}/{password}")]
         public HttpResponseMessage ValidatedUser(int userName, string password)
         {
-            var benificiaryId = _benificiaryService.AuthenticateBeneficiary(userName, password);
-            if (benificiaryId != 0)
-            {                              
-                    return Request.CreateResponse(HttpStatusCode.OK, benificiaryId);
+            var benificiary = _benificiaryService.AuthenticateBeneficiary(userName, password);
+            if (benificiary != null)
+            {
+                if (benificiary.BeneficiaryId != 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, benificiary.BeneficiaryId);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound,"User Name or Password is not corroect.");
+                }
             }
             else
             {
@@ -105,13 +112,13 @@ namespace EPassBook.Controllers
                     Date = s.Date,
                     Photo = "",
                     ConstructionLevel = s.ConstructionLevel,
-                    UserId=s.UserId
+                    UserId = s.UserId
                 }).ToList();
 
                 beneficiaryAPIViewModel.Comments = installmentDetail.Comments.Select(s => new CommentsViewModel
                 {
-                    CreatedDate=s.CreatedDate,
-                    CreatedBy=s.CreatedBy,
+                    CreatedDate = s.CreatedDate,
+                    CreatedBy = s.CreatedBy,
                     Comments = s.Comments,
                     Reason = s.Reason,
                     RoleId = s.RoleId
@@ -121,7 +128,7 @@ namespace EPassBook.Controllers
                 {
                     RoleId = i.RoleId,
                     Sign = i.Sign,
-                    CreatedBy=i.CreatedBy,
+                    CreatedBy = i.CreatedBy,
                     CreatedDate = i.CreatedDate
                 }
                 ).ToList();
@@ -135,8 +142,8 @@ namespace EPassBook.Controllers
 
         }
 
-        
-        [Route("UpdateStatus/{installmentId}/{installmentNo}"),HttpPost]
+
+        [Route("UpdateStatus/{installmentId}/{installmentNo}"), HttpPost]
         public HttpResponseMessage UpdateInstallmentStatus(int installmentId, int installmentNo)
         {
             var installmentDetail = _installmentDetailService.GetAllInstallmentDetails().Where(w => w.InstallmentId == installmentId && w.InstallmentNo == installmentNo).FirstOrDefault();
@@ -159,21 +166,21 @@ namespace EPassBook.Controllers
         [Route("AddComment/{installmentId}/{comment}"), HttpPost]
         public HttpResponseMessage AddComment(int installmentId, string comment)
         {
-            var installmentDetail = _installmentDetailService.GetInstallmentDetailById(installmentId);           
+            var installmentDetail = _installmentDetailService.GetInstallmentDetailById(installmentId);
 
             if (installmentDetail != null)
             {
                 installmentDetail.Comments.Add(new DAL.DBModel.Comment()
                 {
-                    InstallementId= installmentDetail.InstallmentId,
+                    InstallementId = installmentDetail.InstallmentId,
                     BeneficiaryId = installmentDetail.BeneficiaryId,
                     Comments = comment,
                     RoleId = Convert.ToInt32(Roles.Beneficiary),
                     CompanyID = installmentDetail.CompanyID,
                     CreatedDate = DateTime.Now,
                     CreatedBy = installmentDetail.CreatedBy
-                });                    
-                   
+                });
+
                 _installmentDetailService.Update(installmentDetail);
                 _installmentDetailService.SaveChanges();
 
