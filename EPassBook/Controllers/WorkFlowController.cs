@@ -150,56 +150,72 @@ namespace EPassBook.Controllers
 
         [HttpPost]
         [CustomAuthorize(Common.SiteEngineer)]
-        public ActionResult Recommend(FormCollection formCollection, InstallmentDetailsViewModel installmentDetailsViewModel)
+        public ActionResult Recommend(string comment)
         {
             if (ModelState.IsValid)
             {
                 if (Session["UserDetails"] != null)
                 {
-                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailsViewModel.InstallmentId);
+                    int installmentid = 0;
+                    if (Session["InstallmentId"] != null)
+                    {
+                        installmentid = Convert.ToInt32(Session["InstallmentId"]);
+                    }
+                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
 
                     var comments = new Comment();
                     var user = Session["UserDetails"] as UserViewModel;
-                    comments.Comments = formCollection["txtFirstComment"].ToString();
+                    comments.Comments = comment;
                     comments.CreatedBy = user.UserName;
-                    comments.BeneficiaryId = installmentDetailsViewModel.BeneficiaryId;
+                    comments.BeneficiaryId = installment.BeneficiaryId;
                     comments.CreatedDate = DateTime.Now;
                     comments.CompanyID = user.CompanyID;
+                    comments.RoleId = user.UserInRoles.Where(u => u.UserId == user.UserId).Select(r => r.RoleId).FirstOrDefault();
                     installment.IsRecommended = true;
+                    installment.ModifiedBy = user.UserName;
+                    installment.ModifiedDate = DateTime.Now;
                     installment.Comments.Add(comments);
                     _installmentDetailService.Update(installment);
                     _installmentDetailService.SaveChanges();
-                    return PartialView("_SiteEngineer", formCollection);
+                    return PartialView("SiteEngineer");
                 }
             }
-            return PartialView("_SiteEngineer", formCollection);
+            return RedirectToAction("SiteEngineer");
         }
 
         [HttpPost]
         [CustomAuthorize(Common.SiteEngineer)]
-        public ActionResult Reject(FormCollection formCollection, InstallmentDetailsViewModel installmentDetailsViewModel)
+        public ActionResult Reject(string comment)
         {
             if (ModelState.IsValid)
             {
                 if (Session["UserDetails"] != null)
                 {
-                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailsViewModel.InstallmentId);
+                    int installmentid = 0;
+                    if (Session["InstallmentId"] != null)
+                    {
+                        installmentid = Convert.ToInt32(Session["InstallmentId"]);
+                    }
+                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
 
                     var comments = new Comment();
                     var user = Session["UserDetails"] as UserViewModel;
-                    comments.Comments = formCollection["txtFirstComment"].ToString();
+                    comments.Comments = comment;
                     comments.CreatedBy = user.UserName;
-                    comments.BeneficiaryId = installmentDetailsViewModel.BeneficiaryId;
+                    comments.BeneficiaryId = installment.BeneficiaryId;
                     comments.CreatedDate = DateTime.Now;
                     comments.CompanyID = user.CompanyID;
+                    comments.RoleId = user.UserInRoles.Where(u => u.UserId == user.UserId).Select(r => r.RoleId).FirstOrDefault();
                     installment.IsRecommended = false;
                     installment.StageID = Convert.ToInt32(Common.WorkFlowStages.Rejected);
+                    installment.ModifiedBy = user.UserName;
+                    installment.ModifiedDate = DateTime.Now;
                     installment.Comments.Add(comments);
                     _installmentDetailService.SaveChanges();
-                    return PartialView("_SiteEngineer", formCollection);
+                    return RedirectToAction("SiteEngineer");
                 }
             }
-            return PartialView("_SiteEngineer", formCollection);
+            return RedirectToAction("SiteEngineer");
         }
 
 
