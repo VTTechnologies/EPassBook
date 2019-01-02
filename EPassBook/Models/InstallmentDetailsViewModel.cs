@@ -31,6 +31,8 @@ namespace EPassBook.Models
         public string beniInRupees { get; set; }
         public bool IsRecommended { get; set; }
 
+
+
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }
         public virtual ICollection<CommentsViewModel> Comments { get; set; }
         public virtual CompanyViewModel CompanyMaster { get; set; }
