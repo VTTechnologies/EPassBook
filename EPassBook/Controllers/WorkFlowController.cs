@@ -17,14 +17,17 @@ namespace EPassBook.Controllers
         IBenificiaryService _benificiaryService;
         IWorkFlowStagesService _iWorkFlowStagesService;
         ICommentService _icommentService;
-        
+        IInstallmentRejectionService _iInstallmentRejectionService;
 
-        public WorkFlowController(IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService, IWorkFlowStagesService iWorkFlowStagesService, ICommentService icommentService)
+
+        public WorkFlowController(IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService, IWorkFlowStagesService iWorkFlowStagesService, ICommentService icommentService,
+           IInstallmentRejectionService iInstallmentRejectionService)
         {
             _iWorkFlowStagesService = iWorkFlowStagesService;
             _benificiaryService = benificiaryService;
             _installmentDetailService = installmentDetailService;
             _icommentService = icommentService;
+            _iInstallmentRejectionService = iInstallmentRejectionService;
         }
         // GET: WorkFlow
         [HttpGet]
@@ -59,31 +62,33 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult Workflow(int? id)
+        public ActionResult Workflow(int id)
         {
-            var benificiary = _benificiaryService.GetBenificiaryById(1);
-            var benficiarymodel = Mapper.BeneficiaryMapper.Detach(benificiary);
-            Session["InstallmentId"] = id;
-            string rolename = "";
-            if (Session["UserDetails"] != null)
-            {
-                var user = Session["UserDetails"] as UserViewModel;
-                var roleId = user.UserInRoles.Select(s => s.RoleId).FirstOrDefault();
-                rolename = Enum.GetName(typeof(Common.WorkFlowStages), roleId);
-            }
-            ViewBag.RoleName = rolename;
-            return View(benficiarymodel);
+            var installmentDetails = _installmentDetailService.GetInstallmentDetailById(id);
+            //var benificiary = _benificiaryService.GetBenificiaryById(1);
+            var benficiaryDetail = Mapper.BeneficiaryMapper.Detach(installmentDetails.BenificiaryMaster);
+            benficiaryDetail.installmentId = id;
+            //Session["InstallmentId"] = id;
+            //string rolename = "";
+            //if (Session["UserDetails"] != null)
+            //{
+            //    var user = Session["UserDetails"] as UserViewModel;
+            //    var roleId = user.UserInRoles.Select(s => s.RoleId).FirstOrDefault();
+            //    rolename = Enum.GetName(typeof(Common.WorkFlowStages), roleId);
+            //}
+            //ViewBag.RoleName = rolename;
+            return View(benficiaryDetail);
         }
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult Accountant(int id)
+        public ActionResult Accountant(int installmentId)
         {
             AccountDetailsViewModel accountDetailsViewModel = new AccountDetailsViewModel();
             InstallmentSigning instS = new InstallmentSigning();
-            var installmentDetails = _installmentDetailService.GetInstallmentDetailById(id);
+            var installmentDetails = _installmentDetailService.GetInstallmentDetailById(installmentId);
             var benificiaryDetails = _benificiaryService.GetBenificiaryById(installmentDetails.BeneficiaryId);
-            accountDetailsViewModel.InstallmentId = id;
+            accountDetailsViewModel.InstallmentId = installmentId;
 
             accountDetailsViewModel.LoanAmnt = Convert.ToInt32(installmentDetails.LoanAmnt);
             accountDetailsViewModel.IFSCCode = benificiaryDetails.IFSCCode;
@@ -150,22 +155,17 @@ namespace EPassBook.Controllers
 
         [HttpPost]
         [CustomAuthorize(Common.SiteEngineer)]
-        public ActionResult Recommend(string comment)
+        public ActionResult Recommend(InstallmentDetailsViewModel installmentDetailViewModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValidField("txtFirstComment"))
             {
                 if (Session["UserDetails"] != null)
                 {
-                    int installmentid = 0;
-                    if (Session["InstallmentId"] != null)
-                    {
-                        installmentid = Convert.ToInt32(Session["InstallmentId"]);
-                    }
-                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
+                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
 
                     var comments = new Comment();
                     var user = Session["UserDetails"] as UserViewModel;
-                    comments.Comments = comment;
+                    comments.Comments = installmentDetailViewModel.FirstComment;
                     comments.CreatedBy = user.UserName;
                     comments.BeneficiaryId = installment.BeneficiaryId;
                     comments.CreatedDate = DateTime.Now;
@@ -177,59 +177,64 @@ namespace EPassBook.Controllers
                     installment.Comments.Add(comments);
                     _installmentDetailService.Update(installment);
                     _installmentDetailService.SaveChanges();
-                    return View();
+                    return Json(installmentDetailViewModel.InstallmentId); //("SiteEngineer", "WorkFlow", installmentDetailViewModel.InstallmentId);
                 }
             }
-            return View();
+            return Json(installmentDetailViewModel.InstallmentId);
         }
 
         [HttpPost]
         [CustomAuthorize(Common.SiteEngineer)]
-        public ActionResult Reject(string comment)
+        public ActionResult Reject(InstallmentDetailsViewModel installmentDetailViewModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValidField("txtFirstComment"))
             {
                 if (Session["UserDetails"] != null)
                 {
-                    int installmentid = 0;
-                    if (Session["InstallmentId"] != null)
-                    {
-                        installmentid = Convert.ToInt32(Session["InstallmentId"]);
-                    }
-                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
+                    var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
 
                     var comments = new Comment();
+                    var installmentRejection = new InstallmentRejection();
                     var user = Session["UserDetails"] as UserViewModel;
-                    comments.Comments = comment;
+
+                    //add data into comments table
+                    comments.Comments = installmentDetailViewModel.FirstComment;
                     comments.CreatedBy = user.UserName;
                     comments.BeneficiaryId = installment.BeneficiaryId;
                     comments.CreatedDate = DateTime.Now;
                     comments.CompanyID = user.CompanyID;
                     comments.RoleId = user.UserInRoles.Where(u => u.UserId == user.UserId).Select(r => r.RoleId).FirstOrDefault();
+
+                    //add data into installmentRejection table
+                    installmentRejection.BeneficiaryId = installment.BeneficiaryId;
+                    installmentRejection.InstallmentNo = installment.InstallmentNo;
+                    installmentRejection.Comment = installmentDetailViewModel.FirstComment;
+                    installmentRejection.CreatedDate = DateTime.Now;
+                    installmentRejection.CreatedBy = user.UserName;
+                    installmentRejection.CompanyID = user.CompanyID;
+                    
+                    //add data into installmentDetails table
                     installment.IsRecommended = false;
                     installment.StageID = Convert.ToInt32(Common.WorkFlowStages.Rejected);
                     installment.ModifiedBy = user.UserName;
                     installment.ModifiedDate = DateTime.Now;
+                    _iInstallmentRejectionService.Add(installmentRejection);
+                    _iInstallmentRejectionService.SaveChanges();
                     installment.Comments.Add(comments);
                     _installmentDetailService.SaveChanges();
-                    return View();
+                    return Json(installmentDetailViewModel.InstallmentId);
                 }
             }
-            return View();
+            return Json(installmentDetailViewModel.InstallmentId);
         }
 
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult SiteEngineer()
+        public ActionResult SiteEngineer(int installmentId)
         {
-            int installmentid = 0;
-            if (Session["InstallmentId"] != null)
-            {
-                installmentid = Convert.ToInt32(Session["InstallmentId"]);
-            }
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
-            var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
@@ -242,7 +247,6 @@ namespace EPassBook.Controllers
             {
                 installmentviewmodel.beniInRupees = null;
             }
-            ViewBag.isRecommended = installment.IsRecommended.ToString().ToLower();
             return PartialView("_SiteEngineer", installmentviewmodel);
         }
 
@@ -380,16 +384,11 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult ProjectEngineer()
+        public ActionResult ProjectEngineer(int installmentId)
         {
-            int installmentid = 0;
-            if (Session["InstallmentId"] != null)
-            {
-                installmentid = Convert.ToInt32(Session["InstallmentId"]);
-            }
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
-            var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
-            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel._Comments = null;
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
@@ -462,16 +461,11 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult CityEngineer()
+        public ActionResult CityEngineer(int InstallmentId )
         {
-            int installmentid = 0;
-            if (Session["InstallmentId"] != null)
-            {
-                installmentid = Convert.ToInt32(Session["InstallmentId"]);
-            }
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
-            var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
-            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            var installment = _installmentDetailService.GetInstallmentDetailById(InstallmentId);
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel._Comments = null;
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
@@ -544,15 +538,10 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult ChiefOfficer()
+        public ActionResult ChiefOfficer(int InstallmentId)
         {
-            int installmentid = 0;
-            if (Session["InstallmentId"] != null)
-            {
-                installmentid = Convert.ToInt32(Session["InstallmentId"]);
-            }
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
-            var installment = _installmentDetailService.GetInstallmentDetailById(installmentid);
+            var installment = _installmentDetailService.GetInstallmentDetailById(InstallmentId);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel._Comments = null;

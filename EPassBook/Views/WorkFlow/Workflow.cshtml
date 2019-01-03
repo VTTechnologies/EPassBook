@@ -35,47 +35,93 @@
                     <div class="box-header">
                     </div>
                     <div class="box-body">
-                            @Html.Partial("_InstallmentDetails", Model)
-                        </div>
+                        @Html.Partial("_InstallmentDetails", Model)
                     </div>
                 </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 @*<div class="panel with-nav-tabs panel-primary">*@
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li id="li_dataeng"><a href="#tabdataEngineer" class="nav_link" data-toggle="tab">Beneficiary Details</a></li>
-                            <li id="li_siteengneer"><a href="#tabSiteEngineer" class="nav_link" data-toggle="tab">Site Engineer</a></li>
-                            <li id="li_ProjectEngineer"><a href="#tabProjectEngineer" class="nav_link" data-toggle="tab">Project Engineer</a></li>
-                            <li id="li_cityengineer"><a href="#tabCityEngineer" class="nav_link" data-toggle="tab">City Engineer</a></li>
-                            <li id="li_chiefOfficer"><a href="#tabchiefOfficer" class="nav_link" data-toggle="tab">Chief Officer</a></li>
-                            <li id="li_accountant"><a href="#tabAccountant" class="nav_link" data-toggle="tab">Accountant</a></li>
-                        </ul>
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li id="li_dataeng"><a href="#tabdataEngineer" class="nav_link" data-toggle="tab">Beneficiary Details</a></li>
+                        <li id="li_siteengneer"><a href="#tabSiteEngineer" class="nav_link" data-toggle="tab">Site Engineer</a></li>
+                        <li id="li_ProjectEngineer"><a href="#tabProjectEngineer" class="nav_link" data-toggle="tab">Project Engineer</a></li>
+                        <li id="li_cityengineer"><a href="#tabCityEngineer" class="nav_link" data-toggle="tab">City Engineer</a></li>
+                        <li id="li_chiefOfficer"><a href="#tabchiefOfficer" class="nav_link" data-toggle="tab">Chief Officer</a></li>
+                        <li id="li_accountant"><a href="#tabAccountant" class="nav_link" data-toggle="tab">Accountant</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="tabdataEngineer">@Html.Action("DataEntry", "WorkFlow",new { installmentId = Model.installmentId })</div>
+                        <div class="tab-pane fade" id="tabSiteEngineer">@Html.Action("SiteEngineer", "WorkFlow",new { installmentId =Model.installmentId})</div>
+                        <div class="tab-pane fade" id="tabProjectEngineer">@Html.Action("ProjectEngineer", "WorkFlow", new { installmentId = Model.installmentId })</div>
+                        <div class="tab-pane fade" id="tabCityEngineer">@Html.Action("CityEngineer", "WorkFlow", new { installmentId = Model.installmentId })</div>
+                        <div class="tab-pane fade" id="tabchiefOfficer">@Html.Action("ChiefOfficer", "WorkFlow", new { installmentId = Model.installmentId })</div>
+                        <div class="tab-pane fade" id="tabAccountant">@Html.Action("Accountant", "WorkFlow", new { installmentId = Model.installmentId })</div>
                     </div>
-                    <div class="panel-body">
-                        <div class="tab-content">
-                            <div class="tab-pane fade" id="tabdataEngineer">@Html.Action("DataEntry", "WorkFlow")</div>
-                            <div class="tab-pane fade" id="tabSiteEngineer">@Html.Action("SiteEngineer", "WorkFlow")</div>
-                            <div class="tab-pane fade" id="tabProjectEngineer">@Html.Action("ProjectEngineer", "WorkFlow")</div>
-                            <div class="tab-pane fade" id="tabCityEngineer">@Html.Action("CityEngineer", "WorkFlow")</div>
-                            <div class="tab-pane fade" id="tabchiefOfficer">@Html.Action("ChiefOfficer", "WorkFlow")</div>
-                            <div class="tab-pane fade" id="tabAccountant">@Html.Action("Accountant", "WorkFlow")</div>
-                        </div>
-                    </div>
+                </div>
                 @*</div>*@
-            </div>           
+            </div>
         </div>
     </section>
 </div>
 @*<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
 
-</div>*@
+    </div>*@
 <div class="container">
-   
-</div>
 
-<script type="text/javascript">
+</div>
+@{
+    if (User.IsInRole(EPassBook.Helper.Common.SiteEngineer))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#li_siteengneer').addClass("active");
+                $('#tabSiteEngineer').addClass("active in");
+            });
+        </script>
+    }
+    else if (User.IsInRole(EPassBook.Helper.Common.ProjectEngineer))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#li_siteengneer').addClass("active");
+                $('#tabSiteEngineer').addClass("active in");
+            });
+        </script>
+    }
+    else if (User.IsInRole(EPassBook.Helper.Common.ChiefOfficer))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#li_chiefOfficer').addClass("active");
+                $('#tabchiefOfficer').addClass("active in");
+            });
+        </script>
+    }
+    else if (User.IsInRole(EPassBook.Helper.Common.CityEngineer))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#li_cityengineer').addClass("active");
+                $('#tabCityEngineer').addClass("active in");
+            });
+        </script>
+    }
+    else if (User.IsInRole(EPassBook.Helper.Common.Accountant))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#li_Accountant').addClass("active");
+                $('#tabAccountant').addClass("active in");
+            });
+        </script>
+    }
+}
+@*<script type="text/javascript">
     $(document).ready(function () {
 
         var text = '@ViewBag.RoleName'; //Accessing the Json Object from ViewBag
@@ -104,5 +150,5 @@
             $('#tabAccountant').addClass("active in");
         }
     });
-</script>
+</script>*@
 

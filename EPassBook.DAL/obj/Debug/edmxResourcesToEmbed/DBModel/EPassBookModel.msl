@@ -139,6 +139,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DefaultComments">
+      <EntityTypeMapping TypeName="EPassBookModel.DefaultComment">
+        <MappingFragment StoreEntitySet="DefaultComments">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GeoTaggingDetails">
       <EntityTypeMapping TypeName="EPassBookModel.GeoTaggingDetail">
         <MappingFragment StoreEntitySet="GeoTaggingDetails">
@@ -160,6 +169,7 @@
     <EntitySetMapping Name="InstallmentDetails">
       <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetail">
         <MappingFragment StoreEntitySet="InstallmentDetails">
+          <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
           <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
           <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />

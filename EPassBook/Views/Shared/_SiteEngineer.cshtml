@@ -10,18 +10,20 @@
         color: red;
     }
 </style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
 <div id="siteengineer">
-    <section class="content" id="firstDiv">
+    <section class="content">
         <div class="row">
             <!-- left column -->
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
 
-                </div>
-                @using (Ajax.BeginForm("Recommend", "WorkFlow", new AjaxOptions { UpdateTargetId = "firstDiv", OnFailure = "failed" }))
-                {
-                    if (!Convert.ToBoolean(ViewBag.isRecommended))
+                    </div>
+                    @if (!Model.IsRecommended)
                     {
                         <div class="box-body" id="firstDiv">
                             <div class="form-group">
@@ -45,7 +47,8 @@
                                         @Html.Label("Comment", htmlAttributes: new { @class = "control-label" })
                                     </div>
                                     <div class="col-md-9">
-                                        @Html.TextArea("txtFirstComment", null, 5, 5, new { @class = "form-control" })
+                                        @*@Html.TextArea("txtFirstComment", null, 5, 5, new { @class = "form-control" })*@
+                                        @Html.TextBoxFor(model => model.FirstComment, htmlAttributes: new { @class = "form-control", @id = "txtFirstComment" })
                                         <div style="height:20px">
                                             <span id="commentError" class="errmsg"></span>
                                         </div>
@@ -56,26 +59,25 @@
 
                             <div class="form-group">
                                 <div class="col-md-offset-4 col-md-10">
-                                    <input type="submit" value="Recommend" id="recommend" class="btn btn-primary" />
-                                    <input type="submit" value="Reject" id="reject" class="btn btn-danger" />
+                                    <input type="button" value="Recommend" id="recommend" class="btn btn-primary" />
+                                    <input type="button" value="Reject" id="reject" class="btn btn-danger" />
                                 </div>
                             </div>
                             <br />
                         </div>
                     }
-                }
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<section class="content" id="secondDiv">
-    <div class="row">
-        <!-- left column -->
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
+    <section class="content" id="secondDiv">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
 
                     </div>
                     @using (Html.BeginForm("SiteEngineer", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
@@ -286,15 +288,15 @@
         </div>
     </section>
 </div>
-@if (!User.IsInRole(EPassBook.Helper.Common.SiteEngineer))
-{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            debugger;
-            $('#siteengineer').find(':input').prop('disabled', true);
-        });
-    </script>
-}
+@*@if (!User.IsInRole(EPassBook.Helper.Common.SiteEngineer))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                debugger;
+                $('#siteengineer').find(':input').prop('disabled', true);
+            });
+        </script>
+    }*@
 
 @if (ViewBag.Message != null)
 {
@@ -307,13 +309,13 @@
     </script>
 }
 
-@if (ViewBag.isRecommended != null)
-{
-    <script type="text/javascript">
+<script type="text/javascript">
         window.onload = function () {
 
             debugger;
-        var check = '@ViewBag.isRecommended'
+            var check = '@Model.IsRecommended';
+            //TODO
+            check = check.toLowerCase();
             if (check == 'true')
             {
                 $('#secondDiv').show();
@@ -325,8 +327,8 @@
                 $('#firstDiv').show();
             }
         };
-    </script>
-}
+</script>
+
 
 <script type="text/javascript">
 
@@ -341,54 +343,86 @@
             //alert("You have selected the country - " + countries.join(", "));
         });
 
+
         $("#recommend").click(function () {
             debugger;
             var comment = $("#txtFirstComment").val();
+            var installmentId=@Model.InstallmentId;
             if (comment == '') {
                 $("#commentError").html("Comment is required").show().fadeOut("slow");
                 return false;
             }
+            var installmentDetailViewModel = {};
+            installmentDetailViewModel.FirstComment = comment;
+            installmentDetailViewModel.installmentId = installmentId;
+            debugger;
             $.ajax({
                 type: "POST",
-                url: "/WorkFlow/Recommend?comment=" + comment,
-                success: (function (response) {
+                contentType: "application/json",
+                dataType: "json",
+                url: "/WorkFlow/Recommend",
+                data: JSON.stringify(installmentDetailViewModel),
+                success: (function (response){
+                    alert('success');
                     $('#secondDiv').show();
                     $('#firstDiv').hide();
                 }),
                 failure: (function (response) {
+                    alert('failure');
                     return false;
                 }),
+                error: (function (xhr, textStatus, errorThrown) {
+                            if (textStatus != "error") {
+                                alert(textStatus);
+                                $('#secondDiv').show();
+                                $('#firstDiv').hide();
 
-                error: (function (response) {
-                    return false;
+                            }
+                            else if (xhr.status === 401 || xhr.status === 403) {
+                                alert(errorThrown);
+                            }
                 })
-            });;
-            return true;
+            });
         });
 
         $("#reject").click(function () {
             debugger;
             var comment = $("#txtFirstComment").val();
+            var installmentId = @Model.InstallmentId;
             if (comment == '') {
                 $("#commentError").html("Comment is required").show().fadeOut("slow");
                 return false;
             }
+            var installmentDetailViewModel = {};
+            installmentDetailViewModel.FirstComment = comment;
+            installmentDetailViewModel.installmentId = installmentId;
             $.ajax({
                 type: "POST",
-                url: "/WorkFlow/Reject?comment=" + comment,
+                contentType: "application/json",
+                dataType: "json",
+                url: "/WorkFlow/Reject",
+                data: JSON.stringify(installmentDetailViewModel),
                 success: (function (response) {
+                    alert('success');
                     $('#firstDiv').show();
-                    $('#secondDiv').hide()
+                    $('#secondDiv').hide();
                 }),
                 failure: (function (response) {
+                    alert('failure');
                     return false;
                 }),
+                error: (function (xhr, textStatus, errorThrown) {
+                    if (textStatus != "error") {
+                        alert(textStatus);
+                        $('#firstDiv').show();
+                        $('#secondDiv').hide();
 
-                error: (function (response) {
-                    return false;
+                    }
+                    else if (xhr.status === 401 || xhr.status === 403) {
+                        alert(errorThrown);
+                    }
                 })
-            });;
-            return true;
+            });
         });
 
         $("#txtBenAmnt").keyup(function () {
