@@ -45,6 +45,7 @@
     <EntitySet Name="Comments" EntityType="EPassBookModel.Comment" />
     <EntitySet Name="CommentsHisories" EntityType="EPassBookModel.CommentsHisory" />
     <EntitySet Name="CompanyMasters" EntityType="EPassBookModel.CompanyMaster" />
+    <EntitySet Name="DefaultComments" EntityType="EPassBookModel.DefaultComment" />
     <EntitySet Name="GeoTaggingDetails" EntityType="EPassBookModel.GeoTaggingDetail" />
     <EntitySet Name="InstallmentDetails" EntityType="EPassBookModel.InstallmentDetail" />
     <EntitySet Name="InstallmentDetailsHistories" EntityType="EPassBookModel.InstallmentDetailsHistory" />
@@ -289,6 +290,14 @@
     <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.installmentsigning_CompanyID_FK" FromRole="CompanyMaster" ToRole="InstallmentSigning" />
     <NavigationProperty Name="UserMasters" Relationship="EPassBookModel.UserMaster_CompanyID_FK" FromRole="CompanyMaster" ToRole="UserMaster" />
   </EntityType>
+  <EntityType Name="DefaultComment">
+    <Key>
+      <PropertyRef Name="CommentId" />
+    </Key>
+    <Property Name="CommentId" Type="Int32" Nullable="false" />
+    <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
   <EntityType Name="GeoTaggingDetail">
     <Key>
       <PropertyRef Name="Id" />
@@ -329,6 +338,7 @@
     <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CompanyID" Type="Int32" />
     <Property Name="TransactionID" Type="Decimal" Precision="20" Scale="0" />
+    <Property Name="IsRecommended" Type="Boolean" />
     <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster" FromRole="InstallmentDetail" ToRole="BenificiaryMaster" />
     <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_InstallmentDetails" FromRole="InstallmentDetail" ToRole="Comment" />
     <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.installment_CompanyID_FK" FromRole="InstallmentDetail" ToRole="CompanyMaster" />

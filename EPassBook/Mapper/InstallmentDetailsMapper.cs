@@ -92,6 +92,7 @@ namespace EPassBook.Mapper
             installmentDetailsViewModel.ModifiedBy = installmentDetail.ModifiedBy;
             installmentDetailsViewModel.CompanyID = installmentDetail.CompanyID;
             installmentDetailsViewModel.TransactionID = installmentDetail.TransactionID;
+            installmentDetailsViewModel.IsRecommended = installmentDetail.IsRecommended.Value;
 
             installmentDetailsViewModel.Comments = installmentDetail.Comments.Select(s => new CommentsViewModel()
             {

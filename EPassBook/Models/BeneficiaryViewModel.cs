@@ -51,7 +51,7 @@ namespace EPassBook.Models
         public string ModifiedBy { get; set; }
         public Nullable<int> CompanyID { get; set; }
         public string Wife_Photo { get; set; }
-
+        public int installmentId { get; set; }
         public virtual CompanyViewModel CompanyMaster { get; set; }
         public virtual CityViewModel CityMaster { get; set; }
         public virtual ICollection<InstallmentDetailsViewModel> InstallmentDetails { get; set; }

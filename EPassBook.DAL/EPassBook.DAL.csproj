@@ -126,6 +126,7 @@
     <Compile Include="DBModel\WorkflowStage.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IService\IInstallmentRejectionService.cs" />
     <Compile Include="IService\IUserInRolService.cs" />
     <Compile Include="IService\IRoleMasterService .cs" />
     <Compile Include="IService\ICityService.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Repository\IGenericReporsitory.cs" />
     <Compile Include="Service\CompanyMasterService.cs" />
     <Compile Include="IService\ICompanyMasterService.cs" />
+    <Compile Include="Service\InstallmentRejectionService.cs" />
     <Compile Include="Service\RoleMasterService.cs" />
     <Compile Include="Service\CityMasterService.cs" />
     <Compile Include="Service\UserInRoleService.cs" />
