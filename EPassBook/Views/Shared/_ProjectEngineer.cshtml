@@ -208,7 +208,7 @@
     </div>
 </section>
 
-@if (!User.IsInRole(EPassBook.Helper.Common.ProjectEngineer))
+@if (!EPassBook.Helper.AuthorizationForView.IsAuthorize(EPassBook.Helper.Common.ProjectEngineer))
 {
     <script type="text/javascript">
         $(document).ready(function () {

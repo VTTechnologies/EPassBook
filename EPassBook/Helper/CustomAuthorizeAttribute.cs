@@ -27,9 +27,9 @@ namespace EPassBook.Helper
         }
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            bool authorize = false;
-           
-            userDetail = httpContext.Session["UserDetails"] as UserViewModel;
+
+            bool authorize = false;            
+             userDetail = httpContext.Session["UserDetails"] as UserViewModel;
             foreach (var role in allowedroles)
             {
                 if (userDetail != null)

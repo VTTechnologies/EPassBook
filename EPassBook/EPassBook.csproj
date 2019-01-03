@@ -240,12 +240,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\Common.cs" />
+    <Compile Include="Helper\AuthorizationForView.cs" />
     <Compile Include="Helper\CustomAuthorizeAttribute.cs" />
     <Compile Include="Helper\ElmahErrorAttribute.cs" />
     <Compile Include="Helper\HTMLHelperExtensions.cs" />
     <Compile Include="Helper\GMailer.cs" />
     <Compile Include="Helper\Mail.cs" />
-    <Compile Include="Helper\MultipleButtonAttribute.cs" />
     <Compile Include="Helper\NumbersToWords.cs" />
     <Compile Include="Helper\PhotoManager.cs" />
     <Compile Include="Mapper\UserInRoleMapper.cs" />
@@ -4410,7 +4410,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\WorkFlow\Workflow.cshtml" />
     <Content Include="Views\User\IndexOld.cshtml" />
-    <Content Include="Views\User\CreateOld.cshtml" />
     <Content Include="Views\Shared\.DS_Store" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\Error\ServerSideError.cshtml" />
@@ -4444,7 +4443,6 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_AdminLeftMenu.cshtml" />
-    <Content Include="Views\Shared\_SiteEngineerFirst.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

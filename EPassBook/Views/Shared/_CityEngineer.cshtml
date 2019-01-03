@@ -195,7 +195,7 @@
                                        name="hiddforCheckbox_CE"
                                        type="hidden"
                                        value="no" />
-                                <input type="submit" value="Create" onclick="return validation_CE();" class="btn btn-default" />
+                                <input type="submit" value="Create" onclick="return validation_CE();" class="btn btn-primary" />
                             </div>
                         </div>
                     </div>
@@ -206,7 +206,7 @@
 </section>
 
 
-@if (!User.IsInRole(EPassBook.Helper.Common.CityEngineer))
+@if (!EPassBook.Helper.AuthorizationForView.IsAuthorize(EPassBook.Helper.Common.CityEngineer))
 {
     <script type="text/javascript">
         $(document).ready(function () {

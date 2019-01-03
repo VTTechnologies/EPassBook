@@ -177,10 +177,10 @@ namespace EPassBook.Controllers
                     installment.Comments.Add(comments);
                     _installmentDetailService.Update(installment);
                     _installmentDetailService.SaveChanges();
-                    return View();
+                    return PartialView("SiteEngineer");
                 }
             }
-            return View();
+            return RedirectToAction("SiteEngineer");
         }
 
         [HttpPost]
@@ -212,10 +212,10 @@ namespace EPassBook.Controllers
                     installment.ModifiedDate = DateTime.Now;
                     installment.Comments.Add(comments);
                     _installmentDetailService.SaveChanges();
-                    return View();
+                    return RedirectToAction("SiteEngineer");
                 }
             }
-            return View();
+            return RedirectToAction("SiteEngineer");
         }
 
 

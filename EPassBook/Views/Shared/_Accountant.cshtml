@@ -88,7 +88,7 @@
     </div>
 </section>
 
-@if (!User.IsInRole(EPassBook.Helper.Common.Accountant))
+@if (!EPassBook.Helper.AuthorizationForView.IsAuthorize(EPassBook.Helper.Common.Accountant))
 {
     <script type="text/javascript">
         $(document).ready(function () {

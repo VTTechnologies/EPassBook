@@ -365,7 +365,7 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@if (!User.IsInRole(EPassBook.Helper.Common.DataEntry))
+@if (!EPassBook.Helper.AuthorizationForView.IsAuthorize(EPassBook.Helper.Common.DataEntry))
 {
     <script type="text/javascript">
         $(document).ready(function () {
