@@ -15,17 +15,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
 <div id="siteengineer">
-    <section class="content">
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
 
-                    </div>
-                    @if (!Model.IsRecommended)
-                    {
-                        <div class="box-body" id="firstDiv">
+    @if (!Model.IsRecommended)
+    {
+        <section class="content" id="firstDiv">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                        </div>
+                        <div class="box-body">
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -39,7 +39,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="form-group">
                                 <div class="row">
@@ -54,9 +53,7 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
                             <div class="form-group">
                                 <div class="col-md-offset-4 col-md-10">
                                     <input type="button" value="Recommend" id="recommend" class="btn btn-primary" />
@@ -65,12 +62,11 @@
                             </div>
                             <br />
                         </div>
-                    }
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
+        </section>
+    }
 
     <section class="content" id="secondDiv">
         <div class="row">
@@ -371,16 +367,17 @@
                     alert('failure');
                     return false;
                 }),
-                error: (function (xhr, textStatus, errorThrown) {
-                            if (textStatus != "error") {
-                                alert(textStatus);
-                                $('#secondDiv').show();
-                                $('#firstDiv').hide();
-
-                            }
-                            else if (xhr.status === 401 || xhr.status === 403) {
-                                alert(errorThrown);
-                            }
+                error: (function (xhr, textStatus, errorThrown)
+                {
+                    if (textStatus != "error"){
+                        alert(textStatus);
+                        $('#secondDiv').show();
+                        $('#firstDiv').hide();
+                    }
+                    else if (xhr.status === 401 || xhr.status === 403){
+                        alert(errorThrown);
+                        window.location.href = "/WorkFlow/Index/";
+                    }
                 })
             });
         });
@@ -403,9 +400,8 @@
                 url: "/WorkFlow/Reject",
                 data: JSON.stringify(installmentDetailViewModel),
                 success: (function (response) {
-                    alert('success');
-                    $('#firstDiv').show();
-                    $('#secondDiv').hide();
+                    alert('Beneficiary Rejected');
+                    window.location.href = "/WorkFlow/Index/";
                 }),
                 failure: (function (response) {
                     alert('failure');
@@ -416,10 +412,10 @@
                         alert(textStatus);
                         $('#firstDiv').show();
                         $('#secondDiv').hide();
-
                     }
                     else if (xhr.status === 401 || xhr.status === 403) {
                         alert(errorThrown);
+                        window.location.href = "/WorkFlow/Index/";
                     }
                 })
             });
