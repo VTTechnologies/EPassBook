@@ -1,0 +1,56 @@
+﻿@model IEnumerable<EPassBook.Models.SurveyDetailsModel>
+
+@if (Model != null)
+{
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                    </div>
+                    <div class="box-body">
+                        <table id="surveyDetails" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>BeniId</th>
+                                    <th>Sr.No</th>
+                                    <th>Date</th>
+                                    <th>Name of the Surveyer</th>
+                                    <th>Mobile</th>
+                                    <th>Physical Progress</th>
+                                    <th>Instruction/Suggestion</th>
+                                    <th>Signature</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var items in Model)
+                                {
+                                    <tr>
+                                        <td>@items.BeneficiaryId</td>
+                                        <td>@items.BeneficiaryId</td>
+                                        <td>1</td>
+                                        <td>@items.CreatedDate</td>
+                                        <td>@items.UserName</td>
+                                        <td>@items.MobileNo</td>
+                                        <td>@items.Physical_Progress</td>
+                                        <td>@items.Comments</td>
+                                        <td>@Html.CheckBoxFor(m => items.Sign, new { @disabled = "disabled" })</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#surveyDetails').DataTable();
+    });
+</script>
+
