@@ -333,11 +333,9 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult SurveyDetails()
-        {
-            try
-            {
-                IEnumerable<sp_GetSurveyDetailsByBenID_Result> commentlist = _icommentService.GetSurveyDetailsByBenificiaryID(1);
+        public ActionResult SurveyDetails(int installmentId)
+        {            
+                IEnumerable<sp_GetSurveyDetailsByBenID_Result> commentlist = _icommentService.GetSurveyDetailsByBenificiaryID(installmentId);
 
                 var mappedCommentList = commentlist.Select(s => new SurveyDetailsModel
                 {
@@ -351,12 +349,8 @@ namespace EPassBook.Controllers
 
                 }).ToList();
 
-                return View();
-            }
-            catch (Exception ex)
-            {
-                return View();
-            }
+                return PartialView("_SurveyDetails", mappedCommentList);
+            
         }
 
         [HttpGet]
@@ -554,7 +548,7 @@ namespace EPassBook.Controllers
         {
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
             var installment = _installmentDetailService.GetInstallmentDetailById(InstallmentId);
-            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);// _mapper.Map<InstallmentDetail, InstallmentDetailsViewModel>(installment);
+            var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
             installmentviewmodel.Comments = null;
             installmentviewmodel._Comments = null;
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
@@ -623,6 +617,34 @@ namespace EPassBook.Controllers
             //}
 
             return PartialView("_ChiefOfficer", installmentDetailViewModel);
+        }
+
+        [HttpGet]
+        [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
+        public ActionResult WorkStatusDetails(int InstallmentId)
+        {
+            //since we want all records of installment, so we use same name of intallment as parameter.
+            var beneficiaryId = InstallmentId;
+            List<WorkStatusDetailsViewModel> workstatus = new List<WorkStatusDetailsViewModel>();
+            var installments = _installmentDetailService.Get(w=>w.BeneficiaryId==beneficiaryId,null,"").ToList();
+
+            if (installments != null)
+            {
+                workstatus= installments.Select(s => new WorkStatusDetailsViewModel
+                {
+                    Installment=s.InstallmentNo==1 ? "First" : s.InstallmentNo == 2 ? "Second" : s.InstallmentNo == 3 ? "Thir" : s.InstallmentNo == 4 ? "Fourth" : s.InstallmentNo == 5 ? "Fifth" : s.InstallmentNo == 6 ? "Sixth-Cum Final" :"",
+                    LevelType = s.InstallmentNo == 1 ? "At Plinth Level" : s.InstallmentNo == 2 ? "At Lintel Level" : s.InstallmentNo == 3 ? "At Roof Level" : s.InstallmentNo == 4 ? "For Finishing Completion" : s.InstallmentNo == 5 ? "Level" : s.InstallmentNo == 6 ? "Level":"",
+                    BeneficiaryAmount =s.BeneficiaryAmnt,
+                    CenterAmount=s.IsCentreAmnt==true ? s.LoanAmnt :s.LoanAmnt,
+                    StateAmount = s.IsCentreAmnt == false ? s.LoanAmnt : s.LoanAmnt,
+                    ULBAmount=0,
+                    TotalAmount=s.BeneficiaryAmnt + s.LoanAmnt,
+                }).ToList();
+
+                ViewBag.GrandTotal= workstatus.Sum(w => w.TotalAmount);
+            }
+
+            return PartialView("_WorkStatusDetails", workstatus);
         }
 
         [HttpPost]

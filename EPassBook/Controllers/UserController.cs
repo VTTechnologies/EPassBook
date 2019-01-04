@@ -185,7 +185,7 @@ namespace EPassBook.Controllers
         public ActionResult ForgetPassword(FormCollection formCollection)
         {
             var Email = Request["Email"].ToString();
-            if(Email==null)
+            if(Email == null)
             {
                 Email = formCollection["Email"].ToString();
             }
@@ -231,6 +231,7 @@ namespace EPassBook.Controllers
             //mailer.Send();
             return View();
         }
+
         public string PopulateBody(UserMaster user)
         {
             string body = string.Empty;
@@ -244,7 +245,6 @@ namespace EPassBook.Controllers
             //body = body.Replace("{Description}", user.Description);
             return body;
         }
-
 
         [CustomAuthorize(Common.Admin)]
         [HttpGet]
@@ -269,17 +269,34 @@ namespace EPassBook.Controllers
         [HttpPost]
         public ActionResult Create(UserViewModel userVM)
         {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+            var fName = userVM.FirstName;
+            var lName = userVM.LastName;
+            var mobileNo = userVM.MobileNo;
+
+            string firstCharOfFname = 
+                !String.IsNullOrWhiteSpace(fName) && fName.Length >= 1? fName.Substring(0, 1) : fName;
+            var userName = firstCharOfFname + userVM.LastName;
+
+            string firstCharOfLname =
+                !String.IsNullOrWhiteSpace(lName) && fName.Length >= 1 ? lName.Substring(0, 1) : lName;
+
+            var password = firstCharOfFname + firstCharOfLname + mobileNo;
+
+            userVM.UserName = userName;
+            userVM.DecryptedPass = password;
+            userVM.UserInRoles = new List<UserInRoleViewModel>();            
+            userVM.UserInRoles.Add(new UserInRoleViewModel() { RoleId= userVM.RoleId });
             var userData = Mapper.UserMapper.Attach(userVM);
-            var userInRole = new UserInRoleViewModel();
             _userService.Add(userData);
             _userService.SaveChanges();
-            int id = userVM.UserId;
-            userInRole.UserId = id;
-            userInRole.RoleId = userVM.RoleId;
-            var roleData = Mapper.UserInRoleMapper.Attach(userInRole);
-            userData.UserInRoles.Add(roleData);
-            _userService.SaveChanges();
-            return RedirectToAction("userDetails");
+            //var roleData = Mapper.UserInRoleMapper.Attach(userInRole);
+            //userData.UserInRoles.Add(roleData);
+            //_userService.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -366,7 +383,7 @@ namespace EPassBook.Controllers
             }
             else
             {
-                return View();
+                return View(userVM);
             }
         }
 
@@ -391,7 +408,6 @@ namespace EPassBook.Controllers
             }
             return RedirectToAction("Index");
         }
-
-
+        
     }
 }

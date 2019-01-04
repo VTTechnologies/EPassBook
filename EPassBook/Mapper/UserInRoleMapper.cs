@@ -13,8 +13,11 @@ namespace EPassBook.Mapper
         public static UserInRole Attach(UserInRoleViewModel userInRoleViewModel)
         {
 
-            UserInRole userInRole = new UserInRole();              
-        
+            UserInRole userInRole = new UserInRole();
+            userInRole.id = userInRoleViewModel.id;
+            userInRole.RoleId = userInRoleViewModel.RoleId;
+            userInRole.UserId = userInRoleViewModel.UserId;
+
             return userInRole;
         }
         public static UserInRoleViewModel Detach(UserInRole userInRole)

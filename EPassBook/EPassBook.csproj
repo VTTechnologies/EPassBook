@@ -247,6 +247,7 @@
     <Compile Include="Helper\GMailer.cs" />
     <Compile Include="Helper\Mail.cs" />
     <Compile Include="Helper\NumbersToWords.cs" />
+    <Compile Include="Helper\PasswordEncryptionDecryption.cs" />
     <Compile Include="Helper\PhotoManager.cs" />
     <Compile Include="Mapper\UserInRoleMapper.cs" />
     <Compile Include="Mapper\InstallmentDetailsMapper.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Models\ResetPasswordViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\StageinRoleViewModel.cs" />
+    <Compile Include="Models\WorkStatusDetailsViewModel.cs" />
     <Compile Include="Models\SurveyDetailsModel.cs" />
     <Compile Include="Models\UserInRoleViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -4415,7 +4417,7 @@
     <Content Include="Views\Error\ServerSideError.cshtml" />
     <Content Include="Views\Error\CustomErrors.cshtml" />
     <Content Include="Views\Error\UnauthorizedAccess.cshtml" />
-    <Content Include="Views\WorkFlow\SurveyDetails.cshtml" />
+    <Content Include="Views\Shared\_SurveyDetails.cshtml" />
     <Content Include="Views\Shared\_SiteEngineer.cshtml" />
     <Content Include="Views\Shared\_InstallmentDetails.cshtml" />
     <Content Include="Views\Shared\_DataEntry.cshtml" />
@@ -4443,6 +4445,7 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_AdminLeftMenu.cshtml" />
+    <Content Include="Views\Shared\_WorkStatusDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
