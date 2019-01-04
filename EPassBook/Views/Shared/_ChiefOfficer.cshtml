@@ -3,7 +3,7 @@
 @{
     if (ViewBag.Message != null)
     {
-        //Layout = "~/Views/Shared/_Layout.cshtml";
+        Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
 <section class="content" id="chiefofficerpanel">
@@ -170,7 +170,7 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                @Html.CheckBox("ChkSign_CF", "no") @Html.Label("City Engineer")
+                                @Html.CheckBox("ChkSign_CF", "no") @Html.Label("Chief Officer")
                             </div>
                         </div>
 

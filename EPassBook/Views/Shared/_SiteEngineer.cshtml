@@ -2,7 +2,7 @@
 @{
     if (ViewBag.Message != null)
     {
-        // Layout = "~/Views/Shared/_Layout.cshtml";
+        Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
 <style>
@@ -298,14 +298,15 @@
 {
     <script type="text/javascript">
         window.onload = function () {
-            debugger
+            $('#firstDiv').hide();
             alert("submited successfully");
             window.location.href = "/WorkFlow/Index/";
         };
     </script>
 }
-
-<script type="text/javascript">
+else
+{
+    <script type="text/javascript">
         window.onload = function () {
 
             debugger;
@@ -323,8 +324,8 @@
                 $('#firstDiv').show();
             }
         };
-</script>
-
+    </script>
+}
 
 <script type="text/javascript">
 
@@ -340,7 +341,8 @@
         });
 
 
-        $("#recommend").click(function () {
+        $("#recommend").click(function ()
+        {
             debugger;
             var comment = $("#txtFirstComment").val();
             var installmentId=@Model.InstallmentId;
@@ -475,6 +477,18 @@
         }
     });
 
+    var isstatecenter = '@Model.IsCentreAmnt';
+    if (isstatecenter != '') {
+        if (isstatecenter.toLocaleLowerCase() == 'true') {
+            $("#isrdo_1").attr("checked", false);
+            $("#isrdo_2").attr("checked", true);
+        }
+        else {
+            $("#isrdo_1").attr("checked", true);
+            $("#isrdo_2").attr("checked", false);
+        }
+    }
+
     $("#ChkSign").change(function () {
         if ($("#ChkSign").is(":checked")) {
             $("#hiddforCheckbox").val("Checked");
@@ -482,7 +496,7 @@
     });
 
     function validation() {
-        if ($("#LoanAmnt").val().trim() == "") {
+        if ($("#txtLAmnt").val().trim() == "") {
             $("#lblmsg").text("Please Enter Loan Amount");
             return false;
         }
