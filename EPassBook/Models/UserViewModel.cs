@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using EPassBook.Helper;
 
 namespace EPassBook.Models
 {
@@ -11,12 +14,24 @@ namespace EPassBook.Models
         [Key]
         public int UserId { get; set; }
 
-        [Required(ErrorMessage = "User Name is required.")]
+        //[Required(ErrorMessage = "User Name is required.")]
         [StringLength(50, ErrorMessage = "The First Name must be less than {1} characters.")]
         [Display(Name = "User Name:")]
         public string UserName { get; set; }
-        [Required(ErrorMessage = "Please enter the Password.")]
+        //[Required(ErrorMessage = "Please enter the Password.")]
         public string Password { get; set; }
+        [NotMapped]
+        public string DecryptedPass
+        {
+            get
+            {
+                return Password.Decrypt();
+            }
+            set
+            {
+                Password = value.Encrypt();
+            }
+        }
         [Display(Name = "Active:")]
         public bool? IsActive { get; set;}
         //public Nullable<bool> IsLoggedIn { get; set; }
@@ -39,13 +54,24 @@ namespace EPassBook.Models
         [Display(Name ="Role")]
         public string RoleName { get; set; }
 
+        [Required(ErrorMessage = "First Name is required.")]
+        public string FirstName { get; set; }
+        [Required(ErrorMessage = "Last Name is required.")]
+        public string LastName { get; set; }
+        [Required(ErrorMessage = "Date of birth is required.")]
+
+        public Nullable<System.DateTime> Dob { get; set; }
+
         public virtual CityViewModel CityMaster { get; set; }
         public virtual CompanyViewModel CompanyMaster { get; set; }
         public virtual ICollection<GeoTaggingViewModel> GeoTaggingDetails { get; set; }
         public virtual ICollection<InstallmentSigningViewModel> InstallmentSignings { get; set; }     
         public virtual ICollection<UserInRoleViewModel> UserInRoles { get; set; }
 
-      
+        public IEnumerable<SelectList> AllRoles { set; get; }
+        public IEnumerable<SelectList> Cities { set; get; }
+        public IEnumerable<SelectList> Comanies { set; get; }
+
         public bool? IsLoggedIn { get; set; }
        
 

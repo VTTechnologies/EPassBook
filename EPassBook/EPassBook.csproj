@@ -247,6 +247,7 @@
     <Compile Include="Helper\GMailer.cs" />
     <Compile Include="Helper\Mail.cs" />
     <Compile Include="Helper\NumbersToWords.cs" />
+    <Compile Include="Helper\PasswordEncryptionDecryption.cs" />
     <Compile Include="Helper\PhotoManager.cs" />
     <Compile Include="Mapper\UserInRoleMapper.cs" />
     <Compile Include="Mapper\InstallmentDetailsMapper.cs" />
