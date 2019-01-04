@@ -71,7 +71,7 @@
                                             @Html.DisplayFor(modelItem => item.InstallmentNo)
                                         </td>                                       
                                         <td>
-                                            @Html.ActionLink("View Benificiary", "Workflow", "WorkFlow", new { id = item.InstallmentId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                            @Html.ActionLink("View Benificiary", "Workflow", "WorkFlow", new { installmentId = item.InstallmentId }, htmlAttributes: new { @class = "btn btn-primary" })
 
                                         </td>
                                     </tr>

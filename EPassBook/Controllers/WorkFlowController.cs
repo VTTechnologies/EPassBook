@@ -62,21 +62,21 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult Workflow(int id)
+        public ActionResult Workflow(int installmentId)
         {
-            var installmentDetails = _installmentDetailService.GetInstallmentDetailById(id);
+            var installmentDetails = _installmentDetailService.GetInstallmentDetailById(installmentId);
             //var benificiary = _benificiaryService.GetBenificiaryById(1);
             var benficiaryDetail = Mapper.BeneficiaryMapper.Detach(installmentDetails.BenificiaryMaster);
-            benficiaryDetail.installmentId = id;
+            benficiaryDetail.installmentId = installmentId;
             //Session["InstallmentId"] = id;
-            //string rolename = "";
-            //if (Session["UserDetails"] != null)
-            //{
-            //    var user = Session["UserDetails"] as UserViewModel;
-            //    var roleId = user.UserInRoles.Select(s => s.RoleId).FirstOrDefault();
-            //    rolename = Enum.GetName(typeof(Common.WorkFlowStages), roleId);
-            //}
-            //ViewBag.RoleName = rolename;
+            string rolename = "";
+            if (Session["UserDetails"] != null)
+            {
+                var user = Session["UserDetails"] as UserViewModel;
+                var roleId = user.UserInRoles.Select(s => s.RoleId).FirstOrDefault();
+                rolename = Enum.GetName(typeof(Common.WorkFlowStages), roleId);
+            }
+            ViewBag.RoleName = rolename;
             return View(benficiaryDetail);
         }
 
