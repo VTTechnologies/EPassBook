@@ -86,6 +86,7 @@ namespace EPassBook.Mapper
             beneficiaryViewModel.CreatedBy = beneficiaryMaster.CreatedBy;
             beneficiaryViewModel.CreatedDate = DateTime.Now;
             beneficiaryViewModel.CompanyID = beneficiaryMaster.CompanyID;
+            beneficiaryViewModel.BeneficiaryId = beneficiaryMaster.BeneficiaryId;
             return beneficiaryViewModel;
         }
     }

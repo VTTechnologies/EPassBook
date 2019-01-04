@@ -355,9 +355,21 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult DataEntry()
+        public ActionResult DataEntry(int installmentId)
         {
-            return PartialView("_DataEntry", new BeneficiaryViewModel());
+            int beneficiaryId = 0;
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
+            if(installment!=null)
+            {
+                beneficiaryId = installment.BeneficiaryId;
+            }
+            var beneficiary = _benificiaryService.GetBenificiaryById(beneficiaryId);
+            var beneficiaryvm = Mapper.BeneficiaryMapper.Detach(beneficiary);
+
+
+            ViewBag.hsbphoto = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Hasband_Photo;
+            ViewBag.wfphoto = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Wife_Photo;
+            return PartialView("_DataEntry", beneficiaryvm);
         }
 
         [HttpPost]
