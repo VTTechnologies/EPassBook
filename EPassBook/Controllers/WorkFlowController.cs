@@ -612,7 +612,13 @@ namespace EPassBook.Controllers
         public ActionResult WorkStatusDetails(int InstallmentId)
         {
             //since we want all records of installment, so we use same name of intallment as parameter.
-            var beneficiaryId = InstallmentId;
+            int beneficiaryId = 0;
+            var installment = _installmentDetailService.GetInstallmentDetailById(InstallmentId);
+            if (installment != null)
+            {
+                 beneficiaryId = installment.BeneficiaryId;
+            }
+
             List<WorkStatusDetailsViewModel> workstatus = new List<WorkStatusDetailsViewModel>();
             var installments = _installmentDetailService.Get(w=>w.BeneficiaryId==beneficiaryId,null,"").ToList();
 
@@ -622,11 +628,11 @@ namespace EPassBook.Controllers
                 {
                     Installment=s.InstallmentNo==1 ? "First" : s.InstallmentNo == 2 ? "Second" : s.InstallmentNo == 3 ? "Thir" : s.InstallmentNo == 4 ? "Fourth" : s.InstallmentNo == 5 ? "Fifth" : s.InstallmentNo == 6 ? "Sixth-Cum Final" :"",
                     LevelType = s.InstallmentNo == 1 ? "At Plinth Level" : s.InstallmentNo == 2 ? "At Lintel Level" : s.InstallmentNo == 3 ? "At Roof Level" : s.InstallmentNo == 4 ? "For Finishing Completion" : s.InstallmentNo == 5 ? "Level" : s.InstallmentNo == 6 ? "Level":"",
-                    BeneficiaryAmount =s.BeneficiaryAmnt,
-                    CenterAmount=s.IsCentreAmnt==true ? s.LoanAmnt :s.LoanAmnt,
-                    StateAmount = s.IsCentreAmnt == false ? s.LoanAmnt : s.LoanAmnt,
+                    BeneficiaryAmount =s.BeneficiaryAmnt==null ? 0: s.BeneficiaryAmnt,
+                    CenterAmount=s.IsCentreAmnt==null ? 0 : s.IsCentreAmnt == true ? s.LoanAmnt :s.LoanAmnt,
+                    StateAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == false ? s.LoanAmnt : s.LoanAmnt,
                     ULBAmount=0,
-                    TotalAmount=s.BeneficiaryAmnt + s.LoanAmnt,
+                    TotalAmount=s.BeneficiaryAmnt + s.LoanAmnt == null ? 0 : s.BeneficiaryAmnt + s.LoanAmnt,
                 }).ToList();
 
                 ViewBag.GrandTotal= workstatus.Sum(w => w.TotalAmount);
