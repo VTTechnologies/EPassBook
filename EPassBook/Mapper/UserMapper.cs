@@ -15,8 +15,11 @@ namespace EPassBook.Mapper
 
             UserMaster userMaster = new UserMaster();
             userMaster.UserId = userViewModel.UserId;
+            userMaster.FirstName = userViewModel.FirstName;
+            userMaster.LastName = userViewModel.LastName;
             userMaster.UserName = userViewModel.UserName;
-            userMaster.Password = userViewModel.Password;
+            userMaster.Password = userViewModel.DecryptedPass;
+            userMaster.Dob = userViewModel.Dob;
             userMaster.Email = userViewModel.Email;
             userMaster.MobileNo = userViewModel.MobileNo;
             userMaster.Address = userViewModel.Address;
@@ -42,7 +45,7 @@ namespace EPassBook.Mapper
 
             };
 
-            userMaster.UserInRoles = userViewModel.UserInRoles.Select(s => new UserInRole { id = s.id, RoleId = s.RoleId, UserId = s.UserId }).ToList();           
+            userMaster.UserInRoles = userViewModel.UserInRoles == null ? null : userViewModel.UserInRoles.Select(s => new UserInRole { id = s.id, RoleId = s.RoleId, UserId = s.UserId }).ToList();
 
             userMaster.IsReset = userViewModel.IsReset;       
         
