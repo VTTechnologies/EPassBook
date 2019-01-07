@@ -311,6 +311,7 @@ namespace EPassBook.Controllers
                     signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
                     signing.Sign = true;
                     signing.CreatedDate = DateTime.Now;
+                    signing.CreatedBy = user.UserName;
                     signing.CompanyID = user.CompanyID;
 
                     // Applying changes to database tables
@@ -441,6 +442,7 @@ namespace EPassBook.Controllers
                 signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
                 signing.Sign = true;
                 signing.CreatedDate = DateTime.Now;
+                signing.CreatedBy = user.UserName;
                 signing.CompanyID = user.CompanyID;
 
                 // Applying changes to database tables
@@ -518,6 +520,7 @@ namespace EPassBook.Controllers
                 signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
                 signing.Sign = true;
                 signing.CreatedDate = DateTime.Now;
+                signing.CreatedBy = user.UserName;
                 signing.CompanyID = user.CompanyID;
 
                 // Applying changes to database tables
@@ -595,6 +598,7 @@ namespace EPassBook.Controllers
                 signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
                 signing.Sign = true;
                 signing.CreatedDate = DateTime.Now;
+                signing.CreatedBy = user.UserName;
                 signing.CompanyID = user.CompanyID;
 
                 // Applying changes to database tables

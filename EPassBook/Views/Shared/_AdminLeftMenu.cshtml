@@ -16,7 +16,8 @@
         <ul class="sidebar-menu" data-widget="tree">
             @*<li class="header">MAIN NAVIGATION</li>*@
             <li class="@Html.IsSelected(controller: "Dashboard")">
-                <a href="@Url.Action("Dashboard", "Dashboard")">
+                <a href="@Url.Action("Index", "WorkFlow")">
+                    
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>                  
                 </a>             
             <li class="@Html.IsSelected(controller: "User")">
