@@ -306,7 +306,7 @@
 }
 else
 {
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         window.onload = function () {
 
             debugger;
@@ -324,12 +324,26 @@ else
                 $('#firstDiv').show();
             }
         };
-    </script>
+    </script>*@
 }
 
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+            var check = '@Model.IsRecommended';
+            //TODO
+            check = check.toLowerCase();
+            if (check == 'true')
+            {
+                $('#secondDiv').show();
+                $('#firstDiv').hide();
+            }
+            else
+            {
+                $('#secondDiv').hide();
+                $('#firstDiv').show();
+            }
 
         $(".selectpicker").change(function () {
             var countries = [];

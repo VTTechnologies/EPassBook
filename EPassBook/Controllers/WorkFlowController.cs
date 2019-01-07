@@ -136,7 +136,7 @@ namespace EPassBook.Controllers
                     accountDetailsVM.IFSCCode = benificiaryDetails.IFSCCode;
                     accountDetailsVM.AccountNo = benificiaryDetails.AccountNo.ToString();
                     accountDetailsVM.LoanAmtInRupees = accountDetailsVM.LoanAmnt.ConvertNumbertoWords();
-                    
+
                     return View("_Accountant", accountDetailsVM);
                 }
             }
@@ -212,7 +212,7 @@ namespace EPassBook.Controllers
                     installmentRejection.CreatedDate = DateTime.Now;
                     installmentRejection.CreatedBy = user.UserName;
                     installmentRejection.CompanyID = user.CompanyID;
-                    
+
                     //add data into installmentDetails table
                     installment.IsRecommended = false;
                     installment.StageID = Convert.ToInt32(Common.WorkFlowStages.Rejected);
@@ -334,23 +334,24 @@ namespace EPassBook.Controllers
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult SurveyDetails(int installmentId)
-        {            
-                IEnumerable<sp_GetSurveyDetailsByBenID_Result> commentlist = _icommentService.GetSurveyDetailsByBenificiaryID(installmentId);
+        {
+            var BeniId = _icommentService.Get().Where(i => i.InstallementId == installmentId).Select(b => b.BeneficiaryId).FirstOrDefault();
+            IEnumerable<sp_GetSurveyDetailsByBenID_Result> commentlist = _icommentService.GetSurveyDetailsByBenificiaryID(BeniId);
 
-                var mappedCommentList = commentlist.Select(s => new SurveyDetailsModel
-                {
-                    BeneficiaryId = s.BeneficiaryId,
-                    Comments = s.Comments,
-                    UserName = s.UserName,
-                    CreatedDate = s.CreatedDate,
-                    MobileNo = s.MobileNo,
-                    Sign =Convert.ToBoolean(s.Sign),
-                    Physical_Progress = s.Physical_Progress
+            var mappedCommentList = commentlist.Select(s => new SurveyDetailsModel
+            {
+                BeneficiaryId = s.BeneficiaryId,
+                Comments = s.Comments,
+                UserName = s.UserName,
+                CreatedDate = s.CreatedDate,
+                MobileNo = s.MobileNo,
+                Sign = Convert.ToBoolean(s.Sign),
+                Physical_Progress = s.Physical_Progress
 
-                }).ToList();
+            }).ToList();
 
-                return PartialView("_SurveyDetails", mappedCommentList);
-            
+            return PartialView("_SurveyDetails", mappedCommentList);
+
         }
 
         [HttpGet]
@@ -359,7 +360,7 @@ namespace EPassBook.Controllers
         {
             int beneficiaryId = 0;
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
-            if(installment!=null)
+            if (installment != null)
             {
                 beneficiaryId = installment.BeneficiaryId;
             }
@@ -399,7 +400,7 @@ namespace EPassBook.Controllers
             installmentviewmodel._Comments = null;
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
-            if(installmentviewmodel.lInRupees == "ZERO")
+            if (installmentviewmodel.lInRupees == "ZERO")
             {
                 installmentviewmodel.lInRupees = null;
             }
@@ -467,7 +468,7 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult CityEngineer(int InstallmentId )
+        public ActionResult CityEngineer(int InstallmentId)
         {
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
             var installment = _installmentDetailService.GetInstallmentDetailById(InstallmentId);
@@ -628,26 +629,28 @@ namespace EPassBook.Controllers
             var installment = _installmentDetailService.GetInstallmentDetailById(InstallmentId);
             if (installment != null)
             {
-                 beneficiaryId = installment.BeneficiaryId;
+                beneficiaryId = installment.BeneficiaryId;
             }
 
             List<WorkStatusDetailsViewModel> workstatus = new List<WorkStatusDetailsViewModel>();
-            var installments = _installmentDetailService.Get(w=>w.BeneficiaryId==beneficiaryId,null,"").ToList();
+            var installments = _installmentDetailService.Get(w => w.BeneficiaryId == beneficiaryId, null, "").ToList();
 
             if (installments != null)
             {
-                workstatus= installments.Select(s => new WorkStatusDetailsViewModel
+                workstatus = installments.Select(s => new WorkStatusDetailsViewModel
                 {
-                    Installment=s.InstallmentNo==1 ? "First" : s.InstallmentNo == 2 ? "Second" : s.InstallmentNo == 3 ? "Thir" : s.InstallmentNo == 4 ? "Fourth" : s.InstallmentNo == 5 ? "Fifth" : s.InstallmentNo == 6 ? "Sixth-Cum Final" :"",
-                    LevelType = s.InstallmentNo == 1 ? "At Plinth Level" : s.InstallmentNo == 2 ? "At Lintel Level" : s.InstallmentNo == 3 ? "At Roof Level" : s.InstallmentNo == 4 ? "For Finishing Completion" : s.InstallmentNo == 5 ? "Level" : s.InstallmentNo == 6 ? "Level":"",
-                    BeneficiaryAmount =s.BeneficiaryAmnt==null ? 0: s.BeneficiaryAmnt,
-                    CenterAmount=s.IsCentreAmnt==null ? 0 : s.IsCentreAmnt == true ? s.LoanAmnt :s.LoanAmnt,
-                    StateAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == false ? s.LoanAmnt : s.LoanAmnt,
-                    ULBAmount=0,
-                    TotalAmount=s.BeneficiaryAmnt + s.LoanAmnt == null ? 0 : s.BeneficiaryAmnt + s.LoanAmnt,
+                    Installment = s.InstallmentNo == 1 ? "First" : s.InstallmentNo == 2 ? "Second" : s.InstallmentNo == 3 ? "Thir" : s.InstallmentNo == 4 ? "Fourth" : s.InstallmentNo == 5 ? "Fifth" : s.InstallmentNo == 6 ? "Sixth-Cum Final" : "",
+                    LevelType = s.InstallmentNo == 1 ? "At Plinth Level" : s.InstallmentNo == 2 ? "At Lintel Level" : s.InstallmentNo == 3 ? "At Roof Level" : s.InstallmentNo == 4 ? "For Finishing Completion" : s.InstallmentNo == 5 ? "Level" : s.InstallmentNo == 6 ? "Level" : "",
+                    BeneficiaryAmount = s.BeneficiaryAmnt == null ? 0 : s.BeneficiaryAmnt,
+                    //CenterAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == true ? s.LoanAmnt : s.LoanAmnt,
+                    //StateAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == false ? s.LoanAmnt : s.LoanAmnt,
+                    CenterAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == true ? s.LoanAmnt : 0,
+                    StateAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == false ? s.LoanAmnt : 0,
+                    ULBAmount = 0,
+                    TotalAmount = s.BeneficiaryAmnt + s.LoanAmnt == null ? 0 : s.BeneficiaryAmnt + s.LoanAmnt,
                 }).ToList();
 
-                ViewBag.GrandTotal= workstatus.Sum(w => w.TotalAmount);
+                ViewBag.GrandTotal = workstatus.Sum(w => w.TotalAmount);
             }
 
             return PartialView("_WorkStatusDetails", workstatus);

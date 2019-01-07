@@ -12,9 +12,8 @@
                         <table id="surveyDetails" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>BeniId</th>
-                                    <th>Sr.No</th>
+                                    @*<th>Sr.No</th>*@
+                                    <th class="hidden">Beneficiary Id</th>
                                     <th>Date</th>
                                     <th>Name of the Surveyer</th>
                                     <th>Mobile</th>
@@ -27,10 +26,9 @@
                                 @foreach (var items in Model)
                                 {
                                     <tr>
-                                        <td>@items.BeneficiaryId</td>
-                                        <td>@items.BeneficiaryId</td>
-                                        <td>1</td>
-                                        <td>@items.CreatedDate</td>
+                                        @*<td>1</td>*@
+                                        <td class="hidden">@items.BeneficiaryId</td>
+                                        <td>@items.CreatedDate.Value.ToString("dd MMM yyyy")</td>
                                         <td>@items.UserName</td>
                                         <td>@items.MobileNo</td>
                                         <td>@items.Physical_Progress</td>
