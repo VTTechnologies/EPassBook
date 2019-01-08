@@ -43,7 +43,7 @@ namespace EPassBook.DAL.Service
         public void Add(BenificiaryMaster benificiary)
         {
             benificiaryMasterRepository.Add(benificiary);
-        }       
+        }
 
         public void SaveChanges()
         {
@@ -62,7 +62,7 @@ namespace EPassBook.DAL.Service
 
         public BenificiaryMaster AuthenticateBeneficiary(long? userName, string password)
         {
-            return benificiaryMasterRepository.GetAll().Where(w=>w.AdharNo==userName &&  w.Password==password).FirstOrDefault();
+            return benificiaryMasterRepository.GetAll().Where(w => w.AdharNo == userName && w.Password == password).FirstOrDefault();
         }
     }
 }

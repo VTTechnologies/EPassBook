@@ -285,10 +285,11 @@ namespace EPassBook.Controllers
                 !String.IsNullOrWhiteSpace(lName) && fName.Length >= 1 ? lName.Substring(0, 1) : lName;
 
             var password = firstCharOfFname + firstCharOfLname + mobileNo;
-
+            password = password.Encrypt();
+            userVM.IsActive = true;
             userVM.UserName = userName;
             userVM.DecryptedPass = password;
-            userVM.UserInRoles = new List<UserInRoleViewModel>();            
+            userVM.UserInRoles = new List<UserInRoleViewModel>();
             userVM.UserInRoles.Add(new UserInRoleViewModel() { RoleId= userVM.RoleId });
             var userData = Mapper.UserMapper.Attach(userVM);
             _userService.Add(userData);
@@ -307,7 +308,8 @@ namespace EPassBook.Controllers
             {
                 UserId = s.UserId,
                 UserName = s.UserName,
-                Password = s.Password,
+                Password = s.Password, //delete this after database cleaned
+                //Password = s.Password.Decrypt(), //uncomment after database cleaned
                 Email = s.Email,
                 Address=s.Address,
                 MobileNo = Convert.ToString(s.MobileNo),
@@ -393,6 +395,7 @@ namespace EPassBook.Controllers
             var users = _userService.Get(u => u.UserId == id).FirstOrDefault();
             var userModel = Mapper.UserMapper.Detach(users);
             userModel.RoleName = users.UserInRoles.Select(u => u.RoleMaster.RoleName).FirstOrDefault();
+            //userModel.Password = userModel.Password.Decrypt(); //uncomment this after databas cleaned
             return View(userModel);
         }
         [HttpGet]

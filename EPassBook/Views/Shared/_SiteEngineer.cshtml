@@ -2,7 +2,7 @@
 @{
     if (ViewBag.Message != null)
     {
-       // Layout = "~/Views/Shared/_Layout.cshtml";
+        // Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
 <style>
@@ -284,11 +284,11 @@
         </div>
     </section>
 </div>
+
 @if (!EPassBook.Helper.AuthorizationForView.IsAuthorize(EPassBook.Helper.Common.SiteEngineer))
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            debugger;
             $('#siteengineer').find(':input').prop('disabled', true);
         });
     </script>
@@ -305,8 +305,7 @@
     </script>
 }
 
-
-    <script type="text/javascript">
+<script type="text/javascript">
 
     $(document).ready(function () {
 
@@ -336,7 +335,6 @@
 
         $("#recommend").click(function ()
         {
-            debugger;
             var comment = $("#txtFirstComment").val();
             var installmentId=@Model.InstallmentId;
             if (comment == '') {
@@ -346,7 +344,6 @@
             var installmentDetailViewModel = {};
             installmentDetailViewModel.FirstComment = comment;
             installmentDetailViewModel.installmentId = installmentId;
-            debugger;
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
@@ -376,9 +373,7 @@
                 })
             });
         });
-
         $("#reject").click(function () {
-            debugger;
             var comment = $("#txtFirstComment").val();
             var installmentId = @Model.InstallmentId;
             if (comment == '') {
@@ -527,4 +522,4 @@
 
     }
 
-    </script>
+</script>

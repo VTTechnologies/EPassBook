@@ -23,11 +23,12 @@ namespace EPassBook.Controllers
         public ActionResult Index()
         {
             var beneficiaries = _benificiaryService.GetAllBenificiaries();
-            var beneficiaryviewmodel = beneficiaries.Select(s => new BeneficiaryViewModel { 
+            var beneficiaryviewmodel = beneficiaries.Select(s => new BeneficiaryViewModel
+            {
                 BeneficiaryId = s.BeneficiaryId,
                 BeneficairyName = s.BeneficairyName,
                 AdharNo = s.AdharNo,
-                MobileNo=s.MobileNo
+                MobileNo = s.MobileNo
             }).ToList();
             return View(beneficiaryviewmodel);
         }
@@ -60,18 +61,18 @@ namespace EPassBook.Controllers
                 beneficiaryViewModel.Wife_Photo = wphoto; //PhotoManager.ConvertToBytes(wifephoto);
                 beneficiaryViewModel.CreatedBy = user.UserName;
                 var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
-                
+
                 _benificiaryService.Add(insertbeneficiary);
                 _benificiaryService.SaveChanges();
 
                 ViewBag.Message = "sussess message";
-                
+
                 //return RedirectToAction("Index");
 
             }
             catch
             {
-                
+
             }
             return View();
         }
@@ -82,7 +83,7 @@ namespace EPassBook.Controllers
             BeneficiaryViewModel beneficiaryViewModel = new BeneficiaryViewModel();
             var beneficiarybyid = _benificiaryService.GetBenificiaryById(id);
             var beneficiaryvm = Mapper.BeneficiaryMapper.Detach(beneficiarybyid);
-            
+
 
             ViewBag.hsbphoto = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Hasband_Photo;
             ViewBag.wfphoto = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Wife_Photo;
@@ -119,25 +120,22 @@ namespace EPassBook.Controllers
         }
 
         // GET: Beneficiary/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
         // POST: Beneficiary/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpGet]
+        public ActionResult Delete(int id)
         {
-            try
+            if (id > 0 || !string.IsNullOrWhiteSpace(id.ToString()))
             {
-                // TODO: Add delete logic here
-
+                _benificiaryService.Delete(id);
+                _benificiaryService.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }

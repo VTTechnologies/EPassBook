@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<EPassBook.Models.BeneficiaryViewModel>
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Index";
-                //Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="content-wrapper">
     <section class="content-header">
@@ -241,9 +241,11 @@
                                         </td>*@
                                     <td>
                                         @Html.ActionLink("Edit", "Edit", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-primary" })
-                                        @Html.ActionLink("Details", "Details", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-success" })
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-danger" })
+                                        @*@Html.ActionLink("Details", "Details", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-success" })*@
+                                        @*@Html.ActionLink("Delete", "Delete", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-danger" })*@
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.BeneficiaryId }, new { onclick = "return Confirm('" + @item.BeneficiaryId + "');", @class = "btn alert-danger" })
                                     </td>
+
                                 </tr>
 
                             }
@@ -257,7 +259,86 @@
     </section>
 </div>
 
+@*modal*@
+<div class="modal fade" tabindex="-1" id="AlertModal"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <p id="AlertMessage"></p>
+                        <label id="IdForDelete" style="display:none"></label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" id="footer">
+                <button type="button" id="btnOk" class="btn btn-primary button button4" onclick="ReloadPage()">
+                    Ok
+                </button>
+                <button type="button" id="btnYes" class="btn btn-primary button button4">
+                    Yes
+                </button>
+                <button type="button" id="btnNo" class="btn btn-danger button button4">
+                    No
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
+
+    
+        function ReloadPage() {
+            window.location = '@Url.Action("Index")';
+        }
+
+    function Confirm(id) {
+            debugger;
+            $("#AlertMessage").text("Are you sure you wish to delete this user?");
+        $("#IdForDelete").val(id);
+        $("#btnOk").hide();
+        $("#AlertModal").modal('show');
+            return false
+        }
+
+        $("#btnYes").click(function () {
+            var label = $("#IdForDelete");
+            var id = label.val();
+            $("#AlertModal").modal('hide');
+            var url = '@Url.Action("Delete", "Beneficiary")';
+            var data = { id: id };
+            $.ajax(
+                {
+                    type: "GET",
+                    url: url,
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                        $("#AlertMessage").text("User deleted successfully");
+                        $("#btnNo").hide();
+                        $("#btnYes").hide();
+                        $("#btnOk").show();
+                        $("#AlertModal").modal('show');
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+        });
+
+        $("#btnNo").click(function () {
+            $("#AlertModal").modal('hide');
+    });
+
     $(document).ready(function () {
         $('#beneficiarylist').dataTable();
     });
