@@ -24,6 +24,7 @@ namespace EPassBook
             bundles.Add(new ScriptBundle("~/bundles/lib")
               .Include(ltecomponents + "jquery-ui/jquery-ui.min.js")
               .Include(ltecomponents + "bootstrap/dist/js/bootstrap.min.js")
+              .Include(ltecomponents + "bootstrap/dist/js/bootstrap-select.js")
               .Include(ltecomponents + "raphael/raphael.min.js")
               .Include(ltecomponents + "morris.js/morris.min.js")
               .Include(ltecomponents + "chart.js/Chart.min.js")
@@ -68,8 +69,8 @@ namespace EPassBook
             //          "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css")
-               .Include("~/Content/bootstrap.css")
                .Include(ltecomponents + "bootstrap/dist/css/bootstrap.min.css")
+               .Include(ltecomponents + "bootstrap/dist/css/bootstrap-select.css")
                .Include(ltecomponents + "font-awesome/css/font-awesome.min.css")
                .Include(ltecomponents + "Ionicons/css/ionicons.min.css")
                .Include(ltecomponents + "datatables.net-bs/css/dataTables.bootstrap.min.css")
