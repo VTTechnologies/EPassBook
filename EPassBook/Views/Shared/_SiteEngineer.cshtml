@@ -2,7 +2,7 @@
 @{
     if (ViewBag.Message != null)
     {
-        Layout = "~/Views/Shared/_Layout.cshtml";
+       // Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
 <style>
@@ -11,8 +11,8 @@
     }
 </style>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>*@
 
 <div id="siteengineer">
 
@@ -330,7 +330,7 @@ else
 <script type="text/javascript">
 
     $(document).ready(function () {
-
+        $('select').selectpicker();
         $(".selectpicker").change(function () {
             var countries = [];
             $.each($(".selectpicker option:selected"), function () {

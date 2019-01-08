@@ -454,6 +454,7 @@
     <Content Include="Content\adminlte\img\user6-128x128.jpg" />
     <Content Include="Content\adminlte\img\user7-128x128.jpg" />
     <Content Include="Content\adminlte\img\user8-128x128.jpg" />
+    <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Error.css" />
@@ -602,11 +603,13 @@
     <Content Include="Scripts\adminlte\components\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Scripts\adminlte\components\bootstrap-slider\slider.css" />
     <Content Include="Scripts\adminlte\components\bootstrap-timepicker\js\bootstrap-timepicker.js" />
+    <Content Include="Scripts\adminlte\components\bootstrap\dist\css\bootstrap-select.css" />
     <Content Include="Scripts\adminlte\components\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="Scripts\adminlte\components\bootstrap\dist\css\bootstrap-theme.min.css" />
     <Content Include="Scripts\adminlte\components\bootstrap\dist\css\bootstrap.css" />
     <Content Include="Scripts\adminlte\components\bootstrap\dist\css\bootstrap.min.css" />
     <Content Include="Scripts\adminlte\components\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\adminlte\components\bootstrap\dist\js\bootstrap-select.js" />
     <Content Include="Scripts\adminlte\components\bootstrap\dist\js\bootstrap.js" />
     <Content Include="Scripts\adminlte\components\bootstrap\dist\js\bootstrap.min.js" />
     <Content Include="Scripts\adminlte\components\bootstrap\dist\js\npm.js" />
@@ -4331,6 +4334,7 @@
     <Content Include="Scripts\adminlte\plugins\timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
