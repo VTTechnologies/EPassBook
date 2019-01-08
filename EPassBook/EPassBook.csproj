@@ -494,6 +494,7 @@
     <Content Include="Content\Landingpagecss\style.css" />
     <Content Include="Content\img\text.png" />
     <Content Include="Content\LeftMenu.css" />
+    <Content Include="Content\select.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -4397,6 +4398,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\MailBody.html" />
