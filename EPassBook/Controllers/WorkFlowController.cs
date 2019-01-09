@@ -115,7 +115,7 @@ namespace EPassBook.Controllers
                 instSigning.CreatedBy = user.UserName;
                 instSigning.CompanyID = user.CompanyID;
 
-                installmentDetail.TransactionID = Convert.ToDecimal(accountDetailsVM.TransactionId);
+                installmentDetail.TransactionID = accountDetailsVM.TransactionId;
                 installmentDetail.ModifiedBy = user.UserName;
                 installmentDetail.ModifiedDate = DateTime.Now;
                 installmentDetail.StageID = (int)Common.WorkFlowStages.Accountant;
