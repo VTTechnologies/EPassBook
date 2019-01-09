@@ -118,7 +118,7 @@ namespace EPassBook.Controllers
                 installmentDetail.TransactionID = Convert.ToDecimal(accountDetailsVM.TransactionId);
                 installmentDetail.ModifiedBy = user.UserName;
                 installmentDetail.ModifiedDate = DateTime.Now;
-                installmentDetail.StageID = (int)Common.WorkFlowStages.LastChiefOfficer;
+                installmentDetail.StageID = (int)Common.WorkFlowStages.Accountant;
 
                 if (ModelState.IsValid)
                 {
@@ -278,7 +278,7 @@ namespace EPassBook.Controllers
                     installment.LoanAmnt = installmentDetailViewModel.LoanAmnt;
                     installment.IsCentreAmnt = iscenter;
                     installment.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
-                    installment.StageID = (int)Common.WorkFlowStages.ProjectEngineer;
+                    installment.StageID = (int)Common.WorkFlowStages.SiteEngineer;
                     installment.InstallmentNo = installmentDetailViewModel.InstallmentNo;
                     installment.ModifiedDate = DateTime.Now;
 
@@ -424,7 +424,7 @@ namespace EPassBook.Controllers
             {
                 var user = Session["UserDetails"] as UserViewModel;
                 installment.ModifiedBy = user.UserName;
-                installment.StageID = (int)Common.WorkFlowStages.CityEngineer;
+                installment.StageID = (int)Common.WorkFlowStages.ProjectEngineer;
                 installment.ModifiedDate = DateTime.Now;
 
                 // Insert reocrd in comment table 
@@ -502,7 +502,7 @@ namespace EPassBook.Controllers
             {
                 var user = Session["UserDetails"] as UserViewModel;
                 installment.ModifiedBy = user.UserName;
-                installment.StageID = (int)Common.WorkFlowStages.ChiefOfficer;
+                installment.StageID = (int)Common.WorkFlowStages.CityEngineer;
                 installment.ModifiedDate = DateTime.Now;
 
                 // Insert reocrd in comment table 
@@ -574,52 +574,62 @@ namespace EPassBook.Controllers
         {
 
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
-            //if (ModelState.IsValid)
-            //{
-            if (Session["UserDetails"] != null)
+            if (installment != null)
             {
-                var user = Session["UserDetails"] as UserViewModel;
-                installment.ModifiedBy = user.UserName;
-                installment.StageID = (int)Common.WorkFlowStages.Accountant;
-                installment.ModifiedDate = DateTime.Now;
+                if (Session["UserDetails"] != null)
+                {
+                    var user = Session["UserDetails"] as UserViewModel;
 
-                // Insert reocrd in comment table 
-                var comments = new Comment();
-                comments.Comments = installmentDetailViewModel._Comments;
-                comments.CreatedBy = user.UserName;
-                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
-                comments.CreatedDate = DateTime.Now;
-                comments.CompanyID = user.CompanyID;
+                    if(installment.StageID== (int)Common.WorkFlowStages.Accountant)
+                    {
 
-                // Insert reocrd in GeoTaggingDetail table 
-                var signing = new InstallmentSigning();
-                signing.InstallmentId = installmentDetailViewModel.InstallmentId;
-                signing.UserId = user.UserId;
-                signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
-                signing.Sign = true;
-                signing.CreatedDate = DateTime.Now;
-                signing.CreatedBy = user.UserName;
-                signing.CompanyID = user.CompanyID;
+                        installment.IsCompleted = true;
+                        installment.StageID = (int)Common.WorkFlowStages.LastChiefOfficer;
+                    }
+                    else
+                    {
+                        installment.StageID = (int)Common.WorkFlowStages.ChiefOfficer;
+                    }
+                    installment.ModifiedBy = user.UserName;                   
+                    installment.ModifiedDate = DateTime.Now;
 
-                // Applying changes to database tables
-                installment.Comments.Add(comments);
+                    // Insert reocrd in comment table 
+                    var comments = new Comment();
+                    comments.Comments = installmentDetailViewModel._Comments;
+                    comments.CreatedBy = user.UserName;
+                    comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    comments.CreatedDate = DateTime.Now;
+                    comments.CompanyID = user.CompanyID;
 
-                installment.InstallmentSignings.Add(signing);
-                _installmentDetailService.Update(installment);
+                    // Insert reocrd in GeoTaggingDetail table 
+                    var signing = new InstallmentSigning();
+                    signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                    signing.UserId = user.UserId;
+                    signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                    signing.Sign = true;
+                    signing.CreatedDate = DateTime.Now;
+                    signing.CreatedBy = user.UserName;
+                    signing.CompanyID = user.CompanyID;
+
+                    // Applying changes to database tables
+                    installment.Comments.Add(comments);
+
+                    installment.InstallmentSignings.Add(signing);
+                    _installmentDetailService.Update(installment);
 
 
-                _installmentDetailService.SaveChanges();
+                    _installmentDetailService.SaveChanges();
 
-                Session["InstallmentId"] = null;
-                ViewBag.Message = "sussess message";
+                    Session["InstallmentId"] = null;
+                    ViewBag.Message = "sussess message";
 
-                installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
-                installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
-                installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
+                    installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
+                    installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
+                    installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
 
-                //return RedirectToAction("Index", "WorkFlow");
+                    //return RedirectToAction("Index", "WorkFlow");
+                }
             }
-            //}
 
             return PartialView("_ChiefOfficer", installmentDetailViewModel);
         }
