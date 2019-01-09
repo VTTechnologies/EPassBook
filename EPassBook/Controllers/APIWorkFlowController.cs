@@ -1,4 +1,5 @@
 ﻿using EPassBook.DAL.IService;
+using EPassBook.Helper;
 using EPassBook.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using static EPassBook.Helper.Common;
 
 namespace EPassBook.Controllers
 {
+    [ElmahError]
     [RoutePrefix("api/Workflow")]
     public class APIWorkFlowController : ApiController
     {

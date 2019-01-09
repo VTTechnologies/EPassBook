@@ -13,7 +13,7 @@
           <Property Name="BeneficairyName" Type="nvarchar" MaxLength="150" />
           <Property Name="FatherName" Type="nvarchar" MaxLength="150" />
           <Property Name="Mother" Type="nvarchar" MaxLength="150" />
-          <Property Name="MobileNo" Type="nvarchar(max)" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="15" />
           <Property Name="PresentAddress" Type="nvarchar" MaxLength="350" />
           <Property Name="CityId" Type="int" />
           <Property Name="DTRNo" Type="nvarchar(max)" />
@@ -168,7 +168,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CompanyID" Type="int" />
-          <Property Name="TransactionID" Type="numeric" Precision="20" Scale="0" />
+          <Property Name="TransactionID" Type="nvarchar" MaxLength="150" />
           <Property Name="IsRecommended" Type="bit" />
         </EntityType>
         <EntityType Name="InstallmentDetailsHistory">
@@ -190,6 +190,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CompanyID" Type="int" />
+          <Property Name="TransactionID" Type="nvarchar" MaxLength="150" />
           <Property Name="IsRecommended" Type="bit" />
         </EntityType>
         <EntityType Name="InstallmentRejection">
@@ -1022,7 +1023,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="BeneficairyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="FatherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Mother" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="PresentAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
           <Property Name="CityId" Type="Int32" />
           <Property Name="DTRNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1172,7 +1173,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CompanyID" Type="Int32" />
-          <Property Name="TransactionID" Type="Decimal" Precision="20" Scale="0" />
+          <Property Name="TransactionID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="IsRecommended" Type="Boolean" />
           <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster" FromRole="InstallmentDetail" ToRole="BenificiaryMaster" />
           <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_InstallmentDetails" FromRole="InstallmentDetail" ToRole="Comment" />
@@ -1199,6 +1200,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CompanyID" Type="Int32" />
+          <Property Name="TransactionID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="IsRecommended" Type="Boolean" />
         </EntityType>
         <EntityType Name="InstallmentRejection">
@@ -1857,6 +1859,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetailsHistory">
               <MappingFragment StoreEntitySet="InstallmentDetailsHistory">
                 <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
