@@ -114,7 +114,16 @@
     <Compile Include="DBModel\sp_GetSurveyDetailsByBenID_Result.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBModel\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\sp_helpdiagrams_Result.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBModel\StageInRole.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\sysdiagram.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DBModel\UserInRole.cs">

@@ -19,7 +19,7 @@ namespace EPassBook.Models
         public string MobileNo { get; set; }
         public string PresentAddress { get; set; }
         public Nullable<int> CityId { get; set; }
-        public Nullable<int> DTRNo { get; set; }
+        public string DTRNo { get; set; }
         public Nullable<long> RecordNo { get; set; }
         public string Class { get; set; }
         public string General { get; set; }
@@ -43,7 +43,7 @@ namespace EPassBook.Models
         [Required(ErrorMessage = "IFSC Code is required.")]
         public string IFSCCode { get; set; }
         [Required(ErrorMessage = "Account No is required.")]
-        public Nullable<long> AccountNo { get; set; }
+        public string AccountNo { get; set; }
         public string Hasband_Photo { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string CreatedBy { get; set; }
