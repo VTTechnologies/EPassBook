@@ -30,7 +30,7 @@ namespace EPassBook.DAL.DBModel
         public string MobileNo { get; set; }
         public string PresentAddress { get; set; }
         public Nullable<int> CityId { get; set; }
-        public Nullable<int> DTRNo { get; set; }
+        public string DTRNo { get; set; }
         public Nullable<long> RecordNo { get; set; }
         public string Class { get; set; }
         public string General { get; set; }
@@ -50,7 +50,7 @@ namespace EPassBook.DAL.DBModel
         public string BankName { get; set; }
         public string BranchName { get; set; }
         public string IFSCCode { get; set; }
-        public Nullable<long> AccountNo { get; set; }
+        public string AccountNo { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }

@@ -8,3 +8,4 @@
 /EPassBook/libman.json
 *.JPG
 /EPassBook/obj/Debug
+/EPassBook.DAL/DBModel

@@ -23,6 +23,9 @@ namespace EPassBook.DAL.DBModel
         }
     
         public int UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public Nullable<System.DateTime> Dob { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
@@ -33,9 +36,6 @@ namespace EPassBook.DAL.DBModel
         public Nullable<int> CityId { get; set; }
         public Nullable<int> CompanyID { get; set; }
         public Nullable<bool> IsReset { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public Nullable<System.DateTime> Dob { get; set; }
     
         public virtual CityMaster CityMaster { get; set; }
         public virtual CompanyMaster CompanyMaster { get; set; }
