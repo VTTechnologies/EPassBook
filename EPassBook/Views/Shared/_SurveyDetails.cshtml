@@ -15,6 +15,7 @@
                                     @*<th>Beneficiary Id</th>*@
                                     <th>Date</th>
                                     <th>Name of the Surveyer</th>
+                                    <th>Role</th>
                                     <th>Mobile</th>
                                     <th>Physical Progress</th>
                                     <th>Instruction/Suggestion</th>
@@ -24,15 +25,16 @@
                             <tbody>
                                 @foreach (var items in Model)
                                 {
-                                    <tr>
-                                        @*<td>@items.BeneficiaryId</td>*@
-                                        <td>@items.CreatedDate.Value.ToString("dd MMM yyyy")</td>
-                                        <td>@items.UserName</td>
-                                        <td>@items.MobileNo</td>
-                                        <td>@items.Physical_Progress</td>
-                                        <td>@items.Comments</td>
-                                        <td>@Html.CheckBoxFor(m => items.Sign, new { @disabled = "disabled" })</td>
-                                    </tr>
+                                <tr>
+                                    @*<td>@items.BeneficiaryId</td>*@
+                                    <td>@items.CreatedDate.Value.ToString("dd MMM yyyy")</td>
+                                    <td>@items.UserName</td>
+                                    <th>RoleName</th>
+                                    <td>@items.MobileNo</td>
+                                    <td>@items.Physical_Progress</td>
+                                    <td>@items.Comments</td>
+                                    <td>@Html.CheckBoxFor(m => items.Sign, new { @disabled = "disabled" })</td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
