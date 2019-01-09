@@ -2,77 +2,60 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+
+
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
 
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
 </head>
-<body>
-    <div class="container">
-        <div class="page-header">
-            <h2 style="color:black">E-Pass Book</h2>
-        </div>
-        @*<div class="navbar-header" style="background-color:#2e6677">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>*@
-    </div>
-    @*<div class="navbar-collapse collapse" style="background-color:#2e6677">
 
-            <ul class="nav navbar-nav">
-                <li><a id="btnDataEntry">Data Entry</a></li>
-                <li><a id="btnDetails">User Request</a></li>
-                <li><a id="btncityhead">City Head</a></li>
-                <li><a>Project Manager</a></li>
-                <li><a>City Engineer</a></li>
-                <li><a>Chief Officer</a></li>
-                <li><a>Accountant</a></li>
-            </ul>
-        </div>*@
+<body class="hold-transition skin-blue layout-top-nav">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="@Url.Action("Index", "WorkFlow")" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>E</b>Book</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>E </b>PassBook</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <div class="container pull-right">
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <!-- User Account: style can be found in dropdown.less -->
+                            <li class="dropdown user user-menu ">
+                                <a href="#" id="signout" class="dropdown-toggle" data-toggle="dropdown">
+                                    Sign Out
+                                </a>
 
-    <div class="container body-content">
-        @RenderBody()
-        <div id="BeneficiaryResult">
-        </div>
-        @*<hr />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+                            @RenderBody()
+                            @Html.Partial("_Footer")
+                            <div class="control-sidebar-bg"></div>
+                    </div>
 
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>*@
-    </div>
+                    @Scripts.Render("~/bundles/lib")
 
+                    @RenderSection("scripts", required: false)
 
-    
-    @RenderSection("scripts", required: false)
-    @* <script>
-                var url = '@Url.Action("Beneficiary", "Home")';
-                $('#btnDataEntry').click(function ()
-                {
-                alert();
-                    //var keyWord = $('#Keyword').val();
-                    $('#BeneficiaryResult').load(url);
-            })
-
-            var url = '@Url.Action("_InstallmentDetails", "Home")';
-            $('#btnDetails').click(function ()
-                {
-                    $('#BeneficiaryResult').load(url);
-            })
-
-            var url = '@Url.Action("_CityHead", "Home")';
-            $('#btnDetails').click(function ()
-                {
-
-                $('#Usersubmits').load(url);
-            })
-
-        //Usersubmits
-        </script>*@
 </body>
 </html>
+
+<script type="text/javascript">$('#signout').on('click', function () {
+        window.location.href = "/User/SignOut/";
+    });</script>

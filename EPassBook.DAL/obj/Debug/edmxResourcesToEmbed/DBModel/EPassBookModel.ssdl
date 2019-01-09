@@ -185,6 +185,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="CompanyID" Type="int" />
+    <Property Name="IsRecommended" Type="bit" />
   </EntityType>
   <EntityType Name="InstallmentRejection">
     <Key>
@@ -245,6 +246,9 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
       <PropertyRef Name="UserId" />
     </Key>
     <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="Dob" Type="datetime" />
     <Property Name="UserName" Type="nvarchar" MaxLength="150" />
     <Property Name="Password" Type="nvarchar" MaxLength="150" />
     <Property Name="Email" Type="nvarchar" MaxLength="200" />
@@ -313,7 +317,9 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Comments_BenificiaryMaster">
-    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1" />
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="BenificiaryMaster">
@@ -349,7 +355,9 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_GeoTaggingDetails_BenificiaryMaster">
-    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="0..1" />
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetails" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="BenificiaryMaster">
@@ -385,7 +393,9 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_InstallmentRejection_BenificiaryMaster1">
-    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1" />
+    <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="InstallmentRejection" Type="Self.InstallmentRejection" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="BenificiaryMaster">

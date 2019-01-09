@@ -2,8 +2,6 @@
 
 @{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 <style>
     .panel-heading {
@@ -14,65 +12,145 @@
         border-bottom: 0px solid transparent;
     }
 </style>
-<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-    @Html.Partial("_InstallmentDetails", Model);
-</div>
-<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Beneficiary Page
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Beneficiary Page</li>
 
-</div>
-<div class="container">
-    <div class="col-md-12">
-        <div class="panel with-nav-tabs panel-primary">
-            <div class="panel-heading">
-                <ul class="nav nav-tabs">
-                    <li id="li_dataeng"><a href="#tabdataEngineer" class="nav_link" data-toggle="tab">Data Entry</a></li>
-                    <li id="li_userreq"><a href="#tabUserRequest" class="nav_link" data-toggle="tab">User Request</a></li>
-                    <li id="li_siteengneer"><a href="#tabSiteEngineer" class="nav_link" data-toggle="tab">Site Engineer</a></li>
-                    <li id="li_projectmanager"><a href="#tabProjectManager" class="nav_link" data-toggle="tab">Project Manager</a></li>
-                    <li id="li_cityengineer"><a href="#tabCityEngineer" class="nav_link" data-toggle="tab">City Engineer</a></li>
-                    <li id="li_accountant"><a href="#tabAccountant" class="nav_link" data-toggle="tab">Accountant</a></li>
-                </ul>
-            </div>
-            <div class="panel-body">
-                <div class="tab-content">
-                    @*<div class="tab-pane fade in active" id="tabdataEngineer">@Html.Action("Beneficiary", "Home")</div>*@
-                    <div class="tab-pane fade" id="tabdataEngineer">@Html.Action("DataEntry", "WorkFlow")</div>
-                    <div class="tab-pane fade" id="tabSiteEngineer">@Html.Action("SiteEngineer", "WorkFlow")</div> 
-                    <div class="tab-pane fade" id="tabUserRequest">Hi This is User Request</div>
-                    <div class="tab-pane fade" id="tabProjectManager">Project Manager</div>
-                    <div class="tab-pane fade" id="tabCityEngineer">City Engineer</div>
-                    <div class="tab-pane fade" id="tabAccountant">@Html.Action("Accountant", "WorkFlow")</div>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                    </div>
+                    <div class="box-body">
+                        @Html.Partial("_InstallmentDetails", Model)
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-12 col-md-12">
-        @Html.ActionLink("Go To HomePage", "Index", "WorkFlow", htmlAttributes: new { @class = "btn btn-primary" })
-    </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="nav-tabs-custom" id="custtab">
+                    <ul class="nav nav-tabs">
+                        <li id="li_beneficiary"><a href="#tabdataEngineer" class="nav_link" data-toggle="tab">Beneficiary Details</a></li>
+                        <li id="li_workstatus"><a href="#tabworkStatus" class="nav_link" data-toggle="tab">Work Status</a></li>
+                        <li id="li_siteengneer"><a href="#tabSiteEngineer" class="nav_link" data-toggle="tab">Site Engineer</a></li>
+                        <li id="li_ProjectEngineer"><a href="#tabProjectEngineer" class="nav_link" data-toggle="tab">Project Engineer</a></li>
+                        <li id="li_cityengineer"><a href="#tabCityEngineer" class="nav_link" data-toggle="tab">City Engineer</a></li>
+                        <li id="li_chiefOfficer"><a href="#tabchiefOfficer" class="nav_link" data-toggle="tab">Chief Officer</a></li>
+                        <li id="li_accountant"><a href="#tabAccountant" class="nav_link" data-toggle="tab">Accountant</a></li>
+                        <li id="li_surveydetails"><a href="#tabsurveyDetails" class="nav_link" data-toggle="tab">Survey Details</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="tabdataEngineer"></div>
+                        <div class="tab-pane fade" id="tabworkStatus"></div>
+                        <div class="tab-pane fade" id="tabSiteEngineer"></div>
+                        <div class="tab-pane fade" id="tabProjectEngineer"></div>
+                        <div class="tab-pane fade" id="tabCityEngineer"></div>
+                        <div class="tab-pane fade" id="tabchiefOfficer"></div>
+                        <div class="tab-pane fade" id="tabAccountant"></div>
+                        <div class="tab-pane fade" id="tabsurveyDetails"></div>
+                    </div>
+                </div>          
+            </div>
+        </div>
+    </section>
 </div>
 
+<div class="container">
+
+</div>
+
+
 <script type="text/javascript">
-    $(document).ready(function () {        
+    $(document).ready(function () {
+        //$('select').selectpicker();
+        $('#custtab a[data-toggle="tab"]').bind('click', function (e) {
+            debugger;
+            e.preventDefault();
+            var tab = $(this).attr("href");
+            var url = '';
+            switch (tab) {
+                case '#tabdataEngineer':
+                    url = '@Url.Action("DataEntry", "WorkFlow")'
+                    break;
+                case '#tabworkStatus':
+                    url = '@Url.Action("WorkStatusDetails", "WorkFlow")'
+                    break;
+                case '#tabSiteEngineer':
+                    url = '@Url.Action("SiteEngineer", "WorkFlow")'
+                    break;
+                case '#tabProjectEngineer':
+                    url = '@Url.Action("ProjectEngineer", "WorkFlow")'
+                    break;
+                case '#tabCityEngineer':
+                    url = '@Url.Action("CityEngineer", "WorkFlow")'
+                    break;
+                case '#tabchiefOfficer':
+                    url = '@Url.Action("ChiefOfficer", "WorkFlow")'
+                    break;
+                case '#tabAccountant':
+                    url = '@Url.Action("Accountant", "WorkFlow")'
+                    break;
+                  case '#tabsurveyDetails':
+                    url = '@Url.Action("SurveyDetails", "WorkFlow")'
+                    break;
+                default:
+            }
 
-        var text = '@ViewBag.RoleName'; //Accessing the Json Object from ViewBag
-        if (text == 'SiteEngineer') {
-            //$('#li_siteengneer').addClass("active");
-            $('#li_siteengneer').addClass("active");
-            $('#tabSiteEngineer').addClass("active in");
+            if (typeof url !== "undefined") {
+                var pane = $(this);
+                var installmentId = '@Model.installmentId';
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    cache: false,
+                    data: { installmentId: installmentId }
+                }).done(function (result) {
+                   $(tab).html(result);
+                    pane.tab('show');
+                });
+            } else {
+                $(this).tab('show');
+            }
+        });
 
-            //$('#sitanchor').trigger('click');
-            //$('#sitanchor').click(function () {
-            //    alert('test this');
-            //});
-
-
-            //$('#tabSiteEngineer').load("@Url.Action("_CityHead", "Home")");
-        }
-
-
-
-        //$('.nav nav-tabs a').trigger('click');
-
+        var role = '@ViewBag.RoleName'; //Accessing the Json Object from ViewBag
+        debugger;
+        switch (role) {
+            case 'DataEntry':
+                $('#custtab a[href="#tabdataEngineer"]').trigger('click');
+                break;            
+            case 'comment':
+                $('#custtab a[href="#tabAccountant"]').trigger('click');
+                break;     
+            case 'SiteEngineer':
+                $('#custtab a[href="#tabSiteEngineer"]').trigger('click');
+                    break;
+            case 'ProjectEngineer':
+                $('#custtab a[href="#tabProjectEngineer"]').trigger('click');
+                break;
+            case 'CityEngineer':
+                $('#custtab a[href="#tabCityEngineer"]').trigger('click');
+                break;
+            case 'ChiefOfficer':
+                $('#custtab a[href="#tabchiefOfficer"]').trigger('click');
+                    break;
+            case 'Accountant':
+                $('#custtab a[href="#tabAccountant"]').trigger('click');
+                    break;              
+                default:
+            }
+        
     });
 </script>
 

@@ -20,6 +20,8 @@ D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.Cor
 D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.CopyComplete
 D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
 D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb
+C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csprojAssemblyReference.cache
+D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csprojAssemblyReference.cache
 D:\EPassBook\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll.config
 D:\EPassBook\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll
 D:\EPassBook\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.pdb
@@ -32,5 +34,3 @@ D:\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.CoreCompileI
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.CopyComplete
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
 D:\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb
-C:\Users\V.T.Technologies\Documents\GitHub\EPassBook\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csprojAssemblyReference.cache
-D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csprojAssemblyReference.cache

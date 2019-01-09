@@ -191,6 +191,7 @@
     <EntitySetMapping Name="InstallmentDetailsHistories">
       <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetailsHistory">
         <MappingFragment StoreEntitySet="InstallmentDetailsHistory">
+          <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
           <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
@@ -271,6 +272,9 @@
     <EntitySetMapping Name="UserMasters">
       <EntityTypeMapping TypeName="EPassBookModel.UserMaster">
         <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="Dob" ColumnName="Dob" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="IsReset" ColumnName="IsReset" />
           <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
           <ScalarProperty Name="CityId" ColumnName="CityId" />
