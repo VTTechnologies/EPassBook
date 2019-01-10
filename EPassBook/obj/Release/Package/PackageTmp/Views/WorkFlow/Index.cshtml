@@ -65,7 +65,11 @@
                                             @Html.DisplayFor(modelItem => item.CreatedDate)
                                         </td>
                                         <td class="hidden-sm hidden-xs hidden-md">
-                                            @Html.DisplayFor(modelItem => item.PlanYear)
+                                            @{
+                                                int year = Convert.ToDateTime(item.CreatedDate).Year;
+                                            }
+                                            @Html.Label(year.ToString())
+                                            @*@Html.DisplayFor(modelItem => item.PlanYear)*@
                                         </td>                                       
                                         <td>
                                             @Html.DisplayFor(modelItem => item.InstallmentNo)

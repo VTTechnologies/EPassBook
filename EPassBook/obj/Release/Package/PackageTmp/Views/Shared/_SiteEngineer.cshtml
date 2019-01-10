@@ -2,7 +2,7 @@
 @{
     if (ViewBag.Message != null)
     {
-        // Layout = "~/Views/Shared/_Layout.cshtml";
+         Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
 <style>
@@ -10,9 +10,6 @@
         color: red;
     }
 </style>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
 <div id="siteengineer">
 
@@ -273,7 +270,7 @@
                                     </div>
                                 </div>
                                 <div class="box-footer">
-                                    <input type="submit" value="Create" onclick="return validation();" class="btn btn-primary" />
+                                    <input type="submit" value="Send to Project Engineer" onclick="return validation();" class="btn btn-primary" />
                                 </div>
                             </div>
 
@@ -484,7 +481,8 @@
     });
 
     function validation() {
-        if ($("#txtLAmnt").val().trim() == "") {
+        debugger;
+        if ($("#txtLAmnt").val().trim() == "" || $("#txtLAmnt").val() == "0.00") {
             $("#lblmsg").text("Please Enter Loan Amount");
             return false;
         }

@@ -50,7 +50,7 @@ namespace EPassBook.Helper
                     cipherText = Encoding.Unicode.GetString(ms.ToArray());
                 }
             }
-            return cipherText;
+            return cipherText.ToLower();
         }
     }
 }

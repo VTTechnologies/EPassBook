@@ -151,12 +151,16 @@ namespace EPassBook.Controllers
                     {
                         var userData = Session["UserDetails"] as UserViewModel;
                         var user = _userService.GetUserById(userData.UserId);
-                        if (resetPassVM.oldPassword != userData.Password)
+                        var password = userData.Password;
+
+                        password = userData.Password.Decrypt();
+
+                        if (password != resetPassVM.oldPassword)
                         {
                             ModelState.AddModelError(string.Empty, "Wrong old password");
                             return View(resetPassVM);
                         }
-                        user.Password = resetPassVM.newPassword;
+                        user.Password = resetPassVM.newPassword.Encrypt();
                         user.IsReset = true;
                         _userService.Update(user);
                         _userService.SaveChanges();

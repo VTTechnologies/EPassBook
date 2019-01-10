@@ -22,8 +22,8 @@
                         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
                         <div class="form-group">
-                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                                @Html.LabelFor(model => model.AccountNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                @Html.LabelFor(model => model.AccountNo)
                             </div>
                             <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
                                 @Html.DisplayFor(model => model.AccountNo, new { htmlAttributes = new { @class = "form-control" } })
@@ -32,8 +32,8 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                                @Html.LabelFor(model => model.IFSCCode, new { @class = "control-label col-md-2" })
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                @Html.LabelFor(model => model.IFSCCode)
                             </div>
                             <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
                                 @Html.DisplayFor(model => model.IFSCCode, new { htmlAttributes = new { @class = "form-control" } })
@@ -41,18 +41,18 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <p class="control-label col-md-12">
-                                    Has been transferred Rs @Html.DisplayFor(model => model.LoanAmnt) (Rupees @Html.DisplayFor(model => model.LoanAmtInRupees))
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align-last:left">
+                                <p>
+                                    Has been transferred Rs <strong> @Html.DisplayFor(model => model.LoanAmnt)</strong> (Rupees <strong>@Html.DisplayFor(model => model.LoanAmtInRupees)</strong> )
                                     Through RTGS/DBT
                                 </p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                                @Html.LabelFor(model => model.TransactionId, new { @class = "control-label col-md-2" })
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                @Html.LabelFor(model => model.TransactionId)
                             </div>
-                            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                 @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control" } })
 
                             </div>
@@ -60,7 +60,8 @@
 
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @Html.LabelFor(model => model.Sign, new { @class = "col-md-2" })
+                                @*@Html.LabelFor(model => model.Sign, new { @class = "col-md-2" })*@
+                                <label>Sign For Accountant</label>
                             </div>
                             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                                 @Html.CheckBoxFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control", @id = "Sign" } })
@@ -79,7 +80,7 @@
                             </div>
                         </div>
                         <div class="box-footer">
-                            <input type="submit" onclick="return validationAcountant();" value="Submit" class="btn btn-primary" />
+                            <input type="submit" onclick="return validationAcountant();" value="Send to Chief Officer" class="btn btn-primary" />
                         </div>
                     </div>
                 }
