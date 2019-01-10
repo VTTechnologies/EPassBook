@@ -54,6 +54,9 @@ namespace EPassBook.Mapper
         {
             UserViewModel userViewModel = new UserViewModel();
             userViewModel.UserId = userMaster.UserId;
+            userViewModel.FirstName = userMaster.FirstName;
+            userViewModel.LastName = userMaster.LastName;
+            userViewModel.Dob = userMaster.Dob;
             userViewModel.UserName = userMaster.UserName;
             userViewModel.Password = userMaster.Password;
             userViewModel.Email = userMaster.Email;
