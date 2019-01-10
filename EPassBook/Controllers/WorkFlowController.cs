@@ -347,8 +347,8 @@ namespace EPassBook.Controllers
                 CreatedDate = s.CreatedDate,
                 MobileNo = s.MobileNo,
                 Sign = Convert.ToBoolean(s.Sign),
-                Physical_Progress = s.Physical_Progress
-
+                Physical_Progress = s.Physical_Progress,
+                Role = s.Role
 
             }).ToList();
 

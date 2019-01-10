@@ -18,7 +18,7 @@ namespace EPassBook.Mapper
             userMaster.FirstName = userViewModel.FirstName;
             userMaster.LastName = userViewModel.LastName;
             userMaster.UserName = userViewModel.UserName;
-            userMaster.Password = userViewModel.DecryptedPass;
+            userMaster.Password = userViewModel.Password;
             userMaster.Dob = userViewModel.Dob;
             userMaster.Email = userViewModel.Email;
             userMaster.MobileNo = userViewModel.MobileNo;
@@ -34,7 +34,6 @@ namespace EPassBook.Mapper
                 CityName = userViewModel.CityMaster.CityName,
                 CityShortName = userViewModel.CityMaster.CityShortName,
                 IsActive = userViewModel.CityMaster.IsActive,
-
             };
             userMaster.CompanyMaster = userViewModel.CityMaster == null ? null : new CompanyMaster()
             {

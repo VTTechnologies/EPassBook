@@ -13,6 +13,7 @@ namespace EPassBook.Models
         public string MobileNo { get; set; }
         public string Physical_Progress { get; set; }
         public string Comments { get; set; }
+        public string Role { get; set; }
         public bool Sign { get; set; }
     }
 }

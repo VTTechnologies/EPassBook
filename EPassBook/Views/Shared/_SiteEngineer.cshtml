@@ -482,7 +482,7 @@
 
     function validation() {
         debugger;
-        if ($("#txtLAmnt").val().trim() == "") {
+        if ($("#txtLAmnt").val().trim() == "" || $("#txtLAmnt").val() == "0.00") {
             $("#lblmsg").text("Please Enter Loan Amount");
             return false;
         }

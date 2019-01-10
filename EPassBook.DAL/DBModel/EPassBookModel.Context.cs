@@ -121,63 +121,6 @@ namespace EPassBook.DAL.DBModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ELMAH_LogError", errorIdParameter, applicationParameter, hostParameter, typeParameter, sourceParameter, messageParameter, userParameter, allXmlParameter, statusCodeParameter, timeUtcParameter);
         }
     
-        public virtual ObjectResult<sp_GetSurveyDetailsByBenID_Result> sp_GetSurveyDetailsByBenID(Nullable<int> benificiaryId)
-        {
-            var benificiaryIdParameter = benificiaryId.HasValue ?
-                new ObjectParameter("BenificiaryId", benificiaryId) :
-                new ObjectParameter("BenificiaryId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetSurveyDetailsByBenID_Result>("sp_GetSurveyDetailsByBenID", benificiaryIdParameter);
-        }
-    
-        public virtual int sp_UpdatTransactionId(Nullable<int> benifciaryId, Nullable<bool> sign, Nullable<decimal> transactionId, Nullable<int> installmentId, Nullable<int> userid)
-        {
-            var benifciaryIdParameter = benifciaryId.HasValue ?
-                new ObjectParameter("benifciaryId", benifciaryId) :
-                new ObjectParameter("benifciaryId", typeof(int));
-    
-            var signParameter = sign.HasValue ?
-                new ObjectParameter("sign", sign) :
-                new ObjectParameter("sign", typeof(bool));
-    
-            var transactionIdParameter = transactionId.HasValue ?
-                new ObjectParameter("transactionId", transactionId) :
-                new ObjectParameter("transactionId", typeof(decimal));
-    
-            var installmentIdParameter = installmentId.HasValue ?
-                new ObjectParameter("installmentId", installmentId) :
-                new ObjectParameter("installmentId", typeof(int));
-    
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdatTransactionId", benifciaryIdParameter, signParameter, transactionIdParameter, installmentIdParameter, useridParameter);
-        }
-    
-        public virtual ObjectResult<sp_GetInstallmentListViewForUsersRoles_Result> sp_GetInstallmentListViewForUsersRoles(string stageids)
-        {
-            var stageidsParameter = stageids != null ?
-                new ObjectParameter("stageids", stageids) :
-                new ObjectParameter("stageids", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInstallmentListViewForUsersRoles_Result>("sp_GetInstallmentListViewForUsersRoles", stageidsParameter);
-        }
-    
-        [DbFunction("EPassBookEntities", "Split")]
-        public virtual IQueryable<Split_Result> Split(string list, string splitOn)
-        {
-            var listParameter = list != null ?
-                new ObjectParameter("List", list) :
-                new ObjectParameter("List", typeof(string));
-    
-            var splitOnParameter = splitOn != null ?
-                new ObjectParameter("SplitOn", splitOn) :
-                new ObjectParameter("SplitOn", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Split_Result>("[EPassBookEntities].[Split](@List, @SplitOn)", listParameter, splitOnParameter);
-        }
-    
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
@@ -233,6 +176,24 @@ namespace EPassBook.DAL.DBModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
         }
     
+        public virtual ObjectResult<sp_GetInstallmentListViewForUsersRoles_Result> sp_GetInstallmentListViewForUsersRoles(string stageids)
+        {
+            var stageidsParameter = stageids != null ?
+                new ObjectParameter("stageids", stageids) :
+                new ObjectParameter("stageids", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInstallmentListViewForUsersRoles_Result>("sp_GetInstallmentListViewForUsersRoles", stageidsParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetSurveyDetailsByBenID_Result> sp_GetSurveyDetailsByBenID(Nullable<int> benificiaryId)
+        {
+            var benificiaryIdParameter = benificiaryId.HasValue ?
+                new ObjectParameter("BenificiaryId", benificiaryId) :
+                new ObjectParameter("BenificiaryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetSurveyDetailsByBenID_Result>("sp_GetSurveyDetailsByBenID", benificiaryIdParameter);
+        }
+    
         public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
@@ -276,9 +237,48 @@ namespace EPassBook.DAL.DBModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
         }
     
+        public virtual int sp_UpdatTransactionId(Nullable<int> benifciaryId, Nullable<bool> sign, Nullable<decimal> transactionId, Nullable<int> installmentId, Nullable<int> userid)
+        {
+            var benifciaryIdParameter = benifciaryId.HasValue ?
+                new ObjectParameter("benifciaryId", benifciaryId) :
+                new ObjectParameter("benifciaryId", typeof(int));
+    
+            var signParameter = sign.HasValue ?
+                new ObjectParameter("sign", sign) :
+                new ObjectParameter("sign", typeof(bool));
+    
+            var transactionIdParameter = transactionId.HasValue ?
+                new ObjectParameter("transactionId", transactionId) :
+                new ObjectParameter("transactionId", typeof(decimal));
+    
+            var installmentIdParameter = installmentId.HasValue ?
+                new ObjectParameter("installmentId", installmentId) :
+                new ObjectParameter("installmentId", typeof(int));
+    
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdatTransactionId", benifciaryIdParameter, signParameter, transactionIdParameter, installmentIdParameter, useridParameter);
+        }
+    
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        [DbFunction("EPassBookEntities", "Split")]
+        public virtual IQueryable<Split_Result> Split(string list, string splitOn)
+        {
+            var listParameter = list != null ?
+                new ObjectParameter("List", list) :
+                new ObjectParameter("List", typeof(string));
+    
+            var splitOnParameter = splitOn != null ?
+                new ObjectParameter("SplitOn", splitOn) :
+                new ObjectParameter("SplitOn", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Split_Result>("[EPassBookEntities].[Split](@List, @SplitOn)", listParameter, splitOnParameter);
         }
     }
 }

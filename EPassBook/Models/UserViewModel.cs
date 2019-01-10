@@ -20,18 +20,6 @@ namespace EPassBook.Models
         public string UserName { get; set; }
         //[Required(ErrorMessage = "Please enter the Password.")]
         public string Password { get; set; }
-        [NotMapped]
-        public string DecryptedPass
-        {
-            get
-            {
-                return Password.Decrypt();
-            }
-            set
-            {
-                Password = value.Encrypt();
-            }
-        }
         [Display(Name = "Active:")]
         public bool? IsActive { get; set;}
         //public Nullable<bool> IsLoggedIn { get; set; }

@@ -13,12 +13,14 @@ namespace EPassBook.DAL.DBModel
     
     public partial class sp_GetSurveyDetailsByBenID_Result
     {
+        public int InstallementId { get; set; }
         public int BeneficiaryId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string UserName { get; set; }
         public string MobileNo { get; set; }
         public string Physical_Progress { get; set; }
         public string Comments { get; set; }
+        public string Role { get; set; }
         public Nullable<bool> Sign { get; set; }
     }
 }

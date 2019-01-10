@@ -60,6 +60,7 @@ namespace EPassBook.Controllers
                 beneficiaryViewModel.Hasband_Photo = hphoto; //PhotoManager.ConvertToBytes(hasbandphoto);
                 beneficiaryViewModel.Wife_Photo = wphoto; //PhotoManager.ConvertToBytes(wifephoto);
                 beneficiaryViewModel.CreatedBy = user.UserName;
+                beneficiaryViewModel.CreatedDate = DateTime.Now;
                 var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
 
                 _benificiaryService.Add(insertbeneficiary);
