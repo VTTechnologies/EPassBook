@@ -349,6 +349,7 @@ namespace EPassBook.Controllers
                 Sign = Convert.ToBoolean(s.Sign),
                 Physical_Progress = s.Physical_Progress
 
+
             }).ToList();
 
             return PartialView("_SurveyDetails", mappedCommentList);
