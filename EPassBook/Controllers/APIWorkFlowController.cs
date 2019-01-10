@@ -124,7 +124,7 @@ namespace EPassBook.Controllers
                     Comments = s.Comments,
                     Reason = s.Reason,
                     RoleId = s.RoleId,
-                    RoleName=s.RoleMaster.RoleName
+                    RoleName= s.RoleMaster==null? "" : s.RoleMaster.RoleName
                 }).ToList();
 
                 beneficiaryAPIViewModel.InstallmentSignings = installmentDetail.InstallmentSignings.Select(i => new InstallmentSigningViewModel
