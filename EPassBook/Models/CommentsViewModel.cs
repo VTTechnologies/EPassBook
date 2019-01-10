@@ -19,6 +19,8 @@ namespace EPassBook.Models
         public string CreatedBy { get; set; }
         public Nullable<int> CompanyID { get; set; }
 
+        public string RoleName { get; set; }
+
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }
         public virtual CompanyViewModel CompanyMaster { get; set; }
         public virtual InstallmentDetailsViewModel InstallmentDetail { get; set; }

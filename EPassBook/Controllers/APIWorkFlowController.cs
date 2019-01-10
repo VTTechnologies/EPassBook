@@ -112,7 +112,7 @@ namespace EPassBook.Controllers
                 beneficiaryAPIViewModel.GeoTaggingDetails = installmentDetail.GeoTaggingDetails.Select(s => new GeoTaggingViewModel
                 {
                     Date = s.Date,
-                    Photo = "",
+                    Photo = s.Photo,
                     ConstructionLevel = s.ConstructionLevel,
                     UserId = s.UserId
                 }).ToList();
@@ -123,7 +123,8 @@ namespace EPassBook.Controllers
                     CreatedBy = s.CreatedBy,
                     Comments = s.Comments,
                     Reason = s.Reason,
-                    RoleId = s.RoleId
+                    RoleId = s.RoleId,
+                    RoleName=s.RoleMaster.RoleName
                 }).ToList();
 
                 beneficiaryAPIViewModel.InstallmentSignings = installmentDetail.InstallmentSignings.Select(i => new InstallmentSigningViewModel
