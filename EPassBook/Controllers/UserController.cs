@@ -120,22 +120,22 @@ namespace EPassBook.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "The password provided is incorrect.");
+                        ModelState.AddModelError("Error", "The password provided is incorrect.");
                         Session["UserDetails"] = null;
-                        return RedirectToAction("Login");
+                        return View();
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "The username or password provided is incorrect.");
+                    ModelState.AddModelError("Error", "The username or password provided is incorrect.");
                     Session["UserDetails"] = null;
-                    return RedirectToAction("Login");
+                    return View();
                 }
             }
             else
             {
                 Session["UserDetails"] = null;
-                return RedirectToAction("Login");
+                return View();
             }
         }
         //ather code start frm here
@@ -276,7 +276,7 @@ namespace EPassBook.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(UserViewModel userVM)
+        public ActionResult Create([Bind(Exclude = "UserName,Password")] UserViewModel userVM)
         {
             if(!ModelState.IsValid)
             {
@@ -348,23 +348,38 @@ namespace EPassBook.Controllers
             var userInRole = _userInRoleService.Get().Where(w => w.UserMaster.UserInRoles.Where(we => we.RoleId == user.UserInRoles.Select(a => a.RoleId).FirstOrDefault()).Select(s => s.RoleId).Any()).FirstOrDefault().RoleId;
             Session["roleId"] = userInRole;
             var mappedUser = Mapper.UserMapper.Detach(user);
+            mappedUser.Password = mappedUser.Password.Decrypt();
             var roles = _roleMasterService.Get(r => r.IsActive == true);
             var cities = _cityMasterService.Get(r => r.IsActive == true);
             var companies = _companyMasterService.Get(r => r.IsActive == true);
-
             mappedUser.RoleId = Convert.ToInt32(userInRole);
-            ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
-            ViewBag.Cities = new SelectList(cities, "CityId", "CityName");
-            ViewBag.Companies = new SelectList(companies, "CompanyId", "CompanyName");
 
+            mappedUser.Roles = roles.Select(s=>new SelectListItem {Text=s.RoleName,Value=s.RoleId.ToString() }).ToList();
+            mappedUser.Cities = cities.Select(c => new SelectListItem { Text = c.CityName, Value = c.CityId.ToString() }).ToList();
+
+            //ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+            //ViewBag.Cities = new SelectList(cities, "CityId", "CityName");
+            //ViewBag.Companies = new SelectList(companies, "CompanyId", "CompanyName");
+            
             return View(mappedUser);
         }
         [HttpPost]
-        public ActionResult Edit(UserViewModel userVM)
+        public ActionResult Edit([Bind(Exclude = "UserName")] UserViewModel userVM)
         {
-            if(ModelState.IsValid)
+            if(ModelState.IsValidField("FirstName")&& ModelState.IsValidField("LastName")
+                && ModelState.IsValidField("Dob")&& ModelState.IsValidField("Password")
+                && ModelState.IsValidField("RoleId") && ModelState.IsValidField("Email")
+                && ModelState.IsValidField("MobileNo")&& ModelState.IsValidField("CityId"))
             {
-                if(Session["roleId"] == null)
+                var fName = userVM.FirstName;
+                var lName = userVM.LastName;
+                var mobileNo = userVM.MobileNo;
+
+                string firstCharOfFname =
+                !String.IsNullOrWhiteSpace(fName) && fName.Length >= 1 ? fName.Substring(0, 1) : fName;
+                var userName = firstCharOfFname + userVM.LastName;
+
+                if (Session["roleId"] == null)
                 {
                     return RedirectToAction("Index");
                 }
@@ -373,13 +388,16 @@ namespace EPassBook.Controllers
                 var userData = _userService.GetUserById(userVM.UserId);
                 var userInRole = _userInRoleService.Get().Where(r => r.RoleId == Convert.ToInt32(Session["roleId"])).FirstOrDefault();
 
-                userData.UserName = userVM.UserName;
-                userData.Password = userVM.Password;
+                userData.UserName = userName;
+                userData.Password = userVM.Password.Encrypt();
                 userData.Email = userVM.Email;
                 userData.MobileNo = userVM.MobileNo;
                 userData.Address = userVM.Address;
                 userData.CityId = userVM.CityId;
-                userData.CompanyID = userVM.CompanyID;
+                userData.FirstName = userVM.FirstName;
+                userData.LastName = userVM.LastName;
+                userData.Dob = userVM.Dob;
+                //userData.CompanyID = userVM.CompanyID;
 
                 userInRole.RoleId = userVM.RoleId;
                 userInRole.UserId = userVM.UserId;
@@ -393,6 +411,15 @@ namespace EPassBook.Controllers
             }
             else
             {
+                var roles = _roleMasterService.Get(r => r.IsActive == true);
+                var cities = _cityMasterService.Get(r => r.IsActive == true);
+
+                userVM.Roles = new List<SelectListItem>();
+                userVM.Cities = new List<SelectListItem>();
+
+                userVM.Roles = roles.Select(s => new SelectListItem { Text = s.RoleName, Value = s.RoleId.ToString() }).ToList();
+                userVM.Cities = cities.Select(c => new SelectListItem { Text = c.CityName, Value = c.CityId.ToString() }).ToList();
+
                 return View(userVM);
             }
         }
