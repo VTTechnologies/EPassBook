@@ -368,40 +368,32 @@ namespace EPassBook.Controllers
             }
             var beneficiary = _benificiaryService.GetBenificiaryById(beneficiaryId);
             var beneficiaryvm = Mapper.BeneficiaryMapper.Detach(beneficiary);
+            beneficiaryvm.Hasband_Photo = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Hasband_Photo;
+            beneficiaryvm.Wife_Photo = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Wife_Photo;
 
-
-            ViewBag.hsbphoto = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Hasband_Photo;
-            ViewBag.wfphoto = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Wife_Photo;
             return PartialView("_DataEntry", beneficiaryvm);
-        }
-
-        [HttpPost]
-        [CustomAuthorize(Common.DataEntry)]
-        public ActionResult DataEntry(BeneficiaryViewModel beneficiaryViewModel)
-        {
-            HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
-            HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
-            var user = Session["UserDetails"] as UserViewModel;
-            beneficiaryViewModel.Hasband_Photo = "";//PhotoManager.ConvertToBytes(hasbandphoto);
-            beneficiaryViewModel.Wife_Photo = "";//PhotoManager.ConvertToBytes(wifephoto);
-            beneficiaryViewModel.CreatedBy = user.UserName;
-            var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
-            _benificiaryService.Add(insertbeneficiary);
-            _benificiaryService.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        }       
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult ProjectEngineer(int installmentId)
         {
-            InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
+            var userdetails = new UserViewModel();
+            if (Session["UserDetails"] != null)
+            {
+                 userdetails = Session["UserDetails"] as UserViewModel;
+            }
+                InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
             installmentviewmodel.Comments = null;
-            installmentviewmodel._Comments = null;
+            if(installment.Comments.Count>0)
+            installmentviewmodel._Comments = installment.Comments.Where(w=>w.RoleId== userdetails.UserInRoles.FirstOrDefault().RoleId).Select(s=>s.Comments).FirstOrDefault();
+
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+            if (installmentviewmodel.GeoTaggingDetails.Count>0)
+                installmentviewmodel.Photo ="/Uploads/SiteEngPhotos/"+ installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
             if (installmentviewmodel.lInRupees == "ZERO")
             {
                 installmentviewmodel.lInRupees = null;
@@ -419,8 +411,7 @@ namespace EPassBook.Controllers
         {
 
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
-            //if (ModelState.IsValid)
-            //{
+           
             if (Session["UserDetails"] != null)
             {
                 var user = Session["UserDetails"] as UserViewModel;
@@ -432,7 +423,7 @@ namespace EPassBook.Controllers
                 var comments = new Comment();
                 comments.Comments = installmentDetailViewModel._Comments;
                 comments.CreatedBy = user.UserName;
-                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                comments.BeneficiaryId = installment.BeneficiaryId;
                 comments.CreatedDate = DateTime.Now;
                 comments.CompanyID = user.CompanyID;
 
@@ -461,10 +452,7 @@ namespace EPassBook.Controllers
                 installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
                 installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
                 installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
-
-                //return RedirectToAction("Index", "WorkFlow");
             }
-            //}
 
             return PartialView("_ProjectEngineer", installmentDetailViewModel);
         }
@@ -480,6 +468,10 @@ namespace EPassBook.Controllers
             installmentviewmodel._Comments = null;
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+
+            if (installmentviewmodel.GeoTaggingDetails.Count > 0)
+                installmentviewmodel.Photo = "/Uploads/SiteEngPhotos/" + installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
+
             if (installmentviewmodel.lInRupees == "ZERO")
             {
                 installmentviewmodel.lInRupees = null;
@@ -558,6 +550,10 @@ namespace EPassBook.Controllers
             installmentviewmodel._Comments = null;
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+
+            if (installmentviewmodel.GeoTaggingDetails.Count > 0)
+                installmentviewmodel.Photo = "/Uploads/SiteEngPhotos/" + installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
+
             if (installmentviewmodel.lInRupees == "ZERO")
             {
                 installmentviewmodel.lInRupees = null;
