@@ -58,10 +58,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/10/2019 14:16:36</publishTime>
     </File>
     <File Include="bin/EPassBook.dll">
-      <publishTime>01/10/2019 14:16:42</publishTime>
+      <publishTime>01/10/2019 15:01:49</publishTime>
     </File>
     <File Include="bin/EPassBook.pdb">
-      <publishTime>01/10/2019 14:16:42</publishTime>
+      <publishTime>01/10/2019 15:01:49</publishTime>
     </File>
     <File Include="bin/es/Microsoft.Data.Edm.resources.dll">
       <publishTime>12/24/2018 19:57:46</publishTime>

@@ -83,6 +83,7 @@ namespace EPassBook.Controllers
             if (ModelState.IsValidField("UserName") && ModelState.IsValidField("Password"))
             {
                 var userData = _userService.GetPassword(user.UserName);
+                UserViewModel uservm = new UserViewModel();
 
                 if (user.RememberMe)
                 {
@@ -92,12 +93,13 @@ namespace EPassBook.Controllers
                     userCookie.Expires = DateTime.Now.AddDays(1);
                     Response.Cookies.Add(userCookie);
                 }
-                user = Mapper.UserMapper.Detach(userData);
-                Session["UserDetails"] = "";
-                Session["UserDetails"] = user;
-                 if (userData != null)
+                if (userData != null)
                 {
-                    if (user.Password.Equals(userData.Password))
+                    uservm = Mapper.UserMapper.Detach(userData);
+                    Session["UserDetails"] = uservm;
+                    var password = userData.Password.Decrypt();
+
+                    if (user.Password.Equals(password))
                     {
                         Session["CompID"] = userData.CompanyID;
                         if (userData.IsReset != true)
@@ -106,7 +108,7 @@ namespace EPassBook.Controllers
                         }
                         else
                         {
-                            if (user.UserInRoles.FirstOrDefault().RoleId == Convert.ToInt32(Common.Roles.DataEntry))
+                            if (uservm.UserInRoles.FirstOrDefault().RoleId == Convert.ToInt32(Common.Roles.DataEntry))
                             {
                                 return RedirectToAction("Index", "Beneficiary");
                             }
@@ -119,18 +121,21 @@ namespace EPassBook.Controllers
                     else
                     {
                         ModelState.AddModelError(string.Empty, "The password provided is incorrect.");
-                        return View(user);
+                        Session["UserDetails"] = null;
+                        return RedirectToAction("Login");
                     }
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "The username or password provided is incorrect.");
-                    return View(user);
+                    Session["UserDetails"] = null;
+                    return RedirectToAction("Login");
                 }
             }
             else
             {
-                return View(user);
+                Session["UserDetails"] = null;
+                return RedirectToAction("Login");
             }
         }
         //ather code start frm here
