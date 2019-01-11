@@ -286,7 +286,7 @@ namespace EPassBook.Controllers
                     installment.IsCentreAmnt = installmentDetailViewModel.IsCentreAmnt;
                     installment.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
                     installment.StageID = (int)Common.WorkFlowStages.SiteEngineer;
-                    installment.InstallmentNo = installmentDetailViewModel.InstallmentNo;
+                    installment.InstallmentNo = installment.InstallmentNo;
                     installment.ModifiedDate = DateTime.Now;
 
                     // Insert reocrd in comment table 
