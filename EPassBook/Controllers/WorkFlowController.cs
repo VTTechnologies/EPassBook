@@ -501,7 +501,6 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.CityEngineer)]
         public ActionResult CityEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
-
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
             //if (ModelState.IsValid)
             //{

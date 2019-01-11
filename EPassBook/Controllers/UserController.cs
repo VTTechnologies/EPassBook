@@ -169,7 +169,9 @@ namespace EPassBook.Controllers
                         user.IsReset = true;
                         _userService.Update(user);
                         _userService.SaveChanges();
-                        Session["UserDetails"] = _userService.GetUserById(userData.UserId);
+
+                        userData = Mapper.UserMapper.Detach(_userService.GetUserById(userData.UserId));
+                        Session["UserDetails"] = userData;
                         return RedirectToAction("Index", "WorkFlow");
                     }
                 }

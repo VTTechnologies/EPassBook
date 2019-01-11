@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace EPassBook.Controllers
 {
     [ElmahError]
-    [AuthorizeAttribute]
+    //[AuthorizeAttribute]
     public class HomeController : Controller
     {
         IUserService _userserService;
