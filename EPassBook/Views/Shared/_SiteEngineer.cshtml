@@ -78,12 +78,6 @@
                         <div class="box-body">
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group" style="display:none">
-                                @Html.LabelFor(model => model.InstallmentId, "InstallmentID", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.HiddenFor(m => m.InstallmentId)
-                                </div>
-                            </div>
                             <div class="form-horizontal" id="secondDiv">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="form-group" style="display:none">
@@ -116,20 +110,15 @@
                                     @Html.LabelFor(model => model.IsCentreAmnt, "State Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         <div class="checkbox">
-                                            @*@Html.RadioButton("IsRadioButton", "State Assistance")*@
-                                            <input type="radio" name="IsRadioButton" id="isrdo_1" value="State Assistance">@Html.Label("State Assistance")
-                                            @Html.ValidationMessageFor(model => model.IsCentreAmnt, "", new { @class = "text-danger" })
+                                            @Html.RadioButtonFor(model => model.IsCentreAmnt, false)State Assistance
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.IsCentreAmnt, "Central Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         <div class="checkbox">
-                                            @*@Html.RadioButton("IsRadioButton", "Central Assistance")*@
-                                            <input type="radio" name="IsRadioButton" id="isrdo_2" value="Central Assistance">@Html.Label("Central Assistance")
-                                            @Html.ValidationMessageFor(model => model.IsCentreAmnt, "", new { @class = "text-danger" })
+                                            @Html.RadioButtonFor(model => model.IsCentreAmnt, true)Central Assistance
                                         </div>
                                     </div>
                                 </div>
@@ -157,82 +146,17 @@
                                             },
                                             "value",
                                             "text"),"Select Items",
-                                            new { htmlAttributes = new { @class = "form-control" } })
+                                            new {  @class = "form-control"  })
                                         @Html.ValidationMessageFor(model => model.ConstructionLevel, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.StageID, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.StageID, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.StageID, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.IsCompleted, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        <div class="checkbox">
-                                            @Html.EditorFor(model => model.IsCompleted)
-                                            @Html.ValidationMessageFor(model => model.IsCompleted, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.InstallmentNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.InstallmentNo, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.InstallmentNo, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
 
                                 <div class="form-group">
                                     @Html.LabelFor(model => model._Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.TextAreaFor(model => model._Comments, 3, 100, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model._Comments, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.ModifiedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.ModifiedDate, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.ModifiedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.ModifiedBy, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ModifiedBy, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.HiddenFor(model => model.CompanyID, "Company ID")
-                                    <div class="col-md-10">
-                                        @Html.HiddenFor(m => m.CompanyID)
-                                        @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -247,7 +171,8 @@
 
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-10">
-                                        @Html.CheckBox("ChkSign", "no") @Html.Label("Central Assistance")
+                                        @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "SiteEngineer" }) @Html.Label("Central Assistance")
+                                        @*@Html.CheckBox("ChkSign", "no") @Html.Label("Central Assistance")*@
                                     </div>
                                 </div>
 
@@ -451,18 +376,22 @@
                 return false;
             }
         });
+
+        $("#SiteEngineer").change(function () {
+            $("#lblmsg_PM").text("");
+        });
     });
 
-    $("#isrdo_1, #isrdo_2").change(function () {
-        if ($("#isrdo_1").is(":checked")) {
-            $("#hiddforRadio").val("Checked");
-        }
-        else if ($("#isrdo_2").is(":checked")) {
-            $("#hiddforRadio").val("Checked");
-        }
-    });
+    //$("#isrdo_1, #isrdo_2").change(function () {
+    //    if ($("#isrdo_1").is(":checked")) {
+    //        $("#hiddforRadio").val("Checked");
+    //    }
+    //    else if ($("#isrdo_2").is(":checked")) {
+    //        $("#hiddforRadio").val("Checked");
+    //    }
+    //});
 
-    var isstatecenter = '@Model.IsCentreAmnt';
+    @*var isstatecenter = '@Model.IsCentreAmnt';
     if (isstatecenter != '') {
         if (isstatecenter.toLocaleLowerCase() == 'true') {
             $("#isrdo_1").attr("checked", false);
@@ -472,29 +401,27 @@
             $("#isrdo_1").attr("checked", true);
             $("#isrdo_2").attr("checked", false);
         }
-    }
+    }*@
 
-    $("#ChkSign").change(function () {
-        if ($("#ChkSign").is(":checked")) {
-            $("#hiddforCheckbox").val("Checked");
-        }
-    });
+    //$("#ChkSign").change(function () {
+    //    if ($("#ChkSign").is(":checked")) {
+    //        $("#hiddforCheckbox").val("Checked");
+    //    }
+    //});
 
     function validation() {
-        debugger;
         if ($("#txtLAmnt").val().trim() == "" || $("#txtLAmnt").val() == "0.00") {
             $("#lblmsg").text("Please Enter Loan Amount");
             return false;
         }
-        if ($("#hiddforRadio").val() == "no") {
-            $("#lblmsg").text("Please select State Assistance or Center Assistance");
+        //if ($("#hiddforRadio").val() == "no") {
+        //    $("#lblmsg").text("Please select State Assistance or Center Assistance");
+        //    return false;
+        //}       
+        if (!$("#SiteEngineer").is(":checked")) {
+            $("#lblmsg_PM").text("Please sign in to confirm your submission");
             return false;
-        }
-        if ($("#hiddforCheckbox").val() == "no") {
-            $("#lblmsg").text("Please sign in to confirm your submission");
-            return false;
-        }
-
+        }    
         return true;
     }
 

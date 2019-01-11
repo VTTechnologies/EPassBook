@@ -25,7 +25,7 @@ namespace EPassBook.Helper
           Admin = 1,
           DataEntry = 2,
           SiteEngineer = 3,
-          ProjectManager = 4,
+          ProjectEngineer = 4,
           CityEngineer = 5,
           ChiefOfficer = 6,
           Accountant = 7,

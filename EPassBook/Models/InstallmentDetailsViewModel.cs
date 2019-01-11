@@ -31,7 +31,7 @@ namespace EPassBook.Models
         public string beniInRupees { get; set; }
         public bool IsRecommended { get; set; }
         public string FirstComment { get; set; }
-
+        public bool Sign { get; set; }
 
 
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }
