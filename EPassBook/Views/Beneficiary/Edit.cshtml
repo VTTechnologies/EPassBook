@@ -7,11 +7,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Beneficiary Request
+            Edit Beneficiary
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Beneficiary Request Box</a></li>
-            @*<li class="active">Dashboard</li>*@
+            <li><i class="fa fa-dashboard"></i> @Html.ActionLink("Home", "Index", "Beneficiary")</li>
+            <li class="active">Edit Beneficiary</li>
         </ol>
     </section>
     <section class="content">
@@ -200,7 +200,7 @@
                                             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                                                 @Html.LabelFor(model => model.Hasband_Photo, htmlAttributes: new { @class = "control-label col-md-2" })
                                             </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                 <img id="img1" alt="your image" srcset="@ViewBag.hsbphoto" class="img-thumbnail col-md-12" style="height:200px" />
                                                 <input type="file" value="Upload" id="imgupload1" name="imgupload1" onchange="readURL(this, 'img1')" class="btn btn-primary col-md-7" />
                                                 <input type="button" id="btnimg1cencal" onclick="removeimg('img1','imgupload1')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
@@ -210,7 +210,7 @@
                                             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                                                 @Html.LabelFor(model => model.Wife_Photo, htmlAttributes: new { @class = "control-label col-md-2" })
                                             </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                 <img id="img2" srcset="@ViewBag.wfphoto" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
                                                 <input type="file" value="Upload" id="imgupload2" name="imgupload2" onchange="readURL(this,'img2');" class="btn btn-primary col-md-7" />
                                                 <input type="button" id="btnimg2cencal" onclick="removeimg('img2','imgupload2')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
