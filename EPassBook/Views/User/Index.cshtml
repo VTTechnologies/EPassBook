@@ -37,7 +37,7 @@
                                     <th>@Html.DisplayNameFor(model => model.MobileNo)</th>
                                     <th>@Html.DisplayNameFor(model => model.Address)</th>
                                     <th>City</th>
-                                    <th>Company</th>
+                                    @*<th>Company</th>*@
                                     <th>@Html.DisplayNameFor(model => model.RoleName)</th>
                                     <th>Details</th>
                                     <th>Edit</th>
@@ -56,7 +56,7 @@
                                         <td>@items.MobileNo</td>
                                         <td>@items.Address</td>
                                         <td>@items.CityMaster.CityName</td>
-                                        <td>@items.CompanyMaster.CompanyName</td>
+                                        @*<td>@items.CompanyMaster.CompanyName</td>*@
                                         <th>@items.RoleName</th>
                                         <td>@Html.ActionLink("Details", "Details", new { id = @items.UserId }, new { @class = "btn alert-info" })</td>
                                         <td>@Html.ActionLink("Edit", "Edit", new { id = @items.UserId }, new { @class = "btn btn-default" })</td>

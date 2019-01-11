@@ -58,10 +58,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/10/2019 14:16:36</publishTime>
     </File>
     <File Include="bin/EPassBook.dll">
-      <publishTime>01/10/2019 17:24:58</publishTime>
+      <publishTime>01/10/2019 22:26:12</publishTime>
     </File>
     <File Include="bin/EPassBook.pdb">
-      <publishTime>01/10/2019 17:24:58</publishTime>
+      <publishTime>01/10/2019 22:26:12</publishTime>
     </File>
     <File Include="bin/es/Microsoft.Data.Edm.resources.dll">
       <publishTime>12/24/2018 19:57:46</publishTime>
@@ -12391,13 +12391,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/07/2019 11:45:07</publishTime>
     </File>
     <File Include="Views/User/Create.cshtml">
-      <publishTime>01/04/2019 19:21:35</publishTime>
+      <publishTime>01/10/2019 22:01:26</publishTime>
     </File>
     <File Include="Views/User/Details.cshtml">
       <publishTime>01/04/2019 19:39:41</publishTime>
     </File>
     <File Include="Views/User/Edit.cshtml">
-      <publishTime>01/04/2019 19:32:39</publishTime>
+      <publishTime>01/10/2019 22:22:18</publishTime>
     </File>
     <File Include="Views/User/ForgetPassword.cshtml">
       <publishTime>12/28/2018 20:20:09</publishTime>
@@ -12409,7 +12409,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/13/2018 15:51:45</publishTime>
     </File>
     <File Include="Views/User/Login.cshtml">
-      <publishTime>01/10/2019 17:21:03</publishTime>
+      <publishTime>01/10/2019 22:06:13</publishTime>
     </File>
     <File Include="Views/User/ResetPassword.cshtml">
       <publishTime>12/24/2018 20:36:22</publishTime>
