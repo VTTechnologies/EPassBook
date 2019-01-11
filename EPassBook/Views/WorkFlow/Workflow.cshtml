@@ -76,7 +76,6 @@
     $(document).ready(function () {
         //$('select').selectpicker();
         $('#custtab a[data-toggle="tab"]').bind('click', function (e) {
-            debugger;
             e.preventDefault();
             var tab = $(this).attr("href");
             var url = '';
@@ -126,7 +125,6 @@
         });
 
         var role = '@ViewBag.RoleName'; //Accessing the Json Object from ViewBag
-        debugger;
         switch (role) {
             case 'DataEntry':
                 $('#custtab a[href="#tabdataEngineer"]').trigger('click');

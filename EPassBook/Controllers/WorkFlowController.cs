@@ -236,7 +236,14 @@ namespace EPassBook.Controllers
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
-            installmentviewmodel.Comments = null;
+
+            //Get Comment for Project Engineer
+            if (installmentviewmodel.Comments.Count > 0)
+                installmentviewmodel._Comments = installment.Comments.Where(w => w.RoleId == (int)Common.Roles.SiteEngineer && w.InstallementId == installmentId).Select(s => s.Comments).FirstOrDefault();
+
+            //Get Sign for Project Engineer
+            if (installmentviewmodel.InstallmentSignings.Count > 0)
+                installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.SiteEngineer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
             if (installmentviewmodel.lInRupees == "ZERO")
@@ -252,7 +259,7 @@ namespace EPassBook.Controllers
 
         [HttpPost]
         [CustomAuthorize(Common.SiteEngineer)]
-        public ActionResult SiteEngineer(InstallmentDetailsViewModel installmentDetailViewModel, string IsRadioButton)
+        public ActionResult SiteEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
             HttpPostedFileBase hasbandphoto = Request.Files["imguploadsiteeng"];
 
@@ -263,12 +270,12 @@ namespace EPassBook.Controllers
             {
                 if (Session["UserDetails"] != null)
                 {
-                    bool iscenter = true;
+                    //bool iscenter = true;
 
-                    if (IsRadioButton == "State Assistance")
-                    {
-                        iscenter = false;
-                    }
+                    //if (IsRadioButton == "State Assistance")
+                    //{
+                    //    iscenter = false;
+                    //}
 
                     var user = Session["UserDetails"] as UserViewModel;
                     installment.ModifiedBy = user.UserName;
@@ -276,7 +283,7 @@ namespace EPassBook.Controllers
 
                     installment.BeneficiaryAmnt = installmentDetailViewModel.BeneficiaryAmnt;
                     installment.LoanAmnt = installmentDetailViewModel.LoanAmnt;
-                    installment.IsCentreAmnt = iscenter;
+                    installment.IsCentreAmnt = installmentDetailViewModel.IsCentreAmnt;
                     installment.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
                     installment.StageID = (int)Common.WorkFlowStages.SiteEngineer;
                     installment.InstallmentNo = installmentDetailViewModel.InstallmentNo;
@@ -286,7 +293,8 @@ namespace EPassBook.Controllers
                     var comments = new Comment();
                     comments.Comments = installmentDetailViewModel._Comments;
                     comments.CreatedBy = user.UserName;
-                    comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    comments.BeneficiaryId = installment.BeneficiaryId;
+                    comments.RoleId = (int)Common.Roles.SiteEngineer;
                     comments.CreatedDate = DateTime.Now;
                     comments.CompanyID = user.CompanyID;
 
@@ -308,7 +316,7 @@ namespace EPassBook.Controllers
                     var signing = new InstallmentSigning();
                     signing.InstallmentId = installmentDetailViewModel.InstallmentId;
                     signing.UserId = user.UserId;
-                    signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                    signing.RoleId = (int)Common.Roles.SiteEngineer;
                     signing.Sign = true;
                     signing.CreatedDate = DateTime.Now;
                     signing.CreatedBy = user.UserName;
@@ -323,9 +331,7 @@ namespace EPassBook.Controllers
 
                     _installmentDetailService.SaveChanges();
 
-                    Session["InstallmentId"] = null;
                     ViewBag.Message = "sussess message";
-                    //return RedirectToAction("Index", "WorkFlow");
                 }
             }
 
@@ -383,17 +389,25 @@ namespace EPassBook.Controllers
             {
                  userdetails = Session["UserDetails"] as UserViewModel;
             }
-                InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
+
+            InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
-            installmentviewmodel.Comments = null;
-            if(installment.Comments.Count>0)
-            installmentviewmodel._Comments = installment.Comments.Where(w=>w.RoleId== userdetails.UserInRoles.FirstOrDefault().RoleId).Select(s=>s.Comments).FirstOrDefault();
+
+            //Get Comment for Project Engineer
+            if(installmentviewmodel.Comments.Count>0)
+            installmentviewmodel._Comments = installment.Comments.Where(w=>w.RoleId== (int)Common.Roles.ProjectEngineer && w.InstallementId==installmentId).Select(s=>s.Comments).FirstOrDefault();
+            
+            //Get Sign for Project Engineer
+            if (installmentviewmodel.InstallmentSignings.Count > 0)
+                installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.ProjectEngineer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
 
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
             if (installmentviewmodel.GeoTaggingDetails.Count>0)
                 installmentviewmodel.Photo ="/Uploads/SiteEngPhotos/"+ installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
+
+            
             if (installmentviewmodel.lInRupees == "ZERO")
             {
                 installmentviewmodel.lInRupees = null;
@@ -424,6 +438,7 @@ namespace EPassBook.Controllers
                 comments.Comments = installmentDetailViewModel._Comments;
                 comments.CreatedBy = user.UserName;
                 comments.BeneficiaryId = installment.BeneficiaryId;
+                comments.RoleId = (int)Common.Roles.ProjectEngineer;
                 comments.CreatedDate = DateTime.Now;
                 comments.CompanyID = user.CompanyID;
 
@@ -431,7 +446,7 @@ namespace EPassBook.Controllers
                 var signing = new InstallmentSigning();
                 signing.InstallmentId = installmentDetailViewModel.InstallmentId;
                 signing.UserId = user.UserId;
-                signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                signing.RoleId = (int)Common.Roles.ProjectEngineer;
                 signing.Sign = true;
                 signing.CreatedDate = DateTime.Now;
                 signing.CreatedBy = user.UserName;
@@ -446,7 +461,6 @@ namespace EPassBook.Controllers
 
                 _installmentDetailService.SaveChanges();
 
-                Session["InstallmentId"] = null;
                 ViewBag.Message = "sussess message";
 
                 installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
@@ -501,7 +515,8 @@ namespace EPassBook.Controllers
                 var comments = new Comment();
                 comments.Comments = installmentDetailViewModel._Comments;
                 comments.CreatedBy = user.UserName;
-                comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                comments.BeneficiaryId = installment.BeneficiaryId;
+                comments.RoleId = (int)Common.Roles.CityEngineer;
                 comments.CreatedDate = DateTime.Now;
                 comments.CompanyID = user.CompanyID;
 
@@ -509,7 +524,7 @@ namespace EPassBook.Controllers
                 var signing = new InstallmentSigning();
                 signing.InstallmentId = installmentDetailViewModel.InstallmentId;
                 signing.UserId = user.UserId;
-                signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                signing.RoleId = (int)Common.Roles.CityEngineer;//user.UserInRoles.FirstOrDefault().RoleId;
                 signing.Sign = true;
                 signing.CreatedDate = DateTime.Now;
                 signing.CreatedBy = user.UserName;
@@ -594,6 +609,7 @@ namespace EPassBook.Controllers
                     comments.Comments = installmentDetailViewModel._Comments;
                     comments.CreatedBy = user.UserName;
                     comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    comments.RoleId = (int)Common.Roles.ChiefOfficer;
                     comments.CreatedDate = DateTime.Now;
                     comments.CompanyID = user.CompanyID;
 
@@ -601,7 +617,7 @@ namespace EPassBook.Controllers
                     var signing = new InstallmentSigning();
                     signing.InstallmentId = installmentDetailViewModel.InstallmentId;
                     signing.UserId = user.UserId;
-                    signing.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                    signing.RoleId = (int)Common.Roles.ChiefOfficer;
                     signing.Sign = true;
                     signing.CreatedDate = DateTime.Now;
                     signing.CreatedBy = user.UserName;
@@ -616,14 +632,11 @@ namespace EPassBook.Controllers
 
                     _installmentDetailService.SaveChanges();
 
-                    Session["InstallmentId"] = null;
                     ViewBag.Message = "sussess message";
 
                     installmentDetailViewModel.BeneficiaryAmnt = installment.BeneficiaryAmnt;
                     installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
                     installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
-
-                    //return RedirectToAction("Index", "WorkFlow");
                 }
             }
 
@@ -652,8 +665,6 @@ namespace EPassBook.Controllers
                     Installment = s.InstallmentNo == 1 ? "First" : s.InstallmentNo == 2 ? "Second" : s.InstallmentNo == 3 ? "Thir" : s.InstallmentNo == 4 ? "Fourth" : s.InstallmentNo == 5 ? "Fifth" : s.InstallmentNo == 6 ? "Sixth-Cum Final" : "",
                     LevelType = s.InstallmentNo == 1 ? "At Plinth Level" : s.InstallmentNo == 2 ? "At Lintel Level" : s.InstallmentNo == 3 ? "At Roof Level" : s.InstallmentNo == 4 ? "For Finishing Completion" : s.InstallmentNo == 5 ? "Level" : s.InstallmentNo == 6 ? "Level" : "",
                     BeneficiaryAmount = s.BeneficiaryAmnt == null ? 0 : s.BeneficiaryAmnt,
-                    //CenterAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == true ? s.LoanAmnt : s.LoanAmnt,
-                    //StateAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == false ? s.LoanAmnt : s.LoanAmnt,
                     CenterAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == true ? s.LoanAmnt : 0,
                     StateAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == false ? s.LoanAmnt : 0,
                     ULBAmount = 0,
