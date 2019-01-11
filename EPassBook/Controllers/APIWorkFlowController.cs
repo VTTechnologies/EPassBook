@@ -76,7 +76,7 @@ namespace EPassBook.Controllers
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.Forbidden, "You are not having access application, Please contact administrator.");
+                return Request.CreateResponse(HttpStatusCode.Forbidden, "You are not having access to the application, Please contact to administrator.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace EPassBook.Controllers
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.Forbidden, "You are not having access application, Please contact administrator.");
+                return Request.CreateResponse(HttpStatusCode.Forbidden, "You are not having access to the application, Please contact to administrator.");
             }
 
         }
@@ -162,7 +162,7 @@ namespace EPassBook.Controllers
             }
             else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "There is some problem, Please contact administrator.");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "There is some problem, Please contact to administrator.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace EPassBook.Controllers
             }
             else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "There is some problem, Please contact administrator.");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "There is some problem, Please contact to administrator.");
             }
         }
     }

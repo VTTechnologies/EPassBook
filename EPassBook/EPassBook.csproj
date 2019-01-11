@@ -4334,6 +4334,7 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_AdminLeftMenu.cshtml" />
     <Content Include="Views\Shared\_WorkStatusDetails.cshtml" />
+    <Content Include="Views\Shared\_CommonSiteEngineer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
