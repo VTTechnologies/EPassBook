@@ -257,6 +257,7 @@ namespace EPassBook.Controllers
 
         [CustomAuthorize(Common.Admin)]
         [HttpGet]
+        [CustomAuthorize(Common.Admin)]
         public ActionResult Create()
         {
             //added all Roles in list
@@ -276,6 +277,7 @@ namespace EPassBook.Controllers
             return View();
         }
         [HttpPost]
+        [CustomAuthorize(Common.Admin)]
         public ActionResult Create([Bind(Exclude = "UserName,Password")] UserViewModel userVM)
         {
             if(!ModelState.IsValid)
@@ -310,6 +312,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(Common.Admin)]
         public ActionResult Index()
         {
             var users = _userService.Get(u => u.IsActive == true);
@@ -342,6 +345,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(Common.Admin)]
         public ActionResult Edit(int id)
         {
             var user = _userService.GetUserById(id);
@@ -364,6 +368,7 @@ namespace EPassBook.Controllers
             return View(mappedUser);
         }
         [HttpPost]
+        [CustomAuthorize(Common.Admin)]
         public ActionResult Edit([Bind(Exclude = "UserName")] UserViewModel userVM)
         {
             if(ModelState.IsValidField("FirstName")&& ModelState.IsValidField("LastName")
@@ -425,6 +430,7 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize(Common.Admin)]
         public ActionResult Details(int id)
         {
             var users = _userService.Get(u => u.UserId == id).FirstOrDefault();
@@ -434,6 +440,7 @@ namespace EPassBook.Controllers
             return View(userModel);
         }
         [HttpGet]
+        [CustomAuthorize(Common.Admin)]
         public ActionResult Delete(int id)
         {
             if (id > 0 || !string.IsNullOrWhiteSpace(id.ToString()))
