@@ -88,7 +88,11 @@ namespace EPassBook.Controllers
             InstallmentSigning instS = new InstallmentSigning();
             var installmentDetails = _installmentDetailService.GetInstallmentDetailById(installmentId);
             var benificiaryDetails = _benificiaryService.GetBenificiaryById(installmentDetails.BeneficiaryId);
+
             accountDetailsViewModel.InstallmentId = installmentId;
+            //Get Sign for Accountant
+            if (installmentDetails.InstallmentSignings.Count > 0)
+                accountDetailsViewModel.Sign = Convert.ToBoolean(installmentDetails.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.Accountant && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
 
             accountDetailsViewModel.LoanAmnt = Convert.ToInt32(installmentDetails.LoanAmnt);
             accountDetailsViewModel.IFSCCode = benificiaryDetails.IFSCCode;
@@ -383,7 +387,6 @@ namespace EPassBook.Controllers
                  userdetails = Session["UserDetails"] as UserViewModel;
             }
 
-            InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
 
@@ -466,13 +469,18 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult CityEngineer(int InstallmentId)
+        public ActionResult CityEngineer(int installmentId)
         {
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
-            var installment = _installmentDetailService.GetInstallmentDetailById(InstallmentId);
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
-            installmentviewmodel.Comments = null;
-            installmentviewmodel._Comments = null;
+            //Get Comment for City Engineer
+            if (installmentviewmodel.Comments.Count > 0)
+                installmentviewmodel._Comments = installment.Comments.Where(w => w.RoleId == (int)Common.Roles.CityEngineer && w.InstallementId == installmentId).Select(s => s.Comments).FirstOrDefault();
+
+            //Get Sign for City Engineer
+            if (installmentviewmodel.InstallmentSignings.Count > 0)
+                installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.CityEngineer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
 
@@ -548,13 +556,18 @@ namespace EPassBook.Controllers
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
-        public ActionResult ChiefOfficer(int InstallmentId)
+        public ActionResult ChiefOfficer(int installmentId)
         {
             InstallmentDetailsViewModel installvm = new InstallmentDetailsViewModel();
-            var installment = _installmentDetailService.GetInstallmentDetailById(InstallmentId);
+            var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
-            installmentviewmodel.Comments = null;
-            installmentviewmodel._Comments = null;
+            //Get Comment for Chief Officer
+            if (installmentviewmodel.Comments.Count > 0)
+                installmentviewmodel._Comments = installment.Comments.Where(w => w.RoleId == (int)Common.Roles.ChiefOfficer && w.InstallementId == installmentId).Select(s => s.Comments).FirstOrDefault();
+
+            //Get Sign for Chief Officer
+            if (installmentviewmodel.InstallmentSignings.Count > 0)
+                installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.ChiefOfficer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
 

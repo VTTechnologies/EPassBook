@@ -20,42 +20,49 @@
 <body class="hold-transition skin-blue layout-top-nav">
     <div class="wrapper">
         <header class="main-header">
-            <!-- Logo -->
-            <a href="@Url.Action("Index", "WorkFlow")" class="logo">
-                <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>E</b>Book</span>
-                <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>E </b>PassBook</span>
-            </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top">
-                <div class="container pull-right">
-                    <div class="navbar-custom-menu">
-                        <ul class="nav navbar-nav">
-                            <!-- User Account: style can be found in dropdown.less -->
-                            <li class="dropdown user user-menu ">
-                                <a href="#" id="signout" class="dropdown-toggle" data-toggle="dropdown">
-                                    Sign Out
-                                </a>
+                <div class="pull-left">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" id="userName" class="dropdown-toggle" data-toggle="dropdown">
+                                @{
+                                    if (HttpContext.Current.Session["UserDetails"] != null)
+                                    {
+                                        var user = HttpContext.Current.Session["UserDetails"] as EPassBook.Models.UserViewModel;
+                                        <b>@Html.Label("Welcome "+ user.FirstName)  @Html.Label(user.LastName)</b> @Html.Label("(" + user.RoleName + ")")
+                                    }
+                                }
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="pull-right">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu ">
+                            <a href="#" id="signout" class="dropdown-toggle" data-toggle="dropdown">
+                                Sign Out
+                            </a>
 
-                            </li>
-                        </ul>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
             </nav>
         </header>
-                            @RenderBody()
-                            @Html.Partial("_Footer")
-                            <div class="control-sidebar-bg"></div>
-                    </div>
+        @RenderBody()
+        @Html.Partial("_Footer")
+        <div class="control-sidebar-bg"></div>
+    </div>
 
-                    @Scripts.Render("~/bundles/lib")
+    @Scripts.Render("~/bundles/lib")
 
-                    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>
 
-<script type="text/javascript">$('#signout').on('click', function () {
+<script type="text/javascript">
+    $('#signout').on('click', function () {
         window.location.href = "/User/SignOut/";
     });</script>

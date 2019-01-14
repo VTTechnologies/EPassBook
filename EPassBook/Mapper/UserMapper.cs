@@ -82,6 +82,7 @@ namespace EPassBook.Mapper
                 MobileNo = userMaster.CompanyMaster.MobileNo,
 
             };
+            userViewModel.RoleName = userMaster.UserInRoles.FirstOrDefault().RoleMaster.RoleName;
             userViewModel.UserInRoles = userMaster.UserInRoles.Select(s => new UserInRoleViewModel { id = s.id, RoleId = s.RoleId.Value, UserId = s.UserId }).ToList();
             return userViewModel;
         }
