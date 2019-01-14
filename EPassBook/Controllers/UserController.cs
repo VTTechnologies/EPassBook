@@ -122,6 +122,8 @@ namespace EPassBook.Controllers
                     {
                         ModelState.AddModelError("Error", "The password provided is incorrect.");
                         Session["UserDetails"] = null;
+                        string pass = "MpTYWTXkIfUHm59992pCSg==";
+                        pass = pass.Decrypt();
                         return View();
                     }
                 }

@@ -32,7 +32,7 @@
 
                     <div class="form-group">                     
                         <div class="col-md-offset-2 col-md-10">
-                            @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "ProjectEngineer" }) @Html.Label("Project Engineer")
+                            @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkProjectEngineer" }) @Html.Label("Project Engineer")
                         </div>
                     </div>
 
@@ -76,12 +76,12 @@
 
     $(document).ready(function () {
         
-        $("#ProjectEngineer").change(function () {
+        $("#chkProjectEngineer").change(function () {
             $("#lblmsg_PM").text("");
         });
     });
     function validation_PM() {
-        if (!$("#ProjectEngineer").is(":checked")) {
+        if (!$("#chkProjectEngineer").is(":checked")) {
             $("#lblmsg_PM").text("Please sign in to confirm your submission");
             return false;
         }        

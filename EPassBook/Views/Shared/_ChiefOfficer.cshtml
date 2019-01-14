@@ -32,7 +32,8 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            @Html.CheckBox("ChkSign_CF", "no") @Html.Label("Chief Officer")
+                            @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkChiefOfficer" }) @Html.Label("Chief Officer")
+                            @*@Html.CheckBox("ChkSign_CF", "no") @Html.Label("Chief Officer")*@
                         </div>
                     </div>
 
@@ -44,11 +45,6 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            @Html.HiddenFor(x => x.IsCentreAmnt, new { id = "iscenterhdn_CE" })
-                            <input id="hiddforCheckbox_CF"
-                                   name="hiddforCheckbox_CF"
-                                   type="hidden"
-                                   value="no" />
                             <input type="submit" value="Send to Accountant" onclick="return validation_CF();" class="btn btn-primary" />
                         </div>
                     </div>
@@ -64,7 +60,6 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            debugger;
             $('#chiefofficerpanel').find(':input').prop('disabled', true);
         });
     </script>
@@ -74,7 +69,6 @@
 {
     <script type="text/javascript">
         window.onload = function () {
-            $("#ChkSign_CF").attr("checked", true)
             alert("submited successfully");
             window.location.href = "/WorkFlow/Index/";
         };
@@ -82,29 +76,19 @@
 
     </script>
 }
+    <script type="text/javascript">
 
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-        $("#ChkSign_CF").change(function () {
-            if ($("#ChkSign_CF").is(":checked")) {
-                $("#hiddforCheckbox_CF").val("Checked");
+        $(document).ready(function () {
+            $("#chkChiefOfficer").change(function () {
+                $("#lblmsg_CF").text("");
+            });
+        });
+        function validation_CF() {
+            if (!$("#chkChiefOfficer").is(":checked")) {
+                $("#lblmsg_CF").text("Please sign in to confirm your submission");
+                return false;
             }
-            else {
-                $("#hiddforCheckbox_CF").val("no");
-            }
-        })
-    });
-
-    function validation_CF() {
-        if ($("#hiddforCheckbox_CF").val() == "no") {
-            $("#lblmsg_CF").text("Please sign in to confirm your submission");
-            return false;
+            return true;
         }
-        return true;
-    }
-
-</script>
-
+    </script>
 

@@ -107,10 +107,10 @@ namespace EPassBook.Controllers
                 var instSigning = new InstallmentSigning();
                 var installmentDetail = _installmentDetailService.GetInstallmentDetailById(accountDetailsVM.InstallmentId);
 
-                instSigning.InstallmentId = accountDetailsVM.InstallmentId;
+                instSigning.InstallmentId = installmentDetail.InstallmentId;
                 instSigning.Sign = accountDetailsVM.Sign;
                 instSigning.UserId = user.UserId;
-                instSigning.RoleId = user.UserInRoles.FirstOrDefault().RoleId;
+                instSigning.RoleId = (int)Common.Roles.Accountant;
                 instSigning.CreatedDate = DateTime.Now;
                 instSigning.CreatedBy = user.UserName;
                 instSigning.CompanyID = user.CompanyID;
@@ -270,13 +270,6 @@ namespace EPassBook.Controllers
             {
                 if (Session["UserDetails"] != null)
                 {
-                    //bool iscenter = true;
-
-                    //if (IsRadioButton == "State Assistance")
-                    //{
-                    //    iscenter = false;
-                    //}
-
                     var user = Session["UserDetails"] as UserViewModel;
                     installment.ModifiedBy = user.UserName;
                     installment.CompanyID = user.CompanyID;
@@ -300,7 +293,7 @@ namespace EPassBook.Controllers
 
                     // Insert reocrd in GeoTaggingDetail table 
                     var geotaging = new GeoTaggingDetail();
-                    geotaging.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    geotaging.BeneficiaryId = installment.BeneficiaryId;
                     geotaging.CompanyID = user.CompanyID;
                     geotaging.ConstructionLevel = installmentDetailViewModel.ConstructionLevel;
                     geotaging.UserId = user.UserId;
@@ -314,7 +307,7 @@ namespace EPassBook.Controllers
 
                     // Insert reocrd in GeoTaggingDetail table 
                     var signing = new InstallmentSigning();
-                    signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                    signing.InstallmentId = installment.InstallmentId;
                     signing.UserId = user.UserId;
                     signing.RoleId = (int)Common.Roles.SiteEngineer;
                     signing.Sign = true;
@@ -593,9 +586,30 @@ namespace EPassBook.Controllers
 
                     if(installment.StageID== (int)Common.WorkFlowStages.Accountant)
                     {
-
                         installment.IsCompleted = true;
                         installment.StageID = (int)Common.WorkFlowStages.LastChiefOfficer;
+
+                        InstallmentDetail installmentDetail = new InstallmentDetail();
+                        //Insert new rocrd with new installment in installment details
+                        var newInstallmentNo = installment.InstallmentNo;
+                        if (newInstallmentNo <=6)
+                        {
+                            newInstallmentNo = newInstallmentNo + 1;
+                            installmentDetail.InstallmentNo = newInstallmentNo;
+                            installmentDetail.BeneficiaryId = installment.BeneficiaryId;
+                            installmentDetail.BeneficiaryAmnt = 0;
+                            installmentDetail.LoanAmnt = 0;
+                            installmentDetail.IsCentreAmnt = null;
+                            installmentDetail.StageID = 1;
+                            installmentDetail.IsCompleted = false;
+                            installmentDetail.CreatedDate = DateTime.Now;
+                            installmentDetail.CreatedBy = "System";
+                            installmentDetail.CompanyID = installment.CompanyID;
+                            installmentDetail.IsRecommended = false;
+
+                            _installmentDetailService.Add(installmentDetail);
+                            _installmentDetailService.SaveChanges();
+                        }
                     }
                     else
                     {
@@ -608,14 +622,14 @@ namespace EPassBook.Controllers
                     var comments = new Comment();
                     comments.Comments = installmentDetailViewModel._Comments;
                     comments.CreatedBy = user.UserName;
-                    comments.BeneficiaryId = installmentDetailViewModel.BeneficiaryId;
+                    comments.BeneficiaryId = installment.BeneficiaryId;
                     comments.RoleId = (int)Common.Roles.ChiefOfficer;
                     comments.CreatedDate = DateTime.Now;
                     comments.CompanyID = user.CompanyID;
 
                     // Insert reocrd in GeoTaggingDetail table 
                     var signing = new InstallmentSigning();
-                    signing.InstallmentId = installmentDetailViewModel.InstallmentId;
+                    signing.InstallmentId = installment.InstallmentId;
                     signing.UserId = user.UserId;
                     signing.RoleId = (int)Common.Roles.ChiefOfficer;
                     signing.Sign = true;
