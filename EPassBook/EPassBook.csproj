@@ -345,6 +345,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Error.css" />
     <Content Include="Content\img\bg1.jpg" />
+    <Content Include="Content\img\blue.jpg" />
+    <Content Include="Content\img\down.png" />
+    <Content Include="Content\img\green.png" />
     <Content Include="Content\img\icons\button-icons.png" />
     <Content Include="Content\img\icons\grid-menu-icons.png" />
     <Content Include="Content\img\icons\menu-icons.png" />
@@ -359,11 +362,13 @@
     <Content Include="Content\img\icons\weather-icons.png" />
     <Content Include="Content\img\icons\weather-main.png" />
     <Content Include="Content\img\loader.gif" />
+    <Content Include="Content\img\Red.jpg" />
     <Content Include="Content\img\spinner.gif" />
     <Content Include="Content\img\team\1.jpg" />
     <Content Include="Content\img\team\2.jpg" />
     <Content Include="Content\img\team\3.jpg" />
     <Content Include="Content\img\team\4.jpg" />
+    <Content Include="Content\img\up.ico" />
     <Content Include="Content\img\works\1.jpg" />
     <Content Include="Content\img\works\2.jpg" />
     <Content Include="Content\img\works\3.jpg" />
@@ -382,6 +387,7 @@
     <Content Include="Content\LeftMenu.css" />
     <Content Include="Content\select.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -4268,6 +4274,10 @@
     <Content Include="Scripts\adminlte\plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -4280,11 +4290,18 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\LandingPage\bootstrap.min.js" />
+    <Content Include="Scripts\LandingPage\CounterUp\jquery.counterup.min.js" />
+    <Content Include="Scripts\LandingPage\CounterUp\waypoints.min.js" />
     <Content Include="Scripts\LandingPage\custom.js" />
+    <Content Include="Scripts\LandingPage\isotope\imagesloaded.pkgd.min.js" />
+    <Content Include="Scripts\LandingPage\isotope\isotope.pkgd.min.js" />
     <Content Include="Scripts\LandingPage\jquery-1.10.2.js" />
     <Content Include="Scripts\LandingPage\jquery.easing.min.js" />
     <Content Include="Scripts\LandingPage\jquery.min.js" />
     <Content Include="Scripts\LandingPage\jquery.scrollTo.js" />
+    <Content Include="Scripts\LandingPage\owl.carousel.min.js" />
+    <Content Include="Scripts\LandingPage\stellar\jquery.stellar.js" />
+    <Content Include="Scripts\LandingPage\theme.js" />
     <Content Include="Scripts\LandingPage\wow.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
@@ -4346,6 +4363,9 @@
     <Content Include="Views\Shared\_CommonSiteEngineer.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Dashboard\FakeDashboard.cshtml" />
+    <Content Include="scss\_responsive.scss" />
+    <Content Include="scss\_services.scss" />
+    <Content Include="Scripts\LandingPage\style.css.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
