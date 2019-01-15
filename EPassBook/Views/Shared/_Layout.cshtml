@@ -30,7 +30,7 @@
                                     if (HttpContext.Current.Session["UserDetails"] != null)
                                     {
                                         var user = HttpContext.Current.Session["UserDetails"] as EPassBook.Models.UserViewModel;
-                                        <b>@Html.Label("Welcome "+ user.FirstName)  @Html.Label(user.LastName)</b> @Html.Label("(" + user.RoleName + ")")
+                                        <b>@Html.Label("Welcome " + user.FirstName == null ? "" : user.FirstName)  @Html.Label(user.LastName == null ? "" : user.LastName)</b> @Html.Label("(" + user.RoleName == null ? "" : user.RoleName + ")")
                                     }
                                 }
                             </a>

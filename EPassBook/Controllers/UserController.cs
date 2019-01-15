@@ -112,6 +112,10 @@ namespace EPassBook.Controllers
                             {
                                 return RedirectToAction("Index", "Beneficiary");
                             }
+                            else if (uservm.UserInRoles.FirstOrDefault().RoleId == Convert.ToInt32(Common.Roles.Admin))
+                            {
+                                return RedirectToAction("FakeDashboard", "Dashboard");
+                            }
                             else
                             {
                                 return RedirectToAction("Index", "WorkFlow");

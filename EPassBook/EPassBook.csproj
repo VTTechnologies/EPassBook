@@ -232,6 +232,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\APIWorkFlowController.cs" />
     <Compile Include="Controllers\BeneficiaryController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -331,6 +332,7 @@
     <Content Include="Content\adminlte\img\photo2.png" />
     <Content Include="Content\adminlte\img\photo3.jpg" />
     <Content Include="Content\adminlte\img\photo4.jpg" />
+    <Content Include="Content\adminlte\img\user.png" />
     <Content Include="Content\adminlte\img\user1-128x128.jpg" />
     <Content Include="Content\adminlte\img\user2-160x160.jpg" />
     <Content Include="Content\adminlte\img\user3-128x128.jpg" />
@@ -4342,6 +4344,8 @@
     <Content Include="Views\Shared\_AdminLeftMenu.cshtml" />
     <Content Include="Views\Shared\_WorkStatusDetails.cshtml" />
     <Content Include="Views\Shared\_CommonSiteEngineer.cshtml" />
+    <Content Include="Views\Dashboard\Dashboard.cshtml" />
+    <Content Include="Views\Dashboard\FakeDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
