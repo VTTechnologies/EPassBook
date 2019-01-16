@@ -248,8 +248,15 @@ namespace EPassBook.Controllers
             //Get Sign for Project Engineer
             if (installmentviewmodel.InstallmentSignings.Count > 0)
                 installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.SiteEngineer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
+            //Get Geo Tagging Photo
+            if (installmentviewmodel.GeoTaggingDetails.Count > 0)
+                installmentviewmodel.Photo = "/Uploads/SiteEngPhotos/" + installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
+
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+
+            
+
             if (installmentviewmodel.lInRupees == "ZERO")
             {
                 installmentviewmodel.lInRupees = null;
@@ -567,12 +574,14 @@ namespace EPassBook.Controllers
 
             //Get Sign for Chief Officer
             if (installmentviewmodel.InstallmentSignings.Count > 0)
-                installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.ChiefOfficer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
-            installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
-            installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+                installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.ChiefOfficer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());           
 
+            //Get Geotagging photo
             if (installmentviewmodel.GeoTaggingDetails.Count > 0)
                 installmentviewmodel.Photo = "/Uploads/SiteEngPhotos/" + installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
+
+            installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
+            installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
 
             if (installmentviewmodel.lInRupees == "ZERO")
             {
@@ -582,6 +591,7 @@ namespace EPassBook.Controllers
             {
                 installmentviewmodel.beniInRupees = null;
             }
+
             return PartialView("_ChiefOfficer", installmentviewmodel);
         }
 

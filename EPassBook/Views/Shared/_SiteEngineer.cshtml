@@ -21,6 +21,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
+                           
                         </div>
                         <div class="box-body">
                             <div class="form-group">
@@ -43,7 +44,6 @@
                                         @Html.Label("Comment", htmlAttributes: new { @class = "control-label" })
                                     </div>
                                     <div class="col-md-9">
-                                        @*@Html.TextArea("txtFirstComment", null, 5, 5, new { @class = "form-control" })*@
                                         @Html.TextBoxFor(model => model.FirstComment, htmlAttributes: new { @class = "form-control", @id = "txtFirstComment" })
                                         <div style="height:20px">
                                             <span id="commentError" class="errmsg"></span>
@@ -71,7 +71,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-
+                        <h4>Site Engineer</h4>
                     </div>
                     @using (Html.BeginForm("SiteEngineer", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
                     {
@@ -163,43 +163,29 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model._Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.TextAreaFor(model => model._Comments, 3, 100, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.TextAreaFor(model => model._Comments, htmlAttributes: new { @class = "form-control", @row=5} )
                                             @Html.ValidationMessageFor(model => model._Comments, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ModifiedBy, "Upload Photo", htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-5">
-                                            <img id="imgsite" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
-                                            <input type="file" value="Upload" id="imguploadsiteeng" name="imguploadsiteeng" onchange="readURL(this, 'imgsite')" class="btn btn-primary col-md-7" />
-                                            <input type="button" id="btnimg1cencal" onclick="removeimg('imgsite','imguploadsiteeng')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
+                                        <div class="col-md-8">
+                                            <img id="imgsite" src="@Model.Photo" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
+                                            <input type="file" value="Upload" id="imguploadsiteeng" name="imguploadsiteeng" onchange="readURL(this, 'imgsite')" class="btn btn-primary col-md-5 col-sm-5 col-xs-5" />
+                                            <input type="button" id="btnimg1cencal" onclick="removeimg('imgsite','imguploadsiteeng')" value="Cancel" class="btn btn-danger col-md-3 col-sm-3 col-xs-3 pull-right" />
                                         </div>
                                     </div>
 
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-10">
                                         @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "SiteEngineer" }) @Html.Label("Central Assistance")
-                                        @*@Html.CheckBox("ChkSign", "no") @Html.Label("Central Assistance")*@
                                     </div>
                                 </div>
 
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-10">
                                             <label id="lblmsg" class="text-danger"></label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <input id="hiddforRadio"
-                                                   name="hiddforRadio"
-                                                   type="hidden"
-                                                   value="no" />
-                                            <input id="hiddforCheckbox"
-                                                   name="hiddforCheckbox"
-                                                   type="hidden"
-                                                   value="no" />
                                         </div>
                                     </div>
                                     <div class="box-footer">
@@ -259,7 +245,6 @@
                 countries.push($(this).val());
             });
             $("#txtFirstComment").val(countries.join(", "));
-            //alert("You have selected the country - " + countries.join(", "));
         });
 
 
@@ -391,35 +376,8 @@
         });
     });
 
-    //$("#isrdo_1, #isrdo_2").change(function () {
-    //    if ($("#isrdo_1").is(":checked")) {
-    //        $("#hiddforRadio").val("Checked");
-    //    }
-    //    else if ($("#isrdo_2").is(":checked")) {
-    //        $("#hiddforRadio").val("Checked");
-    //    }
-    //});
-
-    @*var isstatecenter = '@Model.IsCentreAmnt';
-    if (isstatecenter != '') {
-        if (isstatecenter.toLocaleLowerCase() == 'true') {
-            $("#isrdo_1").attr("checked", false);
-            $("#isrdo_2").attr("checked", true);
-        }
-        else {
-            $("#isrdo_1").attr("checked", true);
-            $("#isrdo_2").attr("checked", false);
-        }
-    }*@
-
-    //$("#ChkSign").change(function () {
-    //    if ($("#ChkSign").is(":checked")) {
-    //        $("#hiddforCheckbox").val("Checked");
-    //    }
-    //});
 
     function validation() {
-        debugger;
         if ($("#isState").is(":checked") || $("#isCentre").is(":checked")) {
         }
         else {
