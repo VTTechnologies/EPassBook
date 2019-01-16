@@ -49,19 +49,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/04/2015 06:13:42</publishTime>
     </File>
     <File Include="bin/EPassBook.DAL.dll">
-      <publishTime>01/10/2019 14:16:36</publishTime>
+      <publishTime>01/16/2019 11:46:32</publishTime>
     </File>
     <File Include="bin/EPassBook.DAL.dll.config">
       <publishTime>12/26/2018 21:17:07</publishTime>
     </File>
     <File Include="bin/EPassBook.DAL.pdb">
-      <publishTime>01/10/2019 14:16:36</publishTime>
+      <publishTime>01/16/2019 11:46:32</publishTime>
     </File>
     <File Include="bin/EPassBook.dll">
-      <publishTime>01/14/2019 20:51:50</publishTime>
+      <publishTime>01/16/2019 11:48:59</publishTime>
     </File>
     <File Include="bin/EPassBook.pdb">
-      <publishTime>01/14/2019 20:51:50</publishTime>
+      <publishTime>01/16/2019 11:48:59</publishTime>
     </File>
     <File Include="bin/es/Microsoft.Data.Edm.resources.dll">
       <publishTime>12/24/2018 19:57:46</publishTime>
@@ -468,6 +468,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/adminlte/img/photo4.jpg">
       <publishTime>12/31/2018 17:03:59</publishTime>
     </File>
+    <File Include="Content/adminlte/img/user.png">
+      <publishTime>01/16/2019 11:35:55</publishTime>
+    </File>
     <File Include="Content/adminlte/img/user1-128x128.jpg">
       <publishTime>12/31/2018 17:03:59</publishTime>
     </File>
@@ -493,7 +496,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/31/2018 17:03:59</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>12/31/2018 17:03:59</publishTime>
+      <publishTime>01/15/2019 19:18:37</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
       <publishTime>12/31/2018 17:03:59</publishTime>
@@ -503,6 +506,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/img/bg1.jpg">
       <publishTime>12/14/2018 19:21:11</publishTime>
+    </File>
+    <File Include="Content/img/blue.jpg">
+      <publishTime>01/15/2019 19:12:27</publishTime>
+    </File>
+    <File Include="Content/img/green.png">
+      <publishTime>01/15/2019 19:12:42</publishTime>
     </File>
     <File Include="Content/img/icons/button-icons.png">
       <publishTime>12/14/2018 19:21:11</publishTime>
@@ -545,6 +554,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/img/loader.gif">
       <publishTime>12/14/2018 19:21:11</publishTime>
+    </File>
+    <File Include="Content/img/Red.jpg">
+      <publishTime>01/15/2019 19:12:59</publishTime>
     </File>
     <File Include="Content/img/spinner.gif">
       <publishTime>12/14/2018 19:21:11</publishTime>
@@ -598,13 +610,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/14/2018 19:21:11</publishTime>
     </File>
     <File Include="Content/Landingpagecss/font-awesome.min.css">
-      <publishTime>12/14/2018 19:21:11</publishTime>
+      <publishTime>01/15/2019 16:32:09</publishTime>
     </File>
     <File Include="Content/Landingpagecss/Logincss.css">
       <publishTime>12/14/2018 19:21:11</publishTime>
     </File>
     <File Include="Content/Landingpagecss/style.css">
-      <publishTime>12/14/2018 19:21:11</publishTime>
+      <publishTime>01/15/2019 20:48:43</publishTime>
     </File>
     <File Include="Content/LeftMenu.css">
       <publishTime>12/28/2018 20:23:09</publishTime>
@@ -617,6 +629,21 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="favicon.ico">
       <publishTime>12/05/2018 11:35:29</publishTime>
+    </File>
+    <File Include="fonts/fontawesome-webfont.eot">
+      <publishTime>01/15/2019 16:16:35</publishTime>
+    </File>
+    <File Include="fonts/fontawesome-webfont.svg">
+      <publishTime>01/15/2019 16:16:35</publishTime>
+    </File>
+    <File Include="fonts/fontawesome-webfont.ttf">
+      <publishTime>01/15/2019 16:16:35</publishTime>
+    </File>
+    <File Include="fonts/fontawesome-webfont.woff">
+      <publishTime>01/15/2019 16:16:35</publishTime>
+    </File>
+    <File Include="fonts/FontAwesome.otf">
+      <publishTime>01/15/2019 16:16:35</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.eot">
       <publishTime>12/05/2018 11:35:49</publishTime>
@@ -12294,8 +12321,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/LandingPage/bootstrap.min.js">
       <publishTime>12/12/2018 12:49:07</publishTime>
     </File>
+    <File Include="Scripts/LandingPage/CounterUp/jquery.counterup.min.js">
+      <publishTime>11/25/2013 08:53:06</publishTime>
+    </File>
+    <File Include="Scripts/LandingPage/CounterUp/waypoints.min.js">
+      <publishTime>08/27/2016 00:34:34</publishTime>
+    </File>
     <File Include="Scripts/LandingPage/custom.js">
       <publishTime>12/12/2018 12:49:07</publishTime>
+    </File>
+    <File Include="Scripts/LandingPage/isotope/imagesloaded.pkgd.min.js">
+      <publishTime>09/01/2016 07:03:18</publishTime>
+    </File>
+    <File Include="Scripts/LandingPage/isotope/isotope.pkgd.min.js">
+      <publishTime>08/29/2016 06:25:48</publishTime>
     </File>
     <File Include="Scripts/LandingPage/jquery-1.10.2.js">
       <publishTime>12/12/2018 12:49:07</publishTime>
@@ -12308,6 +12347,18 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/LandingPage/jquery.scrollTo.js">
       <publishTime>12/12/2018 12:49:07</publishTime>
+    </File>
+    <File Include="Scripts/LandingPage/owl.carousel.min.js">
+      <publishTime>01/15/2019 13:31:05</publishTime>
+    </File>
+    <File Include="Scripts/LandingPage/stellar/jquery.stellar.js">
+      <publishTime>03/14/2015 16:14:14</publishTime>
+    </File>
+    <File Include="Scripts/LandingPage/style.css.map">
+      <publishTime>01/15/2019 13:31:42</publishTime>
+    </File>
+    <File Include="Scripts/LandingPage/theme.js">
+      <publishTime>11/21/2016 07:57:58</publishTime>
     </File>
     <File Include="Scripts/LandingPage/wow.min.js">
       <publishTime>12/12/2018 12:49:07</publishTime>
@@ -12327,6 +12378,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/_references.js">
       <publishTime>12/26/2018 21:17:08</publishTime>
     </File>
+    <File Include="scss/_responsive.scss">
+      <publishTime>12/19/2016 09:13:54</publishTime>
+    </File>
+    <File Include="scss/_services.scss">
+      <publishTime>11/16/2016 10:35:26</publishTime>
+    </File>
     <File Include="Views/Beneficiary/Create.cshtml">
       <publishTime>01/11/2019 21:04:31</publishTime>
     </File>
@@ -12335,6 +12392,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Beneficiary/Index.cshtml">
       <publishTime>01/11/2019 19:32:34</publishTime>
+    </File>
+    <File Include="Views/Dashboard/Dashboard.cshtml">
+      <publishTime>01/16/2019 11:35:55</publishTime>
+    </File>
+    <File Include="Views/Dashboard/FakeDashboard.cshtml">
+      <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/Error/CustomErrors.cshtml">
       <publishTime>12/18/2018 11:38:20</publishTime>
@@ -12355,7 +12418,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/05/2018 11:35:29</publishTime>
     </File>
     <File Include="Views/Home/Website.cshtml">
-      <publishTime>01/14/2019 20:41:07</publishTime>
+      <publishTime>01/15/2019 20:33:35</publishTime>
     </File>
     <File Include="Views/Shared/.DS_Store">
       <publishTime>12/14/2018 19:11:25</publishTime>
@@ -12373,7 +12436,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/02/2019 20:44:10</publishTime>
     </File>
     <File Include="Views/Shared/_AdminLeftMenu.cshtml">
-      <publishTime>01/07/2019 18:07:48</publishTime>
+      <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/Shared/_ChiefOfficer.cshtml">
       <publishTime>01/14/2019 14:43:40</publishTime>
@@ -12391,16 +12454,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/02/2019 12:08:17</publishTime>
     </File>
     <File Include="Views/Shared/_Header.cshtml">
-      <publishTime>01/02/2019 12:08:17</publishTime>
+      <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/Shared/_InstallmentDetails.cshtml">
       <publishTime>01/10/2019 13:13:44</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>01/14/2019 20:51:18</publishTime>
+      <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/Shared/_LeftMenu.cshtml">
-      <publishTime>01/02/2019 12:08:17</publishTime>
+      <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/Shared/_ProjectEngineer.cshtml">
       <publishTime>01/14/2019 14:35:48</publishTime>
@@ -12415,19 +12478,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/07/2019 11:45:07</publishTime>
     </File>
     <File Include="Views/User/Create.cshtml">
-      <publishTime>01/10/2019 22:01:26</publishTime>
+      <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/User/Details.cshtml">
-      <publishTime>01/11/2019 12:01:06</publishTime>
+      <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/User/Edit.cshtml">
-      <publishTime>01/10/2019 22:22:18</publishTime>
+      <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/User/ForgetPassword.cshtml">
       <publishTime>12/28/2018 20:20:09</publishTime>
     </File>
     <File Include="Views/User/Index.cshtml">
-      <publishTime>01/11/2019 11:59:24</publishTime>
+      <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/User/IndexOld.cshtml">
       <publishTime>12/13/2018 15:51:45</publishTime>
