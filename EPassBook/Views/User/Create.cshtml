@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-           Creat User
+            Creat User
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>Create User</a></li>
@@ -22,121 +22,125 @@
                     @using (Html.BeginForm("Create", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
                     {
                         @Html.AntiForgeryToken()
-                        <div class="box-body">
+                    <div class="box-body">
 
-                            @*@Html.ValidationSummary( false, "", new { @class = "text-danger" })*@
+                        @Html.ValidationMessage("UserExist", null, new { @class = "text-danger" })
+                        <br /><br />
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-5">
-                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
-                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                                </div>
-                                <div class="col-md-5">
-                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Last Name" } })
-                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                                </div>
+                        @*@Html.ValidationSummary( false, "", new { @class = "text-danger" })*@
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-5">
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter First Name" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                             </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Dob, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Dob, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Dob, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="col-md-5">
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Last Name" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                             </div>
+                        </div>
 
-                            @*<div class="form-group">
-                                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>*@
-
-                            @*<div class="form-group">
-                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>*@
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    <div class="checkbox">
-                                        @Html.CheckBoxFor(model => model.IsActive.Value, htmlAttributes: new { @class = "Minimal", @checked = "checked" })
-                                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Dob, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Dob, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Dob, "", new { @class = "text-danger" })
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.RoleId, "RoleId", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.RoleId, TempData["roles"] as SelectList, "SELECT ROLE", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-                                </div>
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                             </div>
+                        </div>*@
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                </div>
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                             </div>
+                        </div>*@
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CityId, "CityId", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.CityId, TempData["Cities"] as SelectList, "SELECT CITY", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CompanyID, "CompanyID", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @*@Html.DropDownList("CompanyID",null, htmlAttributes: new { @class = "form-control" })*@
-                                    @Html.DropDownListFor(model => model.CompanyID, TempData["companies"] as SelectList, "SELECT COMPANY", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            @*<div class="form-group">
-                                    @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        <div class="checkbox">
-                                            @Html.EditorFor(model => model.RememberMe)
-                                            @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>*@
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Create" class="btn btn-primary" />
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(model => model.IsActive.Value, htmlAttributes: new { @class = "Minimal", @checked = "checked" })
+                                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RoleId, "RoleId", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @*@Html.DropDownListFor(model => model.RoleId, TempData["roles"] as SelectList, "SELECT ROLE", new { @class = "form-control" })*@
+                                @Html.DropDownListFor(model => model.RoleId, Model.Roles, "SELECT ROLE", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CityId, "CityId", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @*@Html.DropDownListFor(model => model.CityId, TempData["Cities"] as SelectList, "SELECT CITY", new { @class = "form-control" })*@
+                                @Html.DropDownListFor(model => model.CityId, Model.Cities, "SELECT CITY", new { @class = "form-control", id = "ddlCity" })
+                                @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.CompanyID, "CompanyID", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.CompanyID, TempData["companies"] as SelectList, "SELECT COMPANY", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.RememberMe)
+                                    @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>*@
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-primary" id="btnSubmit" />
+                            </div>
+                        </div>
+                    </div>
                     }
                 </div>
             </div>
@@ -155,5 +159,68 @@
             changeYear: true
         });
     });
+
+    function checkexistuser() {
+        debugger;
+        var cityId = $('#ddlCity :selected').val();
+
+        if (id != '') {
+            $.ajax({
+                type: "POST",
+                url: "/User/CheckUserByCityID?cityId=" + cityId,
+                success: (function (response) {
+                    debugger;
+                    if (response == 'True') {
+                        alert("User already added for this city. Please delete him first or change city");
+                        return false;
+                    }
+                    else {
+                        CreatUser(data);
+                    }
+                }),
+                error: (function (response) {
+                    alert("some error occured please try again");
+                    return false;
+                })
+            });
+        }
+
+    };
+
+    function CreatUser(data) {
+        debugger;
+
+        var fname = $("#FirstName").text();
+        var lname = $("#FirstName").text();
+        var dob = $("#FirstName").text();
+        var mobileno = $("#FirstName").text();
+        var address = $("#FirstName").text();
+        var isactive = $("#FirstName").text();
+        var cityId = $('#ddlCity :selected').val();
+
+        var id = $('#ddlCity :selected').val();
+        if (id != '') {
+            $.ajax({
+                type: "POST",
+                url: "/User/CheckUserByCityID?cityId=" + id,
+                success: (function (response) {
+                    debugger;
+                    if (response == 'True') {
+                        alert("User already added for this city. Please delete him first or change city");
+                        return false;
+                    }
+                    else {
+
+
+                    }
+                }),
+                error: (function (response) {
+                    alert("some error occured please try again");
+                    return false;
+                })
+            });
+        }
+
+    };
 </script>
 

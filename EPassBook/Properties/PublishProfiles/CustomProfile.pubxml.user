@@ -58,10 +58,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/16/2019 11:46:32</publishTime>
     </File>
     <File Include="bin/EPassBook.dll">
-      <publishTime>01/16/2019 11:48:59</publishTime>
+      <publishTime>01/16/2019 17:50:24</publishTime>
     </File>
     <File Include="bin/EPassBook.pdb">
-      <publishTime>01/16/2019 11:48:59</publishTime>
+      <publishTime>01/16/2019 17:50:24</publishTime>
     </File>
     <File Include="bin/es/Microsoft.Data.Edm.resources.dll">
       <publishTime>12/24/2018 19:57:46</publishTime>
@@ -576,6 +576,42 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/img/text.png">
       <publishTime>12/18/2018 11:38:19</publishTime>
     </File>
+    <File Include="Content/img/ValuesIcons/commitment.png">
+      <publishTime>01/16/2019 13:20:32</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/Creativity.png">
+      <publishTime>01/16/2019 13:31:20</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/Equity.png">
+      <publishTime>01/16/2019 13:33:46</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/Fellowship.png">
+      <publishTime>01/16/2019 13:26:38</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/Gender sensitivity.png">
+      <publishTime>01/16/2019 13:32:49</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/humility.png">
+      <publishTime>01/16/2019 13:30:52</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/Inclusiveness.png">
+      <publishTime>01/16/2019 13:25:08</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/Integrity.png">
+      <publishTime>01/16/2019 13:27:15</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/Professionalism.png">
+      <publishTime>01/16/2019 13:21:58</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/selfCritisim.png">
+      <publishTime>01/16/2019 13:28:51</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/sensitivity.png">
+      <publishTime>01/16/2019 13:29:55</publishTime>
+    </File>
+    <File Include="Content/img/ValuesIcons/Transparency.png">
+      <publishTime>01/16/2019 13:23:32</publishTime>
+    </File>
     <File Include="Content/img/works/1.jpg">
       <publishTime>12/14/2018 19:21:11</publishTime>
     </File>
@@ -606,6 +642,60 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/Landingpagecss/bootstrap.min.css">
       <publishTime>12/14/2018 19:21:11</publishTime>
     </File>
+    <File Include="Content/Landingpagecss/camera-slider/camera.css">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/camera.min.js">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/blank.gif">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/camera-loader.gif">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/camera_skins.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/next.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/patterns/overlay1.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/patterns/overlay10.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/patterns/overlay2.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/patterns/overlay3.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/patterns/overlay4.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/patterns/overlay5.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/patterns/overlay6.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/patterns/overlay7.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/patterns/overlay8.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/patterns/overlay9.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/images/prev.png">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
+    <File Include="Content/Landingpagecss/camera-slider/jquery.easing.1.3.js">
+      <publishTime>01/16/2019 12:56:32</publishTime>
+    </File>
     <File Include="Content/Landingpagecss/default.css">
       <publishTime>12/14/2018 19:21:11</publishTime>
     </File>
@@ -616,7 +706,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/14/2018 19:21:11</publishTime>
     </File>
     <File Include="Content/Landingpagecss/style.css">
-      <publishTime>01/15/2019 20:48:43</publishTime>
+      <publishTime>01/16/2019 17:46:35</publishTime>
     </File>
     <File Include="Content/LeftMenu.css">
       <publishTime>12/28/2018 20:23:09</publishTime>
@@ -12418,7 +12508,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/05/2018 11:35:29</publishTime>
     </File>
     <File Include="Views/Home/Website.cshtml">
-      <publishTime>01/15/2019 20:33:35</publishTime>
+      <publishTime>01/16/2019 17:41:55</publishTime>
     </File>
     <File Include="Views/Shared/.DS_Store">
       <publishTime>12/14/2018 19:11:25</publishTime>
@@ -12430,25 +12520,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/28/2018 16:12:55</publishTime>
     </File>
     <File Include="Views/Shared/_Accountant.cshtml">
-      <publishTime>01/14/2019 15:16:16</publishTime>
+      <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/Shared/_AdminLayout.cshtml">
       <publishTime>01/02/2019 20:44:10</publishTime>
     </File>
     <File Include="Views/Shared/_AdminLeftMenu.cshtml">
-      <publishTime>01/16/2019 11:35:55</publishTime>
+      <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/Shared/_ChiefOfficer.cshtml">
-      <publishTime>01/14/2019 14:43:40</publishTime>
+      <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/Shared/_CityEngineer.cshtml">
-      <publishTime>01/14/2019 15:09:41</publishTime>
+      <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/Shared/_CommonSiteEngineer.cshtml">
       <publishTime>01/11/2019 16:04:14</publishTime>
     </File>
     <File Include="Views/Shared/_DataEntry.cshtml">
-      <publishTime>01/11/2019 11:51:35</publishTime>
+      <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/Shared/_Footer.cshtml">
       <publishTime>01/02/2019 12:08:17</publishTime>
@@ -12460,22 +12550,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/10/2019 13:13:44</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>01/16/2019 11:35:55</publishTime>
+      <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/Shared/_LeftMenu.cshtml">
       <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/Shared/_ProjectEngineer.cshtml">
-      <publishTime>01/14/2019 14:35:48</publishTime>
+      <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/Shared/_SiteEngineer.cshtml">
-      <publishTime>01/11/2019 21:20:59</publishTime>
+      <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/Shared/_SurveyDetails.cshtml">
-      <publishTime>01/10/2019 12:50:35</publishTime>
+      <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/Shared/_WorkStatusDetails.cshtml">
-      <publishTime>01/07/2019 11:45:07</publishTime>
+      <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/User/Create.cshtml">
       <publishTime>01/16/2019 11:35:55</publishTime>

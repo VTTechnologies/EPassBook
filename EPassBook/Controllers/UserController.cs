@@ -33,37 +33,7 @@ namespace EPassBook.Controllers
             _userService = userService;
         }
         // GET: User
-        public ActionResult IndexOld()
-        {
-            var users = _userService.GetAllUsers();
-
-            var userModel = users.Select(s => new UserViewModel { UserId = s.UserId, UserName = s.UserName, Password = s.Password, IsActive = s.IsActive }).ToList();
-            //var userModel = _mapper.Map< IEnumerable<UserMaster>, IEnumerable<UserViewModel>>(users);
-           
-
-            return View(userModel);
-        }
-
-        [HttpGet]
-        public ActionResult CreateOld()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult CreateOld(UserViewModel user)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(user);
-            }
-
-            var userModel = Mapper.UserMapper.Attach(user);
-            //var userModel = _mapper.Map<UserViewModel, UserMaster>(user);
-            _userService.Add(userModel);
-            _userService.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+        
         [HttpGet]
         public ActionResult SignOut()
         {
@@ -126,8 +96,6 @@ namespace EPassBook.Controllers
                     {
                         ModelState.AddModelError("Error", "The password provided is incorrect.");
                         Session["UserDetails"] = null;
-                        string pass = "MpTYWTXkIfUHm59992pCSg==";
-                        pass = pass.Decrypt();
                         return View();
                     }
                 }
@@ -144,8 +112,6 @@ namespace EPassBook.Controllers
                 return View();
             }
         }
-        //ather code start frm here
-
         [HttpGet]
         public ActionResult ResetPassword()
         {
@@ -215,9 +181,8 @@ namespace EPassBook.Controllers
                 ViewData["Error"] = "Email does not exist";
                 return RedirectToAction("ForgetPassword");
             }
-
-            GMailer.GmailUsername = "athersayed.vtt@gmail.com";
-            GMailer.GmailPassword = "rahtasayed..";
+            GMailer.GmailUsername = "";
+            GMailer.GmailPassword = "";
 
             GMailer mailer = new GMailer();
             mailer.ToEmail = user.Email;
@@ -226,29 +191,7 @@ namespace EPassBook.Controllers
             mailer.Send();
 
             return View();
-        }
-
-        [HttpGet]
-        public ActionResult sendMail()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult sendMail(Mail mail)
-        {
-            //GMailer.GmailUsername = "athersayed.vtt@gmail.com";
-            //GMailer.GmailPassword = "rahtasayed..";
-
-            //GMailer mailer = new GMailer();
-            //mailer.ToEmail = mail.ToEmail;
-            //mailer.Subject = mail.Subject;
-            //mailer.Body = PopulateBody(mail);
-            //mailer.IsHtml = true;
-            //mailer.Send();
-            return View();
-        }
-
+        }     
         public string PopulateBody(UserMaster user)
         {
             string body = string.Empty;
@@ -262,42 +205,61 @@ namespace EPassBook.Controllers
             //body = body.Replace("{Description}", user.Description);
             return body;
         }
-
+        
         [CustomAuthorize(Common.Admin)]
         [HttpGet]
         [CustomAuthorize(Common.Admin)]
         public ActionResult Create()
         {
-            //added all Roles in list
-            List<RoleMaster> roleList = _roleMasterService.GetAllRoles().ToList();
-            //added all cities in list
-            List<CityMaster> cityList = _cityMasterService.GetAllCities().ToList();
-            //added all companies in list
-            List<CompanyMaster> companyList = _companyMasterService.GetAllCompanies().ToList();
-
-            // passed RoleList to viewdata for binding to Role dropdown
-            TempData["roles"] = new SelectList(roleList, "RoleId", "RoleName");
-            // passed City List to viewdata for binding to city dropdown
-            TempData["Cities"] = new SelectList(cityList, "CityId", "CityName");
-            // passed Company list to viewdata for binding to Role dropdown
-            TempData["companies"] = new SelectList(companyList, "CompanyID", "CompanyName");
-            TempData.Keep();
-            return View();
+            var roles = _roleMasterService.Get(r => r.IsActive == true);
+            var cities = _cityMasterService.Get(r => r.IsActive == true);
+            UserViewModel um = new UserViewModel();
+            um.IsActive = true;
+            um.Roles = roles.Select(s => new SelectListItem { Text = s.RoleName, Value = s.RoleId.ToString() }).ToList();
+            um.Cities = cities.Select(c => new SelectListItem { Text = c.CityName, Value = c.CityId.ToString() }).ToList();
+            return View(um);
         }
         [HttpPost]
         [CustomAuthorize(Common.Admin)]
-        public ActionResult Create([Bind(Exclude = "UserName,Password")] UserViewModel userVM)
+        public ActionResult Create([Bind(Exclude = "UserName,Password,CompanyID")] UserViewModel userVM)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValidField("UserName") && !ModelState.IsValidField("Password")
+                && !ModelState.IsValidField("CompanyID"))
+            { 
+                var roles = _roleMasterService.Get(r => r.IsActive == true);
+                var cities = _cityMasterService.Get(r => r.IsActive == true);
+                UserViewModel um = new UserViewModel();
+                um.Roles = roles.Select(s => new SelectListItem { Text = s.RoleName, Value = s.RoleId.ToString() }).ToList();
+                um.Cities = cities.Select(c => new SelectListItem { Text = c.CityName, Value = c.CityId.ToString() }).ToList();
+                um.IsActive = true;
+                return View(um);
+            }
+            int? companyId = 0;
+            if(Session["UserDetails"] != null)
             {
-                return View();
+                var admindata = Session["UserDetails"] as UserViewModel;
+                companyId = admindata.CompanyID;
+            }
+            else
+            {
+                RedirectToAction("Login");
+            }
+            if(CheckUserByCityAndRole(userVM))
+            {
+                ModelState.AddModelError("UserExist", "User already exist for selected role. Please change the city or role");
+                var roles = _roleMasterService.Get(r => r.IsActive == true);
+                var cities = _cityMasterService.Get(r => r.IsActive == true);
+                userVM.Roles = roles.Select(s => new SelectListItem { Text = s.RoleName, Value = s.RoleId.ToString() }).ToList();
+                userVM.Cities = cities.Select(c => new SelectListItem { Text = c.CityName, Value = c.CityId.ToString() }).ToList();
+                userVM.IsActive = true;
+                return View(userVM);
             }
             var fName = userVM.FirstName;
             var lName = userVM.LastName;
             var mobileNo = userVM.MobileNo;
 
-            string firstCharOfFname = 
-                !String.IsNullOrWhiteSpace(fName) && fName.Length >= 1? fName.Substring(0, 1) : fName;
+            string firstCharOfFname =
+                !String.IsNullOrWhiteSpace(fName) && fName.Length >= 1 ? fName.Substring(0, 1) : fName;
             var userName = firstCharOfFname + userVM.LastName;
 
             string firstCharOfLname =
@@ -308,22 +270,30 @@ namespace EPassBook.Controllers
             userVM.IsActive = true;
             userVM.UserName = userName;
             userVM.Password = password;
+            userVM.CompanyID = companyId;
             userVM.UserInRoles = new List<UserInRoleViewModel>();
             userVM.UserInRoles.Add(new UserInRoleViewModel() { RoleId= userVM.RoleId });
             var userData = Mapper.UserMapper.Attach(userVM);
             _userService.Add(userData);
             _userService.SaveChanges();
-            //var roleData = Mapper.UserInRoleMapper.Attach(userInRole);
-            //userData.UserInRoles.Add(roleData);
-            //_userService.SaveChanges();
             return RedirectToAction("Index");
-        }
+        }       
 
         [HttpGet]
         [CustomAuthorize(Common.Admin)]
         public ActionResult Index()
         {
-            var users = _userService.Get(u => u.IsActive == true);
+            int? companyId = 0;
+            if (Session["UserDetails"] != null)
+            {
+                var admindata = Session["UserDetails"] as UserViewModel;
+                companyId = admindata.CompanyID;
+            }
+            else
+            {
+                RedirectToAction("Login");
+            }
+            var users = _userService.Get(u => u.IsActive == true & u.CompanyID == companyId, u => u.OrderBy(o => o.UserId), "");
             var mappedUser = users.Select(s => new UserViewModel
             {
                 UserId = s.UserId,
@@ -384,6 +354,17 @@ namespace EPassBook.Controllers
                 && ModelState.IsValidField("RoleId") && ModelState.IsValidField("Email")
                 && ModelState.IsValidField("MobileNo")&& ModelState.IsValidField("CityId"))
             {
+                if (CheckUserByCityAndRole(userVM))
+                {
+                    ModelState.AddModelError("UserExist", "User already exist for selected role. Please change the city or role");
+                    var roles = _roleMasterService.Get(r => r.IsActive == true);
+                    var cities = _cityMasterService.Get(r => r.IsActive == true);
+                    userVM.Roles = roles.Select(s => new SelectListItem { Text = s.RoleName, Value = s.RoleId.ToString() }).ToList();
+                    userVM.Cities = cities.Select(c => new SelectListItem { Text = c.CityName, Value = c.CityId.ToString() }).ToList();
+                    userVM.IsActive = true;
+                    return View(userVM);
+                }
+
                 var fName = userVM.FirstName;
                 var lName = userVM.LastName;
                 var mobileNo = userVM.MobileNo;
@@ -461,6 +442,58 @@ namespace EPassBook.Controllers
             }
             return RedirectToAction("Index");
         }
-        
+
+        [HttpPost]
+        [CustomAuthorize(Common.Admin)]
+        public bool CheckUserByCityAndRole(UserViewModel userVM)
+        {
+            int roleId = userVM.RoleId;
+            int userid = userVM.UserId;
+            bool exist = false;
+            var listOfUsers = _userService.GetAllUsers().Where(u => u.CityId == userVM.CityId && u.IsActive == true).ToList();
+
+            if (roleId == (int)Common.Roles.DataEntry) // no validation for data entry user
+            {
+                return exist;
+            }
+            if (userid == 0) //validation for create user
+            {
+                if (listOfUsers.Count > 0)
+                {
+                    foreach (var user in listOfUsers)
+                    {
+                        var exst = user.UserInRoles.Where(u => u.RoleId == roleId).Any();
+                        if (exst)
+                        {
+                            exist = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (userid != 0) //validation for Edit user
+            {
+                if (listOfUsers.Count > 0)
+                {
+                    foreach (var user in listOfUsers)
+                    {
+                        var exst = user.UserInRoles.Where(u => u.RoleId == roleId).Select(r => r.UserId).FirstOrDefault();
+                        if (exst != null)
+                        {
+                            if (exst == userid)
+                            {
+                                exist = false;
+                            }
+                            else
+                            {
+                                exist = true;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            return exist;
+        }
     }
 }

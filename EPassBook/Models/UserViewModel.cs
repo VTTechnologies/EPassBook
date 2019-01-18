@@ -27,6 +27,7 @@ namespace EPassBook.Models
         [Required(ErrorMessage = "Please select user role.")]
         public int RoleId { get; set; }
         [Required(ErrorMessage = "Email is required.")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Mobile No is required.")]
         public string MobileNo { get; set; }
