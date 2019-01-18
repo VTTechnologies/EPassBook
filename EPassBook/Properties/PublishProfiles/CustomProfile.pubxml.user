@@ -49,19 +49,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/04/2015 06:13:42</publishTime>
     </File>
     <File Include="bin/EPassBook.DAL.dll">
-      <publishTime>01/16/2019 11:46:32</publishTime>
+      <publishTime>01/18/2019 14:13:16</publishTime>
     </File>
     <File Include="bin/EPassBook.DAL.dll.config">
       <publishTime>12/26/2018 21:17:07</publishTime>
     </File>
     <File Include="bin/EPassBook.DAL.pdb">
-      <publishTime>01/16/2019 11:46:32</publishTime>
+      <publishTime>01/18/2019 14:13:16</publishTime>
     </File>
     <File Include="bin/EPassBook.dll">
-      <publishTime>01/16/2019 17:50:24</publishTime>
+      <publishTime>01/18/2019 16:37:52</publishTime>
     </File>
     <File Include="bin/EPassBook.pdb">
-      <publishTime>01/16/2019 17:50:24</publishTime>
+      <publishTime>01/18/2019 16:37:51</publishTime>
     </File>
     <File Include="bin/es/Microsoft.Data.Edm.resources.dll">
       <publishTime>12/24/2018 19:57:46</publishTime>
@@ -12568,13 +12568,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/16/2019 17:49:27</publishTime>
     </File>
     <File Include="Views/User/Create.cshtml">
-      <publishTime>01/16/2019 11:35:55</publishTime>
+      <publishTime>01/18/2019 14:10:54</publishTime>
     </File>
     <File Include="Views/User/Details.cshtml">
       <publishTime>01/16/2019 11:35:55</publishTime>
     </File>
     <File Include="Views/User/Edit.cshtml">
-      <publishTime>01/16/2019 11:35:55</publishTime>
+      <publishTime>01/18/2019 14:09:34</publishTime>
     </File>
     <File Include="Views/User/ForgetPassword.cshtml">
       <publishTime>12/28/2018 20:20:09</publishTime>

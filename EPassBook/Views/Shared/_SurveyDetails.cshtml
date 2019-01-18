@@ -10,33 +10,35 @@
                         <h4>Survey Details</h4>
                     </div>
                     <div class="box-body">
-                        <table id="surveyDetails" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Name of the Surveyer</th>
-                                    <th>Role</th>
-                                    <th>Mobile</th>
-                                    <th>Physical Progress</th>
-                                    <th>Instruction/Suggestion</th>
-                                    <th>Signature</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var items in Model)
-                                {
+                        <div class="table-responsive">
+                            <table id="surveyDetails" class="table table-bordered table-striped" style="">
+                                <thead>
                                     <tr>
-                                        <td>@items.CreatedDate.Value.ToString("dd MMM yyyy")</td>
-                                        <td>@items.UserName</td>
-                                        <th>@items.Role</th>
-                                        <td>@items.MobileNo</td>
-                                        <td>@items.Physical_Progress</td>
-                                        <td>@items.Comments</td>
-                                        <td>@Html.CheckBoxFor(m => items.Sign, new { @disabled = "disabled" })</td>
+                                        <th>Date</th>
+                                        <th>Name of the Surveyer</th>
+                                        <th>Role</th>
+                                        <th>Mobile</th>
+                                        <th>Physical Progress</th>
+                                        <th>Instruction/Suggestion</th>
+                                        <th>Signature</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var items in Model)
+                                    {
+                                        <tr>
+                                            <td>@items.CreatedDate.Value.ToString("dd MMM yyyy")</td>
+                                            <td>@items.UserName</td>
+                                            <th>@items.Role</th>
+                                            <td>@items.MobileNo</td>
+                                            <td>@items.Physical_Progress</td>
+                                            <td>@items.Comments</td>
+                                            <td>@Html.CheckBoxFor(m => items.Sign, new { @disabled = "disabled" })</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
