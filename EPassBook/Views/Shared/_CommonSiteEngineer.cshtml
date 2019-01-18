@@ -50,17 +50,26 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ConstructionLevel, "Via RTGS/DBT to the beneficiary for the plan as first instalmentafter digging of the foundation.", htmlAttributes: new { @class = "control-label col-md-7", @disabled = "disabled" })
-            <div class="col-md-3">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="text-align-last:end">
+
+                <strong>Via RTGS/DBT to the beneficiary for the plan as first instalment after </strong>
+
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 @Html.DropDownListFor(model => model.ConstructionLevel, new SelectList(new List<object>
                     {
-                    new{ value=0, text="A" },
-                    new{ value=1, text="B" },
-                    new{ value=2, text="C" },
+                    new{ value="Digging", text="Digging" },
+                    new{ value="A", text="A" },
+                    new{ value="B", text="B" },
                     },
                     "value",
                     "text"),"Select Items",
-                     new { @class = "form-control", disabled = "disabled" })
+                    new {  @class = "form-control",disabled="disabled"})
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <p>
+                    <strong> of the foundation.</strong>
+                </p>
             </div>
         </div>
         <div class="form-group">
