@@ -109,7 +109,7 @@
                                 <div class="form-group">
                                     @Html.Label("State Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        <div class="checkbox">
+                                        <div class="checkbox icheck">
                                             @Html.RadioButtonFor(model => model.IsCentreAmnt, false,new { id="isState" })State Assistance
                                         </div>
                                     </div>
@@ -117,7 +117,7 @@
                                 <div class="form-group">
                                     @Html.Label("Central Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        <div class="checkbox">
+                                        <div class="checkbox icheck">
                                             @Html.RadioButtonFor(model => model.IsCentreAmnt, true, new { id = "isCentre" })Central Assistance
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
                                     </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
+                                    <div class="checkbox icheck col-md-offset-2 col-md-10">
                                         @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "SiteEngineer" }) @Html.Label("Central Assistance")
                                     </div>
                                 </div>
@@ -224,7 +224,11 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
             var check = '@Model.IsRecommended';
             //TODO
             check = check.toLowerCase();

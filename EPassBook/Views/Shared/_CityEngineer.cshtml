@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox icheck col-md-offset-2 col-md-10">
                             @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkCityEngineer" }) @Html.Label("City Engineer")
                         </div>
                     </div>
@@ -74,6 +74,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
+
         $("#chkCityEngineer").change(function () {
             $("#lblmsg_CE").text("");
         });

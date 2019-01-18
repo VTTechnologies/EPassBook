@@ -24,7 +24,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IsCentreAmnt, "State Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
+                <div class="checkbox icheck">
                     @Html.RadioButtonFor(model => model.IsCentreAmnt, false, new { @disabled = "disabled" })State Assistance
                 </div>
             </div>
@@ -32,7 +32,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IsCentreAmnt, "Central Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
+                <div class="checkbox icheck">
                     @Html.RadioButtonFor(model => model.IsCentreAmnt, true, new { @disabled = "disabled" })Central Assistance
                 </div>
             </div>
