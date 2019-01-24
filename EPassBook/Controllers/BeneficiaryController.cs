@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace EPassBook.Controllers
 {
+    [ElmahError]
     public class BeneficiaryController : Controller
     {
         IBenificiaryService _benificiaryService;
@@ -20,8 +21,19 @@ namespace EPassBook.Controllers
             _installmentDetailService = installmentDetailService;
         }
         // GET: Beneficiary
+        [CustomAuthorize(Common.DataEntry, Common.Admin)]
         public ActionResult Index()
         {
+            int? companyId = 0;
+            if (Session["UserDetails"] != null)
+            {
+                var admindata = Session["UserDetails"] as UserViewModel;
+                companyId = admindata.CompanyID;
+            }
+            else
+            {
+                RedirectToAction("Login");
+            }
             var beneficiaries = _benificiaryService.GetAllBenificiaries();
             var beneficiaryviewmodel = beneficiaries.Select(s => new BeneficiaryViewModel
             {
@@ -40,6 +52,7 @@ namespace EPassBook.Controllers
         }
 
         // GET: Beneficiary/Create
+        [CustomAuthorize(Common.DataEntry, Common.Admin)]
         public ActionResult Create()
         {
             return View();
@@ -47,7 +60,7 @@ namespace EPassBook.Controllers
 
         // POST: Beneficiary/Create
         [HttpPost]
-        [CustomAuthorize(Common.DataEntry)]
+        [CustomAuthorize(Common.DataEntry,Common.Admin)]
         public ActionResult Create(BeneficiaryViewModel beneficiaryViewModel)
         {
             try
@@ -93,7 +106,7 @@ namespace EPassBook.Controllers
 
         // POST: Beneficiary/Edit/5
         [HttpPost]
-        [CustomAuthorize(Common.DataEntry)]
+        [CustomAuthorize(Common.DataEntry, Common.Admin)]
         public ActionResult Edit(int id, BeneficiaryViewModel beneficiaryViewModel)
         {
             try

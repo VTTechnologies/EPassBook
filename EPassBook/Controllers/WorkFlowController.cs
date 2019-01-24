@@ -690,7 +690,7 @@ namespace EPassBook.Controllers
             }
 
             List<WorkStatusDetailsViewModel> workstatus = new List<WorkStatusDetailsViewModel>();
-            var installments = _installmentDetailService.Get(w => w.BeneficiaryId == beneficiaryId, null, "").ToList();
+            var installments = _installmentDetailService.Get(w => w.BeneficiaryId ==beneficiaryId , null, "").ToList();
 
             if (installments != null)
             {

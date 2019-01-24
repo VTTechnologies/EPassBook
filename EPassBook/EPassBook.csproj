@@ -4394,6 +4394,7 @@
     <Content Include="scss\_responsive.scss" />
     <Content Include="scss\_services.scss" />
     <Content Include="Scripts\LandingPage\style.css.map" />
+    <Content Include="Views\Dashboard\MasterReports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

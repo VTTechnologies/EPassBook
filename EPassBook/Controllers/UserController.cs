@@ -39,7 +39,6 @@ namespace EPassBook.Controllers
         {
             Session.Clear();
             return RedirectToAction("Login");
-
         }
 
         [HttpGet]
@@ -206,7 +205,6 @@ namespace EPassBook.Controllers
             return body;
         }
         
-        [CustomAuthorize(Common.Admin)]
         [HttpGet]
         [CustomAuthorize(Common.Admin)]
         public ActionResult Create()
