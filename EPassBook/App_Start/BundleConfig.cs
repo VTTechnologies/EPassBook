@@ -28,6 +28,7 @@ namespace EPassBook
               .Include(ltecomponents + "raphael/raphael.min.js")
               .Include(ltecomponents + "morris.js/morris.min.js")
               .Include(ltecomponents + "chart.js/Chart.min.js")
+              .Include(ltecomponents + "chart.js/Chart.bundle.min.js")
               .Include(ltecomponents + "Flot/jquery.flot.js")
               .Include(ltecomponents + "Flot/jquery.flot.resize.js")
               .Include(ltecomponents + "Flot/jquery.flot.pie.js")

@@ -265,6 +265,7 @@
     <Compile Include="Models\InstallmentListView.cs" />
     <Compile Include="Models\InstallmentSigningViewModel.cs" />
     <Compile Include="Models\InstllmentRejectionViewModel.cs" />
+    <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\ResetPasswordViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\StageinRoleViewModel.cs" />
@@ -414,6 +415,8 @@
     <Content Include="Content\img\text.png" />
     <Content Include="Content\LeftMenu.css" />
     <Content Include="Content\select.css" />
+    <Content Include="Content\select2.css" />
+    <Content Include="Content\select2.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -535,6 +538,7 @@
     <Content Include="Scripts\adminlte\components\bootstrap\dist\js\bootstrap.min.js" />
     <Content Include="Scripts\adminlte\components\bootstrap\dist\js\npm.js" />
     <Content Include="Scripts\adminlte\components\chart.js\Chart.min.js" />
+    <Content Include="Scripts\adminlte\components\chart.js\Chart.bundle.min.js" />
     <Content Include="Scripts\adminlte\components\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\adminlte\components\ckeditor\ckeditor.js" />
     <Content Include="Scripts\adminlte\components\ckeditor\config.js" />
@@ -4332,9 +4336,12 @@
     <Content Include="Scripts\LandingPage\theme.js" />
     <Content Include="Scripts\LandingPage\wow.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\multiple-select.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\select.js" />
+    <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\MailBody.html" />
