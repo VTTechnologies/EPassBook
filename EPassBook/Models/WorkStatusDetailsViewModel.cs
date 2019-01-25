@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EPassBook.Models
 {
@@ -15,5 +16,8 @@ namespace EPassBook.Models
         public decimal ULBAmount { get; set; }
         public decimal? TotalAmount { get; set; }
         public decimal? GrandTotal { get; set; }
+        public int CityId { get; set; }
+        public int DtrNo { get; set; }
+
     }
 }

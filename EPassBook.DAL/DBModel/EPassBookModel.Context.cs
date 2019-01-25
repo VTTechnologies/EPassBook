@@ -280,5 +280,22 @@ namespace EPassBook.DAL.DBModel
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Split_Result>("[EPassBookEntities].[Split](@List, @SplitOn)", listParameter, splitOnParameter);
         }
+    
+        public virtual ObjectResult<string> sp_checkUserExists(Nullable<int> userId, Nullable<int> roleId, Nullable<int> cityId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("roleId", roleId) :
+                new ObjectParameter("roleId", typeof(int));
+    
+            var cityIdParameter = cityId.HasValue ?
+                new ObjectParameter("cityId", cityId) :
+                new ObjectParameter("cityId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_checkUserExists", userIdParameter, roleIdParameter, cityIdParameter);
+        }
     }
 }
