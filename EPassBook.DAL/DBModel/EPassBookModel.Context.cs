@@ -185,13 +185,17 @@ namespace EPassBook.DAL.DBModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInstallmentListViewForUsersRoles_Result>("sp_GetInstallmentListViewForUsersRoles", stageidsParameter);
         }
     
-        public virtual ObjectResult<sp_GetSurveyDetailsByBenID_Result> sp_GetSurveyDetailsByBenID(Nullable<int> benificiaryId)
+        public virtual ObjectResult<sp_GetSurveyDetailsByBenID_Result> sp_GetSurveyDetailsByBenID(Nullable<int> benificiaryId, Nullable<int> installmentNo)
         {
             var benificiaryIdParameter = benificiaryId.HasValue ?
                 new ObjectParameter("BenificiaryId", benificiaryId) :
                 new ObjectParameter("BenificiaryId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetSurveyDetailsByBenID_Result>("sp_GetSurveyDetailsByBenID", benificiaryIdParameter);
+            var installmentNoParameter = installmentNo.HasValue ?
+                new ObjectParameter("installmentNo", installmentNo) :
+                new ObjectParameter("installmentNo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetSurveyDetailsByBenID_Result>("sp_GetSurveyDetailsByBenID", benificiaryIdParameter, installmentNoParameter);
         }
     
         public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
@@ -296,6 +300,23 @@ namespace EPassBook.DAL.DBModel
                 new ObjectParameter("cityId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_checkUserExists", userIdParameter, roleIdParameter, cityIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetworkStatusforMAsterReports_Result> sp_GetworkStatusforMAsterReports(Nullable<int> cityId, string dTRNo, Nullable<int> companyID)
+        {
+            var cityIdParameter = cityId.HasValue ?
+                new ObjectParameter("cityId", cityId) :
+                new ObjectParameter("cityId", typeof(int));
+    
+            var dTRNoParameter = dTRNo != null ?
+                new ObjectParameter("DTRNo", dTRNo) :
+                new ObjectParameter("DTRNo", typeof(string));
+    
+            var companyIDParameter = companyID.HasValue ?
+                new ObjectParameter("companyID", companyID) :
+                new ObjectParameter("companyID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetworkStatusforMAsterReports_Result>("sp_GetworkStatusforMAsterReports", cityIdParameter, dTRNoParameter, companyIDParameter);
         }
     }
 }

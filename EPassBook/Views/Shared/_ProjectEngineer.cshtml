@@ -25,6 +25,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model._Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
+                            <label style="color:red">Note: Please check all previous comments in Survey Details tab before proceeding </label>
                             @Html.TextAreaFor(model => model._Comments, htmlAttributes :new { @class = "form-control", @rows = 5, id ="ProjectEngComment"  })
                             @Html.ValidationMessageFor(model => model._Comments, "", new { @class = "text-danger" })
                         </div>

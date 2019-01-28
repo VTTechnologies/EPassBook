@@ -61,9 +61,9 @@ namespace EPassBook.DAL.Service
             unitOfWork.SaveChanges();
         }
 
-        IEnumerable<sp_GetSurveyDetailsByBenID_Result> ICommentService.GetSurveyDetailsByBenificiaryID(int id)
+        IEnumerable<sp_GetSurveyDetailsByBenID_Result> ICommentService.GetSurveyDetailsByBenificiaryID(int id,int installmentNo)
         {
-            var surveyDetails = _dbContext.sp_GetSurveyDetailsByBenID(id);    
+            var surveyDetails = _dbContext.sp_GetSurveyDetailsByBenID(id,installmentNo);    
             //parameter added for testing only
             return surveyDetails.ToList();
         }

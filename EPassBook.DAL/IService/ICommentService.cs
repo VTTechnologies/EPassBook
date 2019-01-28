@@ -16,7 +16,7 @@ namespace EPassBook.DAL.IService
           string includeProperties = "");
         IEnumerable<Comment> GetAllComments();
         Comment GetCommentById(int id);
-        IEnumerable<sp_GetSurveyDetailsByBenID_Result> GetSurveyDetailsByBenificiaryID(int id);
+        IEnumerable<sp_GetSurveyDetailsByBenID_Result> GetSurveyDetailsByBenificiaryID(int id,int installmentNo);
         void Add(Comment user);
         void Update(Comment user);
         void Delete(int id);

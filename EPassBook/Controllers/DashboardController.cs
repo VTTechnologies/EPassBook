@@ -15,21 +15,21 @@ namespace EPassBook.Controllers
     public class DashboardController : Controller
     {
         IBenificiaryService _iBenificiaryService;
-        ICityService _cityService;
+        ICityService _icityService;
         IInstallmentDetailService _iInstallmentDetailService;
        
         // GET: Dashboard
         public DashboardController(IInstallmentDetailService installmentDetailService,  ICityService cityMasterService,
         IBenificiaryService beneficiaryService)
         {
-            _beneficiaryService = beneficiaryService;
-            _cityMasterService = cityMasterService;
-            _installmentDetailService = installmentDetailService;
+            _iBenificiaryService = beneficiaryService;
+            _icityService = cityMasterService;
+            _iInstallmentDetailService = installmentDetailService;
         }
         [CustomAuthorize(Common.Admin)]
         public ActionResult Dashboard()
         {
-            ViewBag.Cities = _cityService.GetAllCities().Select(s => new SelectListItem { Text=s.CityName, Value = s.CityId.ToString() }).ToList();
+            ViewBag.Cities = _icityService.GetAllCities().Select(s => new SelectListItem { Text=s.CityName, Value = s.CityId.ToString() }).ToList();
             return View(new ReportViewModel());
         }
         [CustomAuthorize(Common.Admin)]
@@ -54,7 +54,7 @@ namespace EPassBook.Controllers
             var user = Session["UserDetails"] as UserViewModel;
 
             List<WorkStatusDetailsViewModel> workstatus = new List<WorkStatusDetailsViewModel>();
-            var installments = _installmentDetailService.Get(w => w.BenificiaryMaster.CityId == cityId && w.BenificiaryMaster.DTRNo == DTRno, w => w.OrderByDescending(o => o.InstallmentNo), "").ToList();
+            var installments = _iInstallmentDetailService.Get(w => w.BenificiaryMaster.CityId == cityId && w.BenificiaryMaster.DTRNo == DTRno, w => w.OrderByDescending(o => o.InstallmentNo), "").ToList();
             var installmentslists = installments.GroupBy(o => o.InstallmentNo).
                 Select(g => new
                 {
@@ -96,7 +96,7 @@ namespace EPassBook.Controllers
         {
 
             var user = Session["UserDetails"] as UserViewModel;
-            var cities = _cityMasterService.Get(r => r.IsActive == true);
+            var cities = _icityService.Get(r => r.IsActive == true);
             var citiesSelectList = cities.Select(c => new SelectListItem { Text = c.CityName, Value = c.CityId.ToString()}).ToList();
 
             return Json(citiesSelectList);
@@ -106,7 +106,7 @@ namespace EPassBook.Controllers
         {
             var user = Session["UserDetails"] as UserViewModel;
 
-            var dtrNos = _beneficiaryService.Get().Where(c => c.CityId == cityId).GroupBy(d => d.DTRNo).Select(d => d.First());
+            var dtrNos = _iBenificiaryService.Get().Where(c => c.CityId == cityId).GroupBy(d => d.DTRNo).Select(d => d.First());
             var drtsSelectList = dtrNos.Select(s => new SelectListItem { Text = s.DTRNo, Value = s.DTRNo }).ToList();
             return Json(drtsSelectList);
         }

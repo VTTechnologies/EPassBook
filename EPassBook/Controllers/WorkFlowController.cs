@@ -345,8 +345,9 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
         public ActionResult SurveyDetails(int installmentId)
         {
+            var installmentNo = _installmentDetailService.Get().Where(i => i.InstallmentId == installmentId).Select(x => x.InstallmentNo).FirstOrDefault();
             var BeniId = _icommentService.Get().Where(i => i.InstallementId == installmentId).Select(b => b.BeneficiaryId).FirstOrDefault();
-            IEnumerable<sp_GetSurveyDetailsByBenID_Result> commentlist = _icommentService.GetSurveyDetailsByBenificiaryID(BeniId);
+            IEnumerable<sp_GetSurveyDetailsByBenID_Result> commentlist = _icommentService.GetSurveyDetailsByBenificiaryID(BeniId, installmentNo.Value);
 
             var mappedCommentList = commentlist.Select(s => new SurveyDetailsModel
             {
