@@ -274,7 +274,7 @@
                             {
                                 label: barlabel,
                                 fill: false,
-                                backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
+                                backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#09D261','#A42823'],
                                 pointColor: '#3b8bba',
                                 pointStrokeColor: 'rgba(60,141,188,1)',
                                 pointHighlightFill: '#3C8DBC',
@@ -300,7 +300,7 @@
                     var piedata = {
                         datasets: [{
                             data: dsdata,
-                            backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56']
+                            backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#09D261', '#A42823']
                         }],
                         // These labels appear in the legend and in the tooltips when hovering different arcs
                         labels: label
@@ -345,7 +345,7 @@
                         datasets: [{
                             label: barlabel,
                             data: dsdata,
-                            backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56']
+                            backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#09D261', '#A42823']
                         }]
                     };
 
@@ -357,11 +357,10 @@
                         type: 'bar',
                         data: bardata,
                         options: {
-                            legend: {
+                            legend: { display: false },
+                            title: {
                                 display: true,
-                                labels: {
-                                    fontColor: 'rgb(255, 99, 132)'
-                                }
+                                text: barlabel
                             }
                         }
                     });

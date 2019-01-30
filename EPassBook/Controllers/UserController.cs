@@ -83,7 +83,7 @@ namespace EPassBook.Controllers
                             }
                             else if (uservm.UserInRoles.FirstOrDefault().RoleId == Convert.ToInt32(Common.Roles.Admin))
                             {
-                                return RedirectToAction("FakeDashboard", "Dashboard");
+                                return RedirectToAction("Dashboard", "Dashboard");
                             }
                             else
                             {

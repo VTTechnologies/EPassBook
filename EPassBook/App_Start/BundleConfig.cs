@@ -33,7 +33,7 @@ namespace EPassBook
               .Include(ltecomponents + "Flot/jquery.flot.resize.js")
               .Include(ltecomponents + "Flot/jquery.flot.pie.js")
               .Include(ltecomponents + "Flot/jquery.flot.categories.js")
-              .Include(ltecomponents + "jquery-sparkline/dist/jquery.sparkline.min.js")
+              .Include(ltecomponents + "jquery-sparkline/dist/jquery.sparkline.min.js") 
               .Include(lteplugins + "jvectormap/jquery-jvectormap-1.2.2.min.js")
               .Include(lteplugins + "jvectormap/jquery-jvectormap-world-mill-en.js")
               .Include(ltecomponents + "jquery-knob/dist/jquery.knob.min.js")
