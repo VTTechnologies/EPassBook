@@ -231,6 +231,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\APIWorkFlowController.cs" />
+    <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\BeneficiaryController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Mapper\UserInRoleMapper.cs" />
     <Compile Include="Mapper\InstallmentDetailsMapper.cs" />
     <Compile Include="Mapper\BeneficiaryMapper.cs" />
+    <Compile Include="Mapper\CityMapper.cs" />
     <Compile Include="Mapper\UserMapper.cs" />
     <Compile Include="Models\AccoutDetailsViewModel.cs" />
     <Compile Include="Models\BeneficiaryAPIViewModel.cs" />
@@ -4401,6 +4403,7 @@
     <Content Include="scss\_services.scss" />
     <Content Include="Scripts\LandingPage\style.css.map" />
     <Content Include="Views\Dashboard\MasterReports.cshtml" />
+    <Content Include="Views\City\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
