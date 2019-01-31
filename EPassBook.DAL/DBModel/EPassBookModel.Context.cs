@@ -142,6 +142,23 @@ namespace EPassBook.DAL.DBModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
         }
     
+        public virtual ObjectResult<string> sp_checkUserExists(Nullable<int> userId, Nullable<int> roleId, Nullable<int> cityId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("roleId", roleId) :
+                new ObjectParameter("roleId", typeof(int));
+    
+            var cityIdParameter = cityId.HasValue ?
+                new ObjectParameter("cityId", cityId) :
+                new ObjectParameter("cityId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_checkUserExists", userIdParameter, roleIdParameter, cityIdParameter);
+        }
+    
         public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
@@ -187,6 +204,23 @@ namespace EPassBook.DAL.DBModel
                 new ObjectParameter("installmentNo", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetSurveyDetailsByBenID_Result>("sp_GetSurveyDetailsByBenID", benificiaryIdParameter, installmentNoParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetworkStatusforMAsterReports_Result> sp_GetworkStatusforMAsterReports(Nullable<int> cityId, string dTRNo, Nullable<int> companyID)
+        {
+            var cityIdParameter = cityId.HasValue ?
+                new ObjectParameter("cityId", cityId) :
+                new ObjectParameter("cityId", typeof(int));
+    
+            var dTRNoParameter = dTRNo != null ?
+                new ObjectParameter("DTRNo", dTRNo) :
+                new ObjectParameter("DTRNo", typeof(string));
+    
+            var companyIDParameter = companyID.HasValue ?
+                new ObjectParameter("companyID", companyID) :
+                new ObjectParameter("companyID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetworkStatusforMAsterReports_Result>("sp_GetworkStatusforMAsterReports", cityIdParameter, dTRNoParameter, companyIDParameter);
         }
     
         public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
@@ -308,15 +342,6 @@ namespace EPassBook.DAL.DBModel
                 new ObjectParameter("companyID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetworkStatusforMAsterReports_Result>("sp_GetworkStatusforMAsterReports", cityIdParameter, dTRNoParameter, companyIDParameter);
-        }
-    
-        public virtual ObjectResult<sp_GetInstallmentListViewForUsersRoles_Result> sp_GetInstallmentListViewForUsersRoles(string stageids)
-        {
-            var stageidsParameter = stageids != null ?
-                new ObjectParameter("stageids", stageids) :
-                new ObjectParameter("stageids", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInstallmentListViewForUsersRoles_Result>("sp_GetInstallmentListViewForUsersRoles", stageidsParameter);
         }
     }
 }

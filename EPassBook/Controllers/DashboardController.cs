@@ -31,12 +31,7 @@ namespace EPassBook.Controllers
         {
             ViewBag.Cities = _icityService.GetAllCities().Select(s => new SelectListItem { Text=s.CityName, Value = s.CityId.ToString() }).ToList();
             return View(new ReportViewModel());
-        }
-        [CustomAuthorize(Common.Admin)]
-        public ActionResult FakeDashboard()
-        {
-            return View();
-        }
+        }      
 
         [HttpGet]
         [CustomAuthorize(Common.Admin)]
@@ -111,6 +106,23 @@ namespace EPassBook.Controllers
             return Json(drtsSelectList);
         }
 
-
+        [HttpGet]
+        public JsonResult FetchData(int cityId, string reportType)
+        {
+            var result = new List<SelectListItem>();
+            switch (reportType)
+            {
+                case "DTR-Wise":
+                    result = _iBenificiaryService.Get(w => w.CityId == cityId, null).GroupBy(x => x.DTRNo).Select((s, indexer) => new SelectListItem { Text = s.Key, Value = s.Count().ToString() }).ToList();
+                    break;
+                case "Caste-Wise":
+                    result = _iBenificiaryService.Get(w => w.CityId == cityId, null).GroupBy(x => x.General).Select(s => new SelectListItem { Text = s.Key, Value = s.Count().ToString() }).ToList();
+                    break;
+                case "Installment-Wise":
+                    result = _iInstallmentDetailService.Get(w => w.BenificiaryMaster.CityId == cityId, null, "BenificiaryMaster").GroupBy(x => x.InstallmentNo).Select(s => new SelectListItem { Text = s.Key.ToString(), Value = s.Sum(su => su.LoanAmnt).ToString() }).ToList();
+                    break;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
