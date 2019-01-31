@@ -18,67 +18,73 @@
                 </div>
                 @using (@Html.BeginForm("Accountant", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
                 {
-                    <div class="box-body">
-                        @Html.HiddenFor(model => model.InstallmentId)
-                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <div class="box-body">
+                    @Html.HiddenFor(model => model.InstallmentId)
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @Html.LabelFor(model => model.AccountNo)
-                            </div>
-                            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                @Html.DisplayFor(model => model.AccountNo, new { htmlAttributes = new { @class = "form-control" } })
-
-                            </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @Html.LabelFor(model => model.AccountNo)
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @Html.LabelFor(model => model.IFSCCode)
-                            </div>
-                            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                @Html.DisplayFor(model => model.IFSCCode, new { htmlAttributes = new { @class = "form-control" } })
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align-last:left">
-                                <p>
-                                    Has been transferred Rs <strong> @Html.DisplayFor(model => model.LoanAmnt)</strong> (Rupees <strong>@Html.DisplayFor(model => model.LoanAmtInRupees)</strong> )
-                                    Through RTGS/DBT
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @Html.LabelFor(model => model.TransactionId)
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control" } })
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @*@Html.LabelFor(model => model.Sign, new { @class = "col-md-2" })*@
-                                <label>Sign For Accountant</label>
-                            </div>
-                            <div class="checkbox icheck col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @*@Html.CheckBoxFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control", id = "chkAccountant" } })*@
-                                @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkAccountant" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <label id="lblmsg_acct" class="text-danger"></label>
-                            </div>
-                        </div>
-                        <div class="box-footer">
-                            <input type="submit" onclick="return validationAcountant();" value="Send to Chief Officer" class="btn btn-primary" />
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                            @Html.DisplayFor(model => model.AccountNo, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @Html.LabelFor(model => model.IFSCCode)
+                        </div>
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                            @Html.DisplayFor(model => model.IFSCCode, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align-last:left">
+                            <p>
+                                Has been transferred Rs <strong> @Html.DisplayFor(model => model.LoanAmnt)</strong> (Rupees <strong>@Html.DisplayFor(model => model.LoanAmtInRupees)</strong> )
+                                Through RTGS/DBT
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @Html.LabelFor(model => model.TransactionId)
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @Html.LabelFor(model => model.TransactionDate)
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @*@Html.LabelFor(model => model.Sign, new { @class = "col-md-2" })*@
+                            <label>Sign For Accountant</label>
+                        </div>
+                        <div class="checkbox icheck col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @*@Html.CheckBoxFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control", id = "chkAccountant" } })*@
+                            @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkAccountant" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <label id="lblmsg_acct" class="text-danger"></label>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="submit" onclick="return validationAcountant();" value="Send to Chief Officer" class="btn btn-primary" />
+                    </div>
+                </div>
                 }
             </div>
         </div>
@@ -105,8 +111,19 @@
             $("#lblmsg_acct").text("Please sign in to confirm your submission");
             return false;
         }
+        else if (($("#TransactionDate").val().trim() == "")) {
+            $("#lblmsg_acct").text("Please Enter Transation Date");
+            return false;
+        }
     }
     $(document).ready(function () {
+
+        $("#TransactionDate").datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true
+        });
+
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue',

@@ -170,6 +170,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="CompanyID" Type="int" />
           <Property Name="TransactionID" Type="nvarchar" MaxLength="150" />
           <Property Name="IsRecommended" Type="bit" />
+          <Property Name="TransactionDate" Type="datetime" />
         </EntityType>
         <EntityType Name="InstallmentDetailsHistory">
           <Key>
@@ -960,11 +961,8 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
-          <Parameter Name="stageids" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_GetSurveyDetailsByBenID" ReturnType="Collection(EPassBookModel.sp_GetSurveyDetailsByBenID_Result)">
-          <Parameter Name="BenificiaryId" Mode="In" Type="Int32" />
+            <Parameter Name="BenificiaryId" Mode="In" Type="Int32" />
             <Parameter Name="installmentNo" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(EPassBookModel.sp_helpdiagramdefinition_Result)">
@@ -1001,6 +999,9 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <Parameter Name="cityId" Mode="In" Type="Int32" />
             <Parameter Name="DTRNo" Mode="In" Type="String" />
             <Parameter Name="companyID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
+          <Parameter Name="stageids" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BenificiaryMaster">
@@ -1168,6 +1169,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.installment_CompanyID_FK" FromRole="InstallmentDetail" ToRole="CompanyMaster" />
           <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_InstallmentDetails" FromRole="InstallmentDetail" ToRole="GeoTaggingDetail" />
           <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_InstallmentDetails" FromRole="InstallmentDetail" ToRole="InstallmentSigning" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="InstallmentDetailsHistory">
           <Key>
@@ -1626,18 +1628,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
-          <Property Type="Int32" Name="InstallmentId" Nullable="false" />
-          <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
-          <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="CreatedDate" Nullable="true" MaxLength="20" />
-          <Property Type="Int32" Name="PlanYear" Nullable="true" />
-          <Property Type="Int32" Name="StageID" Nullable="true" />
-          <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
-          <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
-          <Property Type="Int32" Name="CompanyID" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_GetSurveyDetailsByBenID_Result">
           <Property Type="Int32" Name="InstallementId" Nullable="false" />
           <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
@@ -1672,6 +1662,18 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Type="Decimal" Name="BeneficiaryAmount" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Int32" Name="ULBAmount" Nullable="false" />
           <Property Type="Decimal" Name="TotalAmount" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
+          <Property Type="Int32" Name="InstallmentId" Nullable="false" />
+          <Property Type="Int32" Name="BeneficiaryId" Nullable="false" />
+          <Property Type="String" Name="BeneficairyName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="PlanYear" Nullable="true" />
+          <Property Type="Int32" Name="StageID" Nullable="true" />
+          <Property Type="Boolean" Name="IsCompleted" Nullable="true" />
+          <Property Type="Int32" Name="InstallmentNo" Nullable="true" />
+          <Property Type="Int32" Name="CompanyID" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1806,6 +1808,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <EntitySetMapping Name="InstallmentDetails">
             <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetail">
               <MappingFragment StoreEntitySet="InstallmentDetails">
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
@@ -1970,22 +1973,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="EPassBookModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="EPassBookModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="EPassBookModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_GetInstallmentListViewForUsersRoles" FunctionName="EPassBookModel.Store.sp_GetInstallmentListViewForUsersRoles">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result">
-                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-                <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
-                <ScalarProperty Name="StageID" ColumnName="StageID" />
-                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-                <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_GetSurveyDetailsByBenID" FunctionName="EPassBookModel.Store.sp_GetSurveyDetailsByBenID">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EPassBookModel.sp_GetSurveyDetailsByBenID_Result">
@@ -2042,6 +2029,22 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
                 <ScalarProperty Name="BeneficiaryAmount" ColumnName="BeneficiaryAmount" />
                 <ScalarProperty Name="ULBAmount" ColumnName="ULBAmount" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetInstallmentListViewForUsersRoles" FunctionName="EPassBookModel.Store.sp_GetInstallmentListViewForUsersRoles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result">
+                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+                <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PlanYear" ColumnName="PlanYear" />
+                <ScalarProperty Name="StageID" ColumnName="StageID" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

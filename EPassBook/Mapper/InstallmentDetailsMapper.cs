@@ -29,6 +29,7 @@ namespace EPassBook.Mapper
             installmentDetail.ModifiedBy = installmentDetailsViewModel.ModifiedBy;
             installmentDetail.CompanyID = installmentDetailsViewModel.CompanyID;
             installmentDetail.TransactionID = installmentDetailsViewModel.TransactionID;
+            installmentDetail.TransactionDate = installmentDetailsViewModel.TransactionDate;
 
             installmentDetail.Comments = installmentDetailsViewModel.Comments.Select(s => new Comment() {  
                 Id = s.Id,

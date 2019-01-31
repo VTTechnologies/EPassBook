@@ -176,15 +176,6 @@ namespace EPassBook.DAL.DBModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual ObjectResult<sp_GetInstallmentListViewForUsersRoles_Result> sp_GetInstallmentListViewForUsersRoles(string stageids)
-        {
-            var stageidsParameter = stageids != null ?
-                new ObjectParameter("stageids", stageids) :
-                new ObjectParameter("stageids", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInstallmentListViewForUsersRoles_Result>("sp_GetInstallmentListViewForUsersRoles", stageidsParameter);
-        }
-    
         public virtual ObjectResult<sp_GetSurveyDetailsByBenID_Result> sp_GetSurveyDetailsByBenID(Nullable<int> benificiaryId, Nullable<int> installmentNo)
         {
             var benificiaryIdParameter = benificiaryId.HasValue ?
@@ -317,6 +308,15 @@ namespace EPassBook.DAL.DBModel
                 new ObjectParameter("companyID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetworkStatusforMAsterReports_Result>("sp_GetworkStatusforMAsterReports", cityIdParameter, dTRNoParameter, companyIDParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetInstallmentListViewForUsersRoles_Result> sp_GetInstallmentListViewForUsersRoles(string stageids)
+        {
+            var stageidsParameter = stageids != null ?
+                new ObjectParameter("stageids", stageids) :
+                new ObjectParameter("stageids", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInstallmentListViewForUsersRoles_Result>("sp_GetInstallmentListViewForUsersRoles", stageidsParameter);
         }
     }
 }

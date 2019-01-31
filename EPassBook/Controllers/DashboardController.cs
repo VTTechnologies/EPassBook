@@ -110,5 +110,7 @@ namespace EPassBook.Controllers
             var drtsSelectList = dtrNos.Select(s => new SelectListItem { Text = s.DTRNo, Value = s.DTRNo }).ToList();
             return Json(drtsSelectList);
         }
+
+
     }
 }

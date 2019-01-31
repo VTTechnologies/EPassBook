@@ -32,6 +32,7 @@ namespace EPassBook.Models
         public bool IsRecommended { get; set; }
         public string FirstComment { get; set; }
         public bool Sign { get; set; }
+        public Nullable<System.DateTime> TransactionDate { get; set; }
 
 
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }

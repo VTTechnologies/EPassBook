@@ -18,12 +18,12 @@ namespace EPassBook.Models
         [Display(Name = "Mobile No")]
         public string MobileNo { get; set; }
         [Display(Name = "Plan Year")]
-        public string planYear { get; set; }
+        public int planYear { get; set; }
 
         [Display(Name = "Date")]
         //[DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public string CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         [Display(Name = "Plan Year")]
         public Nullable<int> PlanYear { get; set; }
