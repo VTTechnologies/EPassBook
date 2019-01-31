@@ -51,7 +51,7 @@ namespace EPassBook.Controllers
                 CompanyID = s.CompanyID,
                 InstallmentId = s.InstallmentId,
                 InstallmentNo = s.InstallmentNo,
-                CreatedDate = s.CreatedDate,
+                CreatedDate = Convert.ToDateTime(s.CreatedDate),
                 IsCompleted = s.IsCompleted,
                 MobileNo = Convert.ToString(s.MobileNo),
                 PlanYear = s.PlanYear,
@@ -94,6 +94,8 @@ namespace EPassBook.Controllers
             if (installmentDetails.InstallmentSignings.Count > 0)
                 accountDetailsViewModel.Sign = Convert.ToBoolean(installmentDetails.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.Accountant && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
 
+            accountDetailsViewModel.TransactionDate = installmentDetails.TransactionDate;
+            accountDetailsViewModel.TransactionId = installmentDetails.TransactionID;
             accountDetailsViewModel.LoanAmnt = Convert.ToInt32(installmentDetails.LoanAmnt);
             accountDetailsViewModel.IFSCCode = benificiaryDetails.IFSCCode;
             accountDetailsViewModel.AccountNo = benificiaryDetails.AccountNo.ToString();
@@ -123,6 +125,7 @@ namespace EPassBook.Controllers
                 installmentDetail.ModifiedBy = user.UserName;
                 installmentDetail.ModifiedDate = DateTime.Now;
                 installmentDetail.StageID = (int)Common.WorkFlowStages.Accountant;
+                installmentDetail.TransactionDate = accountDetailsVM.TransactionDate;
 
                 if (ModelState.IsValid)
                 {
@@ -698,12 +701,12 @@ namespace EPassBook.Controllers
                 workstatus = installments.Select(s => new WorkStatusDetailsViewModel
                 {
                     Installment = s.InstallmentNo == 1 ? "First" : s.InstallmentNo == 2 ? "Second" : s.InstallmentNo == 3 ? "Thir" : s.InstallmentNo == 4 ? "Fourth" : s.InstallmentNo == 5 ? "Fifth" : s.InstallmentNo == 6 ? "Sixth-Cum Final" : "",
-                    LevelType = s.InstallmentNo == 1 ? "At Plinth Level" : s.InstallmentNo == 2 ? "At Lintel Level" : s.InstallmentNo == 3 ? "At Roof Level" : s.InstallmentNo == 4 ? "For Finishing Completion" : s.InstallmentNo == 5 ? "Level" : s.InstallmentNo == 6 ? "Level" : "",
+                    LevelType = s.ConstructionLevel,
                     BeneficiaryAmount = s.BeneficiaryAmnt == null ? 0 : s.BeneficiaryAmnt,
                     CenterAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == true ? s.LoanAmnt : 0,
                     StateAmount = s.IsCentreAmnt == null ? 0 : s.IsCentreAmnt == false ? s.LoanAmnt : 0,
                     ULBAmount = 0,
-                    TotalAmount = s.BeneficiaryAmnt + s.LoanAmnt == null ? 0 : s.BeneficiaryAmnt + s.LoanAmnt,
+                    TotalAmount = s.LoanAmnt,
                 }).ToList();
 
                 ViewBag.GrandTotal = workstatus.Sum(w => w.TotalAmount);

@@ -293,6 +293,9 @@ namespace EPassBook.Controllers
             {
                 RedirectToAction("Login");
             }
+            var cities = _cityMasterService.Get(c => c.IsActive == true);
+            TempData["Cities"] = cities.Select(s => new SelectListItem { Text = s.CityName, Value = s.CityName }).ToList();
+
             var users = _userService.Get(u => u.IsActive == true & u.CompanyID == companyId, u => u.OrderBy(o => o.UserId), "");
             var mappedUser = users.Select(s => new UserViewModel
             {
@@ -317,8 +320,7 @@ namespace EPassBook.Controllers
                     CityName = s.CityMaster.CityName,
                     CityShortName = s.CityMaster.CityShortName,
                 }
-            }).ToList();           
-
+            }).ToList();
             return View(mappedUser);
         }
 

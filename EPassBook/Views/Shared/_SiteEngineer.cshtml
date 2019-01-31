@@ -124,7 +124,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.LoanAmnt, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.Label("Subsidy Amount", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-4">
                                         @Html.EditorFor(model => model.LoanAmnt, new { htmlAttributes = new { @class = "form-control", @id = "txtLAmnt" } })&nbsp;<span id="errmsgL"></span>
                                         @Html.ValidationMessageFor(model => model.LoanAmnt, "", new { @class = "text-danger" })
@@ -136,15 +136,18 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="text-align-last:end">
-                                        
-                                            <strong>Via RTGS/DBT to the beneficiary for the plan as first instalment after </strong>
-                                        
+                                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="text-align-last:end">                                        
+                                            <strong>Via RTGS/DBT to the beneficiary for the plan as first instalment after </strong>                                        
                                     </div>
                                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                                         @Html.DropDownListFor(model => model.ConstructionLevel, new SelectList(new List<object>
                                             {
+                                            new{ value="Not Started", text="Not Started" },
                                             new{ value="Digging", text="Digging" },
+                                            new{ value="Plinth Level", text="Plinth Level" },
+                                            new{ value="Lintel Level", text="Lintel Level" },
+                                            new{ value="Roof Level", text="Roof Level" },
+                                            new{ value="Finishing/Completion", text="Finishing/Completion" },
                                             },
                                             "value",
                                             "text"),"Select Items",
@@ -177,7 +180,7 @@
 
                                 <div class="form-group">
                                     <div class="checkbox icheck col-md-offset-2 col-md-10">
-                                        @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "SiteEngineer" }) @Html.Label("Central Assistance")
+                                        @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "SiteEngineer" }) @Html.Label("Site Engineer")
                                     </div>
                                 </div>
 

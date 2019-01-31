@@ -13,10 +13,13 @@ namespace EPassBook.Controllers
     public class BeneficiaryController : Controller
     {
         IBenificiaryService _benificiaryService;
+        ICityService _cityMasterService;
         IInstallmentDetailService _installmentDetailService;
 
-        public BeneficiaryController(IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService)
+        public BeneficiaryController(IInstallmentDetailService installmentDetailService, IBenificiaryService benificiaryService,
+            ICityService cityMasterService)
         {
+            _cityMasterService = cityMasterService;
             _benificiaryService = benificiaryService;
             _installmentDetailService = installmentDetailService;
         }
@@ -34,13 +37,18 @@ namespace EPassBook.Controllers
             {
                 RedirectToAction("Login");
             }
+
+            var cities = _cityMasterService.Get(c => c.IsActive == true);
+            TempData["Cities"] = cities.Select(s => new SelectListItem { Text = s.CityName, Value = s.CityName }).ToList();
+
             var beneficiaries = _benificiaryService.GetAllBenificiaries();
             var beneficiaryviewmodel = beneficiaries.Select(s => new BeneficiaryViewModel
             {
                 BeneficiaryId = s.BeneficiaryId,
                 BeneficairyName = s.BeneficairyName,
                 AdharNo = s.AdharNo,
-                MobileNo = s.MobileNo
+                MobileNo = s.MobileNo,
+                CityName = s.CityMaster.CityName
             }).ToList();
             return View(beneficiaryviewmodel);
         }

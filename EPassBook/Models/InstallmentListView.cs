@@ -18,7 +18,7 @@ namespace EPassBook.Models
         [Display(Name = "Mobile No")]
         public string MobileNo { get; set; }
         [Display(Name = "Plan Year")]
-        public string planYear { get; set; }
+        public int planYear { get; set; }
 
         [Display(Name = "Date")]
         //[DataType(DataType.Date)]

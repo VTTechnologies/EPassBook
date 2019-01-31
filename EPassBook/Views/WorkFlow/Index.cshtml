@@ -65,15 +65,7 @@
                                             @Html.DisplayFor(modelItem => item.CreatedDate)
                                         </td>
                                         <td class="hidden-sm hidden-xs hidden-md">
-                                            @{
-                                                var year = "";
-                                                if (!string.IsNullOrWhiteSpace(item.CreatedDate))
-                                                {
-                                                    year = Convert.ToDateTime(item.CreatedDate).Year.ToString();
-                                                }
-                                            }
-                                            @Html.Label(year.ToString())
-                                            @*@Html.DisplayFor(modelItem => item.PlanYear)*@
+                                            @Html.DisplayFor(modelItem => item.PlanYear)
                                         </td>                                       
                                         <td>
                                             @Html.DisplayFor(modelItem => item.InstallmentNo)
