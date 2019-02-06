@@ -98,6 +98,28 @@ namespace EPassBook.Controllers
             }
             return View();
         }
+        public ActionResult SendSMS(int beneficiaryId)
+        {
+            var beneficiaryViewModel = _benificiaryService.GetBenificiaryById(beneficiaryId);
+            if (beneficiaryViewModel != null)
+            {
+
+            }
+            var Link = "http://www.navnirmangroup.org/files/public-docs/app-debug.apk";
+
+
+            string BeniUserName = beneficiaryViewModel.AdharNo.ToString();
+            BeniUserName = !String.IsNullOrWhiteSpace(BeniUserName) && BeniUserName.Length >= 6 ? BeniUserName.Substring(BeniUserName.Length - 6) : BeniUserName;
+            var BeniPassword = beneficiaryViewModel.Password;
+
+            string key = "3r9mqo0k6few3m8";
+            string secret = "mcadq4cuu96g6wp";
+            string to = beneficiaryViewModel.MobileNo;
+            string messages = "Click below link to download the App & use credentials for login Username = " + BeniUserName + " & Password = " + BeniPassword + " " + Link;
+            string URL = "https://www.thetexting.com/rest/sms/json/message/send?api_key=" + key + "&api_secret=" + secret + "&to=" + to + "&text=" + messages;
+
+            return Json("Success");
+        }
 
         public string SendSms(BeneficiaryViewModel beneficiaryViewModel)
         {
