@@ -72,14 +72,17 @@
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 @Html.DropDownListFor(model => model.ConstructionLevel, new SelectList(new List<object>
-                    {
-                    new{ value="Digging", text="Digging" },
-                    new{ value="A", text="A" },
-                    new{ value="B", text="B" },
-                    },
-                    "value",
-                    "text"),"Select Items",
-                    new {  @class = "form-control",disabled="disabled"})
+                                           {
+                                           new{ value="Not Started", text="Not Started" },
+                                           new{ value="Digging", text="Digging" },
+                                           new{ value="Plinth Level", text="Plinth Level" },
+                                           new{ value="Lintel Level", text="Lintel Level" },
+                                           new{ value="Roof Level", text="Roof Level" },
+                                           new{ value="Finishing/Completion", text="Finishing/Completion" },
+                                           },
+                                           "value",
+                                           "text"),"Select Items",
+                                           new {  @class = "form-control", disabled = "disabled" })
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <p>
