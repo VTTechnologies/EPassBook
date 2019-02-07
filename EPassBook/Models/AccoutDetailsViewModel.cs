@@ -21,5 +21,6 @@ namespace EPassBook.Models
         public int InstallmentId { get; set; }
         public int UserId { get; set; }
         public Nullable<System.DateTime> TransactionDate { get; set; }
+        public string TransactionType { get; set; }
     }
 }

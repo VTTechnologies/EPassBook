@@ -25,7 +25,7 @@
                     @using (Html.BeginForm("Edit", "Beneficiary", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
                     {
                         @Html.AntiForgeryToken()
-
+                        @Html.HiddenFor(model => model.BeneficiaryId, htmlAttributes: new {@id="beniId"  })
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="box-body">
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -74,7 +74,7 @@
                                         @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                         @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                                         @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
@@ -95,7 +95,7 @@
                                         @Html.EditorFor(model => model.CityId, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                                         @Html.LabelFor(model => model.DTRNo, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -201,7 +201,7 @@
                                                 @Html.LabelFor(model => model.Hasband_Photo, htmlAttributes: new { @class = "control-label col-md-2" })
                                             </div>
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                <img id="img1" alt="your image" srcset="@ViewBag.hsbphoto" class="img-thumbnail col-md-12" style="height:200px" />
+                                                <img id="img1" alt="your image" src="@ViewBag.hsbphoto" class="img-thumbnail col-md-12" style="height:200px" />
                                                 <input type="file" value="Upload" id="imgupload1" name="imgupload1" onchange="readURL(this, 'img1')" class="btn btn-primary col-md-7" />
                                                 <input type="button" id="btnimg1cencal" onclick="removeimg('img1','imgupload1')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
                                             </div>
@@ -211,7 +211,7 @@
                                                 @Html.LabelFor(model => model.Wife_Photo, htmlAttributes: new { @class = "control-label col-md-2" })
                                             </div>
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                <img id="img2" srcset="@ViewBag.wfphoto" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
+                                                <img id="img2" src="@ViewBag.wfphoto" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
                                                 <input type="file" value="Upload" id="imgupload2" name="imgupload2" onchange="readURL(this,'img2');" class="btn btn-primary col-md-7" />
                                                 <input type="button" id="btnimg2cencal" onclick="removeimg('img2','imgupload2')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
                                             </div>
@@ -235,7 +235,7 @@
                                         @Html.LabelFor(model => model.AdharNo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.AdharNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.AdharNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.AdharNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -255,7 +255,7 @@
                                         @Html.LabelFor(model => model.Area, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.Area, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Area, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.Area, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -265,7 +265,7 @@
                                         @Html.LabelFor(model => model.MojaNo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.MojaNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.MojaNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.MojaNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -285,7 +285,7 @@
                                         @Html.LabelFor(model => model.KhasraNo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.KhasraNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.KhasraNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.KhasraNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -342,7 +342,7 @@
                                     </div>
                                 </div>
                                 <div class="box-footer">
-                                    <input type="submit" id="btncreate" value="Edit" onclick="return validation();" class="btn btn-primary" />
+                                    <input type="submit" id="btncreate" value="Save" onclick="return validation();" class="btn btn-primary" />
                                 </div>
                             </div>
                         </div>
@@ -366,9 +366,18 @@
     </script>
 }
 <script>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
     function validation() {
-        var imgVal = $('#img').attr('src', '');
-        alert(imgVal);
+        debugger
+        var imgVal = $('#imgupload1').val();
+        //alert(imgVal);
         if (imgVal == '') {
             alert("Please select husband photo");
             return false;
@@ -377,6 +386,7 @@
         return true;
     }
     function readURL(input, id) {
+        debugger;
         //alert(id);
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -406,7 +416,8 @@
     })*@
     function removeimg(img, fileupld)
     {
-        document.getElementById(img).removeAttribute('srcset');
+        debugger
+        document.getElementById(img).removeAttribute('src');
         document.getElementById(fileupld).value = "";
     }
 

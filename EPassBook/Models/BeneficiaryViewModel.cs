@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EPassBook.Models
 {
@@ -15,6 +16,7 @@ namespace EPassBook.Models
         [Required(ErrorMessage = "Father Name is required.")]
         public string FatherName { get; set; }
         public string Mother { get; set; }
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Mobile No")]
         [Required(ErrorMessage = "MobileNo is required.")]
         public string MobileNo { get; set; }
         public string PresentAddress { get; set; }
@@ -27,11 +29,15 @@ namespace EPassBook.Models
         public string Disabled { get; set; }
         public string Password { get; set; }
         [Required(ErrorMessage = "Adhar No is required.")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Aadhaar No")]
         public Nullable<long> AdharNo { get; set; }
         public string VoterID { get; set; }
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Area")]
         public Nullable<int> Area { get; set; }
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Moja")]
         public Nullable<int> MojaNo { get; set; }
         public string KhataNo { get; set; }
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Khasra")]
         public Nullable<int> KhasraNo { get; set; }
         public string PlotNo { get; set; }
         public string PoliceStation { get; set; }
@@ -53,6 +59,8 @@ namespace EPassBook.Models
         public string Wife_Photo { get; set; }
         public int installmentId { get; set; }
         public string CityName { get; set; }
+
+        public List<SelectListItem> Cities { set; get; }
 
         public virtual CompanyViewModel CompanyMaster { get; set; }
         public virtual CityViewModel CityMaster { get; set; }

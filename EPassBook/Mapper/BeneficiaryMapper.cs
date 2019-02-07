@@ -15,6 +15,7 @@ namespace EPassBook.Mapper
         {
             BenificiaryMaster beneficiaryMaster = new BenificiaryMaster();
 
+            beneficiaryMaster.BeneficiaryId = beneficiaryViewModel.BeneficiaryId;
             beneficiaryMaster.Hasband_Photo = beneficiaryViewModel.Hasband_Photo;
             beneficiaryMaster.Wife_Photo = beneficiaryViewModel.Wife_Photo;
             beneficiaryMaster.BeneficairyName = beneficiaryViewModel.BeneficairyName;

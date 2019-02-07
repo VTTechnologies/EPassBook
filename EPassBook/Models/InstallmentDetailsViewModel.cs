@@ -33,6 +33,7 @@ namespace EPassBook.Models
         public string FirstComment { get; set; }
         public bool Sign { get; set; }
         public Nullable<System.DateTime> TransactionDate { get; set; }
+        public string TransactionType { get; set; }
 
 
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }

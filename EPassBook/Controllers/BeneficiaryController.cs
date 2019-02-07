@@ -6,6 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
+using System.Data.OleDb;
+using System.Configuration;
+using System.Data;
+using EPassBook.DAL.DBModel;
+using System.Data.SqlClient;
+using System.Web.UI;
+using System.Text;
 
 namespace EPassBook.Controllers
 {
@@ -48,7 +56,7 @@ namespace EPassBook.Controllers
                 BeneficairyName = s.BeneficairyName,
                 AdharNo = s.AdharNo,
                 MobileNo = s.MobileNo,
-                CityName = s.CityMaster.CityName
+                CityName = s.CityMaster == null ? "" : s.CityMaster.CityName
             }).ToList();
             return View(beneficiaryviewmodel);
         }
@@ -68,11 +76,15 @@ namespace EPassBook.Controllers
 
         // POST: Beneficiary/Create
         [HttpPost]
-        [CustomAuthorize(Common.DataEntry,Common.Admin)]
+        [CustomAuthorize(Common.DataEntry, Common.Admin)]
         public ActionResult Create(BeneficiaryViewModel beneficiaryViewModel)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
                 HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
                 HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
                 var user = Session["UserDetails"] as UserViewModel;
@@ -82,6 +94,7 @@ namespace EPassBook.Controllers
                 beneficiaryViewModel.Wife_Photo = wphoto; //PhotoManager.ConvertToBytes(wifephoto);
                 beneficiaryViewModel.CreatedBy = user.UserName;
                 beneficiaryViewModel.CreatedDate = DateTime.Now;
+                beneficiaryViewModel.CityId = user.CityId;
                 var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
 
                 _benificiaryService.Add(insertbeneficiary);
@@ -139,30 +152,32 @@ namespace EPassBook.Controllers
         // POST: Beneficiary/Edit/5
         [HttpPost]
         [CustomAuthorize(Common.DataEntry, Common.Admin)]
-        public ActionResult Edit(int id, BeneficiaryViewModel beneficiaryViewModel)
+        public ActionResult Edit(BeneficiaryViewModel beneficiaryViewModel)
         {
-            try
-            {
-                HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
-                HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
-                var user = Session["UserDetails"] as UserViewModel;
-                string hphoto = PhotoManager.savePhoto(hasbandphoto, 0, "Benificiary");
-                string wphoto = PhotoManager.savePhoto(wifephoto, 0, "Benificiary");
-                beneficiaryViewModel.Hasband_Photo = hphoto; //PhotoManager.ConvertToBytes(hasbandphoto);
-                beneficiaryViewModel.Wife_Photo = wphoto; //PhotoManager.ConvertToBytes(wifephoto);
-                beneficiaryViewModel.CreatedBy = user.UserName;
-                var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
-
-
-                _benificiaryService.Update(insertbeneficiary);
-
-                ViewBag.Message = "sussess message";
-                return RedirectToAction("Index");
-            }
-            catch
+            if (!ModelState.IsValid)
             {
                 return View();
             }
+            HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
+            HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
+            //var beniMaster = _benificiaryService.GetBenificiaryById(beneficiaryViewModel.BeneficiaryId);
+            var user = Session["UserDetails"] as UserViewModel;
+            string hphoto = PhotoManager.savePhoto(hasbandphoto, 0, "Benificiary");
+            string wphoto = PhotoManager.savePhoto(wifephoto, 0, "Benificiary");
+
+            beneficiaryViewModel.Hasband_Photo = hphoto; //PhotoManager.ConvertToBytes(hasbandphoto);
+            beneficiaryViewModel.Wife_Photo = wphoto; //PhotoManager.ConvertToBytes(wifephoto);
+            beneficiaryViewModel.ModifiedBy = user.UserName;
+            beneficiaryViewModel.ModifiedDate = DateTime.Now;
+            beneficiaryViewModel.CityId = user.CityId;
+
+            var beniMaster = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
+
+            _benificiaryService.Update(beniMaster);
+            _benificiaryService.SaveChanges();
+
+            ViewBag.Message = "sussess message";
+            return RedirectToAction("Index");
         }
 
         // GET: Beneficiary/Delete/5
@@ -182,6 +197,306 @@ namespace EPassBook.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [CustomAuthorize(Common.DataEntry, Common.Admin)]
+        public ActionResult UploadBeneficiayExcel()
+        {
+            var cities = _cityMasterService.Get(r => r.IsActive == true);
+            BeneficiaryViewModel um = new BeneficiaryViewModel();
+            um.Cities = cities.Select(s => new SelectListItem { Text = s.CityName, Value = s.CityId.ToString() }).ToList();
+            return View(um);
+        }
+
+        [HttpPost]
+        [CustomAuthorize(Common.DataEntry, Common.Admin)]
+        public ActionResult UploadBeneficiayExcel(HttpPostedFileBase postedFile, BeneficiaryViewModel beneficiaryViewModel)
+        {
+            var cities = _cityMasterService.Get(r => r.IsActive == true);
+            BeneficiaryViewModel um = new BeneficiaryViewModel();
+            um.Cities = cities.Select(s => new SelectListItem { Text = s.CityName, Value = s.CityId.ToString() }).ToList();
+
+            try
+            {
+                int? cityId = beneficiaryViewModel.CityId;
+                var userData = Session["UserDetails"] as UserViewModel;
+                string filePath = string.Empty;
+                if (postedFile != null)
+                {
+                    string path = Server.MapPath("~/Uploads/UploadedExcels/");
+
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    filePath = path + Path.GetFileName(postedFile.FileName);
+                    string extension = Path.GetExtension(postedFile.FileName);
+                    postedFile.SaveAs(filePath);
+
+                    string conStr = string.Empty;
+                    switch (extension)
+                    {
+                        case ".xls":
+                            conStr = ConfigurationManager.ConnectionStrings["Excel03ConString"].ConnectionString;
+                            break;
+                        case ".xlsx":
+                            conStr = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
+                            break;
+                    }
+
+                    DataTable dt = new DataTable();
+                    conStr = string.Format(conStr, filePath);
+
+                    //Add data from excel to dt for validation
+                    using (OleDbConnection conStrExcel = new OleDbConnection(conStr))
+                    {
+                        using (OleDbCommand cmdExcel = new OleDbCommand())
+                        {
+                            using (OleDbDataAdapter daExcel = new OleDbDataAdapter())
+                            {
+                                cmdExcel.Connection = conStrExcel;
+                                conStrExcel.Open();
+                                DataTable dtExcelSchema;
+                                dtExcelSchema = conStrExcel.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                                string sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                                conStrExcel.Close();
+
+                                conStrExcel.Open();
+                                cmdExcel.CommandText = "SELECT * From [" + sheetName + "]";
+                                daExcel.SelectCommand = cmdExcel;
+                                daExcel.Fill(dt);
+                                conStrExcel.Close();
+                            }
+                        }
+                    }
+
+                    //add new columns to existing datatable
+                    dt.Columns.Add("CreatedDate", typeof(System.DateTime));
+                    dt.Columns.Add("CreatedBy", typeof(System.String));
+                    dt.Columns.Add("CompanyID", typeof(System.Int32));
+                    dt.Columns.Add("Password", typeof(System.String));
+                    dt.Columns.Add("CityId", typeof(System.Int32));
+
+                    var password = "";
+                    var beniFirstName = "";
+                    var mobileNoFirstFour = "";
+                    string error = "";
+
+                    StringBuilder sb = new StringBuilder();
+
+                    //validate data by looping before upload
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        if (dt.Rows[i]["CityId"].ToString() == "")
+                        {
+                            dt.Rows[i]["CityId"] = cityId;
+                        }
+                        if (dt.Rows[i]["CreatedDate"].ToString() == "")
+                        {
+                            dt.Rows[i]["CreatedDate"] = DateTime.Now;
+                        }
+                        if (dt.Rows[i]["CreatedBy"].ToString() == "")
+                        {
+                            dt.Rows[i]["CreatedBy"] = "System";
+                        }
+                        if (dt.Rows[i]["CompanyID"].ToString() == "")
+                        {
+                            dt.Rows[i]["CompanyID"] = userData.CompanyID;
+                        }
+                        if (dt.Rows[i]["BeneficairyName"].ToString() == "")
+                        {
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter Beneficiary Name in row " + RowNo);
+                            error += "Please enter Beneficiary Name in row " + RowNo + Environment.NewLine;
+                        }
+                        else
+                        {
+                            beniFirstName = dt.Rows[i]["BeneficairyName"].ToString();
+                            beniFirstName = !String.IsNullOrWhiteSpace(beniFirstName) && beniFirstName.Length >= 5 ? beniFirstName.Substring(0, 4) : beniFirstName;
+                        }
+                        if (dt.Rows[i]["FatherName"].ToString() == "")
+                        {
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter Father Name in row " + RowNo);
+                            error += "Please enter Father Name in row " + RowNo + Environment.NewLine;
+                        }
+                        if (dt.Rows[i]["MobileNo"].ToString() == "")
+                        {
+                            var mobileno = dt.Rows[i]["MobileNo"].GetType();
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter Mobile No in row " + RowNo);
+                            error += "Please enter Mobile No in row " + RowNo + Environment.NewLine;
+                        }
+                        else
+                        {
+                            mobileNoFirstFour = dt.Rows[i]["MobileNo"].ToString();
+                            mobileNoFirstFour = !String.IsNullOrWhiteSpace(mobileNoFirstFour) && mobileNoFirstFour.Length >= 5 ? mobileNoFirstFour.Substring(0, 4) : mobileNoFirstFour;
+                        }
+
+                        #region this Code commented and remain for if client want to add city id from excel data
+
+                        //if (dt.Rows[i]["CityName"].ToString() == "")
+                        //{
+                        //    int RowNo = i + 2;
+                        //    ViewBag.WrongBeniData = "Please enter City Name in row " + RowNo;
+                        //    return View(um);
+                        //}
+                        //else
+                        //{
+                        //    dt.Rows[i]["CityName"] = cityId;
+                        //}
+                        //else
+                        //{
+                        //    var cityName = dt.Rows[i]["CityName"].ToString();
+                        //    var cityId = 0;
+                        //    cityId = _cityMasterService.Get().Where(c => c.CityName == cityName).Select(c => c.CityId).FirstOrDefault();
+                        //    if(cityId != 0)
+                        //    {
+                        //        dt.Rows[i]["CityName"] = cityId;
+                        //    }
+                        //    else
+                        //    {
+                        //        int RowNo = i + 2;
+                        //        ViewBag.WrongBeniData = "Invalid City Name in row " + RowNo; //City Name must be exact same as saved in database
+                        //        return View(um);
+                        //    }
+                        //}
+                        #endregion
+
+                        if (dt.Rows[i]["DTRNo"].ToString() == "")
+                        {
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter DTR No in row " + RowNo);
+                            error += "Please enter DTR No in row " + RowNo + Environment.NewLine;
+                        }
+                        if (dt.Rows[i]["General"].ToString() == "")
+                        {
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter Cast in row " + RowNo);
+                            error += "Please enter Cast in row " + RowNo + Environment.NewLine;
+                        }
+                        if (dt.Rows[i]["AdharNo"].ToString() == "")
+                        {
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter Adhar No in row " + RowNo);
+                            error += "Please enter Adhar No in row " + RowNo + Environment.NewLine;
+                        }
+                        if (dt.Rows[i]["BankName"].ToString() == "")
+                        {
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter Bank Name in row " + RowNo);
+                            error += "Please enter Bank Name in row " + RowNo + Environment.NewLine;
+                        }
+                        if (dt.Rows[i]["BranchName"].ToString() == "")
+                        {
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter Branch Name in row " + RowNo);
+                            error += "Please enter Branch Name in row " + RowNo + Environment.NewLine;
+                        }
+                        if (dt.Rows[i]["IFSCCode"].ToString() == "")
+                        {
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter IFSC Code in row " + RowNo);
+                            error += "Please enter IFSC Code in row " + RowNo + Environment.NewLine;
+                        }
+                        if (dt.Rows[i]["BankName"].ToString() == "")
+                        {
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter BankName in in row " + RowNo);
+                            error += "Please enter BankName in in row " + RowNo + Environment.NewLine;
+                        }
+                        if (dt.Rows[i]["AccountNo"].ToString() == "")
+                        {
+                            int RowNo = i + 2;
+                            sb.AppendLine("Please enter Account No in in row " + RowNo);
+                            error += "Please enter Account No in in row " + RowNo + Environment.NewLine;
+                        }
+                        password = beniFirstName + mobileNoFirstFour;
+                        if (dt.Rows[i]["Password"].ToString() == "")
+                        {
+                            dt.Rows[i]["Password"] = password;
+                        }
+                    }
+
+                    //show blank data cells if exists in dt
+                    if (!string.IsNullOrWhiteSpace(sb.ToString()))
+                    {
+                        ViewBag.WrongBeniData = sb.ToString().Replace(Environment.NewLine, "\n");
+                        return View(um);
+                    }
+
+                    //indert data into DB from dt
+                    conStr = ConfigurationManager.ConnectionStrings["ErrorLog"].ConnectionString;
+                    using (SqlConnection con = new SqlConnection(conStr))
+                    {
+                        con.Open();
+                        using (SqlTransaction sqlTransaction = con.BeginTransaction())
+                        {
+                            using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(conStr))
+                            {
+                                sqlBulkCopy.DestinationTableName = "BenificiaryMaster";
+
+                                //Mapping with excel and sql
+                                sqlBulkCopy.ColumnMappings.Add("BeneficairyName", "[BeneficairyName]");
+                                sqlBulkCopy.ColumnMappings.Add("FatherName", "[FatherName]");
+                                sqlBulkCopy.ColumnMappings.Add("Mother", "[Mother]");
+                                sqlBulkCopy.ColumnMappings.Add("MobileNo", "[MobileNo]");
+                                sqlBulkCopy.ColumnMappings.Add("PresentAddress", "[PresentAddress]");
+                                sqlBulkCopy.ColumnMappings.Add("CityId", "[CityId]");
+                                sqlBulkCopy.ColumnMappings.Add("DTRNo", "[DTRNo]");
+                                sqlBulkCopy.ColumnMappings.Add("RecordNo", "[RecordNo]");
+                                sqlBulkCopy.ColumnMappings.Add("Class", "[Class]");
+                                sqlBulkCopy.ColumnMappings.Add("General", "[General]");
+                                sqlBulkCopy.ColumnMappings.Add("Single", "[Single]");
+                                sqlBulkCopy.ColumnMappings.Add("Disabled", "[Disabled]");
+                                sqlBulkCopy.ColumnMappings.Add("Password", "[Password]");
+                                sqlBulkCopy.ColumnMappings.Add("AdharNo", "[AdharNo]");
+                                sqlBulkCopy.ColumnMappings.Add("VoterID", "[VoterID]");
+                                sqlBulkCopy.ColumnMappings.Add("Area", "[Area]");
+                                sqlBulkCopy.ColumnMappings.Add("MojaNo", "[MojaNo]");
+                                sqlBulkCopy.ColumnMappings.Add("KhataNo", "[KhataNo]");
+                                sqlBulkCopy.ColumnMappings.Add("KhasraNo", "[KhasraNo]");
+                                sqlBulkCopy.ColumnMappings.Add("PlotNo", "[PlotNo]");
+                                sqlBulkCopy.ColumnMappings.Add("PoliceStation", "[PoliceStation]");
+                                sqlBulkCopy.ColumnMappings.Add("WardNo", "[WardNo]");
+                                sqlBulkCopy.ColumnMappings.Add("District", "[District]");
+                                sqlBulkCopy.ColumnMappings.Add("BankName", "[BankName]");
+                                sqlBulkCopy.ColumnMappings.Add("BranchName", "[BranchName]");
+                                sqlBulkCopy.ColumnMappings.Add("IFSCCode", "[IFSCCode]");
+                                sqlBulkCopy.ColumnMappings.Add("AccountNo", "[AccountNo]");
+                                sqlBulkCopy.ColumnMappings.Add("CreatedDate", "[CreatedDate]");
+                                sqlBulkCopy.ColumnMappings.Add("CreatedBy", "[CreatedBy]");
+                                //sqlBulkCopy.ColumnMappings.Add("ModifiedDate", "[ModifiedDate]");
+                                //sqlBulkCopy.ColumnMappings.Add("ModifiedBy", "[ModifiedBy]");
+                                sqlBulkCopy.ColumnMappings.Add("CompanyID", "[CompanyID]");
+                                //sqlBulkCopy.ColumnMappings.Add("Wife_Photo", "[Wife_Photo]");
+                                //sqlBulkCopy.ColumnMappings.Add("Hasband_Photo", "[Hasband_Photo]");
+
+                                try
+                                {
+                                    sqlBulkCopy.WriteToServer(dt);
+                                    sqlTransaction.Commit();
+                                    ViewBag.Success = "Data Improted successfully";
+                                }
+                                catch (Exception ex)
+                                {
+                                    sqlTransaction.Rollback();
+                                    ViewBag.WrongBeniData = "Kindly check the uploaded excel data, there is some proble with the format type or data";
+                                    return View(um);
+                                }
+                            }
+                        }
+                        con.Close();
+                    }
+                }
+                return View(um);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.WrongBeniData = ex.Message;
+                return View(um);
+            }
         }
     }
 }

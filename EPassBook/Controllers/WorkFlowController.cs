@@ -100,6 +100,7 @@ namespace EPassBook.Controllers
             accountDetailsViewModel.IFSCCode = benificiaryDetails.IFSCCode;
             accountDetailsViewModel.AccountNo = benificiaryDetails.AccountNo.ToString();
             accountDetailsViewModel.LoanAmtInRupees = accountDetailsViewModel.LoanAmnt.ConvertNumbertoWords();
+            accountDetailsViewModel.TransactionType = installmentDetails.TransactionType;
             return PartialView("_Accountant", accountDetailsViewModel);
         }
 
@@ -126,6 +127,7 @@ namespace EPassBook.Controllers
                 installmentDetail.ModifiedDate = DateTime.Now;
                 installmentDetail.StageID = (int)Common.WorkFlowStages.Accountant;
                 installmentDetail.TransactionDate = accountDetailsVM.TransactionDate;
+                installmentDetail.TransactionType = accountDetailsVM.TransactionType;
 
                 if (ModelState.IsValid)
                 {
@@ -256,8 +258,7 @@ namespace EPassBook.Controllers
 
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
-
-            
+            installmentviewmodel.TransactionType = installment.TransactionType;
 
             if (installmentviewmodel.lInRupees == "ZERO")
             {
@@ -294,6 +295,7 @@ namespace EPassBook.Controllers
                     installment.StageID = (int)Common.WorkFlowStages.SiteEngineer;
                     installment.InstallmentNo = installment.InstallmentNo;
                     installment.ModifiedDate = DateTime.Now;
+                    installment.TransactionType = installmentDetailViewModel.TransactionType;
 
                     // Insert reocrd in comment table 
                     var comments = new Comment();
@@ -333,7 +335,6 @@ namespace EPassBook.Controllers
                     installment.GeoTaggingDetails.Add(geotaging);
                     installment.InstallmentSignings.Add(signing);
                     _installmentDetailService.Update(installment);
-
 
                     _installmentDetailService.SaveChanges();
 
@@ -412,8 +413,10 @@ namespace EPassBook.Controllers
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
             if (installmentviewmodel.GeoTaggingDetails.Count>0)
                 installmentviewmodel.Photo ="/Uploads/SiteEngPhotos/"+ installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
+            installmentviewmodel.TransactionType = installment.TransactionType;
 
-            
+
+
             if (installmentviewmodel.lInRupees == "ZERO")
             {
                 installmentviewmodel.lInRupees = null;
@@ -492,6 +495,7 @@ namespace EPassBook.Controllers
                 installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.CityEngineer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
+            installmentviewmodel.TransactionType = installment.TransactionType;
 
             if (installmentviewmodel.GeoTaggingDetails.Count > 0)
                 installmentviewmodel.Photo = "/Uploads/SiteEngPhotos/" + installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
@@ -580,6 +584,7 @@ namespace EPassBook.Controllers
             //Get Geotagging photo
             if (installmentviewmodel.GeoTaggingDetails.Count > 0)
                 installmentviewmodel.Photo = "/Uploads/SiteEngPhotos/" + installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
+            installmentviewmodel.TransactionType = installment.TransactionType;
 
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
@@ -600,7 +605,6 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.ChiefOfficer)]
         public ActionResult ChiefOfficer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
-
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
             if (installment != null)
             {
