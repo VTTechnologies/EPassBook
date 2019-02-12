@@ -13,7 +13,8 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-
+                    <h4>Accountant</h4>
+                    <label style="color:red">Note: Please check all comments in Survey Details tab before proceeding </label>
                 </div>
                 @using (@Html.BeginForm("Accountant", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
                 {
@@ -27,7 +28,6 @@
                             </div>
                             <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
                                 @Html.DisplayFor(model => model.AccountNo, new { htmlAttributes = new { @class = "form-control" } })
-
                             </div>
                         </div>
 
@@ -54,7 +54,28 @@
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                 @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control" } })
-
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                @Html.LabelFor(model => model.TransactionDate)
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                @Html.LabelFor(model => model.TransactionType)
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                @Html.DropDownListFor(model => model.TransactionType, new SelectList(new List<object>
+                                    {
+                                    new{ value="Check", text="Check" },
+                                    new{ value="Cash", text="Cash" },
+                                    new{ value="RTGS", text="RTGS" },
+                                    },
+                                    "value",
+                                    "text"),"Select Items",
+                                    new {  @class = "form-control"})
                             </div>
                         </div>
 
@@ -63,20 +84,15 @@
                                 @*@Html.LabelFor(model => model.Sign, new { @class = "col-md-2" })*@
                                 <label>Sign For Accountant</label>
                             </div>
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @Html.CheckBoxFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control", @id = "Sign" } })
-
+                            <div class="checkbox icheck col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                @*@Html.CheckBoxFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control", id = "chkAccountant" } })*@
+                                @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkAccountant" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input id="hiddforCheckbox"
-                                       name="hiddforCheckbox"
-                                       value="no"
-                                       type="hidden" />
-                                <label id="lblTransaction" class="text-danger"></label><br />
-                                <label id="lblSign" class="text-danger"></label>
+                                <label id="lblmsg_acct" class="text-danger"></label>
                             </div>
                         </div>
                         <div class="box-footer">
@@ -93,54 +109,52 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            debugger;
             $('#accountant').find(':input').prop('disabled', true);
         });
     </script>
 }
 
 <script type="text/javascript">
+
     function validationAcountant() {
-        if ($("#TransactionId").val().trim() == "" && $("#hiddforCheckbox").val() == "no") {
-            $("#lblTransaction").text("Please Enter Transaction no");
-            $("#lblSign").text("Please sign in to confirm your submission");
+        if (($("#TransactionId").val().trim() == "")) {
+            $("#lblmsg_acct").text("Please Enter Transaction no");
             return false;
         }
-        else {
-            if (($("#TransactionId").val().trim() == "") || ($("#hiddforCheckbox").val() == "no")) {
-                if ($("#TransactionId").val().trim() == "") {
-                    $("#lblSign").text("");
-                    $("#lblTransaction").text("Please Enter Transaction no");
-                    return false;
-                }
-                if ($("#hiddforCheckbox").val() == "no") {
-                    $("#lblTransaction").text("");
-                    $("#lblSign").text("Please sign in to confirm your submission");
-                    return false;
-                }
-            }
+        else if (!$("#chkAccountant").is(":checked")) {
+            $("#lblmsg_acct").text("Please sign in to confirm your submission");
+            return false;
         }
-        $("#lblSign").text("");
-        $("#lblTransaction").text("");
-        return true;
+        else if (($("#TransactionDate").val().trim() == "")) {
+            $("#lblmsg_acct").text("Please Enter Transation Date");
+            return false;
+        }
     }
-    $("#Sign").change(function () {
-        if ($("#Sign").is(":checked")) {
-            $("#hiddforCheckbox").val("Checked");
-            $("#hiddforCheckbox").val("yes");
-        }
-        else {
-            $("#hiddforCheckbox").val("Unchecked");
-            $("#hiddforCheckbox").val("no");
-        }
-    })
+    $(document).ready(function () {
+
+        $("#TransactionDate").datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true
+        });
+
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
+
+        $("#chkAccountant").change(function () {
+            debugger;
+            $("#lblmsg_acct").text("");
+        });
+    });
 </script>
 
 @if (ViewBag.Message != null)
 {
     <script type="text/javascript">
         window.onload = function () {
-            debugger
             alert("submited successfully");
             window.location.href = "/WorkFlow/Index/";
         };

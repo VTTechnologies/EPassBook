@@ -239,6 +239,12 @@ namespace EPassBook.Controllers
             BeneficiaryViewModel um = new BeneficiaryViewModel();
             um.Cities = cities.Select(s => new SelectListItem { Text = s.CityName, Value = s.CityId.ToString() }).ToList();
 
+            if(postedFile == null)
+            {
+                ViewBag.Success = "postedFile is Null";
+                return View(um);
+            }
+
             try
             {
                 int? cityId = beneficiaryViewModel.CityId;

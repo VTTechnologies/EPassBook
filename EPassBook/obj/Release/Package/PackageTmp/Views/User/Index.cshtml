@@ -3,6 +3,7 @@
     ViewBag.Title = "Index";
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -27,6 +28,17 @@
                     <div class="box-header with-border">
                     </div>
                     <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.Label("Select City")
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().CityName, TempData["Cities"] as List<SelectListItem>, "SELECT CITY", new { @class = "form-control", @Id = "selectCity" })
+                                </div>
+                            </div>
+                        </div>
                         @*<div style="height: auto; overflow: auto;">*@
                         <table id="userGrid" class="table table-bordered table-striped">
                             <thead>
@@ -34,14 +46,11 @@
                                     <th style="display:none;">ID</th>
                                     <th>@Html.DisplayNameFor(model => model.UserName)</th>
                                     <th>@Html.DisplayNameFor(model => model.Email)</th>
+                                    <th>@Html.DisplayNameFor(model => model.RoleName)</th>
                                     <th>@Html.DisplayNameFor(model => model.MobileNo)</th>
                                     <th>@Html.DisplayNameFor(model => model.Address)</th>
                                     <th>City</th>
-                                    <th>Company</th>
-                                    <th>@Html.DisplayNameFor(model => model.RoleName)</th>
-                                    <th>Details</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th></th>
                                 </tr>
                             </thead>
 
@@ -53,14 +62,16 @@
                                         <td style="display:none;">@items.UserId</td>
                                         <td>@items.UserName</td>
                                         <td>@items.Email</td>
+                                        <th>@items.RoleName</th>
                                         <td>@items.MobileNo</td>
                                         <td>@items.Address</td>
                                         <td>@items.CityMaster.CityName</td>
-                                        <td>@items.CompanyMaster.CompanyName</td>
-                                        <th>@items.RoleName</th>
-                                        <td>@Html.ActionLink("Details", "Details", new { id = @items.UserId }, new { @class = "btn alert-info" })</td>
-                                        <td>@Html.ActionLink("Edit", "Edit", new { id = @items.UserId }, new { @class = "btn btn-default" })</td>
-                                        <td>@Html.ActionLink("Delete", "Delete", new { id = @items.UserId }, new { @class = "btn alert-danger", onclick = "return IsManager('" + @items.RoleName + "','" + @items.UserId + "');" })</td>
+                                        <td>
+                                            @Html.ActionLink("Details", "Details", new { id = @items.UserId }, new { @class = "btn alert-info" })
+                                            @Html.ActionLink("Edit", "Edit", new { id = @items.UserId }, new { @class = "btn btn-default" })
+                                            @Html.ActionLink("Delete", "Delete", new { id = @items.UserId }, new { @class = "btn alert-danger", onclick = "return IsManager('" + @items.RoleName + "','" + @items.UserId + "');" })
+                                        </td>
+
 
                                     </tr>
                                 }
@@ -164,9 +175,24 @@
             $("#AlertModal").modal('hide');
     });
 
-    
+
 
     $(document).ready(function () {
         $('#userGrid').dataTable();
+        var dtUsers = $('#userGrid').dataTable();
+
+        $('#selectCity').on('change', function ()
+        {
+            debugger
+            var selectedValue = $(this).val();
+            if (selectedValue == "")
+            {
+                window.ReloadPage();
+            }
+            else {
+                dtUsers.fnFilter("^" + selectedValue + "$", 6, true);
+            }
+        });
+
     });
 </script>

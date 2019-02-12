@@ -2,7 +2,7 @@
 @{
     if (ViewBag.Message != null)
     {
-         Layout = "~/Views/Shared/_Layout.cshtml";
+        Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
 <style>
@@ -21,6 +21,7 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
+
                         </div>
                         <div class="box-body">
                             <div class="form-group">
@@ -29,7 +30,7 @@
                                         @Html.Label("Select Comment", "Select Comment", htmlAttributes: new { @class = "control-label" })
                                     </div>
                                     <div class="col-md-9">
-                                        <select class="selectpicker form-control" multiple data-live-search="false">
+                                        <select class="selectpicker  form-control" multiple data-actions-box="true" data-live-search="false">
                                             <option>Centre line is not proper</option>
                                             <option>Foundation state to rest foundation in not hard</option>
                                             <option>Column footing reinforcement is not as per design/properly laid</option>
@@ -43,7 +44,6 @@
                                         @Html.Label("Comment", htmlAttributes: new { @class = "control-label" })
                                     </div>
                                     <div class="col-md-9">
-                                        @*@Html.TextArea("txtFirstComment", null, 5, 5, new { @class = "form-control" })*@
                                         @Html.TextBoxFor(model => model.FirstComment, htmlAttributes: new { @class = "form-control", @id = "txtFirstComment" })
                                         <div style="height:20px">
                                             <span id="commentError" class="errmsg"></span>
@@ -71,19 +71,13 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-
+                        <h4>Site Engineer</h4>
                     </div>
                     @using (Html.BeginForm("SiteEngineer", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
                     {
                         <div class="box-body">
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group" style="display:none">
-                                @Html.LabelFor(model => model.InstallmentId, "InstallmentID", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.HiddenFor(m => m.InstallmentId)
-                                </div>
-                            </div>
                             <div class="form-horizontal" id="secondDiv">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="form-group" style="display:none">
@@ -113,29 +107,24 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.IsCentreAmnt, "State Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.Label("State Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        <div class="checkbox">
-                                            @*@Html.RadioButton("IsRadioButton", "State Assistance")*@
-                                            <input type="radio" name="IsRadioButton" id="isrdo_1" value="State Assistance">@Html.Label("State Assistance")
-                                            @Html.ValidationMessageFor(model => model.IsCentreAmnt, "", new { @class = "text-danger" })
+                                        <div class="checkbox icheck">
+                                            @Html.RadioButtonFor(model => model.IsCentreAmnt, false, new { id = "isState" })State Assistance
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Central Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <div class="checkbox icheck">
+                                            @Html.RadioButtonFor(model => model.IsCentreAmnt, true, new { id = "isCentre" })Central Assistance
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.IsCentreAmnt, "Central Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        <div class="checkbox">
-                                            @*@Html.RadioButton("IsRadioButton", "Central Assistance")*@
-                                            <input type="radio" name="IsRadioButton" id="isrdo_2" value="Central Assistance">@Html.Label("Central Assistance")
-                                            @Html.ValidationMessageFor(model => model.IsCentreAmnt, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.LoanAmnt, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.Label("Subsidy Amount", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-4">
                                         @Html.EditorFor(model => model.LoanAmnt, new { htmlAttributes = new { @class = "form-control", @id = "txtLAmnt" } })&nbsp;<span id="errmsgL"></span>
                                         @Html.ValidationMessageFor(model => model.LoanAmnt, "", new { @class = "text-danger" })
@@ -147,126 +136,71 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ConstructionLevel, "Via RTGS/DBT to the beneficiary for the plan as first instalmentafter digging of the foundation.", htmlAttributes: new { @class = "control-label col-md-7" })
-                                    <div class="col-md-3">
-                                        @Html.DropDownListFor(model => model.ConstructionLevel, new SelectList(new List<object>
+                                    @Html.Label("Transaction Type", htmlAttributes: new { @class = "control-label col-md-2" })                                    
+                                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                        @Html.DropDownListFor(model => model.TransactionType, new SelectList(new List<object>
                                             {
-                                            new{ value=0, text="A" },
-                                            new{ value=1, text="B" },
-                                            new{ value=2, text="C" },
+                                            new{ value="Check", text="Check" },
+                                            new{ value="Cash", text="Cash" },
+                                            new{ value="RTGS", text="RTGS" },
                                             },
                                             "value",
                                             "text"),"Select Items",
-                                            new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ConstructionLevel, "", new { @class = "text-danger" })
+                                            new {  @class = "form-control"})
                                     </div>
                                 </div>
 
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.StageID, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.StageID, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.StageID, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="text-align-last:end">
+                                        <strong>Via RTGS/DBT to the beneficiary for the plan as first instalment after </strong>
                                     </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.IsCompleted, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        <div class="checkbox">
-                                            @Html.EditorFor(model => model.IsCompleted)
-                                            @Html.ValidationMessageFor(model => model.IsCompleted, "", new { @class = "text-danger" })
-                                        </div>
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.DropDownListFor(model => model.ConstructionLevel, new SelectList(new List<object>
+                                            {
+                                            new{ value="Not Started", text="Not Started" },
+                                            new{ value="Digging", text="Digging" },
+                                            new{ value="Plinth Level", text="Plinth Level" },
+                                            new{ value="Lintel Level", text="Lintel Level" },
+                                            new{ value="Roof Level", text="Roof Level" },
+                                            new{ value="Finishing/Completion", text="Finishing/Completion" },
+                                            },
+                                            "value",
+                                            "text"),"Select Items",
+                                            new {  @class = "form-control"})
                                     </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.InstallmentNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.InstallmentNo, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.InstallmentNo, "", new { @class = "text-danger" })
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                        <p>
+                                            <strong> of the foundation.</strong>
+                                        </p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     @Html.LabelFor(model => model._Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.TextAreaFor(model => model._Comments, 3, 100, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.TextAreaFor(model => model._Comments, htmlAttributes: new { @class = "form-control", @row = 5 })
                                         @Html.ValidationMessageFor(model => model._Comments, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.ModifiedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.ModifiedDate, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group" style="display:none">
-                                    @Html.LabelFor(model => model.ModifiedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.EditorFor(model => model.ModifiedBy, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ModifiedBy, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.HiddenFor(model => model.CompanyID, "Company ID")
-                                    <div class="col-md-10">
-                                        @Html.HiddenFor(m => m.CompanyID)
-                                        @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.ModifiedBy, "Upload Photo", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-5">
-                                        <img id="imgsite" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
-                                        <input type="file" value="Upload" id="imguploadsiteeng" name="imguploadsiteeng" onchange="readURL(this, 'imgsite')" class="btn btn-primary col-md-7" />
-                                        <input type="button" id="btnimg1cencal" onclick="removeimg('imgsite','imguploadsiteeng')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
+                                    <div class="col-md-8">
+                                        <img id="imgsite" src="@Model.Photo" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
+                                        <input type="file" value="Upload" id="imguploadsiteeng" name="imguploadsiteeng" onchange="readURL(this, 'imgsite')" class="btn btn-primary col-md-5 col-sm-5 col-xs-5" />
+                                        <input type="button" id="btnimg1cencal" onclick="removeimg('imgsite','imguploadsiteeng')" value="Cancel" class="btn btn-danger col-md-3 col-sm-3 col-xs-3 pull-right" />
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        @Html.CheckBox("ChkSign", "no") @Html.Label("Central Assistance")
+                                    <div class="checkbox icheck col-md-offset-2 col-md-10">
+                                        @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "SiteEngineer" }) @Html.Label("Site Engineer")
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-10">
                                         <label id="lblmsg" class="text-danger"></label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <input id="hiddforRadio"
-                                               name="hiddforRadio"
-                                               type="hidden"
-                                               value="no" />
-                                        <input id="hiddforCheckbox"
-                                               name="hiddforCheckbox"
-                                               type="hidden"
-                                               value="no" />
                                     </div>
                                 </div>
                                 <div class="box-footer">
@@ -305,7 +239,11 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
             var check = '@Model.IsRecommended';
             //TODO
             check = check.toLowerCase();
@@ -319,14 +257,13 @@
                 $('#secondDiv').hide();
                 $('#firstDiv').show();
             }
-    $('select').selectpicker();
+        $('select').selectpicker();
         $(".selectpicker").change(function () {
             var countries = [];
             $.each($(".selectpicker option:selected"), function () {
                 countries.push($(this).val());
             });
             $("#txtFirstComment").val(countries.join(", "));
-            //alert("You have selected the country - " + countries.join(", "));
         });
 
 
@@ -370,6 +307,7 @@
                 })
             });
         });
+
         $("#reject").click(function () {
             var comment = $("#txtFirstComment").val();
             var installmentId = @Model.InstallmentId;
@@ -451,55 +389,36 @@
                 return false;
             }
         });
+
+        $("#SiteEngineer").change(function () {
+            $("#lblmsg_PM").text("");
+        });
     });
 
-    $("#isrdo_1, #isrdo_2").change(function () {
-        if ($("#isrdo_1").is(":checked")) {
-            $("#hiddforRadio").val("Checked");
-        }
-        else if ($("#isrdo_2").is(":checked")) {
-            $("#hiddforRadio").val("Checked");
-        }
-    });
-
-    var isstatecenter = '@Model.IsCentreAmnt';
-    if (isstatecenter != '') {
-        if (isstatecenter.toLocaleLowerCase() == 'true') {
-            $("#isrdo_1").attr("checked", false);
-            $("#isrdo_2").attr("checked", true);
-        }
-        else {
-            $("#isrdo_1").attr("checked", true);
-            $("#isrdo_2").attr("checked", false);
-        }
-    }
-
-    $("#ChkSign").change(function () {
-        if ($("#ChkSign").is(":checked")) {
-            $("#hiddforCheckbox").val("Checked");
-        }
-    });
 
     function validation() {
-        debugger;
+        if ($("#isState").is(":checked") || $("#isCentre").is(":checked")) {
+        }
+        else {
+            $("#lblmsg").text("Please select State Assistance or Center Assistance");
+            return false;
+        }
         if ($("#txtLAmnt").val().trim() == "" || $("#txtLAmnt").val() == "0.00") {
             $("#lblmsg").text("Please Enter Loan Amount");
             return false;
         }
-        if ($("#hiddforRadio").val() == "no") {
-            $("#lblmsg").text("Please select State Assistance or Center Assistance");
-            return false;
-        }
-        if ($("#hiddforCheckbox").val() == "no") {
+        if (!$("#SiteEngineer").is(":checked")) {
             $("#lblmsg").text("Please sign in to confirm your submission");
             return false;
         }
-
+        if ($("#ConstructionLevel").val() =='') {
+            $("#lblmsg").text("Please select construction level.");
+            return false;
+        }
         return true;
     }
 
     function readURL(input, id) {
-        //alert(id);
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 

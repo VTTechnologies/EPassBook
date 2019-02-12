@@ -8,7 +8,7 @@
     <Property Name="BeneficairyName" Type="nvarchar" MaxLength="150" />
     <Property Name="FatherName" Type="nvarchar" MaxLength="150" />
     <Property Name="Mother" Type="nvarchar" MaxLength="150" />
-    <Property Name="MobileNo" Type="nvarchar" MaxLength="15" />
+    <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
     <Property Name="PresentAddress" Type="nvarchar" MaxLength="350" />
     <Property Name="CityId" Type="int" />
     <Property Name="DTRNo" Type="nvarchar(max)" />
@@ -165,6 +165,8 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="CompanyID" Type="int" />
     <Property Name="TransactionID" Type="nvarchar" MaxLength="150" />
     <Property Name="IsRecommended" Type="bit" />
+    <Property Name="TransactionDate" Type="datetime" />
+    <Property Name="TransactionType" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="InstallmentDetailsHistory">
     <Key>
@@ -187,6 +189,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="CompanyID" Type="int" />
     <Property Name="TransactionID" Type="nvarchar" MaxLength="150" />
     <Property Name="IsRecommended" Type="bit" />
+    <Property Name="TransactionType" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="InstallmentRejection">
     <Key>
@@ -554,7 +557,9 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     </ReferentialConstraint>
   </Association>
   <Association Name="UserInRoles_userid_fk">
-    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1" />
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="UserInRoles" Type="Self.UserInRoles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserMaster">
@@ -606,6 +611,11 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Parameter Name="version" Type="int" Mode="In" />
     <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
   </Function>
+  <Function Name="sp_checkUserExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="int" Mode="In" />
+    <Parameter Name="roleId" Type="int" Mode="In" />
+    <Parameter Name="cityId" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
     <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -621,6 +631,12 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
   </Function>
   <Function Name="sp_GetSurveyDetailsByBenID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="BenificiaryId" Type="int" Mode="In" />
+    <Parameter Name="installmentNo" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_GetworkStatusforMAsterReports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="cityId" Type="int" Mode="In" />
+    <Parameter Name="DTRNo" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="companyID" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />

@@ -4,27 +4,30 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            User
+            Creat User
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>User</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i>Create User</a></li>
             @*<li class="active">Dashboard</li>*@
         </ol>
     </section>
-    <section class="content" id="accountant">
+    <section class="content">
         <div class="row">
             <!-- left column -->
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-
+                        Create User
                     </div>
                     @using (Html.BeginForm("Create", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="box-body">
 
-                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            @Html.ValidationMessage("UserExist", null, new { @class = "text-danger" })
+                            <br /><br />
+
+                            @*@Html.ValidationSummary( false, "", new { @class = "text-danger" })*@
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -35,6 +38,14 @@
                                 <div class="col-md-5">
                                     @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Last Name" } })
                                     @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -66,7 +77,7 @@
                                 @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     <div class="checkbox">
-                                        @Html.CheckBoxFor(model => model.IsActive.Value, htmlAttributes: new { @class = "Minimal", @checked = "checked" })
+                                        @Html.CheckBoxFor(model => model.IsActive.Value, htmlAttributes: new { @class = "minimal", @checked = "checked" })
                                         @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -75,7 +86,8 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.RoleId, "RoleId", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.RoleId, TempData["roles"] as SelectList, "SELECT ROLE", new { @class = "form-control" })
+                                    @*@Html.DropDownListFor(model => model.RoleId, TempData["roles"] as SelectList, "SELECT ROLE", new { @class = "form-control" })*@
+                                    @Html.DropDownListFor(model => model.RoleId, Model.Roles, "SELECT ROLE", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -85,14 +97,6 @@
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -107,19 +111,19 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.CityId, "CityId", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.CityId, TempData["Cities"] as SelectList, "SELECT CITY", new { @class = "form-control" })
+                                    @*@Html.DropDownListFor(model => model.CityId, TempData["Cities"] as SelectList, "SELECT CITY", new { @class = "form-control" })*@
+                                    @Html.DropDownListFor(model => model.CityId, Model.Cities, "SELECT CITY", new { @class = "form-control", id = "ddlCity" })
                                     @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CompanyID, "CompanyID", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @*@Html.DropDownList("CompanyID",null, htmlAttributes: new { @class = "form-control" })*@
-                                    @Html.DropDownListFor(model => model.CompanyID, TempData["companies"] as SelectList, "SELECT COMPANY", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.CompanyID, "CompanyID", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.CompanyID, TempData["companies"] as SelectList, "SELECT COMPANY", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
 
                             @*<div class="form-group">
                                     @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -133,7 +137,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                    <input type="submit" value="Create" class="btn btn-primary" id="btnSubmit" />
                                 </div>
                             </div>
                         </div>
@@ -155,5 +159,77 @@
             changeYear: true
         });
     });
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+    function checkexistuser() {
+        debugger;
+        var cityId = $('#ddlCity :selected').val();
+
+        if (id != '') {
+            $.ajax({
+                type: "POST",
+                url: "/User/CheckUserByCityID?cityId=" + cityId,
+                success: (function (response) {
+                    debugger;
+                    if (response == 'True') {
+                        alert("User already added for this city. Please delete him first or change city");
+                        return false;
+                    }
+                    else {
+                        CreatUser(data);
+                    }
+                }),
+                error: (function (response) {
+                    alert("some error occured please try again");
+                    return false;
+                })
+            });
+        }
+
+    };
+
+    function CreatUser(data) {
+        debugger;
+
+        var fname = $("#FirstName").text();
+        var lname = $("#FirstName").text();
+        var dob = $("#FirstName").text();
+        var mobileno = $("#FirstName").text();
+        var address = $("#FirstName").text();
+        var isactive = $("#FirstName").text();
+        var cityId = $('#ddlCity :selected').val();
+
+        var id = $('#ddlCity :selected').val();
+        if (id != '') {
+            $.ajax({
+                type: "POST",
+                url: "/User/CheckUserByCityID?cityId=" + id,
+                success: (function (response) {
+                    debugger;
+                    if (response == 'True') {
+                        alert("User already added for this city. Please delete him first or change city");
+                        return false;
+                    }
+                    else {
+
+
+                    }
+                }),
+                error: (function (response) {
+                    alert("some error occured please try again");
+                    return false;
+                })
+            });
+        }
+
+    };
 </script>
 
