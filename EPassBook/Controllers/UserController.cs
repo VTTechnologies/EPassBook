@@ -51,12 +51,14 @@ namespace EPassBook.Controllers
         {
             if (ModelState.IsValidField("UserName") && ModelState.IsValidField("Password"))
             {
+                HttpCookie userCookie = new HttpCookie("userinfo");
                 var userData = _userService.GetPassword(user.UserName);
                 UserViewModel uservm = new UserViewModel();
 
+                userCookie["userId"] = user.UserId.ToString();
+
                 if (user.RememberMe)
                 {
-                    HttpCookie userCookie = new HttpCookie("userinfo");
                     userCookie["user"] = user.UserName;
                     userCookie["password"] = user.Password;
                     userCookie.Expires = DateTime.Now.AddDays(1);
@@ -64,8 +66,18 @@ namespace EPassBook.Controllers
                 }
                 if (userData != null)
                 {
+                    if (checkIsLogedIn(userData))
+                    {
+                        ModelState.AddModelError("Error", "This user is already logged in from another device");
+                        return View();
+                    }
+                    else
+                    {
+                        UpdateIsLoggeIn(userData);
+                    }
                     uservm = Mapper.UserMapper.Detach(userData);
-                    Session["UserDetails"] = uservm;
+
+                    Session["UserDetails"] = uservm;                    
                     var password = userData.Password.Decrypt();
 
                     if (user.Password.Equals(password))
@@ -443,6 +455,19 @@ namespace EPassBook.Controllers
                 return RedirectToAction("Index");                
             }
             return RedirectToAction("Index");
+        }
+
+        public bool checkIsLogedIn(UserMaster user)
+        {
+            bool flag = false;
+            flag = user.IsLoggedIn.Value;
+            return flag;
+        }
+        public void UpdateIsLoggeIn(UserMaster user)
+        {
+            user.IsLoggedIn = true;
+            _userService.Update(user);
+            _userService.SaveChanges();
         }
 
         [HttpPost]

@@ -63,6 +63,9 @@ namespace EPassBook.Helper
                 //userDetail
                 if (filterContext.HttpContext.Session["UserDetails"] == null)
                 {
+                    var UserId = HttpContext.Current.Request.Cookies["userId"].Value;
+                    var um = _userService.Get().Where(u => u.UserId == Convert.ToInt32(UserId)).FirstOrDefault();
+                    UpdateIsLoggeIn(um);
                     filterContext.Result = new RedirectResult("~/User/Login");
                 }
                 else
@@ -70,6 +73,12 @@ namespace EPassBook.Helper
                     filterContext.Result = new RedirectResult("~/Error/UnauthorizedAccess");
                 }
             }
+        }
+        public void UpdateIsLoggeIn(UserMaster user)
+        {
+            user.IsLoggedIn = false;
+            _userService.Update(user);
+            _userService.SaveChanges();
         }
     }
 }
