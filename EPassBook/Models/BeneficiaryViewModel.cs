@@ -32,8 +32,7 @@ namespace EPassBook.Models
         [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Aadhaar No")]
         public Nullable<long> AdharNo { get; set; }
         public string VoterID { get; set; }
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Area")]
-        public Nullable<int> Area { get; set; }
+        public string Area { get; set; }
         [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Moja")]
         public Nullable<int> MojaNo { get; set; }
         public string KhataNo { get; set; }

@@ -108,11 +108,17 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.Accountant)]
         public ActionResult Accountant(AccountDetailsViewModel accountDetailsVM)
         {
+            var installmentDetail = _installmentDetailService.GetInstallmentDetailById(accountDetailsVM.InstallmentId);
+            if (accountDetailsVM.OTP != installmentDetail.OTP)
+            {
+                ViewBag.Error = "Wrong OTP";
+                return RedirectToAction("Workflow", new { id = installmentDetail.InstallmentId });                
+                //return View("_Accountant", accountDetailsVM);
+            }
             if (Session["UserDetails"] != null)
             {
                 var user = Session["UserDetails"] as UserViewModel;
                 var instSigning = new InstallmentSigning();
-                var installmentDetail = _installmentDetailService.GetInstallmentDetailById(accountDetailsVM.InstallmentId);
 
                 instSigning.InstallmentId = installmentDetail.InstallmentId;
                 instSigning.Sign = accountDetailsVM.Sign;
@@ -282,6 +288,12 @@ namespace EPassBook.Controllers
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
             if (ModelState.IsValid)
             {
+                if(installment.OTP!= installmentDetailViewModel.OTP)
+                {
+                    ViewBag.Error = "Wrong OTP";
+                    return RedirectToAction("Workflow", "Workflow", installmentDetailViewModel.InstallmentId);
+                    //return PartialView("_SiteEngineer", installmentDetailViewModel);
+                }
                 if (Session["UserDetails"] != null)
                 {
                     var user = Session["UserDetails"] as UserViewModel;
@@ -432,9 +444,12 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.ProjectEngineer)]
         public ActionResult ProjectEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
-
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
-           
+            if (installmentDetailViewModel.OTP != installment.OTP)
+            {
+                ViewBag.Error = "Wrong OTP";
+                return PartialView("_ProjectEngineer", installmentDetailViewModel);
+            }
             if (Session["UserDetails"] != null)
             {
                 var user = Session["UserDetails"] as UserViewModel;
@@ -516,6 +531,11 @@ namespace EPassBook.Controllers
         public ActionResult CityEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
+            if (installmentDetailViewModel.OTP != installment.OTP)
+            {
+                ViewBag.Error = "Wrong OTP";
+                return PartialView("_CityEngineer", installmentDetailViewModel);
+            }
             //if (ModelState.IsValid)
             //{
             if (Session["UserDetails"] != null)
@@ -606,6 +626,12 @@ namespace EPassBook.Controllers
         public ActionResult ChiefOfficer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
+            if (installmentDetailViewModel.OTP != installment.OTP)
+            {
+                ViewBag.Error = "Wrong OTP";
+                return RedirectToAction("Workflow", new { id = installment.InstallmentId });
+                //return PartialView("_ChiefOfficer", installmentDetailViewModel);
+            }
             if (installment != null)
             {
                 if (Session["UserDetails"] != null)
@@ -724,6 +750,30 @@ namespace EPassBook.Controllers
         {
             var Rupees = number.ConvertNumbertoWords();
             return Rupees;
+        }
+
+        [HttpGet]
+        public void SendOtp(int installmentID)
+        {
+            var uvm = Session["UserDetails"] as UserViewModel;
+            VerifyUser verifyUser = new VerifyUser();
+            //verifyUser.sid = sid;
+            //verifyUser.user = user;
+            //verifyUser.password = password;
+            verifyUser.msisdn = uvm.MobileNo;
+            verifyUser.OTP = verifyUser.GenerateRandomOTP(4);
+
+            string res = "Nothing";//verifyUser.SendOtp();
+
+            //save otp to DB;
+            InstallmentDetail installmentDetail = new InstallmentDetail();
+            installmentDetail = _installmentDetailService.Get().Where(i => i.InstallmentId == installmentID).FirstOrDefault();
+            installmentDetail.OTP = verifyUser.OTP;
+            _installmentDetailService.Update(installmentDetail);
+            _installmentDetailService.SaveChanges();
+
+            TempData["res"] = res;
+            ViewBag.MobileNo = uvm.MobileNo;
         }
     }
 }

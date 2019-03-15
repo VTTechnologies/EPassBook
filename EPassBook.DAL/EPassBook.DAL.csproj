@@ -132,6 +132,9 @@
     <Compile Include="DBModel\UserInRole.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBModel\UserLoginDetail.cs">
+      <DependentUpon>EPassBookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBModel\UserMaster.cs">
       <DependentUpon>EPassBookModel.tt</DependentUpon>
     </Compile>

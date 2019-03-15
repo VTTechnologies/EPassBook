@@ -20,7 +20,7 @@
     <Property Name="Password" Type="nvarchar" MaxLength="150" />
     <Property Name="AdharNo" Type="bigint" />
     <Property Name="VoterID" Type="nvarchar" MaxLength="50" />
-    <Property Name="Area" Type="int" />
+    <Property Name="Area" Type="nvarchar(max)" />
     <Property Name="MojaNo" Type="int" />
     <Property Name="KhataNo" Type="nvarchar" MaxLength="50" />
     <Property Name="KhasraNo" Type="int" />
@@ -167,6 +167,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="IsRecommended" Type="bit" />
     <Property Name="TransactionDate" Type="datetime" />
     <Property Name="TransactionType" Type="nvarchar(max)" />
+    <Property Name="OTP" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="InstallmentDetailsHistory">
     <Key>
@@ -254,6 +255,20 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RoleId" Type="int" />
     <Property Name="UserId" Type="int" />
+  </EntityType>
+  <EntityType Name="UserLoginDetails">
+    <Key>
+      <PropertyRef Name="AttendanceId" />
+    </Key>
+    <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="InTime" Type="datetime" />
+    <Property Name="OutTime" Type="datetime" />
+    <Property Name="InLocation" Type="nvarchar(max)" />
+    <Property Name="OutLocation" Type="nvarchar(max)" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="CompanyId" Type="int" />
   </EntityType>
   <EntityType Name="UserMaster">
     <Key>
@@ -496,6 +511,20 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserLoginDetails_UserMaster">
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserLoginDetails" Type="Self.UserLoginDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserLoginDetails">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserMaster_CityMaster">
     <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
     <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
@@ -687,6 +716,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <EntitySet Name="StageInRole" EntityType="Self.StageInRole" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserInRoles" EntityType="Self.UserInRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserLoginDetails" EntityType="Self.UserLoginDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkflowStages" EntityType="Self.WorkflowStages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" store:Type="Tables" store:Schema="dbo">
@@ -771,6 +801,10 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <AssociationSet Name="FK_StageInRole_WorkflowStages" Association="Self.FK_StageInRole_WorkflowStages">
       <End Role="WorkflowStages" EntitySet="WorkflowStages" />
       <End Role="StageInRole" EntitySet="StageInRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserLoginDetails_UserMaster" Association="Self.FK_UserLoginDetails_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMaster" />
+      <End Role="UserLoginDetails" EntitySet="UserLoginDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_UserMaster_CityMaster" Association="Self.FK_UserMaster_CityMaster">
       <End Role="CityMaster" EntitySet="CityMaster" />

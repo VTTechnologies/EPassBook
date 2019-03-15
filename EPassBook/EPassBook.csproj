@@ -254,6 +254,7 @@
     <Compile Include="Helper\NumbersToWords.cs" />
     <Compile Include="Helper\PasswordEncryptionDecryption.cs" />
     <Compile Include="Helper\PhotoManager.cs" />
+    <Compile Include="Helper\VerifyUser.cs" />
     <Compile Include="Mapper\UserInRoleMapper.cs" />
     <Compile Include="Mapper\InstallmentDetailsMapper.cs" />
     <Compile Include="Mapper\BeneficiaryMapper.cs" />

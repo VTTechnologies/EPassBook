@@ -24,8 +24,10 @@ namespace EPassBook
         }
         protected void Session_End()
         {
-            var UserId = HttpContext.Current.Request.Cookies["userId"].Value;
-            if(UserId != null || UserId != "")
+            //var UserId = HttpContext.Current.Request.Cookies["userId"].Value;
+            var UserId = HttpContext.Current.Request.Cookies["userinfo"].Value;
+
+            if (UserId != null || UserId != "")
             {
                 var um = _userService.Get().Where(u => u.UserId == Convert.ToInt32(UserId)).FirstOrDefault();
                 um.IsLoggedIn = false;

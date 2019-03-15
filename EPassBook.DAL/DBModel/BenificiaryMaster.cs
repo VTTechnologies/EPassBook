@@ -39,7 +39,7 @@ namespace EPassBook.DAL.DBModel
         public string Password { get; set; }
         public Nullable<long> AdharNo { get; set; }
         public string VoterID { get; set; }
-        public Nullable<int> Area { get; set; }
+        public string Area { get; set; }
         public Nullable<int> MojaNo { get; set; }
         public string KhataNo { get; set; }
         public Nullable<int> KhasraNo { get; set; }

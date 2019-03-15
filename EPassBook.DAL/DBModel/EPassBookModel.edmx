@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EPassBookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPassBookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BenificiaryMaster">
           <Key>
             <PropertyRef Name="BeneficiaryId" />
@@ -25,7 +25,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="150" />
           <Property Name="AdharNo" Type="bigint" />
           <Property Name="VoterID" Type="nvarchar" MaxLength="50" />
-          <Property Name="Area" Type="int" />
+          <Property Name="Area" Type="nvarchar(max)" />
           <Property Name="MojaNo" Type="int" />
           <Property Name="KhataNo" Type="nvarchar" MaxLength="50" />
           <Property Name="KhasraNo" Type="int" />
@@ -172,6 +172,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="IsRecommended" Type="bit" />
           <Property Name="TransactionDate" Type="datetime" />
           <Property Name="TransactionType" Type="nvarchar(max)" />
+          <Property Name="OTP" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="InstallmentDetailsHistory">
           <Key>
@@ -259,6 +260,20 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleId" Type="int" />
           <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="UserLoginDetails">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="InTime" Type="datetime" />
+          <Property Name="OutTime" Type="datetime" />
+          <Property Name="InLocation" Type="nvarchar(max)" />
+          <Property Name="OutLocation" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="CityId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
         </EntityType>
         <EntityType Name="UserMaster">
           <Key>
@@ -501,6 +516,20 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserLoginDetails_UserMaster">
+          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserLoginDetails" Type="Self.UserLoginDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserLoginDetails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserMaster_CityMaster">
           <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
           <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
@@ -692,6 +721,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <EntitySet Name="StageInRole" EntityType="Self.StageInRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInRoles" EntityType="Self.UserInRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLoginDetails" EntityType="Self.UserLoginDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkflowStages" EntityType="Self.WorkflowStages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" store:Type="Tables" store:Schema="dbo">
@@ -777,6 +807,10 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <End Role="WorkflowStages" EntitySet="WorkflowStages" />
             <End Role="StageInRole" EntitySet="StageInRole" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserLoginDetails_UserMaster" Association="Self.FK_UserLoginDetails_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMaster" />
+            <End Role="UserLoginDetails" EntitySet="UserLoginDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserMaster_CityMaster" Association="Self.FK_UserMaster_CityMaster">
             <End Role="CityMaster" EntitySet="CityMaster" />
             <End Role="UserMaster" EntitySet="UserMaster" />
@@ -806,8 +840,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <End Role="UserMaster" EntitySet="UserMaster" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EPassBookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -815,749 +848,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Value" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </ComplexType>
-        <EntityType Name="BenificiaryMaster">
-          <Key>
-            <PropertyRef Name="BeneficiaryId" />
-          </Key>
-          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BeneficairyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="FatherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Mother" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PresentAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
-          <Property Name="CityId" Type="Int32" />
-          <Property Name="DTRNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecordNo" Type="Int64" />
-          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="General" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Single" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Disabled" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="AdharNo" Type="Int64" />
-          <Property Name="VoterID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Area" Type="Int32" />
-          <Property Name="MojaNo" Type="Int32" />
-          <Property Name="KhataNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="KhasraNo" Type="Int32" />
-          <Property Name="PlotNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PoliceStation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="WardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BankName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="BranchName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="IFSCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyID" Type="Int32" />
-          <Property Name="Wife_Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Hasband_Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CompanyMaster" Relationship="Self.benficiary_CompanyID_FK" FromRole="BenificiaryMaster" ToRole="CompanyMaster" />
-          <NavigationProperty Name="CityMaster" Relationship="Self.FK_BenificiaryMaster_CityMaster" FromRole="BenificiaryMaster" ToRole="CityMaster" />
-          <NavigationProperty Name="InstallmentDetails" Relationship="Self.FK_CityHeadDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="InstallmentDetails" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="Comments" />
-          <NavigationProperty Name="GeoTaggingDetails" Relationship="Self.FK_GeoTaggingDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="GeoTaggingDetails" />
-          <NavigationProperty Name="InstallmentRejections" Relationship="Self.FK_InstallmentRejection_BenificiaryMaster1" FromRole="BenificiaryMaster" ToRole="InstallmentRejection" />
-        </EntityType>
-        <EntityType Name="CityMaster">
-          <Key>
-            <PropertyRef Name="CityId" />
-          </Key>
-          <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CityName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="CityShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="BenificiaryMasters" Relationship="Self.FK_BenificiaryMaster_CityMaster" FromRole="CityMaster" ToRole="BenificiaryMaster" />
-          <NavigationProperty Name="UserMasters" Relationship="Self.FK_UserMaster_CityMaster" FromRole="CityMaster" ToRole="UserMaster" />
-        </EntityType>
-        <EntityType Name="Comment">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
-          <Property Name="InstallementId" Type="Int32" Nullable="false" />
-          <Property Name="Reason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RoleId" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyID" Type="Int32" />
-          <NavigationProperty Name="BenificiaryMaster" Relationship="Self.FK_Comments_BenificiaryMaster" FromRole="Comments" ToRole="BenificiaryMaster" />
-          <NavigationProperty Name="CompanyMaster" Relationship="Self.comments_CompanyID_FK" FromRole="Comments" ToRole="CompanyMaster" />
-          <NavigationProperty Name="InstallmentDetail" Relationship="Self.FK_Comments_InstallmentDetails" FromRole="Comments" ToRole="InstallmentDetails" />
-          <NavigationProperty Name="RoleMaster" Relationship="Self.FK_Comments_RoleMaster" FromRole="Comments" ToRole="RoleMaster" />
-        </EntityType>
-        <EntityType Name="CommentsHisory">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CommentId" Type="Int32" Nullable="false" />
-          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
-          <Property Name="InstallementId" Type="Int32" Nullable="false" />
-          <Property Name="Reason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RoleId" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyID" Type="Int32" />
-        </EntityType>
-        <EntityType Name="CompanyMaster">
-          <Key>
-            <PropertyRef Name="CompanyID" />
-          </Key>
-          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="OwnerName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="EmailID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="Modifiedby" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="BenificiaryMasters" Relationship="Self.benficiary_CompanyID_FK" FromRole="CompanyMaster" ToRole="BenificiaryMaster" />
-          <NavigationProperty Name="Comments" Relationship="Self.comments_CompanyID_FK" FromRole="CompanyMaster" ToRole="Comments" />
-          <NavigationProperty Name="InstallmentRejections" Relationship="Self.FK_InstallmentRejection_CompanyMaster" FromRole="CompanyMaster" ToRole="InstallmentRejection" />
-          <NavigationProperty Name="GeoTaggingDetails" Relationship="Self.geotaging_CompanyID_FK" FromRole="CompanyMaster" ToRole="GeoTaggingDetails" />
-          <NavigationProperty Name="InstallmentDetails" Relationship="Self.installment_CompanyID_FK" FromRole="CompanyMaster" ToRole="InstallmentDetails" />
-          <NavigationProperty Name="InstallmentSignings" Relationship="Self.installmentsigning_CompanyID_FK" FromRole="CompanyMaster" ToRole="InstallmentSigning" />
-          <NavigationProperty Name="UserMasters" Relationship="Self.UserMaster_CompanyID_FK" FromRole="CompanyMaster" ToRole="UserMaster" />
-        </EntityType>
-        <EntityType Name="DefaultComment">
-          <Key>
-            <PropertyRef Name="CommentId" />
-          </Key>
-          <Property Name="CommentId" Type="Int32" Nullable="false" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="GeoTaggingDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ConstructionLevel" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="BeneficiaryId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="InstallmentId" Type="Int32" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyID" Type="Int32" />
-          <NavigationProperty Name="BenificiaryMaster" Relationship="Self.FK_GeoTaggingDetails_BenificiaryMaster" FromRole="GeoTaggingDetails" ToRole="BenificiaryMaster" />
-          <NavigationProperty Name="CompanyMaster" Relationship="Self.geotaging_CompanyID_FK" FromRole="GeoTaggingDetails" ToRole="CompanyMaster" />
-          <NavigationProperty Name="InstallmentDetail" Relationship="Self.FK_GeoTaggingDetails_InstallmentDetails" FromRole="GeoTaggingDetails" ToRole="InstallmentDetails" />
-          <NavigationProperty Name="UserMaster" Relationship="Self.FK_GeoTaggingDetails_UserMaster" FromRole="GeoTaggingDetails" ToRole="UserMaster" />
-        </EntityType>
-        <EntityType Name="InstallmentDetail">
-          <Key>
-            <PropertyRef Name="InstallmentId" />
-          </Key>
-          <Property Name="InstallmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
-          <Property Name="BeneficiaryAmnt" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="LoanAmnt" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IsCentreAmnt" Type="Boolean" />
-          <Property Name="ConstructionLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StageID" Type="Int32" />
-          <Property Name="IsCompleted" Type="Boolean" />
-          <Property Name="InstallmentNo" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyID" Type="Int32" />
-          <Property Name="TransactionID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="IsRecommended" Type="Boolean" />
-          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
-          <Property Name="TransactionType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BenificiaryMaster" Relationship="Self.FK_CityHeadDetails_BenificiaryMaster" FromRole="InstallmentDetails" ToRole="BenificiaryMaster" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_InstallmentDetails" FromRole="InstallmentDetails" ToRole="Comments" />
-          <NavigationProperty Name="CompanyMaster" Relationship="Self.installment_CompanyID_FK" FromRole="InstallmentDetails" ToRole="CompanyMaster" />
-          <NavigationProperty Name="GeoTaggingDetails" Relationship="Self.FK_GeoTaggingDetails_InstallmentDetails" FromRole="InstallmentDetails" ToRole="GeoTaggingDetails" />
-          <NavigationProperty Name="InstallmentSignings" Relationship="Self.FK_InstallmentSigning_InstallmentDetails" FromRole="InstallmentDetails" ToRole="InstallmentSigning" />
-        </EntityType>
-        <EntityType Name="InstallmentDetailsHistory">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InstallmentId" Type="Int32" Nullable="false" />
-          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
-          <Property Name="BeneficiaryAmnt" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="LoanAmnt" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IsCentreAmnt" Type="Boolean" />
-          <Property Name="ConstructionLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StageID" Type="Int32" />
-          <Property Name="IsCompleted" Type="Boolean" />
-          <Property Name="InstallmentNo" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyID" Type="Int32" />
-          <Property Name="TransactionID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="IsRecommended" Type="Boolean" />
-          <Property Name="TransactionType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="InstallmentRejection">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
-          <Property Name="InstallmentNo" Type="Int32" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyID" Type="Int32" />
-          <NavigationProperty Name="BenificiaryMaster" Relationship="Self.FK_InstallmentRejection_BenificiaryMaster1" FromRole="InstallmentRejection" ToRole="BenificiaryMaster" />
-          <NavigationProperty Name="CompanyMaster" Relationship="Self.FK_InstallmentRejection_CompanyMaster" FromRole="InstallmentRejection" ToRole="CompanyMaster" />
-        </EntityType>
-        <EntityType Name="InstallmentSigning">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InstallmentId" Type="Int32" />
-          <Property Name="Sign" Type="Boolean" />
-          <Property Name="SignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="RoleId" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyID" Type="Int32" />
-          <NavigationProperty Name="CompanyMaster" Relationship="Self.installmentsigning_CompanyID_FK" FromRole="InstallmentSigning" ToRole="CompanyMaster" />
-          <NavigationProperty Name="InstallmentDetail" Relationship="Self.FK_InstallmentSigning_InstallmentDetails" FromRole="InstallmentSigning" ToRole="InstallmentDetails" />
-          <NavigationProperty Name="RoleMaster" Relationship="Self.FK_InstallmentSigning_RoleMaster" FromRole="InstallmentSigning" ToRole="RoleMaster" />
-          <NavigationProperty Name="UserMaster" Relationship="Self.FK_InstallmentSigning_UserMaster" FromRole="InstallmentSigning" ToRole="UserMaster" />
-        </EntityType>
-        <EntityType Name="RoleMaster">
-          <Key>
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <Property Name="RoleName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_RoleMaster" FromRole="RoleMaster" ToRole="Comments" />
-          <NavigationProperty Name="InstallmentSignings" Relationship="Self.FK_InstallmentSigning_RoleMaster" FromRole="RoleMaster" ToRole="InstallmentSigning" />
-          <NavigationProperty Name="StageInRoles" Relationship="Self.FK_StageInRole_RoleMaster" FromRole="RoleMaster" ToRole="StageInRole" />
-          <NavigationProperty Name="UserInRoles" Relationship="Self.UserInRoles_roleid_fk" FromRole="RoleMaster" ToRole="UserInRoles" />
-        </EntityType>
-        <EntityType Name="StageInRole">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageId" Type="Int32" />
-          <Property Name="RoleId" Type="Int32" />
-          <NavigationProperty Name="RoleMaster" Relationship="Self.FK_StageInRole_RoleMaster" FromRole="StageInRole" ToRole="RoleMaster" />
-          <NavigationProperty Name="WorkflowStage" Relationship="Self.FK_StageInRole_WorkflowStages" FromRole="StageInRole" ToRole="WorkflowStages" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="UserInRole">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <NavigationProperty Name="RoleMaster" Relationship="Self.UserInRoles_roleid_fk" FromRole="UserInRoles" ToRole="RoleMaster" />
-          <NavigationProperty Name="UserMaster" Relationship="Self.UserInRoles_userid_fk" FromRole="UserInRoles" ToRole="UserMaster" />
-        </EntityType>
-        <EntityType Name="UserMaster">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Dob" Type="DateTime" Precision="3" />
-          <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="IsLoggedIn" Type="Boolean" />
-          <Property Name="CityId" Type="Int32" />
-          <Property Name="CompanyID" Type="Int32" />
-          <Property Name="IsReset" Type="Boolean" />
-          <NavigationProperty Name="CityMaster" Relationship="Self.FK_UserMaster_CityMaster" FromRole="UserMaster" ToRole="CityMaster" />
-          <NavigationProperty Name="CompanyMaster" Relationship="Self.UserMaster_CompanyID_FK" FromRole="UserMaster" ToRole="CompanyMaster" />
-          <NavigationProperty Name="GeoTaggingDetails" Relationship="Self.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetails" />
-          <NavigationProperty Name="InstallmentSignings" Relationship="Self.FK_InstallmentSigning_UserMaster" FromRole="UserMaster" ToRole="InstallmentSigning" />
-          <NavigationProperty Name="UserInRoles" Relationship="Self.UserInRoles_userid_fk" FromRole="UserMaster" ToRole="UserInRoles" />
-        </EntityType>
-        <EntityType Name="WorkflowStage">
-          <Key>
-            <PropertyRef Name="StageId" />
-          </Key>
-          <Property Name="StageId" Type="Int32" Nullable="false" />
-          <Property Name="Stage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="StageInRoles" Relationship="Self.FK_StageInRole_WorkflowStages" FromRole="WorkflowStages" ToRole="StageInRole" />
-        </EntityType>
-        <EntityType Name="ELMAH_Error">
-          <Key>
-            <PropertyRef Name="ErrorId" />
-            <PropertyRef Name="Application" />
-            <PropertyRef Name="Host" />
-            <PropertyRef Name="Type" />
-            <PropertyRef Name="Source" />
-            <PropertyRef Name="Message" />
-            <PropertyRef Name="User" />
-            <PropertyRef Name="StatusCode" />
-            <PropertyRef Name="TimeUtc" />
-            <PropertyRef Name="Sequence" />
-            <PropertyRef Name="AllXml" />
-          </Key>
-          <Property Name="ErrorId" Type="Guid" Nullable="false" />
-          <Property Name="Application" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Host" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Source" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StatusCode" Type="Int32" Nullable="false" />
-          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AllXml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <Association Name="benficiary_CompanyID_FK">
-          <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
-          <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyMaster">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="BenificiaryMaster">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BenificiaryMaster_CityMaster">
-          <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
-          <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CityMaster">
-              <PropertyRef Name="CityId" />
-            </Principal>
-            <Dependent Role="BenificiaryMaster">
-              <PropertyRef Name="CityId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CityHeadDetails_BenificiaryMaster">
-          <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InstallmentDetails" Type="Self.InstallmentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BenificiaryMaster">
-              <PropertyRef Name="BeneficiaryId" />
-            </Principal>
-            <Dependent Role="InstallmentDetails">
-              <PropertyRef Name="BeneficiaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comments_BenificiaryMaster">
-          <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BenificiaryMaster">
-              <PropertyRef Name="BeneficiaryId" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="BeneficiaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GeoTaggingDetails_BenificiaryMaster">
-          <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BenificiaryMaster">
-              <PropertyRef Name="BeneficiaryId" />
-            </Principal>
-            <Dependent Role="GeoTaggingDetails">
-              <PropertyRef Name="BeneficiaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InstallmentRejection_BenificiaryMaster1">
-          <End Role="BenificiaryMaster" Type="Self.BenificiaryMaster" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InstallmentRejection" Type="Self.InstallmentRejection" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BenificiaryMaster">
-              <PropertyRef Name="BeneficiaryId" />
-            </Principal>
-            <Dependent Role="InstallmentRejection">
-              <PropertyRef Name="BeneficiaryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserMaster_CityMaster">
-          <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
-          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CityMaster">
-              <PropertyRef Name="CityId" />
-            </Principal>
-            <Dependent Role="UserMaster">
-              <PropertyRef Name="CityId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="comments_CompanyID_FK">
-          <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
-          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyMaster">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comments_InstallmentDetails">
-          <End Role="InstallmentDetails" Type="Self.InstallmentDetail" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InstallmentDetails">
-              <PropertyRef Name="InstallmentId" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="InstallementId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comments_RoleMaster">
-          <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="0..1" />
-          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoleMaster">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InstallmentRejection_CompanyMaster">
-          <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
-          <End Role="InstallmentRejection" Type="Self.InstallmentRejection" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyMaster">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="InstallmentRejection">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="geotaging_CompanyID_FK">
-          <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
-          <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyMaster">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="GeoTaggingDetails">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="installment_CompanyID_FK">
-          <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
-          <End Role="InstallmentDetails" Type="Self.InstallmentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyMaster">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="InstallmentDetails">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="installmentsigning_CompanyID_FK">
-          <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
-          <End Role="InstallmentSigning" Type="Self.InstallmentSigning" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyMaster">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="InstallmentSigning">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="UserMaster_CompanyID_FK">
-          <End Role="CompanyMaster" Type="Self.CompanyMaster" Multiplicity="0..1" />
-          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyMaster">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="UserMaster">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GeoTaggingDetails_InstallmentDetails">
-          <End Role="InstallmentDetails" Type="Self.InstallmentDetail" Multiplicity="0..1" />
-          <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InstallmentDetails">
-              <PropertyRef Name="InstallmentId" />
-            </Principal>
-            <Dependent Role="GeoTaggingDetails">
-              <PropertyRef Name="InstallmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GeoTaggingDetails_UserMaster">
-          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="1" />
-          <End Role="GeoTaggingDetails" Type="Self.GeoTaggingDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserMaster">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="GeoTaggingDetails">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InstallmentSigning_InstallmentDetails">
-          <End Role="InstallmentDetails" Type="Self.InstallmentDetail" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InstallmentSigning" Type="Self.InstallmentSigning" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InstallmentDetails">
-              <PropertyRef Name="InstallmentId" />
-            </Principal>
-            <Dependent Role="InstallmentSigning">
-              <PropertyRef Name="InstallmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InstallmentSigning_RoleMaster">
-          <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="0..1" />
-          <End Role="InstallmentSigning" Type="Self.InstallmentSigning" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoleMaster">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="InstallmentSigning">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InstallmentSigning_UserMaster">
-          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1" />
-          <End Role="InstallmentSigning" Type="Self.InstallmentSigning" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserMaster">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="InstallmentSigning">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StageInRole_RoleMaster">
-          <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="0..1" />
-          <End Role="StageInRole" Type="Self.StageInRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoleMaster">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="StageInRole">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="UserInRoles_roleid_fk">
-          <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="0..1" />
-          <End Role="UserInRoles" Type="Self.UserInRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoleMaster">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="UserInRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StageInRole_WorkflowStages">
-          <End Role="WorkflowStages" Type="Self.WorkflowStage" Multiplicity="0..1" />
-          <End Role="StageInRole" Type="Self.StageInRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WorkflowStages">
-              <PropertyRef Name="StageId" />
-            </Principal>
-            <Dependent Role="StageInRole">
-              <PropertyRef Name="StageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="UserInRoles_userid_fk">
-          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UserInRoles" Type="Self.UserInRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserMaster">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserInRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="EPassBookEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BenificiaryMasters" EntityType="Self.BenificiaryMaster" />
-          <EntitySet Name="CityMasters" EntityType="Self.CityMaster" />
-          <EntitySet Name="Comments" EntityType="Self.Comment" />
-          <EntitySet Name="CommentsHisories" EntityType="Self.CommentsHisory" />
-          <EntitySet Name="CompanyMasters" EntityType="Self.CompanyMaster" />
-          <EntitySet Name="DefaultComments" EntityType="Self.DefaultComment" />
-          <EntitySet Name="GeoTaggingDetails" EntityType="Self.GeoTaggingDetail" />
-          <EntitySet Name="InstallmentDetails" EntityType="Self.InstallmentDetail" />
-          <EntitySet Name="InstallmentDetailsHistories" EntityType="Self.InstallmentDetailsHistory" />
-          <EntitySet Name="InstallmentRejections" EntityType="Self.InstallmentRejection" />
-          <EntitySet Name="InstallmentSignings" EntityType="Self.InstallmentSigning" />
-          <EntitySet Name="RoleMasters" EntityType="Self.RoleMaster" />
-          <EntitySet Name="StageInRoles" EntityType="Self.StageInRole" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="UserInRoles" EntityType="Self.UserInRole" />
-          <EntitySet Name="UserMasters" EntityType="Self.UserMaster" />
-          <EntitySet Name="WorkflowStages" EntityType="Self.WorkflowStage" />
-          <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" />
-          <AssociationSet Name="benficiary_CompanyID_FK" Association="Self.benficiary_CompanyID_FK">
-            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
-            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BenificiaryMaster_CityMaster" Association="Self.FK_BenificiaryMaster_CityMaster">
-            <End Role="CityMaster" EntitySet="CityMasters" />
-            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CityHeadDetails_BenificiaryMaster" Association="Self.FK_CityHeadDetails_BenificiaryMaster">
-            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
-            <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_BenificiaryMaster" Association="Self.FK_Comments_BenificiaryMaster">
-            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GeoTaggingDetails_BenificiaryMaster" Association="Self.FK_GeoTaggingDetails_BenificiaryMaster">
-            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
-            <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InstallmentRejection_BenificiaryMaster1" Association="Self.FK_InstallmentRejection_BenificiaryMaster1">
-            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
-            <End Role="InstallmentRejection" EntitySet="InstallmentRejections" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserMaster_CityMaster" Association="Self.FK_UserMaster_CityMaster">
-            <End Role="CityMaster" EntitySet="CityMasters" />
-            <End Role="UserMaster" EntitySet="UserMasters" />
-          </AssociationSet>
-          <AssociationSet Name="comments_CompanyID_FK" Association="Self.comments_CompanyID_FK">
-            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_InstallmentDetails" Association="Self.FK_Comments_InstallmentDetails">
-            <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_RoleMaster" Association="Self.FK_Comments_RoleMaster">
-            <End Role="RoleMaster" EntitySet="RoleMasters" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InstallmentRejection_CompanyMaster" Association="Self.FK_InstallmentRejection_CompanyMaster">
-            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
-            <End Role="InstallmentRejection" EntitySet="InstallmentRejections" />
-          </AssociationSet>
-          <AssociationSet Name="geotaging_CompanyID_FK" Association="Self.geotaging_CompanyID_FK">
-            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
-            <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
-          </AssociationSet>
-          <AssociationSet Name="installment_CompanyID_FK" Association="Self.installment_CompanyID_FK">
-            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
-            <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
-          </AssociationSet>
-          <AssociationSet Name="installmentsigning_CompanyID_FK" Association="Self.installmentsigning_CompanyID_FK">
-            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
-            <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
-          </AssociationSet>
-          <AssociationSet Name="UserMaster_CompanyID_FK" Association="Self.UserMaster_CompanyID_FK">
-            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
-            <End Role="UserMaster" EntitySet="UserMasters" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GeoTaggingDetails_InstallmentDetails" Association="Self.FK_GeoTaggingDetails_InstallmentDetails">
-            <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
-            <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GeoTaggingDetails_UserMaster" Association="Self.FK_GeoTaggingDetails_UserMaster">
-            <End Role="UserMaster" EntitySet="UserMasters" />
-            <End Role="GeoTaggingDetails" EntitySet="GeoTaggingDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InstallmentSigning_InstallmentDetails" Association="Self.FK_InstallmentSigning_InstallmentDetails">
-            <End Role="InstallmentDetails" EntitySet="InstallmentDetails" />
-            <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InstallmentSigning_RoleMaster" Association="Self.FK_InstallmentSigning_RoleMaster">
-            <End Role="RoleMaster" EntitySet="RoleMasters" />
-            <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InstallmentSigning_UserMaster" Association="Self.FK_InstallmentSigning_UserMaster">
-            <End Role="UserMaster" EntitySet="UserMasters" />
-            <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StageInRole_RoleMaster" Association="Self.FK_StageInRole_RoleMaster">
-            <End Role="RoleMaster" EntitySet="RoleMasters" />
-            <End Role="StageInRole" EntitySet="StageInRoles" />
-          </AssociationSet>
-          <AssociationSet Name="UserInRoles_roleid_fk" Association="Self.UserInRoles_roleid_fk">
-            <End Role="RoleMaster" EntitySet="RoleMasters" />
-            <End Role="UserInRoles" EntitySet="UserInRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StageInRole_WorkflowStages" Association="Self.FK_StageInRole_WorkflowStages">
-            <End Role="WorkflowStages" EntitySet="WorkflowStages" />
-            <End Role="StageInRole" EntitySet="StageInRoles" />
-          </AssociationSet>
-          <AssociationSet Name="UserInRoles_userid_fk" Association="Self.UserInRoles_userid_fk">
-            <End Role="UserMaster" EntitySet="UserMasters" />
-            <End Role="UserInRoles" EntitySet="UserInRoles" />
-          </AssociationSet>
           <FunctionImport Name="Split" IsComposable="true" ReturnType="Collection(EPassBookModel.Split_Result)">
             <Parameter Name="List" Mode="In" Type="String" />
             <Parameter Name="SplitOn" Mode="In" Type="String" />
@@ -1606,7 +897,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_GetInstallmentListViewForUsersRoles" ReturnType="Collection(EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result)">
-            <Parameter Name="stageids" Mode="In" Type="String" />
+          <Parameter Name="stageids" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_GetSurveyDetailsByBenID" ReturnType="Collection(EPassBookModel.sp_GetSurveyDetailsByBenID_Result)">
             <Parameter Name="BenificiaryId" Mode="In" Type="Int32" />
@@ -1638,6 +929,125 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
             <Parameter Name="userid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="BenificiaryMasters" EntityType="EPassBookModel.BenificiaryMaster" />
+          <EntitySet Name="CityMasters" EntityType="EPassBookModel.CityMaster" />
+          <EntitySet Name="Comments" EntityType="EPassBookModel.Comment" />
+          <EntitySet Name="CommentsHisories" EntityType="EPassBookModel.CommentsHisory" />
+          <EntitySet Name="CompanyMasters" EntityType="EPassBookModel.CompanyMaster" />
+          <EntitySet Name="DefaultComments" EntityType="EPassBookModel.DefaultComment" />
+          <EntitySet Name="GeoTaggingDetails" EntityType="EPassBookModel.GeoTaggingDetail" />
+          <EntitySet Name="InstallmentDetails" EntityType="EPassBookModel.InstallmentDetail" />
+          <EntitySet Name="InstallmentDetailsHistories" EntityType="EPassBookModel.InstallmentDetailsHistory" />
+          <EntitySet Name="InstallmentRejections" EntityType="EPassBookModel.InstallmentRejection" />
+          <EntitySet Name="InstallmentSignings" EntityType="EPassBookModel.InstallmentSigning" />
+          <EntitySet Name="RoleMasters" EntityType="EPassBookModel.RoleMaster" />
+          <EntitySet Name="StageInRoles" EntityType="EPassBookModel.StageInRole" />
+          <EntitySet Name="sysdiagrams" EntityType="EPassBookModel.sysdiagram" />
+          <EntitySet Name="UserInRoles" EntityType="EPassBookModel.UserInRole" />
+          <EntitySet Name="UserLoginDetails" EntityType="EPassBookModel.UserLoginDetail" />
+          <EntitySet Name="UserMasters" EntityType="EPassBookModel.UserMaster" />
+          <EntitySet Name="WorkflowStages" EntityType="EPassBookModel.WorkflowStage" />
+          <EntitySet Name="ELMAH_Error" EntityType="EPassBookModel.ELMAH_Error" />
+          <AssociationSet Name="benficiary_CompanyID_FK" Association="EPassBookModel.benficiary_CompanyID_FK">
+            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
+            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BenificiaryMaster_CityMaster" Association="EPassBookModel.FK_BenificiaryMaster_CityMaster">
+            <End Role="CityMaster" EntitySet="CityMasters" />
+            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CityHeadDetails_BenificiaryMaster" Association="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster">
+            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+            <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_BenificiaryMaster" Association="EPassBookModel.FK_Comments_BenificiaryMaster">
+            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GeoTaggingDetails_BenificiaryMaster" Association="EPassBookModel.FK_GeoTaggingDetails_BenificiaryMaster">
+            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+            <End Role="GeoTaggingDetail" EntitySet="GeoTaggingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstallmentRejection_BenificiaryMaster1" Association="EPassBookModel.FK_InstallmentRejection_BenificiaryMaster1">
+            <End Role="BenificiaryMaster" EntitySet="BenificiaryMasters" />
+            <End Role="InstallmentRejection" EntitySet="InstallmentRejections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMaster_CityMaster" Association="EPassBookModel.FK_UserMaster_CityMaster">
+            <End Role="CityMaster" EntitySet="CityMasters" />
+            <End Role="UserMaster" EntitySet="UserMasters" />
+          </AssociationSet>
+          <AssociationSet Name="comments_CompanyID_FK" Association="EPassBookModel.comments_CompanyID_FK">
+            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_InstallmentDetails" Association="EPassBookModel.FK_Comments_InstallmentDetails">
+            <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_RoleMaster" Association="EPassBookModel.FK_Comments_RoleMaster">
+            <End Role="RoleMaster" EntitySet="RoleMasters" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstallmentRejection_CompanyMaster" Association="EPassBookModel.FK_InstallmentRejection_CompanyMaster">
+            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
+            <End Role="InstallmentRejection" EntitySet="InstallmentRejections" />
+          </AssociationSet>
+          <AssociationSet Name="geotaging_CompanyID_FK" Association="EPassBookModel.geotaging_CompanyID_FK">
+            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
+            <End Role="GeoTaggingDetail" EntitySet="GeoTaggingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="installment_CompanyID_FK" Association="EPassBookModel.installment_CompanyID_FK">
+            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
+            <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="installmentsigning_CompanyID_FK" Association="EPassBookModel.installmentsigning_CompanyID_FK">
+            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
+            <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
+          </AssociationSet>
+          <AssociationSet Name="UserMaster_CompanyID_FK" Association="EPassBookModel.UserMaster_CompanyID_FK">
+            <End Role="CompanyMaster" EntitySet="CompanyMasters" />
+            <End Role="UserMaster" EntitySet="UserMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GeoTaggingDetails_InstallmentDetails" Association="EPassBookModel.FK_GeoTaggingDetails_InstallmentDetails">
+            <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
+            <End Role="GeoTaggingDetail" EntitySet="GeoTaggingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GeoTaggingDetails_UserMaster" Association="EPassBookModel.FK_GeoTaggingDetails_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMasters" />
+            <End Role="GeoTaggingDetail" EntitySet="GeoTaggingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstallmentSigning_InstallmentDetails" Association="EPassBookModel.FK_InstallmentSigning_InstallmentDetails">
+            <End Role="InstallmentDetail" EntitySet="InstallmentDetails" />
+            <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstallmentSigning_RoleMaster" Association="EPassBookModel.FK_InstallmentSigning_RoleMaster">
+            <End Role="RoleMaster" EntitySet="RoleMasters" />
+            <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstallmentSigning_UserMaster" Association="EPassBookModel.FK_InstallmentSigning_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMasters" />
+            <End Role="InstallmentSigning" EntitySet="InstallmentSignings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StageInRole_RoleMaster" Association="EPassBookModel.FK_StageInRole_RoleMaster">
+            <End Role="RoleMaster" EntitySet="RoleMasters" />
+            <End Role="StageInRole" EntitySet="StageInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="UserInRoles_roleid_fk" Association="EPassBookModel.UserInRoles_roleid_fk">
+            <End Role="RoleMaster" EntitySet="RoleMasters" />
+            <End Role="UserInRole" EntitySet="UserInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StageInRole_WorkflowStages" Association="EPassBookModel.FK_StageInRole_WorkflowStages">
+            <End Role="WorkflowStage" EntitySet="WorkflowStages" />
+            <End Role="StageInRole" EntitySet="StageInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="UserInRoles_userid_fk" Association="EPassBookModel.UserInRoles_userid_fk">
+            <End Role="UserMaster" EntitySet="UserMasters" />
+            <End Role="UserInRole" EntitySet="UserInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLoginDetails_UserMaster" Association="EPassBookModel.FK_UserLoginDetails_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMasters" />
+            <End Role="UserLoginDetail" EntitySet="UserLoginDetails" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_GetInstallmentListViewForUsersRoles_Result">
           <Property Type="Int32" Name="InstallmentId" Nullable="false" />
@@ -1682,300 +1092,671 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="BenificiaryMaster">
+          <Key>
+            <PropertyRef Name="BeneficiaryId" />
+          </Key>
+          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BeneficairyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="FatherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Mother" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PresentAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="DTRNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecordNo" Type="Int64" />
+          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="General" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Single" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Disabled" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="AdharNo" Type="Int64" />
+          <Property Name="VoterID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MojaNo" Type="Int32" />
+          <Property Name="KhataNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KhasraNo" Type="Int32" />
+          <Property Name="PlotNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PoliceStation" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="WardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BankName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BranchName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IFSCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyID" Type="Int32" />
+          <Property Name="Wife_Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Hasband_Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.benficiary_CompanyID_FK" FromRole="BenificiaryMaster" ToRole="CompanyMaster" />
+          <NavigationProperty Name="CityMaster" Relationship="EPassBookModel.FK_BenificiaryMaster_CityMaster" FromRole="BenificiaryMaster" ToRole="CityMaster" />
+          <NavigationProperty Name="InstallmentDetails" Relationship="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="InstallmentDetail" />
+          <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="Comment" />
+          <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_BenificiaryMaster" FromRole="BenificiaryMaster" ToRole="GeoTaggingDetail" />
+          <NavigationProperty Name="InstallmentRejections" Relationship="EPassBookModel.FK_InstallmentRejection_BenificiaryMaster1" FromRole="BenificiaryMaster" ToRole="InstallmentRejection" />
+        </EntityType>
+        <EntityType Name="CityMaster">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CityShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="BenificiaryMasters" Relationship="EPassBookModel.FK_BenificiaryMaster_CityMaster" FromRole="CityMaster" ToRole="BenificiaryMaster" />
+          <NavigationProperty Name="UserMasters" Relationship="EPassBookModel.FK_UserMaster_CityMaster" FromRole="CityMaster" ToRole="UserMaster" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+          <Property Name="InstallementId" Type="Int32" Nullable="false" />
+          <Property Name="Reason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyID" Type="Int32" />
+          <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_Comments_BenificiaryMaster" FromRole="Comment" ToRole="BenificiaryMaster" />
+          <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.comments_CompanyID_FK" FromRole="Comment" ToRole="CompanyMaster" />
+          <NavigationProperty Name="InstallmentDetail" Relationship="EPassBookModel.FK_Comments_InstallmentDetails" FromRole="Comment" ToRole="InstallmentDetail" />
+          <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.FK_Comments_RoleMaster" FromRole="Comment" ToRole="RoleMaster" />
+        </EntityType>
+        <EntityType Name="CommentsHisory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CommentId" Type="Int32" Nullable="false" />
+          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+          <Property Name="InstallementId" Type="Int32" Nullable="false" />
+          <Property Name="Reason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CompanyMaster">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OwnerName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EmailID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Modifiedby" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="BenificiaryMasters" Relationship="EPassBookModel.benficiary_CompanyID_FK" FromRole="CompanyMaster" ToRole="BenificiaryMaster" />
+          <NavigationProperty Name="Comments" Relationship="EPassBookModel.comments_CompanyID_FK" FromRole="CompanyMaster" ToRole="Comment" />
+          <NavigationProperty Name="InstallmentRejections" Relationship="EPassBookModel.FK_InstallmentRejection_CompanyMaster" FromRole="CompanyMaster" ToRole="InstallmentRejection" />
+          <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.geotaging_CompanyID_FK" FromRole="CompanyMaster" ToRole="GeoTaggingDetail" />
+          <NavigationProperty Name="InstallmentDetails" Relationship="EPassBookModel.installment_CompanyID_FK" FromRole="CompanyMaster" ToRole="InstallmentDetail" />
+          <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.installmentsigning_CompanyID_FK" FromRole="CompanyMaster" ToRole="InstallmentSigning" />
+          <NavigationProperty Name="UserMasters" Relationship="EPassBookModel.UserMaster_CompanyID_FK" FromRole="CompanyMaster" ToRole="UserMaster" />
+        </EntityType>
+        <EntityType Name="DefaultComment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GeoTaggingDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ConstructionLevel" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="BeneficiaryId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="InstallmentId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyID" Type="Int32" />
+          <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_GeoTaggingDetails_BenificiaryMaster" FromRole="GeoTaggingDetail" ToRole="BenificiaryMaster" />
+          <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.geotaging_CompanyID_FK" FromRole="GeoTaggingDetail" ToRole="CompanyMaster" />
+          <NavigationProperty Name="InstallmentDetail" Relationship="EPassBookModel.FK_GeoTaggingDetails_InstallmentDetails" FromRole="GeoTaggingDetail" ToRole="InstallmentDetail" />
+          <NavigationProperty Name="UserMaster" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="GeoTaggingDetail" ToRole="UserMaster" />
+        </EntityType>
+        <EntityType Name="InstallmentDetail">
+          <Key>
+            <PropertyRef Name="InstallmentId" />
+          </Key>
+          <Property Name="InstallmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+          <Property Name="BeneficiaryAmnt" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LoanAmnt" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsCentreAmnt" Type="Boolean" />
+          <Property Name="ConstructionLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StageID" Type="Int32" />
+          <Property Name="IsCompleted" Type="Boolean" />
+          <Property Name="InstallmentNo" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyID" Type="Int32" />
+          <Property Name="TransactionID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsRecommended" Type="Boolean" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
+          <Property Name="TransactionType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OTP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_CityHeadDetails_BenificiaryMaster" FromRole="InstallmentDetail" ToRole="BenificiaryMaster" />
+          <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_InstallmentDetails" FromRole="InstallmentDetail" ToRole="Comment" />
+          <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.installment_CompanyID_FK" FromRole="InstallmentDetail" ToRole="CompanyMaster" />
+          <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_InstallmentDetails" FromRole="InstallmentDetail" ToRole="GeoTaggingDetail" />
+          <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_InstallmentDetails" FromRole="InstallmentDetail" ToRole="InstallmentSigning" />
+        </EntityType>
+        <EntityType Name="InstallmentDetailsHistory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InstallmentId" Type="Int32" Nullable="false" />
+          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+          <Property Name="BeneficiaryAmnt" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LoanAmnt" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsCentreAmnt" Type="Boolean" />
+          <Property Name="ConstructionLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StageID" Type="Int32" />
+          <Property Name="IsCompleted" Type="Boolean" />
+          <Property Name="InstallmentNo" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyID" Type="Int32" />
+          <Property Name="TransactionID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsRecommended" Type="Boolean" />
+          <Property Name="TransactionType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="InstallmentRejection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BeneficiaryId" Type="Int32" Nullable="false" />
+          <Property Name="InstallmentNo" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyID" Type="Int32" />
+          <NavigationProperty Name="BenificiaryMaster" Relationship="EPassBookModel.FK_InstallmentRejection_BenificiaryMaster1" FromRole="InstallmentRejection" ToRole="BenificiaryMaster" />
+          <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.FK_InstallmentRejection_CompanyMaster" FromRole="InstallmentRejection" ToRole="CompanyMaster" />
+        </EntityType>
+        <EntityType Name="InstallmentSigning">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InstallmentId" Type="Int32" />
+          <Property Name="Sign" Type="Boolean" />
+          <Property Name="SignData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyID" Type="Int32" />
+          <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.installmentsigning_CompanyID_FK" FromRole="InstallmentSigning" ToRole="CompanyMaster" />
+          <NavigationProperty Name="InstallmentDetail" Relationship="EPassBookModel.FK_InstallmentSigning_InstallmentDetails" FromRole="InstallmentSigning" ToRole="InstallmentDetail" />
+          <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.FK_InstallmentSigning_RoleMaster" FromRole="InstallmentSigning" ToRole="RoleMaster" />
+          <NavigationProperty Name="UserMaster" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="InstallmentSigning" ToRole="UserMaster" />
+        </EntityType>
+        <EntityType Name="RoleMaster">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Comments" Relationship="EPassBookModel.FK_Comments_RoleMaster" FromRole="RoleMaster" ToRole="Comment" />
+          <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_RoleMaster" FromRole="RoleMaster" ToRole="InstallmentSigning" />
+          <NavigationProperty Name="StageInRoles" Relationship="EPassBookModel.FK_StageInRole_RoleMaster" FromRole="RoleMaster" ToRole="StageInRole" />
+          <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_roleid_fk" FromRole="RoleMaster" ToRole="UserInRole" />
+        </EntityType>
+        <EntityType Name="StageInRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.FK_StageInRole_RoleMaster" FromRole="StageInRole" ToRole="RoleMaster" />
+          <NavigationProperty Name="WorkflowStage" Relationship="EPassBookModel.FK_StageInRole_WorkflowStages" FromRole="StageInRole" ToRole="WorkflowStage" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UserInRole">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="RoleMaster" Relationship="EPassBookModel.UserInRoles_roleid_fk" FromRole="UserInRole" ToRole="RoleMaster" />
+          <NavigationProperty Name="UserMaster" Relationship="EPassBookModel.UserInRoles_userid_fk" FromRole="UserInRole" ToRole="UserMaster" />
+        </EntityType>
+        <EntityType Name="UserLoginDetail">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="InTime" Type="DateTime" Precision="3" />
+          <Property Name="OutTime" Type="DateTime" Precision="3" />
+          <Property Name="InLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OutLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <NavigationProperty Name="UserMaster" Relationship="EPassBookModel.FK_UserLoginDetails_UserMaster" FromRole="UserLoginDetail" ToRole="UserMaster" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Dob" Type="DateTime" Precision="3" />
+          <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsLoggedIn" Type="Boolean" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="CompanyID" Type="Int32" />
+          <Property Name="IsReset" Type="Boolean" />
+          <NavigationProperty Name="CityMaster" Relationship="EPassBookModel.FK_UserMaster_CityMaster" FromRole="UserMaster" ToRole="CityMaster" />
+          <NavigationProperty Name="CompanyMaster" Relationship="EPassBookModel.UserMaster_CompanyID_FK" FromRole="UserMaster" ToRole="CompanyMaster" />
+          <NavigationProperty Name="GeoTaggingDetails" Relationship="EPassBookModel.FK_GeoTaggingDetails_UserMaster" FromRole="UserMaster" ToRole="GeoTaggingDetail" />
+          <NavigationProperty Name="InstallmentSignings" Relationship="EPassBookModel.FK_InstallmentSigning_UserMaster" FromRole="UserMaster" ToRole="InstallmentSigning" />
+          <NavigationProperty Name="UserInRoles" Relationship="EPassBookModel.UserInRoles_userid_fk" FromRole="UserMaster" ToRole="UserInRole" />
+          <NavigationProperty Name="UserLoginDetails" Relationship="EPassBookModel.FK_UserLoginDetails_UserMaster" FromRole="UserMaster" ToRole="UserLoginDetail" />
+        </EntityType>
+        <EntityType Name="WorkflowStage">
+          <Key>
+            <PropertyRef Name="StageId" />
+          </Key>
+          <Property Name="StageId" Type="Int32" Nullable="false" />
+          <Property Name="Stage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="StageInRoles" Relationship="EPassBookModel.FK_StageInRole_WorkflowStages" FromRole="WorkflowStage" ToRole="StageInRole" />
+        </EntityType>
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+            <PropertyRef Name="Application" />
+            <PropertyRef Name="Host" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="Source" />
+            <PropertyRef Name="Message" />
+            <PropertyRef Name="User" />
+            <PropertyRef Name="StatusCode" />
+            <PropertyRef Name="TimeUtc" />
+            <PropertyRef Name="Sequence" />
+            <PropertyRef Name="AllXml" />
+          </Key>
+          <Property Name="ErrorId" Type="Guid" Nullable="false" />
+          <Property Name="Application" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusCode" Type="Int32" Nullable="false" />
+          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="benficiary_CompanyID_FK">
+          <End Type="EPassBookModel.CompanyMaster" Role="CompanyMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyMaster">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="BenificiaryMaster">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BenificiaryMaster_CityMaster">
+          <End Type="EPassBookModel.CityMaster" Role="CityMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityMaster">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="BenificiaryMaster">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CityHeadDetails_BenificiaryMaster">
+          <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EPassBookModel.InstallmentDetail" Role="InstallmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BenificiaryMaster">
+              <PropertyRef Name="BeneficiaryId" />
+            </Principal>
+            <Dependent Role="InstallmentDetail">
+              <PropertyRef Name="BeneficiaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_BenificiaryMaster">
+          <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EPassBookModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BenificiaryMaster">
+              <PropertyRef Name="BeneficiaryId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="BeneficiaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GeoTaggingDetails_BenificiaryMaster">
+          <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EPassBookModel.GeoTaggingDetail" Role="GeoTaggingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BenificiaryMaster">
+              <PropertyRef Name="BeneficiaryId" />
+            </Principal>
+            <Dependent Role="GeoTaggingDetail">
+              <PropertyRef Name="BeneficiaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstallmentRejection_BenificiaryMaster1">
+          <End Type="EPassBookModel.BenificiaryMaster" Role="BenificiaryMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EPassBookModel.InstallmentRejection" Role="InstallmentRejection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BenificiaryMaster">
+              <PropertyRef Name="BeneficiaryId" />
+            </Principal>
+            <Dependent Role="InstallmentRejection">
+              <PropertyRef Name="BeneficiaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMaster_CityMaster">
+          <End Type="EPassBookModel.CityMaster" Role="CityMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityMaster">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="UserMaster">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="comments_CompanyID_FK">
+          <End Type="EPassBookModel.CompanyMaster" Role="CompanyMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyMaster">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_InstallmentDetails">
+          <End Type="EPassBookModel.InstallmentDetail" Role="InstallmentDetail" Multiplicity="1" />
+          <End Type="EPassBookModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstallmentDetail">
+              <PropertyRef Name="InstallmentId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="InstallementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_RoleMaster">
+          <End Type="EPassBookModel.RoleMaster" Role="RoleMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleMaster">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstallmentRejection_CompanyMaster">
+          <End Type="EPassBookModel.CompanyMaster" Role="CompanyMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.InstallmentRejection" Role="InstallmentRejection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyMaster">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="InstallmentRejection">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="geotaging_CompanyID_FK">
+          <End Type="EPassBookModel.CompanyMaster" Role="CompanyMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.GeoTaggingDetail" Role="GeoTaggingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyMaster">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="GeoTaggingDetail">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="installment_CompanyID_FK">
+          <End Type="EPassBookModel.CompanyMaster" Role="CompanyMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.InstallmentDetail" Role="InstallmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyMaster">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="InstallmentDetail">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="installmentsigning_CompanyID_FK">
+          <End Type="EPassBookModel.CompanyMaster" Role="CompanyMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.InstallmentSigning" Role="InstallmentSigning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyMaster">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="InstallmentSigning">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserMaster_CompanyID_FK">
+          <End Type="EPassBookModel.CompanyMaster" Role="CompanyMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyMaster">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="UserMaster">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GeoTaggingDetails_InstallmentDetails">
+          <End Type="EPassBookModel.InstallmentDetail" Role="InstallmentDetail" Multiplicity="0..1" />
+          <End Type="EPassBookModel.GeoTaggingDetail" Role="GeoTaggingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstallmentDetail">
+              <PropertyRef Name="InstallmentId" />
+            </Principal>
+            <Dependent Role="GeoTaggingDetail">
+              <PropertyRef Name="InstallmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GeoTaggingDetails_UserMaster">
+          <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="1" />
+          <End Type="EPassBookModel.GeoTaggingDetail" Role="GeoTaggingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="GeoTaggingDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstallmentSigning_InstallmentDetails">
+          <End Type="EPassBookModel.InstallmentDetail" Role="InstallmentDetail" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EPassBookModel.InstallmentSigning" Role="InstallmentSigning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstallmentDetail">
+              <PropertyRef Name="InstallmentId" />
+            </Principal>
+            <Dependent Role="InstallmentSigning">
+              <PropertyRef Name="InstallmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstallmentSigning_RoleMaster">
+          <End Type="EPassBookModel.RoleMaster" Role="RoleMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.InstallmentSigning" Role="InstallmentSigning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleMaster">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="InstallmentSigning">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstallmentSigning_UserMaster">
+          <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.InstallmentSigning" Role="InstallmentSigning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="InstallmentSigning">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StageInRole_RoleMaster">
+          <End Type="EPassBookModel.RoleMaster" Role="RoleMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.StageInRole" Role="StageInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleMaster">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="StageInRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserInRoles_roleid_fk">
+          <End Type="EPassBookModel.RoleMaster" Role="RoleMaster" Multiplicity="0..1" />
+          <End Type="EPassBookModel.UserInRole" Role="UserInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleMaster">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserInRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StageInRole_WorkflowStages">
+          <End Type="EPassBookModel.WorkflowStage" Role="WorkflowStage" Multiplicity="0..1" />
+          <End Type="EPassBookModel.StageInRole" Role="StageInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStage">
+              <PropertyRef Name="StageId" />
+            </Principal>
+            <Dependent Role="StageInRole">
+              <PropertyRef Name="StageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserInRoles_userid_fk">
+          <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EPassBookModel.UserInRole" Role="UserInRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserInRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLoginDetails_UserMaster">
+          <End Type="EPassBookModel.UserMaster" Role="UserMaster" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EPassBookModel.UserLoginDetail" Role="UserLoginDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserLoginDetail">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EPassBookModelStoreContainer" CdmEntityContainer="EPassBookEntities">
-          <EntitySetMapping Name="BenificiaryMasters">
-            <EntityTypeMapping TypeName="EPassBookModel.BenificiaryMaster">
-              <MappingFragment StoreEntitySet="BenificiaryMaster">
-                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-                <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
-                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
-                <ScalarProperty Name="Mother" ColumnName="Mother" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="PresentAddress" ColumnName="PresentAddress" />
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
-                <ScalarProperty Name="DTRNo" ColumnName="DTRNo" />
-                <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
-                <ScalarProperty Name="Class" ColumnName="Class" />
-                <ScalarProperty Name="General" ColumnName="General" />
-                <ScalarProperty Name="Single" ColumnName="Single" />
-                <ScalarProperty Name="Disabled" ColumnName="Disabled" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="AdharNo" ColumnName="AdharNo" />
-                <ScalarProperty Name="VoterID" ColumnName="VoterID" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
-                <ScalarProperty Name="MojaNo" ColumnName="MojaNo" />
-                <ScalarProperty Name="KhataNo" ColumnName="KhataNo" />
-                <ScalarProperty Name="KhasraNo" ColumnName="KhasraNo" />
-                <ScalarProperty Name="PlotNo" ColumnName="PlotNo" />
-                <ScalarProperty Name="PoliceStation" ColumnName="PoliceStation" />
-                <ScalarProperty Name="WardNo" ColumnName="WardNo" />
-                <ScalarProperty Name="District" ColumnName="District" />
-                <ScalarProperty Name="BankName" ColumnName="BankName" />
-                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
-                <ScalarProperty Name="IFSCCode" ColumnName="IFSCCode" />
-                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="Wife_Photo" ColumnName="Wife_Photo" />
-                <ScalarProperty Name="Hasband_Photo" ColumnName="Hasband_Photo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CityMasters">
-            <EntityTypeMapping TypeName="EPassBookModel.CityMaster">
-              <MappingFragment StoreEntitySet="CityMaster">
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="CityShortName" ColumnName="CityShortName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Comments">
-            <EntityTypeMapping TypeName="EPassBookModel.Comment">
-              <MappingFragment StoreEntitySet="Comments">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-                <ScalarProperty Name="InstallementId" ColumnName="InstallementId" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CommentsHisories">
-            <EntityTypeMapping TypeName="EPassBookModel.CommentsHisory">
-              <MappingFragment StoreEntitySet="CommentsHisory">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-                <ScalarProperty Name="InstallementId" ColumnName="InstallementId" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CompanyMasters">
-            <EntityTypeMapping TypeName="EPassBookModel.CompanyMaster">
-              <MappingFragment StoreEntitySet="CompanyMaster">
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
-                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="Modifiedby" ColumnName="Modifiedby" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DefaultComments">
-            <EntityTypeMapping TypeName="EPassBookModel.DefaultComment">
-              <MappingFragment StoreEntitySet="DefaultComments">
-                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GeoTaggingDetails">
-            <EntityTypeMapping TypeName="EPassBookModel.GeoTaggingDetail">
-              <MappingFragment StoreEntitySet="GeoTaggingDetails">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
-                <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
-                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InstallmentDetails">
-            <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetail">
-              <MappingFragment StoreEntitySet="InstallmentDetails">
-                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-                <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
-                <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
-                <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
-                <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
-                <ScalarProperty Name="StageID" ColumnName="StageID" />
-                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-                <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
-                <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
-                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
-                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InstallmentDetailsHistories">
-            <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetailsHistory">
-              <MappingFragment StoreEntitySet="InstallmentDetailsHistory">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-                <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
-                <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
-                <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
-                <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
-                <ScalarProperty Name="StageID" ColumnName="StageID" />
-                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-                <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
-                <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
-                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InstallmentRejections">
-            <EntityTypeMapping TypeName="EPassBookModel.InstallmentRejection">
-              <MappingFragment StoreEntitySet="InstallmentRejection">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-                <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InstallmentSignings">
-            <EntityTypeMapping TypeName="EPassBookModel.InstallmentSigning">
-              <MappingFragment StoreEntitySet="InstallmentSigning">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-                <ScalarProperty Name="Sign" ColumnName="Sign" />
-                <ScalarProperty Name="SignData" ColumnName="SignData" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RoleMasters">
-            <EntityTypeMapping TypeName="EPassBookModel.RoleMaster">
-              <MappingFragment StoreEntitySet="RoleMaster">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StageInRoles">
-            <EntityTypeMapping TypeName="EPassBookModel.StageInRole">
-              <MappingFragment StoreEntitySet="StageInRole">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="EPassBookModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserInRoles">
-            <EntityTypeMapping TypeName="EPassBookModel.UserInRole">
-              <MappingFragment StoreEntitySet="UserInRoles">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserMasters">
-            <EntityTypeMapping TypeName="EPassBookModel.UserMaster">
-              <MappingFragment StoreEntitySet="UserMaster">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Dob" ColumnName="Dob" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="IsReset" ColumnName="IsReset" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WorkflowStages">
-            <EntityTypeMapping TypeName="EPassBookModel.WorkflowStage">
-              <MappingFragment StoreEntitySet="WorkflowStages">
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                <ScalarProperty Name="Stage" ColumnName="Stage" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ELMAH_Error">
-            <EntityTypeMapping TypeName="EPassBookModel.ELMAH_Error">
-              <MappingFragment StoreEntitySet="ELMAH_Error">
-                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
-                <ScalarProperty Name="Application" ColumnName="Application" />
-                <ScalarProperty Name="Host" ColumnName="Host" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Source" ColumnName="Source" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="User" ColumnName="User" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
-                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
-                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionName="EPassBookModel.Store.Split" FunctionImportName="Split">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EPassBookModel.Split_Result">
@@ -2057,6 +1838,310 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="EPassBookModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_UpdatTransactionId" FunctionName="EPassBookModel.Store.sp_UpdatTransactionId" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="EPassBookModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="BenificiaryMasters">
+            <EntityTypeMapping TypeName="EPassBookModel.BenificiaryMaster">
+              <MappingFragment StoreEntitySet="BenificiaryMaster">
+                <ScalarProperty Name="Hasband_Photo" ColumnName="Hasband_Photo" />
+                <ScalarProperty Name="Wife_Photo" ColumnName="Wife_Photo" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="IFSCCode" ColumnName="IFSCCode" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="WardNo" ColumnName="WardNo" />
+                <ScalarProperty Name="PoliceStation" ColumnName="PoliceStation" />
+                <ScalarProperty Name="PlotNo" ColumnName="PlotNo" />
+                <ScalarProperty Name="KhasraNo" ColumnName="KhasraNo" />
+                <ScalarProperty Name="KhataNo" ColumnName="KhataNo" />
+                <ScalarProperty Name="MojaNo" ColumnName="MojaNo" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="VoterID" ColumnName="VoterID" />
+                <ScalarProperty Name="AdharNo" ColumnName="AdharNo" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Disabled" ColumnName="Disabled" />
+                <ScalarProperty Name="Single" ColumnName="Single" />
+                <ScalarProperty Name="General" ColumnName="General" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
+                <ScalarProperty Name="DTRNo" ColumnName="DTRNo" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="PresentAddress" ColumnName="PresentAddress" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Mother" ColumnName="Mother" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
+                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CityMasters">
+            <EntityTypeMapping TypeName="EPassBookModel.CityMaster">
+              <MappingFragment StoreEntitySet="CityMaster">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CityShortName" ColumnName="CityShortName" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="EPassBookModel.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="InstallementId" ColumnName="InstallementId" />
+                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommentsHisories">
+            <EntityTypeMapping TypeName="EPassBookModel.CommentsHisory">
+              <MappingFragment StoreEntitySet="CommentsHisory">
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="InstallementId" ColumnName="InstallementId" />
+                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyMasters">
+            <EntityTypeMapping TypeName="EPassBookModel.CompanyMaster">
+              <MappingFragment StoreEntitySet="CompanyMaster">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Modifiedby" ColumnName="Modifiedby" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DefaultComments">
+            <EntityTypeMapping TypeName="EPassBookModel.DefaultComment">
+              <MappingFragment StoreEntitySet="DefaultComments">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GeoTaggingDetails">
+            <EntityTypeMapping TypeName="EPassBookModel.GeoTaggingDetail">
+              <MappingFragment StoreEntitySet="GeoTaggingDetails">
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+                <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstallmentDetails">
+            <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetail">
+              <MappingFragment StoreEntitySet="InstallmentDetails">
+                <ScalarProperty Name="OTP" ColumnName="OTP" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="StageID" ColumnName="StageID" />
+                <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
+                <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
+                <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
+                <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
+                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstallmentDetailsHistories">
+            <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetailsHistory">
+              <MappingFragment StoreEntitySet="InstallmentDetailsHistory">
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="StageID" ColumnName="StageID" />
+                <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
+                <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
+                <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
+                <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
+                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstallmentRejections">
+            <EntityTypeMapping TypeName="EPassBookModel.InstallmentRejection">
+              <MappingFragment StoreEntitySet="InstallmentRejection">
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+                <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstallmentSignings">
+            <EntityTypeMapping TypeName="EPassBookModel.InstallmentSigning">
+              <MappingFragment StoreEntitySet="InstallmentSigning">
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SignData" ColumnName="SignData" />
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleMasters">
+            <EntityTypeMapping TypeName="EPassBookModel.RoleMaster">
+              <MappingFragment StoreEntitySet="RoleMaster">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StageInRoles">
+            <EntityTypeMapping TypeName="EPassBookModel.StageInRole">
+              <MappingFragment StoreEntitySet="StageInRole">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="EPassBookModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInRoles">
+            <EntityTypeMapping TypeName="EPassBookModel.UserInRole">
+              <MappingFragment StoreEntitySet="UserInRoles">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLoginDetails">
+            <EntityTypeMapping TypeName="EPassBookModel.UserLoginDetail">
+              <MappingFragment StoreEntitySet="UserLoginDetails">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="OutLocation" ColumnName="OutLocation" />
+                <ScalarProperty Name="InLocation" ColumnName="InLocation" />
+                <ScalarProperty Name="OutTime" ColumnName="OutTime" />
+                <ScalarProperty Name="InTime" ColumnName="InTime" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="EPassBookModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="IsReset" ColumnName="IsReset" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Dob" ColumnName="Dob" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowStages">
+            <EntityTypeMapping TypeName="EPassBookModel.WorkflowStage">
+              <MappingFragment StoreEntitySet="WorkflowStages">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Stage" ColumnName="Stage" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ELMAH_Error">
+            <EntityTypeMapping TypeName="EPassBookModel.ELMAH_Error">
+              <MappingFragment StoreEntitySet="ELMAH_Error">
+                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

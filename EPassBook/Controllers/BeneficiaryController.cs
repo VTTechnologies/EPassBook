@@ -298,6 +298,21 @@ namespace EPassBook.Controllers
                             }
                         }
                     }
+                    
+                    //To get only 6 digit of adhaar no
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        var NewAdhaarNo = dt.Rows[i]["AdharNo"].ToString();
+                        var NewDTRNo = dt.Rows[i]["DTRNo"].ToString();
+                        var NewAccountNo = dt.Rows[i]["AccountNo"].ToString();
+                        NewAdhaarNo = NewAdhaarNo.Substring(NewAdhaarNo.Length - 6);
+                        NewDTRNo = NewDTRNo.Replace("'", "");
+                        NewAccountNo = NewAccountNo.Replace("'", "");
+                        dt.Rows[i]["AdharNo"] = NewAdhaarNo;
+                        dt.Rows[i]["DTRNo"] = NewDTRNo;
+                        dt.Rows[i]["AccountNo"] = NewAccountNo;
+                    }
+                    //dt.Columns["AdharNo"]=
 
                     //add new columns to existing datatable
                     dt.Columns.Add("CreatedDate", typeof(System.DateTime));
@@ -398,12 +413,12 @@ namespace EPassBook.Controllers
                             sb.AppendLine("Please enter DTR No in row " + RowNo);
                             error += "Please enter DTR No in row " + RowNo + Environment.NewLine;
                         }
-                        if (dt.Rows[i]["General"].ToString() == "")
-                        {
-                            int RowNo = i + 2;
-                            sb.AppendLine("Please enter Cast in row " + RowNo);
-                            error += "Please enter Cast in row " + RowNo + Environment.NewLine;
-                        }
+                        //if (dt.Rows[i]["General"].ToString() == "")
+                        //{
+                        //    int RowNo = i + 2;
+                        //    sb.AppendLine("Please enter Cast in row " + RowNo);
+                        //    error += "Please enter Cast in row " + RowNo + Environment.NewLine;
+                        //}
                         if (dt.Rows[i]["AdharNo"].ToString() == "")
                         {
                             int RowNo = i + 2;

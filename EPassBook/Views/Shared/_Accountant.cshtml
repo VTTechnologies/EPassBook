@@ -18,89 +18,105 @@
                 </div>
                 @using (@Html.BeginForm("Accountant", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
                 {
-                    <div class="box-body">
-                        @Html.HiddenFor(model => model.InstallmentId)
-                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <div class="box-body">
+                    @Html.HiddenFor(model => model.InstallmentId)
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @Html.LabelFor(model => model.AccountNo)
-                            </div>
-                            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                @Html.DisplayFor(model => model.AccountNo, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @Html.LabelFor(model => model.AccountNo)
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @Html.LabelFor(model => model.IFSCCode)
-                            </div>
-                            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                @Html.DisplayFor(model => model.IFSCCode, new { htmlAttributes = new { @class = "form-control" } })
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align-last:left">
-                                <p>
-                                    Has been transferred Rs <strong> @Html.DisplayFor(model => model.LoanAmnt)</strong> (Rupees <strong>@Html.DisplayFor(model => model.LoanAmtInRupees)</strong> )
-                                    Through RTGS/DBT
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @Html.LabelFor(model => model.TransactionId)
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @Html.LabelFor(model => model.TransactionDate)
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control" } })
-                            </div>
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @Html.LabelFor(model => model.TransactionType)
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                @Html.DropDownListFor(model => model.TransactionType, new SelectList(new List<object>
-                                    {
-                                    new{ value="RTGS", text="RTGS" },
-                                    new{ value="IMPS", text="IMPS" },
-                                    new{ value="NEFT", text="NEFT" },
-                                    new{ value="Check", text="Check" },
-                                    new{ value="Cash", text="Cash" },
-                                    },
-                                    "value",
-                                    "text"),"Select Items",
-                                    new {  @class = "form-control"})
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @*@Html.LabelFor(model => model.Sign, new { @class = "col-md-2" })*@
-                                <label>Sign For Accountant</label>
-                            </div>
-                            <div class="checkbox icheck col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                                @*@Html.CheckBoxFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control", id = "chkAccountant" } })*@
-                                @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkAccountant" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <label id="lblmsg_acct" class="text-danger"></label>
-                            </div>
-                        </div>
-                        <div class="box-footer">
-                            <input type="submit" onclick="return validationAcountant();" value="Send to Chief Officer" class="btn btn-primary" />
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                            @Html.DisplayFor(model => model.AccountNo, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @Html.LabelFor(model => model.IFSCCode)
+                        </div>
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                            @Html.DisplayFor(model => model.IFSCCode, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align-last:left">
+                            <p>
+                                Has been transferred Rs <strong> @Html.DisplayFor(model => model.LoanAmnt)</strong> (Rupees <strong>@Html.DisplayFor(model => model.LoanAmtInRupees)</strong> )
+                                Through RTGS/DBT
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @Html.LabelFor(model => model.TransactionId)
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @Html.LabelFor(model => model.TransactionDate)
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @Html.LabelFor(model => model.TransactionType)
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            @Html.DropDownListFor(model => model.TransactionType, new SelectList(new List<object>
+                                {
+                                new{ value="RTGS", text="RTGS" },
+                                new{ value="IMPS", text="IMPS" },
+                                new{ value="NEFT", text="NEFT" },
+                                new{ value="Check", text="Check" },
+                                new{ value="Cash", text="Cash" },
+                                },
+                                "value",
+                                "text"),"Select Items",
+                                new {  @class = "form-control"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @*@Html.LabelFor(model => model.Sign, new { @class = "col-md-2" })*@
+                            <label>Sign For Accountant</label>
+                        </div>
+                        <div class="checkbox icheck col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            @*@Html.CheckBoxFor(model => model.Sign, new { htmlAttributes = new { @class = "form-control", id = "chkAccountant" } })*@
+                            @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkAccountant" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <label id="lblmsg_acct" class="text-danger"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button id="btnGenOTP" type="button" class="btn btn-primary" />
+                    </div>
+
+                    <div class="form-group" id="otpDiv" visible="false">
+                        <div class="col-md-offset-2 col-md-10">
+                            <label id="lblotp">Enter OTP: </label>
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.OTP, htmlAttributes: new { @class = "form-control", @maxlength = "4", id = "txtOtp" })
+                                @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
+                                <label id="lblOTPError" class="text-danger"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer" id="btnSubmit">
+                        <input type="submit" onclick="return validationAcountant('otp');" value="Send to Chief Officer" class="btn btn-primary" />
+                    </div>
+                </div>
                 }
             </div>
         </div>
@@ -116,9 +132,23 @@
     </script>
 }
 
+@if (ViewBag.Error != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("Wrong OTP");
+        };
+    </script>
+}
 <script type="text/javascript">
 
-    function validationAcountant() {
+    function validationAcountant(data) {
+        if (data == 'otp') {
+            if ($("#txtOtp").val() == '') {
+                $("#lblOTPError").text("Please enter OTP");
+                return false;
+            }
+        }
         if (($("#TransactionId").val().trim() == "")) {
             $("#lblmsg_acct").text("Please Enter Transaction no");
             return false;
@@ -133,6 +163,58 @@
         }
     }
     $(document).ready(function () {
+
+        $("#btnGenOTP").text('Generate OTP');
+        $("#otpDiv").hide();
+        $('#btnSubmit').hide();
+
+        $("#btnGenOTP").on("click", function ()
+        {
+        debugger;
+        var installmentId ='@Model.InstallmentId';
+             $.ajax({
+                 url: "/WorkFlow/SendOtp",
+            type: "GET",
+            contentType: "application/json",
+            //dataType: "json",
+            data: { 'installmentID': installmentId},
+            success: (function (response) {
+                debugger;
+                var mobNo = '@ViewBag.MobileNo';
+                var resp = '@TempData["res"]';
+                $("#otpDiv").show();
+                //$('#btnSubmit').show();
+                $("#btnGenOTP").text('Re-Generate OTP');
+                alert(resp);
+            }),
+            failure: (function (response) {
+                alert('Try again Failed!');
+                return false;
+            }),
+            error: (function (xhr, textStatus, errorThrown) {
+                if (textStatus != "error") {
+                }
+                else if (xhr.status === 401 || xhr.status === 403) {
+                }
+            })
+        });
+    });
+        $("#txtOtp").keypress(function (e)
+        {
+            var a = [];
+            var k = e.which;
+            for (i = 48; i < 58; i++)
+                a.push(i);
+            if (!(a.indexOf(k) >= 0))
+                e.preventDefault();
+
+            var length = $("#txtOtp").val().length;
+            if (length == 3) {
+                $("#otpDiv").show();
+                $('#btnSubmit').show();
+                //$("#btnGenOTP").text('Re-Generate OTP');
+            }
+        });
 
         $("#TransactionDate").datepicker({
             dateFormat: "dd-mm-yy",

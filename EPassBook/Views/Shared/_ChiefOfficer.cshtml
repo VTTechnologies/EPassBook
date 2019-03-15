@@ -1,7 +1,13 @@
 ﻿
 @model EPassBook.Models.InstallmentDetailsViewModel
 @{
+    /**/
+
     if (ViewBag.Message != null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    if (ViewBag.Error != null)
     {
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
@@ -44,27 +50,42 @@
                     </div>
 
                     <div class="form-group">
+                        <button id="btnGenOTP" type="button" class="btn btn-primary" />
+                    </div>
+
+                    <div class="form-group" id="otpDiv" visible="false">
+                        <div class="col-md-offset-2 col-md-10">
+                            <label id="lblotp">Enter OTP: </label>
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.OTP, htmlAttributes: new { @class = "form-control", @maxlength = "4", id = "txtOtp" })
+                                @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
+                                <label id="lblOTPError" class="text-danger"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="btnSubmit">
                         <div class="col-md-offset-2 col-md-10">
                             @{
 
                                 if (Model.StageID == Convert.ToInt32(EPassBook.Helper.Common.Roles.CityEngineer))
                                 {
-                                    <input type="submit" value="Send to Accountant" onclick="return validation_CF();" class="btn btn-primary" />
+                                    <input type="submit" value="Send to Accountant" onclick="return validation_CF('otp');" class="btn btn-primary" />
                                 }
                                 else if (Model.StageID == Convert.ToInt32(EPassBook.Helper.Common.Roles.Accountant))
                                 {
-                                    <input type="submit" value="Complete Installment" onclick="return validation_CF();" class="btn btn-primary" />
+                                    <input type="submit" value="Complete Installment" onclick="return validation_CF('otp');" class="btn btn-primary" />
                                 }
                                 else
                                 {
-                                    <input type="submit" value="Send to Accountant" onclick="return validation_CF();" class="btn btn-primary" />
+                                    <input type="submit" value="Send to Accountant" onclick="return validation_CF('otp');" class="btn btn-primary" />
                                 }
                             }
 
                         </div>
                     </div>
                 </div>
-                                }
+                }
             </div>
         </div>
     </div>
@@ -91,9 +112,72 @@
 
     </script>
 }
+@if (ViewBag.Error != null)
+{
     <script type="text/javascript">
+        window.onload = function () {
+            //$('#firstDiv').hide();
+            alert("Wrong OTP");
+        };
+    </script>
+}
+<script type="text/javascript">
 
         $(document).ready(function () {
+
+            $("#btnGenOTP").text('Generate OTP');
+            $("#otpDiv").hide();
+            $('#btnSubmit').hide();
+
+        $("#btnGenOTP").on("click", function ()
+        {
+        debugger;
+        var installmentId ='@Model.InstallmentId';
+             $.ajax({
+                 url: "/WorkFlow/SendOtp",
+            type: "GET",
+            contentType: "application/json",
+            //dataType: "json",
+            data: { 'installmentID': installmentId},
+            success: (function (response) {
+                debugger;
+                var mobNo = '@ViewBag.MobileNo';
+                var resp = '@TempData["res"]';
+                $("#otpDiv").show();
+                //$('#btnSubmit').show();
+                $("#btnGenOTP").text('Re-Generate OTP');
+                alert(resp);
+            }),
+            failure: (function (response) {
+                alert('Try again Failed!');
+                return false;
+            }),
+            error: (function (xhr, textStatus, errorThrown) {
+                if (textStatus != "error") {
+                }
+                else if (xhr.status === 401 || xhr.status === 403) {
+                }
+            })
+        });
+    });
+
+        $("#txtOtp").keypress(function (e)
+        {
+            var a = [];
+            var k = e.which;
+            for (i = 48; i < 58; i++)
+                a.push(i);
+            if (!(a.indexOf(k) >= 0))
+                e.preventDefault();
+
+            var length = $("#txtOtp").val().length;
+            if (length == 3) {
+                $("#otpDiv").show();
+                $('#btnSubmit').show();
+                //$("#btnGenOTP").text('Re-Generate OTP');
+            }
+        });
+
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
@@ -104,12 +188,18 @@
                 $("#lblmsg_CF").text("");
             });
         });
-        function validation_CF() {
+    function validation_CF(data) {
+        if (data == 'otp') {
+            if ($("#txtOtp").val() == '') {
+                $("#lblOTPError").text("Please enter OTP");
+                return false;
+            }
+        }
             if (!$("#chkChiefOfficer").is(":checked")) {
                 $("#lblmsg_CF").text("Please sign in to confirm your submission");
                 return false;
             }
             return true;
         }
-    </script>
+</script>
 

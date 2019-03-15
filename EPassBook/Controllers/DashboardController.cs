@@ -26,7 +26,7 @@ namespace EPassBook.Controllers
         }
         [CustomAuthorize(Common.Admin)]
         public ActionResult Dashboard()
-        {
+        {            
             ViewBag.Cities = _icityService.GetAllCities().Select(s => new SelectListItem { Text=s.CityName, Value = s.CityId.ToString() }).ToList();
             return View(new ReportViewModel());
         }      

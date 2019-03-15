@@ -3,7 +3,11 @@
 @{
     if (ViewBag.Message != null)
     {
-       Layout = "~/Views/Shared/_Layout.cshtml";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    if (ViewBag.Error != null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
 <section class="content" id="projectengineer">
@@ -18,35 +22,51 @@
                 @using (Html.BeginForm("ProjectEngineer", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
-                <div class="box-body">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="box-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    @Html.Partial("_CommonSiteEngineer", Model)
-                    
-                    <div class="form-group">
-                        @Html.LabelFor(model => model._Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <label style="color:red">Note: Please check all previous comments in Survey Details tab before proceeding </label>
-                            @Html.TextAreaFor(model => model._Comments, htmlAttributes :new { @class = "form-control", @rows = 5, id ="ProjectEngComment"  })
-                            @Html.ValidationMessageFor(model => model._Comments, "", new { @class = "text-danger" })
+                        @Html.Partial("_CommonSiteEngineer", Model)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model._Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <label style="color:red">Note: Please check all previous comments in Survey Details tab before proceeding </label>
+                                @Html.TextAreaFor(model => model._Comments, htmlAttributes: new { @class = "form-control", @rows = 5, id = "ProjectEngComment" })
+                                @Html.ValidationMessageFor(model => model._Comments, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox icheck col-md-offset-2 col-md-10">
+                                @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkProjectEngineer" }) @Html.Label("Project Engineer")
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <label id="lblmsg_PM" class="text-danger"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button id="btnGenOTP" type="button" class="btn btn-primary" />
+                        </div>
+
+                        <div class="form-group" id="otpDiv" visible="false">
+                            <div class="col-md-offset-2 col-md-10">
+                                <label id="lblotp">Enter OTP: </label>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.OTP, htmlAttributes: new { @class = "form-control", @maxlength = "4", id = "txtOtp" })
+                                    @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
+                                    <label id="lblOTPError" class="text-danger"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-footer" id="btnSubmit">
+                            <input type="submit" value="Send to City Engineer" onclick="return validation_PM('otp');" class="btn btn-primary" />
                         </div>
                     </div>
-
-                    <div class="form-group">                     
-                        <div class="checkbox icheck col-md-offset-2 col-md-10">
-                            @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkProjectEngineer" }) @Html.Label("Project Engineer")
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <label id="lblmsg_PM" class="text-danger"></label>
-                        </div>
-                    </div>
-                    <div class="box-footer">
-                        <input type="submit" value="Send to City Engineer" onclick="return validation_PM();" class="btn btn-primary" />
-                    </div>
-                </div>
                 }
             </div>
         </div>
@@ -61,9 +81,6 @@
         });
     </script>
 }
-
-
-
 @if (ViewBag.Message != null)
 {
     <script type="text/javascript">
@@ -74,9 +91,70 @@
     </script>
 }
 
-<script type="text/javascript">    
+@if (ViewBag.Error != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("Wrong OTP");
+        };
+    </script>
+}
+
+<script type="text/javascript">
 
     $(document).ready(function () {
+        debugger;
+        $("#btnGenOTP").text('Generate OTP');
+        $("#otpDiv").hide();
+        $('#btnSubmit').hide();
+
+        $("#btnGenOTP").on("click", function (){
+        debugger;
+        var installmentId ='@Model.InstallmentId';
+             $.ajax({
+                 url: "/WorkFlow/SendOtp",
+            type: "GET",
+            contentType: "application/json",
+            //dataType: "json",
+            data: { 'installmentID': installmentId},
+            success: (function (response) {
+                debugger;
+                var mobNo = '@ViewBag.MobileNo';
+                var resp = '@TempData["res"]';
+                $("#otpDiv").show();
+                //$('#btnSubmit').show();
+                $("#btnGenOTP").text('Re-Generate OTP');
+                alert(resp);
+            }),
+            failure: (function (response) {
+                alert('Try again Failed!');
+                return false;
+            }),
+            error: (function (xhr, textStatus, errorThrown) {
+                if (textStatus != "error") {
+                }
+                else if (xhr.status === 401 || xhr.status === 403) {
+                }
+                 })
+             });
+        });
+
+        $("#txtOtp").keypress(function (e) {
+            var a = [];
+            var k = e.which;
+            for (i = 48; i < 58; i++)
+                a.push(i);
+            if (!(a.indexOf(k) >= 0))
+                e.preventDefault();
+
+            var length = $("#txtOtp").val().length;
+            if (length == 3) {
+                $("#otpDiv").show();
+                $('#btnSubmit').show();
+                //$("#btnGenOTP").text('Re-Generate OTP');
+            }
+        });
+
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue',
@@ -87,11 +165,17 @@
             $("#lblmsg_PM").text("");
         });
     });
-    function validation_PM() {
-        if (!$("#chkProjectEngineer").is(":checked")) {
-            $("#lblmsg_PM").text("Please sign in to confirm your submission");
-            return false;
-        }        
-        return true;
+    function validation_PM(data) {
+        if (data == 'otp') {
+            if ($("#txtOtp").val() == '') {
+                $("#lblOTPError").text("Please enter OTP");
+                return false;
+            }
+            if (!$("#chkProjectEngineer").is(":checked")) {
+                $("#lblmsg_PM").text("Please sign in to confirm your submission");
+                return false;
+            }
+            return true;
+        }
     }
 </script>

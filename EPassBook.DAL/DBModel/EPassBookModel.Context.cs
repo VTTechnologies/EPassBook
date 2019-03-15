@@ -42,6 +42,7 @@ namespace EPassBook.DAL.DBModel
         public virtual DbSet<StageInRole> StageInRoles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<UserInRole> UserInRoles { get; set; }
+        public virtual DbSet<UserLoginDetail> UserLoginDetails { get; set; }
         public virtual DbSet<UserMaster> UserMasters { get; set; }
         public virtual DbSet<WorkflowStage> WorkflowStages { get; set; }
         public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }

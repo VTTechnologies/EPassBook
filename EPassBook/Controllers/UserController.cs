@@ -55,14 +55,24 @@ namespace EPassBook.Controllers
                 var userData = _userService.GetPassword(user.UserName);
                 UserViewModel uservm = new UserViewModel();
 
-                userCookie["userId"] = user.UserId.ToString();
+                //Response.Cookies["userId"].Value = user.UserId.ToString();
+
+                userCookie.Value = userData.UserId.ToString();
+                //userCookie["password"] = user.Password;
+                userCookie.Expires = DateTime.Now.AddDays(1);
+                //userCookie.rem.Remove("userinfo");
+                HttpContext.Response.Cookies.Remove("userinfo");
+                HttpContext.Response.Cookies.Add(userCookie);
 
                 if (user.RememberMe)
                 {
-                    userCookie["user"] = user.UserName;
-                    userCookie["password"] = user.Password;
+                    userCookie.Value = user.UserId.ToString();
+                    //userCookie["password"] = user.Password;
                     userCookie.Expires = DateTime.Now.AddDays(1);
-                    Response.Cookies.Add(userCookie);
+                    //userCookie.rem.Remove("userinfo");
+                    HttpContext.Response.Cookies.Remove("userinfo");
+                    HttpContext.Response.Cookies.Add(userCookie);
+                    //Response.Cookies.Add(userCookie);
                 }
                 if (userData != null)
                 {
@@ -73,7 +83,7 @@ namespace EPassBook.Controllers
                     }
                     else
                     {
-                        UpdateIsLoggeIn(userData);
+                        //UpdateIsLoggeIn(userData); //commented for testing purpose
                     }
                     uservm = Mapper.UserMapper.Detach(userData);
 

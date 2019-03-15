@@ -22,5 +22,8 @@ namespace EPassBook.Models
         public int UserId { get; set; }
         public Nullable<System.DateTime> TransactionDate { get; set; }
         public string TransactionType { get; set; }
+        [MaxLength(4)]
+        [Required(ErrorMessage = "OTP is Required")]
+        public string OTP { get; set; }
     }
 }
