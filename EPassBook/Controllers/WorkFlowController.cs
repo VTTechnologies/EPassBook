@@ -112,8 +112,8 @@ namespace EPassBook.Controllers
             if (accountDetailsVM.OTP != installmentDetail.OTP)
             {
                 ViewBag.Error = "Wrong OTP";
-                return RedirectToAction("Workflow", new { id = installmentDetail.InstallmentId });                
-                //return View("_Accountant", accountDetailsVM);
+                //return RedirectToAction("Workflow", new { id = installmentDetail.InstallmentId });                
+                return View("_Accountant", accountDetailsVM);
             }
             if (Session["UserDetails"] != null)
             {
@@ -291,8 +291,8 @@ namespace EPassBook.Controllers
                 if(installment.OTP!= installmentDetailViewModel.OTP)
                 {
                     ViewBag.Error = "Wrong OTP";
-                    return RedirectToAction("Workflow", "Workflow", installmentDetailViewModel.InstallmentId);
-                    //return PartialView("_SiteEngineer", installmentDetailViewModel);
+                    //return RedirectToAction("Workflow", "Workflow", installmentDetailViewModel.InstallmentId);
+                    return PartialView("_SiteEngineer", installmentDetailViewModel);
                 }
                 if (Session["UserDetails"] != null)
                 {
@@ -629,8 +629,8 @@ namespace EPassBook.Controllers
             if (installmentDetailViewModel.OTP != installment.OTP)
             {
                 ViewBag.Error = "Wrong OTP";
-                return RedirectToAction("Workflow", new { id = installment.InstallmentId });
-                //return PartialView("_ChiefOfficer", installmentDetailViewModel);
+                //return RedirectToAction("Workflow", new { id = installment.InstallmentId });
+                return PartialView("_ChiefOfficer", installmentDetailViewModel);
             }
             if (installment != null)
             {
