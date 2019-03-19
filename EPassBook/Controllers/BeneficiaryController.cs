@@ -118,7 +118,7 @@ namespace EPassBook.Controllers
         {
             VerifyUser verifyUser = new VerifyUser();
             string response = string.Empty;
-            string sid = "";// System.Configuration.ConfigurationManager.AppSettings["sid"];
+            string sid = System.Configuration.ConfigurationManager.AppSettings["sid"];
             string user = System.Configuration.ConfigurationManager.AppSettings["user"];
             string password = System.Configuration.ConfigurationManager.AppSettings["password"];
 

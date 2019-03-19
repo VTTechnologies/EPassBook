@@ -32,7 +32,6 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.Admin)]
         public ActionResult Edit(int id)
         {
-            
             var city = _cityMasterService.GetCityById(id);
             var cityViewModel = Mapper.CityMapper.Detach(city);
             return View(cityViewModel);
@@ -83,7 +82,6 @@ namespace EPassBook.Controllers
         
         [HttpGet]
         [CustomAuthorize(Common.Admin)]
-
         public ActionResult Delete(int id)
         {
             var citDbydata = _cityMasterService.GetCityById(id);
@@ -95,18 +93,13 @@ namespace EPassBook.Controllers
 
         }
 
-
         [HttpGet]
         [CustomAuthorize(Common.Admin)]
-
         public ActionResult Details(int id)
         {
-
             var cityDbydata = _cityMasterService.Get(c => c.CityId == id).FirstOrDefault();
             var cityViewModel = Mapper.CityMapper.Detach(cityDbydata);
             return View(cityViewModel);
-
-
         }
     }
 

@@ -739,7 +739,7 @@ namespace EPassBook.Controllers
             verifyUser.msisdn = uvm.MobileNo;
             verifyUser.OTP = verifyUser.GenerateRandomOTP(4);
 
-            string res = "Nothing for testing purpose only";//verifyUser.SendOtp();
+            string res = verifyUser.SendOtp();
 
             //save otp to DB;
             InstallmentDetail installmentDetail = new InstallmentDetail();
