@@ -215,18 +215,18 @@
                             </div>
 
                             <div class="form-group" id="otpDiv" visible="false">
-                                <div class="col-md-offset-2 col-md-10">
+                                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                                     <label id="lblotp">Enter OTP: </label>
-                                    <div class="col-md-10">
+                                </div>
+                                    <div class="col-md-4">
                                         @Html.TextBoxFor(model => model.OTP, htmlAttributes: new { @class = "form-control", @maxlength = "4", id = "txtOtp" })
                                         @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
                                         <label id="lblOTPError" class="text-danger"></label>
                                     </div>
-                                </div>
                             </div>
 
                             <div class="box-footer" id="btnSubmit">
-                                <input type="submit" value="Send to Project Engineer" onclick="return validation('otp');" class="btn btn-primary" />
+                                <input type="submit" value="Send to Project Engineer" onclick="return validation();" class="btn btn-primary" />
                             </div>
                         </div>
 
@@ -257,15 +257,6 @@
         };
 </script>
 }
-@if (ViewBag.Error != null)
-{
-<script type="text/javascript">
-        window.onload = function () {
-            $('#firstDiv').hide();
-            alert("Wrong OTP");
-        };
-</script>
-}
 
 <script type="text/javascript">
 
@@ -277,50 +268,12 @@
 
         $("#btnGenOTP").on("click", function ()
         {
-        debugger;
-        var installmentId ='@Model.InstallmentId';
-             $.ajax({
-                 url: "/WorkFlow/SendOtp",
-            type: "GET",
-            contentType: "application/json",
-            //dataType: "json",
-            data: { 'installmentID': installmentId},
-            success: (function (response) {
-                debugger;
-                var mobNo = '@ViewBag.MobileNo';
-                var resp = '@TempData["res"]';
-                $("#otpDiv").show();
-                //$('#btnSubmit').show();
-                $("#btnGenOTP").text('Re-Generate OTP');
-                alert(resp);
-            }),
-            failure: (function (response) {
-                alert('Try again Failed!');
-                return false;
-            }),
-            error: (function (xhr, textStatus, errorThrown) {
-                if (textStatus != "error") {
-                }
-                else if (xhr.status === 401 || xhr.status === 403) {
-                }
-            })
+             var installmentId = '@Model.InstallmentId';
+            AjaxWithParameter(installmentId);
         });
-    });
-        $("#txtOtp").keypress(function (e)
-        {
-            var a = [];
-            var k = e.which;
-            for (i = 48; i < 58; i++)
-                a.push(i);
-            if (!(a.indexOf(k) >= 0))
-                e.preventDefault();
 
-            var length = $("#txtOtp").val().length;
-            if (length == 3) {
-                $("#otpDiv").show();
-                $('#btnSubmit').show();
-                //$("#btnGenOTP").text('Re-Generate OTP');
-            }
+        $("#txtOtp").keyup(function (e) {
+            KeyPressEvent(e);
         });
 
         $('input').iCheck({
@@ -328,29 +281,30 @@
             radioClass: 'iradio_square-blue',
             increaseArea: '20%' /* optional */
         });
-            var check = '@Model.IsRecommended';
-            //TODO
+
+        var check = '@Model.IsRecommended';
+        //TODO
         check = check.toLowerCase();
         debugger;
-            if (check == 'true')
-            {
-                $('#secondDiv').show();
-                $('#firstDiv').hide();
-            }
-            else
-            {
-                $('#secondDiv').hide();
-                $('#firstDiv').show();
-            }
+        if (check == 'true')
+        {
+            $('#secondDiv').show();
+            $('#firstDiv').hide();
+        }
+        else
+        {
+            $('#secondDiv').hide();
+            $('#firstDiv').show();
+        }
         $('select').selectpicker();
-        $(".selectpicker").change(function () {
+        $(".selectpicker").change(function ()
+        {
             var countries = [];
             $.each($(".selectpicker option:selected"), function () {
                 countries.push($(this).val());
             });
             $("#txtFirstComment").val(countries.join(", "));
         });
-
 
         $("#recommend").click(function ()
         {
@@ -393,10 +347,12 @@
             });
         });
 
-        $("#reject").click(function () {
+        $("#reject").click(function ()
+        {
             var comment = $("#txtFirstComment").val();
             var installmentId = @Model.InstallmentId;
-            if (comment == '') {
+            if (comment == '')
+            {
                 $("#commentError").html("Comment is required").show().fadeOut("slow");
                 return false;
             }
@@ -431,18 +387,20 @@
             });
         });
 
-        $("#txtBenAmnt").keyup(function () {
+        $("#txtBenAmnt").keyup(function ()
+        {
             $("#lblBeniAmntRupees").text('');
             var amnt = $(this).val();
-            $.ajax(
-                {
-                    type: "POST",
-                    url: '/WorkFlow/ToWords?number=' + amnt,
-                    success: (function (response) {
-                        $("#lblBeniAmntRupees").text(response);
-                    })
-                });
+            $.ajax({
+
+                type: "POST",
+                url: '/WorkFlow/ToWords?number=' + amnt,
+                success: (function (response) {
+                    $("#lblBeniAmntRupees").text(response);
+                })
+            });
         });
+
         $("#txtLAmnt").keyup(function () {
             $("#lblAmntLRupees").text('');
             var amnt = $(this).val();
@@ -480,26 +438,26 @@
         });
     });
 
-
-    function validation(data) {
+    function validation()
+    {
         debugger;
-        if (data == 'otp') {
-            if ($("#txtOtp").val() == '') {
-                $("#lblOTPError").text("Please enter OTP");
-                return false;
-            }
-        }
+        var isOTPverfied = false;
+        var installmentId = '@Model.InstallmentId';
+        var Otp = $("#txtOtp").val();
+
+        debugger
         if ($("#isState").is(":checked") || $("#isCentre").is(":checked")) {
         }
         else {
             $("#lblmsg").text("Please select State Assistance or Center Assistance");
             return false;
         }
-        if ($("#txtLAmnt").val().trim() == "" || $("#txtLAmnt").val() == "0.00") {
+        if ($("#txtLAmnt").val().trim() == "" || $("#txtLAmnt").val() == "0.00" || $("#txtLAmnt").val() == "0") {
             $("#lblmsg").text("Please Enter Loan Amount");
             return false;
         }
         if (!$("#SiteEngineer").is(":checked")) {
+            
             $("#lblmsg").text("Please sign in to confirm your submission");
             return false;
         }
@@ -508,6 +466,19 @@
             return false;
         }
 
+        if (Otp == '') {
+            $("#lblOTPError").text("Please enter OTP");
+            return false;
+        }
+        if ($("#TransactionType").val() == '') {
+            $("#lblmsg").text("Please select transaction type.");
+            return false;
+        }
+        var isOTPverfied = ValidateOTP(installmentId, Otp);
+        if (isOTPverfied != 'True') {
+            alert("Wrong OTP");
+            return false;
+        }
         return true;
     }
 
@@ -521,7 +492,6 @@
                         .attr('src', e.target.result);
                 };
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }
@@ -529,7 +499,6 @@
     function removeimg(img, fileupld) {
         document.getElementById(img).removeAttribute('src');
         document.getElementById(fileupld).value = "";
-
     }
 
 </script>

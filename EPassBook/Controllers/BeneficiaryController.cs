@@ -14,6 +14,7 @@ using EPassBook.DAL.DBModel;
 using System.Data.SqlClient;
 using System.Web.UI;
 using System.Text;
+using System.Net;
 
 namespace EPassBook.Controllers
 {
@@ -111,29 +112,51 @@ namespace EPassBook.Controllers
             }
             return View();
         }
-        public ActionResult SendSMS(int beneficiaryId)
-        {
-            var beneficiaryViewModel = _benificiaryService.GetBenificiaryById(beneficiaryId);
-            if (beneficiaryViewModel != null)
-            {
 
+        [HttpGet]
+        public ActionResult SendSMS(int id)
+        {
+            VerifyUser verifyUser = new VerifyUser();
+            string response = string.Empty;
+            string sid = "";// System.Configuration.ConfigurationManager.AppSettings["sid"];
+            string user = System.Configuration.ConfigurationManager.AppSettings["user"];
+            string password = System.Configuration.ConfigurationManager.AppSettings["password"];
+
+            var beneficiaryViewModel = _benificiaryService.GetBenificiaryById(id);
+            if (beneficiaryViewModel == null)
+            {
+                TempData["Message"] = "Some error occured please try again";
+                TempData.Keep();
+                return RedirectToAction("Index", "Beneficiary");
             }
             var Link = "http://www.navnirmangroup.org/files/public-docs/app-debug.apk";
-
 
             string BeniUserName = beneficiaryViewModel.AdharNo.ToString();
             BeniUserName = !String.IsNullOrWhiteSpace(BeniUserName) && BeniUserName.Length >= 6 ? BeniUserName.Substring(BeniUserName.Length - 6) : BeniUserName;
             var BeniPassword = beneficiaryViewModel.Password;
+            string message = "Click below link to download the App and use credentials for login Username = " + BeniUserName + " and Password = " + BeniPassword + "  " + Link;
+            string msisdn = beneficiaryViewModel.MobileNo;
+            
+            //string urlPromotional = "http://sms.sminfomedia.in/vendorsms/pushsms.aspx?user="+ user + "&password=" + password + "&msisdn=" + msisdn + "&sid=" + sid + "&msg=" + OTP + "&fl=0 ";
+            string urlTransactional = "http://sms.sminfomedia.in/vendorsms/pushsms.aspx?user=" + user + "&password=" + password + "&msisdn=" + msisdn + "&sid=" + sid + "&msg=" + message + "&fl=0&gwid=2 ";
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(urlTransactional);
+            HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
 
-            string key = "3r9mqo0k6few3m8";
-            string secret = "mcadq4cuu96g6wp";
-            string to = beneficiaryViewModel.MobileNo;
-            string messages = "Click below link to download the App & use credentials for login Username = " + BeniUserName + " & Password = " + BeniPassword + " " + Link;
-            string URL = "https://www.thetexting.com/rest/sms/json/message/send?api_key=" + key + "&api_secret=" + secret + "&to=" + to + "&text=" + messages;
-
-            return Json("Success");
+            if (myHttpWebResponse.StatusCode == HttpStatusCode.OK)
+            {
+                TempData["Message"] = "Message Sent";
+                TempData.Keep();
+                return RedirectToAction("Index", "Beneficiary");
+            }
+            else
+            {
+                TempData["Message"] = "Some error occured please try again";
+                TempData.Keep();
+                return RedirectToAction("Index", "Beneficiary");
+            }
         }
 
+        //useless
         public string SendSms(BeneficiaryViewModel beneficiaryViewModel)
         {
             string msg = "";
@@ -298,8 +321,8 @@ namespace EPassBook.Controllers
                             }
                         }
                     }
-                    
-                    //To get only 6 digit of adhaar no
+
+                    //Code for get only 6 digit of adhaar no and remove single quote from adhaar and DTR no
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         var NewAdhaarNo = dt.Rows[i]["AdharNo"].ToString();

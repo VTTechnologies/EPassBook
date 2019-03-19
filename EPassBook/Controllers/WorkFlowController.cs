@@ -109,12 +109,7 @@ namespace EPassBook.Controllers
         public ActionResult Accountant(AccountDetailsViewModel accountDetailsVM)
         {
             var installmentDetail = _installmentDetailService.GetInstallmentDetailById(accountDetailsVM.InstallmentId);
-            if (accountDetailsVM.OTP != installmentDetail.OTP)
-            {
-                ViewBag.Error = "Wrong OTP";
-                //return RedirectToAction("Workflow", new { id = installmentDetail.InstallmentId });                
-                return View("_Accountant", accountDetailsVM);
-            }
+            
             if (Session["UserDetails"] != null)
             {
                 var user = Session["UserDetails"] as UserViewModel;
@@ -288,12 +283,12 @@ namespace EPassBook.Controllers
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
             if (ModelState.IsValid)
             {
-                if(installment.OTP!= installmentDetailViewModel.OTP)
-                {
-                    ViewBag.Error = "Wrong OTP";
-                    //return RedirectToAction("Workflow", "Workflow", installmentDetailViewModel.InstallmentId);
-                    return PartialView("_SiteEngineer", installmentDetailViewModel);
-                }
+                //if (installment.OTP != installmentDetailViewModel.OTP)
+                //{
+                //    ViewBag.Error = "Wrong OTP";
+                //    //return RedirectToAction("Workflow", "Workflow", installmentDetailViewModel.InstallmentId);
+                //    return PartialView("_SiteEngineer", installmentDetailViewModel);
+                //}
                 if (Session["UserDetails"] != null)
                 {
                     var user = Session["UserDetails"] as UserViewModel;
@@ -398,7 +393,7 @@ namespace EPassBook.Controllers
             beneficiaryvm.Wife_Photo = "/Uploads/BeneficiaryImages/" + beneficiaryvm.Wife_Photo;
 
             return PartialView("_DataEntry", beneficiaryvm);
-        }       
+        }
 
         [HttpGet]
         [CustomAuthorize(Common.Admin, Common.SiteEngineer, Common.Accountant, Common.ChiefOfficer, Common.CityEngineer, Common.ProjectEngineer)]
@@ -407,27 +402,25 @@ namespace EPassBook.Controllers
             var userdetails = new UserViewModel();
             if (Session["UserDetails"] != null)
             {
-                 userdetails = Session["UserDetails"] as UserViewModel;
+                userdetails = Session["UserDetails"] as UserViewModel;
             }
 
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
             var installmentviewmodel = Mapper.InstallmentDetailsMapper.Detach(installment);
 
             //Get Comment for Project Engineer
-            if(installmentviewmodel.Comments.Count>0)
-            installmentviewmodel._Comments = installment.Comments.Where(w=>w.RoleId== (int)Common.Roles.ProjectEngineer && w.InstallementId==installmentId).Select(s=>s.Comments).FirstOrDefault();
-            
+            if (installmentviewmodel.Comments.Count > 0)
+                installmentviewmodel._Comments = installment.Comments.Where(w => w.RoleId == (int)Common.Roles.ProjectEngineer && w.InstallementId == installmentId).Select(s => s.Comments).FirstOrDefault();
+
             //Get Sign for Project Engineer
             if (installmentviewmodel.InstallmentSignings.Count > 0)
                 installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.ProjectEngineer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
 
             installmentviewmodel.lInRupees = Convert.ToInt64(installmentviewmodel.LoanAmnt).ConvertNumbertoWords();
             installmentviewmodel.beniInRupees = Convert.ToInt64(installmentviewmodel.BeneficiaryAmnt).ConvertNumbertoWords();
-            if (installmentviewmodel.GeoTaggingDetails.Count>0)
-                installmentviewmodel.Photo ="/Uploads/SiteEngPhotos/"+ installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
+            if (installmentviewmodel.GeoTaggingDetails.Count > 0)
+                installmentviewmodel.Photo = "/Uploads/SiteEngPhotos/" + installmentviewmodel.GeoTaggingDetails.FirstOrDefault().Photo;
             installmentviewmodel.TransactionType = installment.TransactionType;
-
-
 
             if (installmentviewmodel.lInRupees == "ZERO")
             {
@@ -445,11 +438,7 @@ namespace EPassBook.Controllers
         public ActionResult ProjectEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
-            if (installmentDetailViewModel.OTP != installment.OTP)
-            {
-                ViewBag.Error = "Wrong OTP";
-                return PartialView("_ProjectEngineer", installmentDetailViewModel);
-            }
+            
             if (Session["UserDetails"] != null)
             {
                 var user = Session["UserDetails"] as UserViewModel;
@@ -491,7 +480,6 @@ namespace EPassBook.Controllers
                 installmentDetailViewModel.LoanAmnt = installment.LoanAmnt;
                 installmentDetailViewModel.ConstructionLevel = installment.ConstructionLevel;
             }
-
             return PartialView("_ProjectEngineer", installmentDetailViewModel);
         }
 
@@ -531,11 +519,7 @@ namespace EPassBook.Controllers
         public ActionResult CityEngineer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
-            if (installmentDetailViewModel.OTP != installment.OTP)
-            {
-                ViewBag.Error = "Wrong OTP";
-                return PartialView("_CityEngineer", installmentDetailViewModel);
-            }
+            
             //if (ModelState.IsValid)
             //{
             if (Session["UserDetails"] != null)
@@ -599,7 +583,7 @@ namespace EPassBook.Controllers
 
             //Get Sign for Chief Officer
             if (installmentviewmodel.InstallmentSignings.Count > 0)
-                installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.ChiefOfficer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());           
+                installmentviewmodel.Sign = Convert.ToBoolean(installment.InstallmentSignings.Where(w => w.RoleId == (int)Common.Roles.ChiefOfficer && w.InstallmentId == installmentId).Select(s => s.Sign).FirstOrDefault());
 
             //Get Geotagging photo
             if (installmentviewmodel.GeoTaggingDetails.Count > 0)
@@ -626,19 +610,14 @@ namespace EPassBook.Controllers
         public ActionResult ChiefOfficer(InstallmentDetailsViewModel installmentDetailViewModel)
         {
             var installment = _installmentDetailService.GetInstallmentDetailById(installmentDetailViewModel.InstallmentId);
-            if (installmentDetailViewModel.OTP != installment.OTP)
-            {
-                ViewBag.Error = "Wrong OTP";
-                //return RedirectToAction("Workflow", new { id = installment.InstallmentId });
-                return PartialView("_ChiefOfficer", installmentDetailViewModel);
-            }
+            
             if (installment != null)
             {
                 if (Session["UserDetails"] != null)
                 {
                     var user = Session["UserDetails"] as UserViewModel;
 
-                    if(installment.StageID== (int)Common.WorkFlowStages.Accountant)
+                    if (installment.StageID == (int)Common.WorkFlowStages.Accountant)
                     {
                         installment.IsCompleted = true;
                         installment.StageID = (int)Common.WorkFlowStages.LastChiefOfficer;
@@ -646,7 +625,7 @@ namespace EPassBook.Controllers
                         InstallmentDetail installmentDetail = new InstallmentDetail();
                         //Insert new rocrd with new installment in installment details
                         var newInstallmentNo = installment.InstallmentNo;
-                        if (newInstallmentNo <=6)
+                        if (newInstallmentNo <= 6)
                         {
                             newInstallmentNo = newInstallmentNo + 1;
                             installmentDetail.InstallmentNo = newInstallmentNo;
@@ -669,7 +648,7 @@ namespace EPassBook.Controllers
                     {
                         installment.StageID = (int)Common.WorkFlowStages.ChiefOfficer;
                     }
-                    installment.ModifiedBy = user.UserName;                   
+                    installment.ModifiedBy = user.UserName;
                     installment.ModifiedDate = DateTime.Now;
 
                     // Insert reocrd in comment table 
@@ -724,7 +703,7 @@ namespace EPassBook.Controllers
             }
 
             List<WorkStatusDetailsViewModel> workstatus = new List<WorkStatusDetailsViewModel>();
-            var installments = _installmentDetailService.Get(w => w.BeneficiaryId ==beneficiaryId , null, "").ToList();
+            var installments = _installmentDetailService.Get(w => w.BeneficiaryId == beneficiaryId, null, "").ToList();
 
             if (installments != null)
             {
@@ -753,17 +732,14 @@ namespace EPassBook.Controllers
         }
 
         [HttpGet]
-        public void SendOtp(int installmentID)
+        public string SendOtp(int installmentID)
         {
             var uvm = Session["UserDetails"] as UserViewModel;
             VerifyUser verifyUser = new VerifyUser();
-            //verifyUser.sid = sid;
-            //verifyUser.user = user;
-            //verifyUser.password = password;
             verifyUser.msisdn = uvm.MobileNo;
             verifyUser.OTP = verifyUser.GenerateRandomOTP(4);
 
-            string res = "Nothing";//verifyUser.SendOtp();
+            string res = "Nothing for testing purpose only";//verifyUser.SendOtp();
 
             //save otp to DB;
             InstallmentDetail installmentDetail = new InstallmentDetail();
@@ -772,8 +748,26 @@ namespace EPassBook.Controllers
             _installmentDetailService.Update(installmentDetail);
             _installmentDetailService.SaveChanges();
 
-            TempData["res"] = res;
-            ViewBag.MobileNo = uvm.MobileNo;
+            return res;
+        }
+
+        [HttpGet]
+        public bool ValidateOtp(int installmentId, int Otp)
+        {
+            var isVerified = false;
+            if (!string.IsNullOrEmpty(Convert.ToString(installmentId)) && !string.IsNullOrEmpty(Convert.ToString(installmentId)))
+            {
+                var installment = _installmentDetailService.GetInstallmentDetailById(installmentId);
+                var DBotp = installment.OTP;
+                if (!string.IsNullOrEmpty(DBotp))
+                {
+                    if (Otp == Convert.ToInt32(DBotp))
+                    {
+                        isVerified = true;
+                    }
+                }
+            }
+            return isVerified;
         }
     }
 }

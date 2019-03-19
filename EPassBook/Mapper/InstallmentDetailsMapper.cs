@@ -95,6 +95,8 @@ namespace EPassBook.Mapper
             installmentDetailsViewModel.TransactionID = installmentDetail.TransactionID;
             installmentDetailsViewModel.IsRecommended = installmentDetail.IsRecommended.Value;
 
+            installmentDetailsViewModel.BenificiaryMaster = BeneficiaryMapper.Detach(installmentDetail.BenificiaryMaster);
+           
             installmentDetailsViewModel.Comments = installmentDetail.Comments.Select(s => new CommentsViewModel()
             {
                 Id = s.Id,

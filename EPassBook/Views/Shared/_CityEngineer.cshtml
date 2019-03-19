@@ -51,13 +51,13 @@
                         </div>
 
                         <div class="form-group" id="otpDiv" visible="false">
-                            <div class="col-md-offset-2 col-md-10">
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                                 <label id="lblotp">Enter OTP: </label>
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.OTP, htmlAttributes: new { @class = "form-control", @maxlength = "4", id = "txtOtp" })
-                                    @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
-                                    <label id="lblOTPError" class="text-danger"></label>
-                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.OTP, htmlAttributes: new { @class = "form-control", @maxlength = "4", id = "txtOtp" })
+                                @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
+                                <label id="lblOTPError" class="text-danger"></label>
                             </div>
                         </div>
 
@@ -91,15 +91,7 @@
         };
     </script>
 }
-@if (ViewBag.Error != null)
-{
-    <script type="text/javascript">
-        window.onload = function () {
-            //$('#firstDiv').hide();
-            alert("Wrong OTP");
-        };
-    </script>
-}
+
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -110,51 +102,13 @@
 
         $("#btnGenOTP").on("click", function ()
         {
-        debugger;
-        var installmentId ='@Model.InstallmentId';
-             $.ajax({
-                 url: "/WorkFlow/SendOtp",
-            type: "GET",
-            contentType: "application/json",
-            //dataType: "json",
-            data: { 'installmentID': installmentId},
-            success: (function (response) {
-                debugger;
-                var mobNo = '@ViewBag.MobileNo';
-                var resp = '@TempData["res"]';
-                $("#otpDiv").show();
-                //$('#btnSubmit').show();
-                $("#btnGenOTP").text('Re-Generate OTP');
-                alert(resp);
-            }),
-            failure: (function (response) {
-                alert('Try again Failed!');
-                return false;
-            }),
-            error: (function (xhr, textStatus, errorThrown) {
-                if (textStatus != "error") {
-                }
-                else if (xhr.status === 401 || xhr.status === 403) {
-                }
-            })
+            var installmentId = '@Model.InstallmentId';
+            AjaxWithParameter(installmentId);
         });
-    });
 
-        $("#txtOtp").keypress(function (e)
-        {
-            var a = [];
-            var k = e.which;
-            for (i = 48; i < 58; i++)
-                a.push(i);
-            if (!(a.indexOf(k) >= 0))
-                e.preventDefault();
-
-            var length = $("#txtOtp").val().length;
-            if (length == 3) {
-                $("#otpDiv").show();
-                $('#btnSubmit').show();
-                //$("#btnGenOTP").text('Re-Generate OTP');
-            }
+        //Only Take 4 charecter , show and Hide
+        $("#txtOtp").keyup(function (e) {
+            KeyPressEvent(e);
         });
 
         $('input').iCheck({
@@ -167,15 +121,25 @@
             $("#lblmsg_CE").text("");
         });
     });
-    function validation_CE(data) {
-        if (data == 'otp') {
-            if ($("#txtOtp").val() == '') {
-                $("#lblOTPError").text("Please enter OTP");
-                return false;
-            }
+    function validation_CE()
+    {
+        var isOTPverfied = false;
+        var installmentId = '@Model.InstallmentId';
+        var Otp = $("#txtOtp").val();
+        if (Otp == '')
+        {
+            $("#lblOTPError").text("Please enter OTP");
+            return false;
         }
-        if (!$("#chkCityEngineer").is(":checked")) {
+        if (!$("#chkCityEngineer").is(":checked"))
+        {
             $("#lblmsg_CE").text("Please sign in to confirm your submission");
+            return false;
+        }
+        var isOTPverfied = ValidateOTP(installmentId, Otp);
+        if (isOTPverfied != 'True')
+        {
+            alert("Wrong OTP");
             return false;
         }
         return true;

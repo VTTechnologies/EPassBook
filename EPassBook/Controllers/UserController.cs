@@ -51,29 +51,25 @@ namespace EPassBook.Controllers
         {
             if (ModelState.IsValidField("UserName") && ModelState.IsValidField("Password"))
             {
-                HttpCookie userCookie = new HttpCookie("userinfo");
                 var userData = _userService.GetPassword(user.UserName);
                 UserViewModel uservm = new UserViewModel();
 
-                //Response.Cookies["userId"].Value = user.UserId.ToString();
-
-                userCookie.Value = userData.UserId.ToString();
-                //userCookie["password"] = user.Password;
-                userCookie.Expires = DateTime.Now.AddDays(1);
-                //userCookie.rem.Remove("userinfo");
-                HttpContext.Response.Cookies.Remove("userinfo");
-                HttpContext.Response.Cookies.Add(userCookie);
+                Response.Cookies["UserId"].Value = userData.UserId.ToString();
 
                 if (user.RememberMe)
                 {
-                    userCookie.Value = user.UserId.ToString();
-                    //userCookie["password"] = user.Password;
-                    userCookie.Expires = DateTime.Now.AddDays(1);
-                    //userCookie.rem.Remove("userinfo");
-                    HttpContext.Response.Cookies.Remove("userinfo");
-                    HttpContext.Response.Cookies.Add(userCookie);
-                    //Response.Cookies.Add(userCookie);
+                    Response.Cookies["userName"].Value = userData.UserName;
+                    Response.Cookies["Password"].Value = userData.Password;
+
+                    string User_Name = string.Empty;
+                    string pass = string.Empty;
+                    string id = string.Empty;
+                    User_Name = Request.Cookies["userName"].Value;
+                    pass = Request.Cookies["Password"].Value;
+                    id = Request.Cookies["UserId"].Value;
                 }
+                
+                
                 if (userData != null)
                 {
                     if (checkIsLogedIn(userData))

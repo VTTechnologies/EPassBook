@@ -21,6 +21,9 @@ namespace EPassBook
             bundles.Add(new ScriptBundle("~/bundles/jquery")
               .Include(ltecomponents + "jquery/dist/jquery.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/Common")
+             .Include("~/Scripts/CommonJs/Common.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/lib")
               .Include(ltecomponents + "jquery-ui/jquery-ui.min.js")
               .Include(ltecomponents + "bootstrap/dist/js/bootstrap.min.js")

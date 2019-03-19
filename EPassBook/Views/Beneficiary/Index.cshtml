@@ -18,8 +18,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-md-2">
                 @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("Upload Excel data", "UploadBeneficiayExcel", null, htmlAttributes: new { @class = "btn btn-primary" })
             </div>
         </div>
         <div class="row">
@@ -62,11 +65,11 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.CityId)
                                     </th>
-                                   
+
                                     <th>
                                         @Html.DisplayNameFor(model => model.AdharNo)
                                     </th>
-                                   
+
                                     <th></th>
                                 </tr>
                             </thead>
@@ -81,28 +84,26 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.BeneficairyName)
                                     </td>
-                                   
+
                                     <td>
                                         @Html.DisplayFor(modelItem => item.MobileNo)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.CityName)
                                     </td>
-                                   
+
                                     <td>
                                         @Html.DisplayFor(modelItem => item.AdharNo)
                                     </td>
-                                   
+
                                     <td>
                                         @Html.ActionLink("Edit", "Edit", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-default" })
                                         @*@Html.ActionLink("Details", "Details", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-success" })*@
                                         @*@Html.ActionLink("Delete", "Delete", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-danger" })*@
                                         @Html.ActionLink("Delete", "Delete", new { id = item.BeneficiaryId }, new { onclick = "return Confirm('" + @item.BeneficiaryId + "');", @class = "btn alert-danger" })
-                                        @*@Html.ActionLink("Send SMS", "SendSMS", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-default" })*@
+                                        @Html.ActionLink("Send SMS", "SendSMS", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-success" })
                                     </td>
-
                                 </tr>
-
                             }
 
                         </table>
@@ -146,9 +147,16 @@
     </div>
 </div>
 
+@if (TempData["Message"] != null)
+{
 <script type="text/javascript">
-
-
+    debugger;
+    window.onload = function () {
+        alert('@TempData["Message"]');
+    };
+</script>
+}
+<script type="text/javascript">
         function ReloadPage() {
             window.location = '@Url.Action("Index")';
         }

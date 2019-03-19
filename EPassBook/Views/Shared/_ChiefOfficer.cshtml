@@ -24,67 +24,67 @@
                 {
                     @Html.AntiForgeryToken()
 
-                <div class="box-body">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.Partial("_CommonSiteEngineer", Model)
+                    <div class="box-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.Partial("_CommonSiteEngineer", Model)
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model._Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <label style="color:red">Note: Please check all previous comments in Survey Details tab before proceeding </label>
-                            @Html.TextAreaFor(model => model._Comments, htmlAttributes: new { @class = "form-control", @rows = 5 })
-                            @Html.ValidationMessageFor(model => model._Comments, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="checkbox icheck col-md-offset-2 col-md-10">
-                            @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkChiefOfficer" }) @Html.Label("Chief Officer")
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <label id="lblmsg_CF" class="text-danger"></label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <button id="btnGenOTP" type="button" class="btn btn-primary" />
-                    </div>
-
-                    <div class="form-group" id="otpDiv" visible="false">
-                        <div class="col-md-offset-2 col-md-10">
-                            <label id="lblotp">Enter OTP: </label>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model._Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
+                                <label style="color:red">Note: Please check all previous comments in Survey Details tab before proceeding </label>
+                                @Html.TextAreaFor(model => model._Comments, htmlAttributes: new { @class = "form-control", @rows = 5 })
+                                @Html.ValidationMessageFor(model => model._Comments, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox icheck col-md-offset-2 col-md-10">
+                                @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkChiefOfficer" }) @Html.Label("Chief Officer")
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <label id="lblmsg_CF" class="text-danger"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button id="btnGenOTP" type="button" class="btn btn-primary" />
+                        </div>
+
+                        <div class="form-group" id="otpDiv" visible="false">
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                <label id="lblotp">Enter OTP: </label>
+                            </div>
+                            <div class="col-md-4">
                                 @Html.TextBoxFor(model => model.OTP, htmlAttributes: new { @class = "form-control", @maxlength = "4", id = "txtOtp" })
                                 @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
                                 <label id="lblOTPError" class="text-danger"></label>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group" id="btnSubmit">
-                        <div class="col-md-offset-2 col-md-10">
-                            @{
+                        <div class="form-group" id="btnSubmit">
+                            <div class="col-md-offset-2 col-md-10">
+                                @{
 
-                                if (Model.StageID == Convert.ToInt32(EPassBook.Helper.Common.Roles.CityEngineer))
-                                {
-                                    <input type="submit" value="Send to Accountant" onclick="return validation_CF('otp');" class="btn btn-primary" />
+                                    if (Model.StageID == Convert.ToInt32(EPassBook.Helper.Common.Roles.CityEngineer))
+                                    {
+                                        <input type="submit" value="Send to Accountant" onclick="return validation_CF();" class="btn btn-primary" />
+                                    }
+                                    else if (Model.StageID == Convert.ToInt32(EPassBook.Helper.Common.Roles.Accountant))
+                                    {
+                                        <input type="submit" value="Complete Installment" onclick="return validation_CF();" class="btn btn-primary" />
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" value="Send to Accountant" onclick="return validation_CF();" class="btn btn-primary" />
+                                    }
                                 }
-                                else if (Model.StageID == Convert.ToInt32(EPassBook.Helper.Common.Roles.Accountant))
-                                {
-                                    <input type="submit" value="Complete Installment" onclick="return validation_CF('otp');" class="btn btn-primary" />
-                                }
-                                else
-                                {
-                                    <input type="submit" value="Send to Accountant" onclick="return validation_CF('otp');" class="btn btn-primary" />
-                                }
-                            }
 
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
             </div>
         </div>
@@ -112,94 +112,57 @@
 
     </script>
 }
-@if (ViewBag.Error != null)
-{
-    <script type="text/javascript">
-        window.onload = function () {
-            //$('#firstDiv').hide();
-            alert("Wrong OTP");
-        };
-    </script>
-}
 <script type="text/javascript">
-
-        $(document).ready(function () {
-
-            $("#btnGenOTP").text('Generate OTP');
-            $("#otpDiv").hide();
-            $('#btnSubmit').hide();
-
+    $(document).ready(function ()
+    {
+        $("#btnGenOTP").text('Generate OTP');
+        $("#otpDiv").hide();
+        $('#btnSubmit').hide();
         $("#btnGenOTP").on("click", function ()
         {
-        debugger;
-        var installmentId ='@Model.InstallmentId';
-             $.ajax({
-                 url: "/WorkFlow/SendOtp",
-            type: "GET",
-            contentType: "application/json",
-            //dataType: "json",
-            data: { 'installmentID': installmentId},
-            success: (function (response) {
-                debugger;
-                var mobNo = '@ViewBag.MobileNo';
-                var resp = '@TempData["res"]';
-                $("#otpDiv").show();
-                //$('#btnSubmit').show();
-                $("#btnGenOTP").text('Re-Generate OTP');
-                alert(resp);
-            }),
-            failure: (function (response) {
-                alert('Try again Failed!');
-                return false;
-            }),
-            error: (function (xhr, textStatus, errorThrown) {
-                if (textStatus != "error") {
-                }
-                else if (xhr.status === 401 || xhr.status === 403) {
-                }
-            })
+            var installmentId = '@Model.InstallmentId';
+            AjaxWithParameter(installmentId);
+        });
+
+        //Only Take 4 charecter , show and Hide
+        $("#txtOtp").keyup(function (e)
+        {
+            KeyPressEvent(e);
+        });
+
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
+        $("#chkChiefOfficer").change(function ()
+        {
+            $("#lblmsg_CF").text("");
         });
     });
 
-        $("#txtOtp").keypress(function (e)
+    function validation_CF()
+    {
+        var isOTPverfied = false;
+        var installmentId = '@Model.InstallmentId';
+        var Otp = $("#txtOtp").val();
+        if ($("#txtOtp").val() == '')
         {
-            var a = [];
-            var k = e.which;
-            for (i = 48; i < 58; i++)
-                a.push(i);
-            if (!(a.indexOf(k) >= 0))
-                e.preventDefault();
-
-            var length = $("#txtOtp").val().length;
-            if (length == 3) {
-                $("#otpDiv").show();
-                $('#btnSubmit').show();
-                //$("#btnGenOTP").text('Re-Generate OTP');
-            }
-        });
-
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' /* optional */
-            });
-
-            $("#chkChiefOfficer").change(function () {
-                $("#lblmsg_CF").text("");
-            });
-        });
-    function validation_CF(data) {
-        if (data == 'otp') {
-            if ($("#txtOtp").val() == '') {
-                $("#lblOTPError").text("Please enter OTP");
-                return false;
-            }
+            $("#lblOTPError").text("Please enter OTP");
+            return false;
         }
-            if (!$("#chkChiefOfficer").is(":checked")) {
-                $("#lblmsg_CF").text("Please sign in to confirm your submission");
-                return false;
-            }
-            return true;
+        if (!$("#chkChiefOfficer").is(":checked"))
+        {
+            $("#lblmsg_CF").text("Please sign in to confirm your submission");
+            return false;
         }
+        var isOTPverfied = ValidateOTP(installmentId, Otp);
+        if (isOTPverfied != 'True')
+        {
+            alert("Wrong OTP");
+            return false;
+        }
+        return true;
+    }
 </script>
 
