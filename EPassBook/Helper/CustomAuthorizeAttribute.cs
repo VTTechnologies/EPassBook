@@ -63,7 +63,12 @@ namespace EPassBook.Helper
                 //userDetail
                 if (filterContext.HttpContext.Session["UserDetails"] == null)
                 {
-                    var UserId = HttpContext.Current.Request.Cookies["UserId"].Value;
+                    var UserId = "";
+                    HttpCookie objRequestRead = HttpContext.Current.Request.Cookies["UserId"];
+                    if (objRequestRead != null)
+                    {
+                        UserId = objRequestRead.Value;
+                    }
                     var um = _userService.Get().Where(u => u.UserId == Convert.ToInt32(UserId)).FirstOrDefault();
                     UpdateIsLoggeIn(um);
                     filterContext.Result = new RedirectResult("~/User/Login");

@@ -24,7 +24,12 @@ namespace EPassBook
         }
         protected void Session_End()
         {
-            var UserId = Request.Cookies["UserId"].Value;
+            var UserId = "";
+            HttpCookie objRequestRead = Request.Cookies["UserId"];
+            if (objRequestRead != null)
+            {
+                UserId = objRequestRead.Value;
+            }
 
             if (UserId != null || UserId != "")
             {

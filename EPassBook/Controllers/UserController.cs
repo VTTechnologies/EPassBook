@@ -56,10 +56,16 @@ namespace EPassBook.Controllers
 
                 Response.Cookies["UserId"].Value = userData.UserId.ToString();
 
+                HttpCookie objCookie = new HttpCookie("UserId");
+                objCookie.Value = userData.UserId.ToString();
+                objCookie.Expires = DateTime.Now.AddDays(1);
+
+                Response.Cookies.Add(objCookie);
+
                 if (user.RememberMe)
                 {
                     Response.Cookies["userName"].Value = userData.UserName;
-                    Response.Cookies["Password"].Value = userData.Password;
+                    Response.Cookies["Password"].Value = userData.UserName;
 
                     string User_Name = string.Empty;
                     string pass = string.Empty;
@@ -68,8 +74,12 @@ namespace EPassBook.Controllers
                     pass = Request.Cookies["Password"].Value;
                     id = Request.Cookies["UserId"].Value;
                 }
-                
-                
+                HttpCookie objRequestRead = Request.Cookies["UserId"];
+                if (objRequestRead != null)
+                {
+                    string User_Name = objRequestRead.Value;
+                }
+
                 if (userData != null)
                 {
                     if (checkIsLogedIn(userData))
