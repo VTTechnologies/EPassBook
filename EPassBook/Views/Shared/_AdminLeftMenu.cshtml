@@ -24,19 +24,24 @@
             @*<li class="header">MAIN NAVIGATION</li>*@
             <li class="@Html.IsSelected(controller: "Dashboard")">
                 <a href="@Url.Action("Dashboard","Dashboard")">
-                    
-                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>                  
-                </a>             
+
+                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                </a>
             <li class="@Html.IsSelected(controller: "User")">
                 <a href="@Url.Action("Index", "User")">
                     <i class="fa fa-user"></i>
                     <span>User Master</span>
-                </a>               
+                </a>
             </li>
             <li class="@Html.IsSelected(controller: "Beneficiary")">
                 <a href="@Url.Action("Index", "Beneficiary")">
                     <i class="glyphicon glyphicon-user"></i> <span>Beneficiary</span>
-                </a>               
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "City")">
+                <a href="@Url.Action("Index", "City")">
+                    <i class="glyphicon glyphicon-stats"></i> <span>City</span>
+                </a>
             </li>
         </ul>
     </section>

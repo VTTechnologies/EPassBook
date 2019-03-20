@@ -22,8 +22,8 @@ namespace EPassBook.Controllers
         // GET: Beneficiary
         [CustomAuthorize(Common.Admin)]
         public ActionResult Index()
-        {           
-            var cities = _cityMasterService.Get().Select(s=>new CityViewModel { CityId=s.CityId,CityName=s.CityName,CityShortName=s.CityShortName,IsActive=s.IsActive}).ToList();    
+        {
+            var cities = _cityMasterService.Get().Where(s => s.IsActive == true).Select(s => new CityViewModel { CityId = s.CityId, CityName = s.CityName, CityShortName = s.CityShortName, IsActive = s.IsActive }).ToList();
             //var cityViewModel=Mapper.CityMapper.Detach(cities)                                                                     
             return View(cities);
         }
