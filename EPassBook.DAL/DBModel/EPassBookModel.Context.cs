@@ -47,20 +47,6 @@ namespace EPassBook.DAL.DBModel
         public virtual DbSet<WorkflowStage> WorkflowStages { get; set; }
         public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
     
-        [DbFunction("EPassBookEntities", "Split")]
-        public virtual IQueryable<Split_Result> Split(string list, string splitOn)
-        {
-            var listParameter = list != null ?
-                new ObjectParameter("List", list) :
-                new ObjectParameter("List", typeof(string));
-    
-            var splitOnParameter = splitOn != null ?
-                new ObjectParameter("SplitOn", splitOn) :
-                new ObjectParameter("SplitOn", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Split_Result>("[EPassBookEntities].[Split](@List, @SplitOn)", listParameter, splitOnParameter);
-        }
-    
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {
             var applicationParameter = application != null ?
@@ -318,6 +304,20 @@ namespace EPassBook.DAL.DBModel
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        [DbFunction("EPassBookEntities", "Split")]
+        public virtual IQueryable<Split_Result> Split(string list, string splitOn)
+        {
+            var listParameter = list != null ?
+                new ObjectParameter("List", list) :
+                new ObjectParameter("List", typeof(string));
+    
+            var splitOnParameter = splitOn != null ?
+                new ObjectParameter("SplitOn", splitOn) :
+                new ObjectParameter("SplitOn", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Split_Result>("[EPassBookEntities].[Split](@List, @SplitOn)", listParameter, splitOnParameter);
         }
     }
 }
