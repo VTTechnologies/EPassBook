@@ -35,7 +35,13 @@ namespace EPassBook.Controllers
         {
             return View();
         }
-      
+
+        public ActionResult Website2()
+        {
+            return View();
+        }
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
