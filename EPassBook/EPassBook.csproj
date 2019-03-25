@@ -429,9 +429,11 @@
     <Content Include="Content\Website2\img\about-extra-2.svg" />
     <Content Include="Content\Website2\img\about-img.svg" />
     <Content Include="Content\Website2\img\about1.png" />
+    <Content Include="Content\Website2\img\aboutimg1.jpg" />
     <Content Include="Content\Website2\img\apple-touch-icon.png" />
     <Content Include="Content\Website2\img\Banner.jpg" />
     <Content Include="Content\Website2\img\banner2.jpg" />
+    <Content Include="Content\Website2\img\bgimg2.png" />
     <Content Include="Content\Website2\img\clients\client-1.png" />
     <Content Include="Content\Website2\img\clients\client-2.png" />
     <Content Include="Content\Website2\img\clients\client-3.png" />
