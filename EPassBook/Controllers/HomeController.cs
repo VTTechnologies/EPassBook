@@ -19,7 +19,7 @@ namespace EPassBook.Controllers
         ICityService _cityMasterService;
         IRoleMasterService _roleMasterService;
         ICompanyMasterService _companyMasterService;
-        
+
 
         public HomeController(IUserService userserService, ICityService cityMasterService,
             IRoleMasterService roleMasterService, ICompanyMasterService companyMasterService)
@@ -55,6 +55,22 @@ namespace EPassBook.Controllers
 
             return View();
         }
-        
-    }
+
+        [HttpGet]
+        public ActionResult SendMessage(string name, string email, string subject, string message)
+        {
+            
+            GMailer.GmailUsername = "";
+            GMailer.GmailPassword = "";
+
+            GMailer mailer = new GMailer();
+            mailer.ToEmail = "";
+            mailer.Body = "Name: " + name + "   Email: " + email + "  Message: " + message;
+            mailer.Subject = subject;
+            mailer.IsHtml = true;
+            mailer.Send();
+
+            return View();
+        }
+    }     
 }

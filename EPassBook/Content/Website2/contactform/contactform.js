@@ -90,28 +90,47 @@ jQuery(document).ready(function($) {
     });
     if (ferror) return false;
     else var str = $(this).serialize();
-    var action = $(this).attr('action');
-    if( ! action ) {
-      action = 'contactform/contactform.php';
-    }
-    $.ajax({
-      type: "POST",
-      url: action,
-      data: str,
-      success: function(msg) {
-        // alert(msg);
-        if (msg == 'OK') {
-          $("#sendmessage").addClass("show");
-          $("#errormessage").removeClass("show");
-          $('.contactForm').find("input, textarea").val("");
-        } else {
-          $("#sendmessage").removeClass("show");
-          $("#errormessage").addClass("show");
-          $('#errormessage').html(msg);
-        }
-
+      var action = $(this).attr('action');
+      //----------------------------SMTP Email Coding=======================>
+      var name = $('#txtname').val();
+      var email = $('#txtemail').val();
+      var subject = $('#txtsubject').val();
+      var message = $('textarea#txtmessage').val();
+      if (!action) {
+          action = '/Home/SendMessage';
       }
-    });
+      $.ajax({
+          url: '/Home/SendMessage',
+          data: { 'name': name, 'email': email, 'subject': subject, 'message': message },
+          type: "GET",
+          cache: false,
+          success: function (savingStatus) {
+              alert('Message sent');
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+              alert('Unabel to send a message');
+          }
+      });
+
+    
+    //$.ajax({
+    //  type: "POST",
+    //  url: action,
+    //  data: str,
+    //  success: function(msg) {
+    //    // alert(msg);
+    //    if (msg == 'OK') {
+    //      $("#sendmessage").addClass("show");
+    //      $("#errormessage").removeClass("show");
+    //      $('.contactForm').find("input, textarea").val("");
+    //    } else {
+    //      $("#sendmessage").removeClass("show");
+    //      $("#errormessage").addClass("show");
+    //      $('#errormessage').html(msg);
+    //    }
+
+    //  }
+    //});
     return false;
   });
 
