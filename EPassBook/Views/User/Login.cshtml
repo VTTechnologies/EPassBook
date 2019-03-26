@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
+    
     <div class="login-box">
         <div class="login-logo">
             @*<a href="../../index2.html"><b>E</b>PassBook</a>*@
@@ -54,7 +55,7 @@
                 </div>
                 <div class="form-group has-feedback">
                     @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password", name = "pass", placeholder = "Password" })
-                    @Html.ValidationMessageFor(m=>m.Password,null,new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
@@ -74,6 +75,12 @@
             </form>
         </div>
         <!-- /.login-box-body -->
+        <br />
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                @Html.ActionLink("Go back to website", "Website", "Home")
+            </div>
+        </div>
     </div>
     <!-- /.login-box -->
     <!-- jQuery 3 -->
