@@ -7,7 +7,7 @@
       <Diagram DiagramId="ccb9a0a88fc149508a20e370ffdd090f" Name="Diagram1" ZoomLevel="53">
         <EntityTypeShape EntityType="EPassBookModel.BenificiaryMaster" Width="1.5" PointX="6" PointY="9.25" />
         <EntityTypeShape EntityType="EPassBookModel.CityMaster" Width="1.5" PointX="3.75" PointY="7.625" />
-        <EntityTypeShape EntityType="EPassBookModel.Comment" Width="1.5" PointX="13.5" PointY="11.875" />
+        <EntityTypeShape EntityType="EPassBookModel.Comment" Width="1.5" PointX="10.5" PointY="6.875" />
         <EntityTypeShape EntityType="EPassBookModel.CommentsHisory" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="EPassBookModel.CompanyMaster" Width="1.5" PointX="0.75" PointY="11.625" />
         <EntityTypeShape EntityType="EPassBookModel.DefaultComment" Width="1.5" PointX="2.75" PointY="0.75" />
@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="EPassBookModel.InstallmentDetail" Width="1.5" PointX="8.25" PointY="10.875" />
         <EntityTypeShape EntityType="EPassBookModel.InstallmentDetailsHistory" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="EPassBookModel.InstallmentRejection" Width="1.5" PointX="11.25" PointY="12.125" />
-        <EntityTypeShape EntityType="EPassBookModel.InstallmentSigning" Width="1.5" PointX="10.5" PointY="6.75" />
+        <EntityTypeShape EntityType="EPassBookModel.InstallmentSigning" Width="1.5" PointX="13.5" PointY="11.75" />
         <EntityTypeShape EntityType="EPassBookModel.RoleMaster" Width="1.5" PointX="8.25" PointY="4.5" />
         <EntityTypeShape EntityType="EPassBookModel.StageInRole" Width="1.5" PointX="10.5" PointY="3.625" />
         <EntityTypeShape EntityType="EPassBookModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.75" />
