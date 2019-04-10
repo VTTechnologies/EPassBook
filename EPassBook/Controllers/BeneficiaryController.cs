@@ -86,6 +86,9 @@ namespace EPassBook.Controllers
                 {
                     return View();
                 }
+                var beniFirstName = "";
+                var mobileNoFirstFour = "";
+                var password = "";
                 HttpPostedFileBase hasbandphoto = Request.Files["imgupload1"];
                 HttpPostedFileBase wifephoto = Request.Files["imgupload2"];
                 var user = Session["UserDetails"] as UserViewModel;
@@ -96,6 +99,16 @@ namespace EPassBook.Controllers
                 beneficiaryViewModel.CreatedBy = user.UserName;
                 beneficiaryViewModel.CreatedDate = DateTime.Now;
                 beneficiaryViewModel.CityId = user.CityId;
+
+                beniFirstName = beneficiaryViewModel.BeneficairyName.ToString();
+                beniFirstName = !String.IsNullOrWhiteSpace(beniFirstName) && beniFirstName.Length >= 5 ? beniFirstName.Substring(0, 4) : beniFirstName;
+
+                mobileNoFirstFour = beneficiaryViewModel.MobileNo.ToString();
+                mobileNoFirstFour = !String.IsNullOrWhiteSpace(mobileNoFirstFour) && mobileNoFirstFour.Length >= 5 ? mobileNoFirstFour.Substring(0, 4) : mobileNoFirstFour;
+                password = beniFirstName + mobileNoFirstFour;
+
+                beneficiaryViewModel.Password = password;
+
                 var insertbeneficiary = Mapper.BeneficiaryMapper.Attach(beneficiaryViewModel);
 
                 _benificiaryService.Add(insertbeneficiary);
