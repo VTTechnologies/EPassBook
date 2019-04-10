@@ -62,6 +62,10 @@ namespace EPassBook.Controllers
         [Route("Validate/{userName}/{password}")]
         public HttpResponseMessage ValidatedUser(int userName, string password)
         {
+            var adharLastSix = userName.ToString();
+            adharLastSix = adharLastSix.Length > 6 ? adharLastSix.Substring(adharLastSix.Length - 6) : adharLastSix;
+            userName = Convert.ToInt32(adharLastSix);
+
             var benificiary = _benificiaryService.AuthenticateBeneficiary(userName, password);
             if (benificiary != null)
             {
