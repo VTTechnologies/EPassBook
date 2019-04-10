@@ -479,7 +479,8 @@ form#contact-form input:focus,form#contact-form select:focus,form#contact-form t
 }
 
 .widget-contact {
-	text-align: left;
+    text-align: left;
+    color: white;
 }
 
 .validation {

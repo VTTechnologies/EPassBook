@@ -58,7 +58,7 @@ namespace EPassBook.DAL.Service
         }
         public UserMaster GetPassword(string userName)
         {
-            return userMasterRepository.Get(w => w.UserName == userName && w.IsActive==true, null, string.Empty).FirstOrDefault();
+            return userMasterRepository.Get(w => w.UserName == userName && w.IsActive == true, null, string.Empty).FirstOrDefault();
         }        
     }
 }

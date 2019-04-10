@@ -9,3 +9,4 @@
 *.JPG
 /EPassBook/obj/Debug
 /EPassBook.DAL/DBModel
+/EPassBook.DAL/obj/Release

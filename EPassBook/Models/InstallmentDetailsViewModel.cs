@@ -32,6 +32,11 @@ namespace EPassBook.Models
         public bool IsRecommended { get; set; }
         public string FirstComment { get; set; }
         public bool Sign { get; set; }
+        public Nullable<System.DateTime> TransactionDate { get; set; }
+        public string TransactionType { get; set; }
+        [MaxLength(4)]
+        [Required(ErrorMessage = "OTP is Required")]
+        public string OTP { get; set; }
 
 
         public virtual BeneficiaryViewModel BenificiaryMaster { get; set; }

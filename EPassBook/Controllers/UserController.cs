@@ -54,18 +54,46 @@ namespace EPassBook.Controllers
                 var userData = _userService.GetPassword(user.UserName);
                 UserViewModel uservm = new UserViewModel();
 
+                Response.Cookies["UserId"].Value = userData.UserId.ToString();
+
+                HttpCookie objCookie = new HttpCookie("UserId");
+                objCookie.Value = userData.UserId.ToString();
+                objCookie.Expires = DateTime.Now.AddDays(1);
+
+                Response.Cookies.Add(objCookie);
+
                 if (user.RememberMe)
                 {
-                    HttpCookie userCookie = new HttpCookie("userinfo");
-                    userCookie["user"] = user.UserName;
-                    userCookie["password"] = user.Password;
-                    userCookie.Expires = DateTime.Now.AddDays(1);
-                    Response.Cookies.Add(userCookie);
+                    Response.Cookies["userName"].Value = userData.UserName;
+                    Response.Cookies["Password"].Value = userData.UserName;
+
+                    string User_Name = string.Empty;
+                    string pass = string.Empty;
+                    string id = string.Empty;
+                    User_Name = Request.Cookies["userName"].Value;
+                    pass = Request.Cookies["Password"].Value;
+                    id = Request.Cookies["UserId"].Value;
                 }
+                HttpCookie objRequestRead = Request.Cookies["UserId"];
+                if (objRequestRead != null)
+                {
+                    string User_Name = objRequestRead.Value;
+                }
+
                 if (userData != null)
                 {
+                    if (checkIsLogedIn(userData))
+                    {
+                        ModelState.AddModelError("Error", "This user is already logged in from another device");
+                        return View();
+                    }
+                    else
+                    {
+                        //UpdateIsLoggeIn(userData); //commented for testing purpose
+                    }
                     uservm = Mapper.UserMapper.Detach(userData);
-                    Session["UserDetails"] = uservm;
+
+                    Session["UserDetails"] = uservm;                    
                     var password = userData.Password.Decrypt();
 
                     if (user.Password.Equals(password))
@@ -83,7 +111,7 @@ namespace EPassBook.Controllers
                             }
                             else if (uservm.UserInRoles.FirstOrDefault().RoleId == Convert.ToInt32(Common.Roles.Admin))
                             {
-                                return RedirectToAction("FakeDashboard", "Dashboard");
+                                return RedirectToAction("Dashboard", "Dashboard");
                             }
                             else
                             {
@@ -128,7 +156,7 @@ namespace EPassBook.Controllers
                         var userData = Session["UserDetails"] as UserViewModel;
                         var user = _userService.GetUserById(userData.UserId);
                         var password = userData.Password;
-
+                        
                         password = userData.Password.Decrypt();
 
                         if (password != resetPassVM.oldPassword)
@@ -293,6 +321,9 @@ namespace EPassBook.Controllers
             {
                 RedirectToAction("Login");
             }
+            var cities = _cityMasterService.Get(c => c.IsActive == true);
+            TempData["Cities"] = cities.Select(s => new SelectListItem { Text = s.CityName, Value = s.CityName }).ToList();
+
             var users = _userService.Get(u => u.IsActive == true & u.CompanyID == companyId, u => u.OrderBy(o => o.UserId), "");
             var mappedUser = users.Select(s => new UserViewModel
             {
@@ -317,8 +348,7 @@ namespace EPassBook.Controllers
                     CityName = s.CityMaster.CityName,
                     CityShortName = s.CityMaster.CityShortName,
                 }
-            }).ToList();           
-
+            }).ToList();
             return View(mappedUser);
         }
 
@@ -441,6 +471,19 @@ namespace EPassBook.Controllers
                 return RedirectToAction("Index");                
             }
             return RedirectToAction("Index");
+        }
+
+        public bool checkIsLogedIn(UserMaster user)
+        {
+            bool flag = false;
+            flag = user.IsLoggedIn.Value;
+            return flag;
+        }
+        public void UpdateIsLoggeIn(UserMaster user)
+        {
+            user.IsLoggedIn = true;
+            _userService.Update(user);
+            _userService.SaveChanges();
         }
 
         [HttpPost]

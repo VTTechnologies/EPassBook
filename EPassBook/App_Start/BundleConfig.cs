@@ -21,6 +21,9 @@ namespace EPassBook
             bundles.Add(new ScriptBundle("~/bundles/jquery")
               .Include(ltecomponents + "jquery/dist/jquery.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/Common")
+             .Include("~/Scripts/CommonJs/Common.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/lib")
               .Include(ltecomponents + "jquery-ui/jquery-ui.min.js")
               .Include(ltecomponents + "bootstrap/dist/js/bootstrap.min.js")
@@ -28,11 +31,12 @@ namespace EPassBook
               .Include(ltecomponents + "raphael/raphael.min.js")
               .Include(ltecomponents + "morris.js/morris.min.js")
               .Include(ltecomponents + "chart.js/Chart.min.js")
+              .Include(ltecomponents + "chart.js/Chart.bundle.min.js")
               .Include(ltecomponents + "Flot/jquery.flot.js")
               .Include(ltecomponents + "Flot/jquery.flot.resize.js")
               .Include(ltecomponents + "Flot/jquery.flot.pie.js")
               .Include(ltecomponents + "Flot/jquery.flot.categories.js")
-              .Include(ltecomponents + "jquery-sparkline/dist/jquery.sparkline.min.js")
+              .Include(ltecomponents + "jquery-sparkline/dist/jquery.sparkline.min.js") 
               .Include(lteplugins + "jvectormap/jquery-jvectormap-1.2.2.min.js")
               .Include(lteplugins + "jvectormap/jquery-jvectormap-world-mill-en.js")
               .Include(ltecomponents + "jquery-knob/dist/jquery.knob.min.js")

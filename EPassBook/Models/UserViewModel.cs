@@ -29,6 +29,7 @@ namespace EPassBook.Models
         [Required(ErrorMessage = "Email is required.")]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Mobile No")]
         [Required(ErrorMessage = "Mobile No is required.")]
         public string MobileNo { get; set; }
         public string Address { get; set; }

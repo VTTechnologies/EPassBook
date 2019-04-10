@@ -1,0 +1,1113 @@
+﻿
+@{
+    ViewBag.Title = "Website2";
+    Layout = null;
+}
+
+<h2>Landing Page</h2>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Navnirman Group</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicons -->
+    <link href="~/Content/Website2/img/favicon.png" rel="icon">
+    <link href="~/Content/Website2/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="~/Content/Website2/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="~/Content/Website2/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/Website2/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="~/Content/Website2/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="~/Content/Website2/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/Website2/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="~/Content/Website2/css/style.css" rel="stylesheet" />
+
+    <!-- =======================================================
+      Theme Name: NewBiz
+      Theme URL: https://bootstrapmade.com/newbiz-bootstrap-business-template/
+      Author: BootstrapMade.com
+      License: https://bootstrapmade.com/license/
+    ======================================================= -->
+
+    <style>
+        .bold_Font {
+            font-weight: bold;
+            color: cornflowerblue;
+            font-size: x-large;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!--==========================
+    Header
+    ============================-->
+    <header id="header" class="fixed-top">
+        <div class="container">
+
+            <div class="logo float-left">
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <h1 class="text-light"><a href="#header"><span>NewBiz</span></a></h1> -->
+                <a href="#intro" class="scrollto"><img src="~/Content/Website2/img/logo.jpg" alt="" class="img-fluid"></a>
+            </div>
+
+            <nav class="main-nav float-right d-none d-lg-block">
+                <ul>
+                    <li class="active"><a href="#intro">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    @*<li><a href="#services">Services</a></li>*@
+                    <li><a href="#portfolio">Achivements</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li class="drop-down">
+                        <a href="#">E-PassBook</a>
+                        <ul>
+                            <li>@Html.ActionLink("E-Pass Book", "Login", "User")</li>
+                        </ul>
+                    </li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav><!-- .main-nav -->
+
+        </div>
+    </header><!-- #header -->
+    <!--==========================
+      Intro Section
+    ============================-->
+    <section id="intro" class="clearfix">
+        <div class="container">
+
+            <div class="intro-img">
+                <img src="~/Content/Website2/img/bgimg2.png" alt="" class="img-fluid">
+            </div>
+
+            <div class="intro-info">
+                <h2>We provide<br><span>solutions</span><br>for your business!</h2>
+                <div>
+                    <a href="#about" class="btn-get-started scrollto">Get Started</a>
+                    @*<a href="#services" class="btn-services scrollto">Our Services</a>*@
+                </div>
+            </div>
+
+        </div>
+    </section><!-- #intro -->
+
+    <main id="main">
+
+        <!--==========================
+          About Us Section
+        ============================-->
+        <section id="about">
+            <div class="container">
+
+                <header class="section-header">
+                    <h3>About Us</h3>
+                    @*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>*@
+                </header>
+
+                <div class="row about-container">
+
+                    <div class="col-lg-6 content order-lg-1 order-2">
+                        <p>
+
+                        </p>
+
+                        <div class="icon-box wow fadeInUp" data-wow-delay="0.4s">
+                            <div class="icon"><i class="fa fa-eye-slash"></i></div>
+                            <h4 class="title"><a href="">Goal</a></h4>
+                            <p class="description">“To ensure food, water, livelihoods, housing and income security together with a growing quality of life to vulnerable and disadvantaged communities on a sustainable and equitable basis”</p>
+                        </div>
+
+                        <div class="icon-box wow fadeInUp">
+                            <div class="icon"><i class="fa fa-eye"></i></div>
+                            <h4 class="title"><a href="">Vision</a></h4>
+                            <p class="description">“Communities, especially the women, poor are economical backward class within, are empowered to live in dignity and secure their livelihood in sustainable ecosystems”</p>
+                        </div>
+
+                        <div class="icon-box wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="icon"><i class="fa fa-bullseye"></i></div>
+                            <h4 class="title"><a href="">Mission</a></h4>
+                            <p class="description">“To provide committed development support that motivates, energizes and empowers individuals, groups, communities and other organizations to undertake integrated ecosystems development for enhancement of well being on a sustainable basis”</p>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6 background order-lg-2 order-1 wow fadeInUp">
+                        <img src="~/Content/Website2/img/about-extra-2.svg" class="img-fluid" alt="">
+                    </div>
+                </div>
+
+                <div class="row about-extra">
+                    <div class="col-lg-6 wow fadeInUp">
+                        <img src="/Content/Website2/img/about-extra-1.svg" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-lg-6 wow fadeInUp pt-5 pt-lg-0">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>Registration No.:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                MH/9120/F – 8338
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>GST No.:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                27AAATN6086BIZM
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>12A Reg. No.:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                C.I.T. I/12-A/N-549/2007-08
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>Niti Aayog:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                UID No. MH/2017/0163449
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>Mail:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                navnirmagroup@gmail.com
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>Work Place:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                Whole India
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="row about-extra">
+                        <div class="col-lg-6 wow fadeInUp order-1 order-lg-2">
+                            <img src="~/Content/Website2/img/about-extra-2.svg" class="img-fluid" alt="">
+                        </div>
+
+                        <div class="col-lg-6 wow fadeInUp pt-4 pt-lg-0 order-2 order-lg-1">
+                            <h4>Neque saepe temporibus repellat ea ipsum et. Id vel et quia tempora facere reprehenderit.</h4>
+                            <p>
+                                Delectus alias ut incidunt delectus nam placeat in consequatur. Sed cupiditate quia ea quis. Voluptas nemo qui aut distinctio. Cumque fugit earum est quam officiis numquam. Ducimus corporis autem at blanditiis beatae incidunt sunt.
+                            </p>
+                            <p>
+                                Voluptas saepe natus quidem blanditiis. Non sunt impedit voluptas mollitia beatae. Qui esse molestias. Laudantium libero nisi vitae debitis. Dolorem cupiditate est perferendis iusto.
+                            </p>
+                            <p>
+                                Eum quia in. Magni quas ipsum a. Quis ex voluptatem inventore sint quia modi. Numquam est aut fuga mollitia exercitationem nam accusantium provident quia.
+                            </p>
+                        </div>
+
+                    </div>*@
+
+            </div>
+        </section><!-- #about -->
+        <!--==========================
+          Services Section
+        ============================-->
+        <section id="services" class="section-bg">
+            <div class="container">
+
+                <header class="section-header">
+                    <h3>Core VALUES</h3>
+
+                </header>
+
+                <div class="row">
+
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/commitment.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">COMMITMENT</a></h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/professionalism.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">PROFESSIONALISM</a></h4>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/Transparency.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">TRANSPARENCY</a></h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/Inclusiveness.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">INCLUSIVENESS</a></h4>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/Fellowship.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">FELLOWSHIP</a></h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/Integrity.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">INTEGRITY</a></h4>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/selfCritisim.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">SELF-CRITICISM</a></h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/Sensitivity.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">SENSITIVITY</a></h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/Humility.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">HUMANITY</a></h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/Creativity.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">CREATIVITY</a></h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/Gender sensitivity.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">GENDER SENSITIVITY</a></h4>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-4 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
+                        <div class="box">
+                            <div class="icon"><i><img src="~/Content/img/ValuesIcons/Equity.png" width="50" height="50" /></i></div>
+                            <h4 class="title"><a href="">EQUITY</a></h4>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </section><!-- #services -->
+        <!--==========================
+          Why Us Section
+        ============================-->
+        <section id="why-us" class="wow fadeIn">
+            <div class="container">
+                <header class="section-header">
+                    <h3>Services</h3>
+                    <p>Laudem latine persequeris id sed, ex fabulas delectus quo. No vel partiendo abhorreant vituperatoribus.</p>
+                </header>
+
+                @*<div class="row row-eq-height justify-content-center">
+
+                        <div class="col-lg-4 mb-4">
+                            <div class="card wow bounceInUp">
+                                <i class="fa fa-diamond"></i>
+                                <div class="card-body">
+                                    <h5 class="card-title">Corporis dolorem</h5>
+                                    <p class="card-text">Deleniti optio et nisi dolorem debitis. Aliquam nobis est temporibus sunt ab inventore officiis aut voluptatibus.</p>
+                                    <a href="#" class="readmore">Read more </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mb-4">
+                            <div class="card wow bounceInUp">
+                                <i class="fa fa-language"></i>
+                                <div class="card-body">
+                                    <h5 class="card-title">Voluptates dolores</h5>
+                                    <p class="card-text">Voluptates nihil et quis omnis et eaque omnis sint aut. Ducimus dolorum aspernatur.</p>
+                                    <a href="#" class="readmore">Read more </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 mb-4">
+                            <div class="card wow bounceInUp">
+                                <i class="fa fa-object-group"></i>
+                                <div class="card-body">
+                                    <h5 class="card-title">Eum ut aspernatur</h5>
+                                    <p class="card-text">Autem quod nesciunt eos ea aut amet laboriosam ab. Eos quis porro in non nemo ex. </p>
+                                    <a href="#" class="readmore">Read more </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>*@
+
+                @*<div class="row counters">
+
+                        <div class="col-lg-3 col-6 text-center">
+                            <span data-toggle="counter-up">274</span>
+                            <p>Clients</p>
+                        </div>
+
+                        <div class="col-lg-3 col-6 text-center">
+                            <span data-toggle="counter-up">421</span>
+                            <p>Projects</p>
+                        </div>
+
+                        <div class="col-lg-3 col-6 text-center">
+                            <span data-toggle="counter-up">1,364</span>
+                            <p>Hours Of Support</p>
+                        </div>
+
+                        <div class="col-lg-3 col-6 text-center">
+                            <span data-toggle="counter-up">18</span>
+                            <p>Hard Workers</p>
+                        </div>
+
+                    </div>*@
+
+            </div>
+        </section>
+
+        <!--==========================
+          Portfolio Section
+        ============================-->
+        <section id="portfolio" class="clearfix section-bg">
+            <div class="container">
+
+                <header class="section-header">
+                    <h3 class="section-title">Achivements</h3>
+                </header>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        @*<ul id="portfolio-flters">
+                                <li data-filter="*" class="filter-active">All</li>
+                                <li data-filter=".filter-app">App</li>
+                                <li data-filter=".filter-card">Card</li>
+                                <li data-filter=".filter-web">Web</li>
+                            </ul>*@
+                        <ul id="portfolio-flters">
+                            <li data-filter="*" class="filter-active"> All</li>
+                            <li data-filter=".Special_Achivements">Special Achivements</li>
+                            <li data-filter=".Special_Achivement_under_PMAY_Scheme">Special Achivement under PMAY Scheme</li>
+                            <li data-filter=".Other"> Other</li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row portfolio-container">
+                    <div class="col-lg-4 col-md-6 portfolio-item Other">
+                        <div class="text-center">
+                            <h4>Walmiki Aambedkar Yojana</h4>
+                            <h6>
+                                Approved Funds - 4005.60 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">10014</span>
+                                <h6>Total Families</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Other" data-wow-delay="0.1s">
+                        <div class="text-center">
+                            <h4>Lok Awas Yojana</h4>
+                            <h6>
+                                Approved Funds – 150.00 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">500</span>
+                                <h6>Total Families</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Other" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>IHSDP Yojana</h4>
+                            <h6>
+                                Approved Funds – 12081.78 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">13970</span>
+                                <h6>Total Families</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Other" data-wow-delay="0.1s">
+                        <div class="text-center">
+                            <h4>Economic Social Survey</h4>
+                            <h6>
+                                Approved Funds - 218285 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">43657</span>
+                                <h6>Total Families</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Other" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Ramaai Awas Yojana</h4>
+                            <h6>
+                                Approved Funds – 7000.00 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">2800</span>
+                                <h6>Total Families</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Other" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Raajiv Awas Yojana</h4>
+                            <h6>
+                                Approved Funds – 2250.00 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">500</span>
+                                <h6>Total Families</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Other" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Jalswaraj</h4>
+                            <h6>
+                                Approved Funds - 15.75 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">7</span>
+                                <h6>Total Villages</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Special_Achivements" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Rural Sanitation Campaign</h4>
+                            <h6>
+                                Approved Funds – 29.58 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">15</span>
+                                <h6>Total Villages</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Special_Achivements" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Women Empowerment</h4>
+                            <h6>
+                                Approved Funds - 250.00 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">200</span>
+                                <h6>Total Savings Group</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Special_Achivements" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Housing for Economically Weaker Section (EWS)</h4>
+                            <h6>
+                                Approved Funds - 2550.00(Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">940</span>
+                                <h6>Total Houses</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Other" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Sant Gagdebaba Cleanliness campaign</h4>
+                            <h6>
+                                Approved Funds – 8.40 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">7</span>
+                                <h6>Total Villages</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Other" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Pradhan Mantri Awas Yojana (PMAY)</h4>
+                            <h6>
+                                Approved Funds – 125407.64 (Lakh)
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">20463</span>
+                                <h6>Total Families</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Special_Achivement_under_PMAY_Scheme" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Pradhan Mantri Awas Yojana (PMAY)</h4>
+                            <h6>
+                                Successful implementation of the scheme in
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">40</span>
+                                <h6>Municipalities of the state.</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Special_Achivement_under_PMAY_Scheme" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Pradhan Mantri Awas Yojana (PMAY)</h4>
+                            <h6>
+                                Successful implementation of the scheme in
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">7</span>
+                                <h6>Municipal Corporation of the state.</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 portfolio-item Special_Achivement_under_PMAY_Scheme" data-wow-delay="0.2s">
+                        <div class="text-center">
+                            <h4>Pradhan Mantri Awas Yojana (PMAY)</h4>
+                            <h6>
+                                So far the total project cost is Rs.
+                            </h6>
+                            <div class="text-center">
+                                <span data-toggle="counter-up" class="bold_Font">125407.64</span>
+                                <h6>crore Approved.</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class=" portfolio-item Special_Achivement_under_PMAY_Scheme" data-wow-delay="0.2s">
+                        @*<div class="portfolio-wrap">*@
+                        <div class="text-center">
+                            <h4>Pradhan Mantri Awas Yojana (PMAY)</h4>
+                            <h6>
+                                Under Vertical - 4 of the scheme, 20436 out of 56 thousand sanctioned houses in the state are sanctioned through the organization.
+                            </h6>
+                        </div>
+                        @*</div>*@
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- #portfolio -->
+        <!--==========================
+          Clients Section
+        ============================-->
+        @*<section id="testimonials" class="section-bg">
+                <div class="container">
+
+                    <header class="section-header">
+                        <h3>Testimonials</h3>
+                    </header>
+
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+
+                            <div class="owl-carousel testimonials-carousel wow fadeInUp">
+
+                                <div class="testimonial-item">
+                                    <img src="~/Content/Website2/img/testimonial-1.jpg" class="testimonial-img" alt="">
+                                    <h3>Saul Goodman</h3>
+                                    <h4>Ceo &amp; Founder</h4>
+                                    <p>
+                                        Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                                    </p>
+                                </div>
+
+                                <div class="testimonial-item">
+                                    <img src="~/Content/Website2/img/testimonial-2.jpg" class="testimonial-img" alt="">
+                                    <h3>Sara Wilsson</h3>
+                                    <h4>Designer</h4>
+                                    <p>
+                                        Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                                    </p>
+                                </div>
+
+                                <div class="testimonial-item">
+                                    <img src="~/Content/Website2/img/testimonial-3.jpg" class="testimonial-img" alt="">
+                                    <h3>Jena Karlis</h3>
+                                    <h4>Store Owner</h4>
+                                    <p>
+                                        Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                                    </p>
+                                </div>
+
+                                <div class="testimonial-item">
+                                    <img src="~/Content/Website2/img/testimonial-4.jpg" class="testimonial-img" alt="">
+                                    <h3>Matt Brandon</h3>
+                                    <h4>Freelancer</h4>
+                                    <p>
+                                        Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                                    </p>
+                                </div>
+
+                                <div class="testimonial-item">
+                                    <img src="~/Content/Website2/img/testimonial-5.jpg" class="testimonial-img" alt="">
+                                    <h3>John Larson</h3>
+                                    <h4>Entrepreneur</h4>
+                                    <p>
+                                        Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </section>*@<!-- #testimonials -->
+        <!--==========================
+          Team Section
+        ============================-->
+        <section id="team">
+            <div class="container">
+                <div class="section-header">
+                    <h3>Team</h3>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 wow fadeInUp">
+                        <div class="member">
+                            <img src="~/Content/Website2/img/team-1.jpg" class="img-fluid" alt="">
+                            <div class="member-info">
+                                <div class="member-info-content">
+                                    <h4>Walter White</h4>
+                                    <span>Chief Executive Officer</span>
+                                    <div class="social">
+                                        <a href=""><i class="fa fa-twitter"></i></a>
+                                        <a href=""><i class="fa fa-facebook"></i></a>
+                                        <a href=""><i class="fa fa-google-plus"></i></a>
+                                        <a href=""><i class="fa fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="member">
+                            <img src="~/Content/Website2/img/team-2.jpg" class="img-fluid" alt="">
+                            <div class="member-info">
+                                <div class="member-info-content">
+                                    <h4>Sarah Jhonson</h4>
+                                    <span>Product Manager</span>
+                                    <div class="social">
+                                        <a href=""><i class="fa fa-twitter"></i></a>
+                                        <a href=""><i class="fa fa-facebook"></i></a>
+                                        <a href=""><i class="fa fa-google-plus"></i></a>
+                                        <a href=""><i class="fa fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="member">
+                            <img src="~/Content/Website2/img/team-3.jpg" class="img-fluid" alt="">
+                            <div class="member-info">
+                                <div class="member-info-content">
+                                    <h4>William Anderson</h4>
+                                    <span>CTO</span>
+                                    <div class="social">
+                                        <a href=""><i class="fa fa-twitter"></i></a>
+                                        <a href=""><i class="fa fa-facebook"></i></a>
+                                        <a href=""><i class="fa fa-google-plus"></i></a>
+                                        <a href=""><i class="fa fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="member">
+                            <img src="~/Content/Website2/img/team-4.jpg" class="img-fluid" alt="">
+                            <div class="member-info">
+                                <div class="member-info-content">
+                                    <h4>Amanda Jepson</h4>
+                                    <span>Accountant</span>
+                                    <div class="social">
+                                        <a href=""><i class="fa fa-twitter"></i></a>
+                                        <a href=""><i class="fa fa-facebook"></i></a>
+                                        <a href=""><i class="fa fa-google-plus"></i></a>
+                                        <a href=""><i class="fa fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- #team -->
+        <!--==========================
+          Clients Section
+        ============================-->
+        <section id="clients" class="section-bg">
+
+            <div class="container">
+
+                <div class="section-header">
+                    <h3>Our Partners</h3>
+
+                </div>
+
+                <div class="row no-gutters clients-wrap clearfix wow fadeInUp">
+
+                    <div class="col-lg-4 col-md-4 col-xs-6">
+                        <div class="client-logo">
+                            <p class="text-center">Planedge Consultancy Pvt. Ltd. Pune.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-6">
+                        <div class="client-logo">
+                            <p class="text-center">Nilkamal Constitution & Consultancy Company, Akola.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-6">
+                        <div class="client-logo">
+                            <p class="text-center">Indo Global Infrastructure Services, Aurangabad.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-6">
+                        <div class="client-logo">
+
+                            <div class="text-center">
+                                <h5 class="bold_Font">Bankers Partner</h5>
+                                <p class="text-center">Nabard Financial Services Ltd.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-6">
+                        <div class="client-logo">
+                            <div class="text-center">
+                                <h5 class="bold_Font">Media Group</h5>
+                                <p class="text-center">Asmi Group</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-6">
+                        <div class="client-logo">
+                            <div class="text-center">
+                                <h5 class="bold_Font">Event Partner</h5>
+                                <p>Infinite Events</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="col-lg-4 col-md-4 col-xs-6">
+                            <div class="client-logo">
+                                <img src="~/Content/Website2/img/clients/client-6.png" class="img-fluid" alt="">
+                            </div>
+                        </div>*@
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!--==========================
+          Contact Section
+        ============================-->
+        <section id="contact">
+            <div class="container-fluid">
+
+                <div class="section-header">
+                    <h3>Contact Us</h3>
+                </div>
+
+                <div class="row wow fadeInUp">
+
+                    @*<div class="col-lg-6">
+                            <div class="map mb-4 mb-lg-0">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 312px;" allowfullscreen></iframe>
+                            </div>
+                        </div>*@
+
+                    <div class="col-lg-10 offset-1">
+                        <div class="row">
+                            <div class="col-md-5 info">
+                                <i class="ion-ios-location-outline"></i>
+                                <p>Flat No. 04, 2nd Floor, Pride Vista, Seven Hills, Near MRF Tires Showroom, Aurangabad</p>
+                            </div>
+                            <div class="col-md-4 info">
+                                <i class="ion-ios-email-outline"></i>
+                                <p>navnirmagroup@gmail.com</p>
+                            </div>
+                            <div class="col-md-3 info">
+                                <i class="ion-ios-telephone-outline"></i>
+                                <p>+91 9123456789</p>
+                            </div>
+                        </div>
+
+                        <div class="form">
+                            <div id="sendmessage">Your message has been sent. Thank you!</div>
+                            <div id="errormessage"></div>
+                            <form action="" method="post" role="form" class="contactForm">
+                                <div class="form-row">
+                                    <div class="form-group col-lg-6">
+                                        <input type="text" name="name" class="form-control" id="txtname" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                                        <div class="validation"></div>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <input type="email" class="form-control" name="email" id="txtemail" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                                        <div class="validation"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="subject" id="txtsubject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" id="txtMessage" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="text-center">
+                                <button type="submit" title="" id="btnSendMessage">Send Message</button></div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- #contact -->
+
+    </main>
+
+    <!--==========================
+      Footer
+    ============================-->
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-6 footer-info">
+                        <h4>HEAD OFFICE</h4>
+                        <p>
+                            Flat No. 04, 2nd Floor, Pride Vista, Seven Hills,
+                            Near MRF Tires Showroom, Aurangabad.
+                        </p>
+                        <br /><br />
+                        <h4>REGISTRATION OFFICE</h4>
+                        <p>
+                            S – 31 Ganga Nagar, Washim Bypass Road,
+                            Akola, Dist. Akola (Maharashtra).
+                        </p>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class=" footer-info">
+                            <h4>DIVISIONAL OFFICES</h4>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5>
+                                        West Maharashtra
+                                    </h5>
+                                    <address>
+                                        Loware Ground, Galaxy Square, CTC No. 504, Nanapeth, Jawaharlal Nehru Marg,<br>
+                                        Pune.<br>
+                                    </address>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>North Maharashtra</h5>
+                                    <address>
+                                        2nd Row House, Patil Prestige, Sambhaji Chowk, Untwadi Road,<br />
+                                        Nashik.<br>
+                                    </address>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>Marathwada</h5>
+                                    <address>
+                                        Flat No. 202, Lahoti Apartment, Chikhalwadi Corner,<br />
+                                        Nanded.<br>
+                                    </address>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>Vidarbh</h5>
+                                    <address>
+                                        Suman Ingale Building, Near Shrikrushna Temple, Kedia Plot,<br />
+                                        Akola<br>
+                                    </address>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="col-lg-2 col-md-6 footer-links">
+                            <h4>Useful Links</h4>
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">About us</a></li>
+                                <li><a href="#">Services</a></li>
+                                <li><a href="#">Terms of service</a></li>
+                                <li><a href="#">Privacy policy</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 footer-contact">
+                            <h4>Contact Us</h4>
+                            <p>
+                                A108 Adam Street <br>
+                                New York, NY 535022<br>
+                                United States <br>
+                                <strong>Phone:</strong> +1 5589 55488 55<br>
+                                <strong>Email:</strong> info@example.com<br>
+                            </p>
+
+                            <div class="social-links">
+                                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                                <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                                <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 footer-newsletter">
+                            <h4>Our Newsletter</h4>
+                            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna veniam enim veniam illum dolore legam minim quorum culpa amet magna export quem marada parida nodela caramase seza.</p>
+                            <form action="" method="post">
+                                <input type="email" name="email"><input type="submit" value="Subscribe">
+                            </form>
+                        </div>*@
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong>Navnirman Group</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!--
+                  All the links in the footer should remain intact.
+                  You can delete the links only if you purchased the pro version.
+                  Licensing information: https://bootstrapmade.com/license/
+                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=NewBiz
+                -->
+                Designed by <a href="https://zunmansolutions.com/">Zunman Solutions Pvt. Ltd.</a>
+            </div>
+        </div>
+    </footer><!-- #footer -->
+
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+    <!-- Uncomment below i you want to use a preloader -->
+    <!-- <div id="preloader"></div> -->
+    <!-- JavaScript Libraries -->
+    <script src="~/Content/Website2/lib/jquery/jquery.min.js"></script>
+    <script src="~/Content/Website2/lib/jquery/jquery-migrate.min.js"></script>
+    <script src="~/Content/Website2/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/Website2/lib/easing/easing.min.js"></script>
+    <script src="~/Content/Website2/lib/mobile-nav/mobile-nav.js"></script>
+    <script src="~/Content/Website2/lib/wow/wow.min.js"></script>
+    <script src="~/Content/Website2/lib/waypoints/waypoints.min.js"></script>
+    <script src="~/Content/Website2/lib/counterup/counterup.min.js"></script>
+    <script src="~/Content/Website2/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Content/Website2/lib/isotope/isotope.pkgd.min.js"></script>
+    <script src="~/Content/Website2/lib/lightbox/js/lightbox.min.js"></script>
+    <!-- Contact Form JavaScript File -->
+    <script src="~/Content/Website2/contactform/contactform.js"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="~/Content/Website2/js/main.js"></script>
+    <script src="">
+
+        //$('#btnSendMessage').click(function () {
+        //    debugger;
+        //    var name = $('#txtname').val();
+        //    var email = $('#txtemail').val();
+        //    var subject = $('#txtsubject').val();
+        //    var message = $('#txtmessage').text();   
+            
+        //    $.ajax({
+        //        url: '/Home/SendMessage',
+        //        data: { 'name': name, 'email': email, 'subject': subject, 'message': message },
+        //        type: "GET",
+        //        cache: false,
+        //        async=false,
+        //        success: function (savingStatus) {
+        //            alert('Message sent');
+        //        },
+        //        error: function (xhr, ajaxOptions, thrownError) {
+        //            alert('Unabel to send a message');
+        //        }
+        //    });
+        //});
+    </script>
+
+</body>
+</html>

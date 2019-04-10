@@ -31,5 +31,7 @@ namespace EPassBook.DAL.DBModel
         public Nullable<int> CompanyID { get; set; }
         public string TransactionID { get; set; }
         public Nullable<bool> IsRecommended { get; set; }
+        public string TransactionType { get; set; }
+        public string OTP { get; set; }
     }
 }

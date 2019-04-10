@@ -18,8 +18,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-md-2">
                 @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("Upload Excel data", "UploadBeneficiayExcel", null, htmlAttributes: new { @class = "btn btn-primary" })
             </div>
         </div>
         <div class="row">
@@ -29,6 +32,18 @@
                         @*<h3 class="box-title">Beneficiary Request</h3>*@
                     </div>
                     <div class="box-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.Label("Select City")
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().CityMaster.CityName, TempData["Cities"] as List<SelectListItem>, "SELECT CITY", new { @class = "form-control", @Id = "selectCity" })
+                                </div>
+                            </div>
+                        </div>
+
                         <table id="beneficiarylist" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -47,90 +62,14 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.MobileNo)
                                     </th>
-                                    @*<th>
-                                            @Html.DisplayNameFor(model => model.PresentAddress)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CityId)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.DTRNo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.RecordNo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Class)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.General)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Single)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Disabled)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Password)
-                                        </th>*@
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CityId)
+                                    </th>
+
                                     <th>
                                         @Html.DisplayNameFor(model => model.AdharNo)
                                     </th>
-                                    @*<th>
-                                            @Html.DisplayNameFor(model => model.VoterID)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Area)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.MojaNo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.KhataNo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.KhasraNo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.PlotNo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.PoliceStation)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.WardNo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.District)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.BankName)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.BranchName)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.IFSCCode)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.AccountNo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CreatedDate)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CreatedBy)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.ModifiedDate)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.ModifiedBy)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CompanyID)
-                                        </th>*@
+
                                     <th></th>
                                 </tr>
                             </thead>
@@ -145,108 +84,26 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.BeneficairyName)
                                     </td>
-                                    @*<td>
-                                            @Html.DisplayFor(modelItem => item.FatherName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Mother)
-                                        </td>*@
+
                                     <td>
                                         @Html.DisplayFor(modelItem => item.MobileNo)
                                     </td>
-                                    @*<td>
-                                            @Html.DisplayFor(modelItem => item.PresentAddress)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.CityId)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DTRNo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.RecordNo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Class)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.General)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Single)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Disabled)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Password)
-                                        </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CityName)
+                                    </td>
+
                                     <td>
                                         @Html.DisplayFor(modelItem => item.AdharNo)
                                     </td>
-                                    @*<td>
-                                            @Html.DisplayFor(modelItem => item.VoterID)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Area)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.MojaNo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.KhataNo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.KhasraNo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PlotNo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PoliceStation)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.WardNo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.District)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.BankName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.BranchName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.IFSCCode)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.AccountNo)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.CreatedDate)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.CreatedBy)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ModifiedDate)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ModifiedBy)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.CompanyID)
-                                        </td>*@
+
                                     <td>
                                         @Html.ActionLink("Edit", "Edit", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-default" })
                                         @*@Html.ActionLink("Details", "Details", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-success" })*@
                                         @*@Html.ActionLink("Delete", "Delete", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-danger" })*@
                                         @Html.ActionLink("Delete", "Delete", new { id = item.BeneficiaryId }, new { onclick = "return Confirm('" + @item.BeneficiaryId + "');", @class = "btn alert-danger" })
+                                        @Html.ActionLink("Send SMS", "SendSMS", new { id = item.BeneficiaryId }, htmlAttributes: new { @class = "btn btn-success" })
                                     </td>
-
                                 </tr>
-
                             }
 
                         </table>
@@ -290,9 +147,16 @@
     </div>
 </div>
 
+@if (TempData["Message"] != null)
+{
 <script type="text/javascript">
-
-    
+    debugger;
+    window.onload = function () {
+        alert('@TempData["Message"]');
+    };
+</script>
+}
+<script type="text/javascript">
         function ReloadPage() {
             window.location = '@Url.Action("Index")';
         }
@@ -340,5 +204,18 @@
 
     $(document).ready(function () {
         $('#beneficiarylist').dataTable();
+        var dtBeneficiary = $('#beneficiarylist').dataTable();
+
+        $('#selectCity').on('change', function () {
+            debugger
+            var selectedValue = $(this).val();
+            if (selectedValue == "") {
+                window.ReloadPage();
+            }
+            else {
+                dtBeneficiary.fnFilter("^" + selectedValue + "$", 3, true);
+            }
+        });
+
     });
 </script>

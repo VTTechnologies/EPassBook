@@ -1,39 +1,35 @@
 ﻿using EPassBook.DAL.IService;
+using EPassBook.Helper;
+using EPassBook.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using EPassBook.Models;
-using EPassBook.Helper;
 
 namespace EPassBook.Controllers
 {
     [ElmahError]
     public class DashboardController : Controller
     {
-        IInstallmentDetailService _installmentDetailService;
-        ICityService _cityMasterService;
-        IBenificiaryService _beneficiaryService;
-
+        IBenificiaryService _iBenificiaryService;
+        ICityService _icityService;
+        IInstallmentDetailService _iInstallmentDetailService;
+       
         // GET: Dashboard
         public DashboardController(IInstallmentDetailService installmentDetailService,  ICityService cityMasterService,
         IBenificiaryService beneficiaryService)
         {
-            _beneficiaryService = beneficiaryService;
-            _cityMasterService = cityMasterService;
-            _installmentDetailService = installmentDetailService;
+            _iBenificiaryService = beneficiaryService;
+            _icityService = cityMasterService;
+            _iInstallmentDetailService = installmentDetailService;
         }
         [CustomAuthorize(Common.Admin)]
         public ActionResult Dashboard()
-        {
-            return View();
-        }
-        [CustomAuthorize(Common.Admin)]
-        public ActionResult FakeDashboard()
-        {
-            return View();
-        }
+        {            
+            ViewBag.Cities = _icityService.GetAllCities().Select(s => new SelectListItem { Text=s.CityName, Value = s.CityId.ToString() }).ToList();
+            return View(new ReportViewModel());
+        }      
 
         [HttpGet]
         [CustomAuthorize(Common.Admin)]
@@ -51,7 +47,7 @@ namespace EPassBook.Controllers
             var user = Session["UserDetails"] as UserViewModel;
 
             List<WorkStatusDetailsViewModel> workstatus = new List<WorkStatusDetailsViewModel>();
-            var installments = _installmentDetailService.Get(w => w.BenificiaryMaster.CityId == cityId && w.BenificiaryMaster.DTRNo == DTRno, w => w.OrderByDescending(o => o.InstallmentNo), "").ToList();
+            var installments = _iInstallmentDetailService.Get(w => w.BenificiaryMaster.CityId == cityId && w.BenificiaryMaster.DTRNo == DTRno, w => w.OrderByDescending(o => o.InstallmentNo), "").ToList();
             var installmentslists = installments.GroupBy(o => o.InstallmentNo).
                 Select(g => new
                 {
@@ -93,7 +89,7 @@ namespace EPassBook.Controllers
         {
 
             var user = Session["UserDetails"] as UserViewModel;
-            var cities = _cityMasterService.Get(r => r.IsActive == true);
+            var cities = _icityService.Get(r => r.IsActive == true);
             var citiesSelectList = cities.Select(c => new SelectListItem { Text = c.CityName, Value = c.CityId.ToString()}).ToList();
 
             return Json(citiesSelectList);
@@ -103,9 +99,28 @@ namespace EPassBook.Controllers
         {
             var user = Session["UserDetails"] as UserViewModel;
 
-            var dtrNos = _beneficiaryService.Get().Where(c => c.CityId == cityId).GroupBy(d => d.DTRNo).Select(d => d.First());
+            var dtrNos = _iBenificiaryService.Get().Where(c => c.CityId == cityId).GroupBy(d => d.DTRNo).Select(d => d.First());
             var drtsSelectList = dtrNos.Select(s => new SelectListItem { Text = s.DTRNo, Value = s.DTRNo }).ToList();
             return Json(drtsSelectList);
+        }
+
+        [HttpGet]
+        public JsonResult FetchData(int cityId, string reportType)
+        {
+            var result = new List<SelectListItem>();
+            switch (reportType)
+            {
+                case "DTR-Wise":
+                    result = _iBenificiaryService.Get(w => w.CityId == cityId, null).GroupBy(x => x.DTRNo).Select((s, indexer) => new SelectListItem { Text = s.Key, Value = s.Count().ToString() }).ToList();
+                    break;
+                case "Caste-Wise":
+                    result = _iBenificiaryService.Get(w => w.CityId == cityId, null).GroupBy(x => x.General).Select(s => new SelectListItem { Text = s.Key, Value = s.Count().ToString() }).ToList();
+                    break;
+                case "Installment-Wise":
+                    result = _iInstallmentDetailService.Get(w => w.BenificiaryMaster.CityId == cityId, null, "BenificiaryMaster").GroupBy(x => x.InstallmentNo).Select(s => new SelectListItem { Text = s.Key.ToString(), Value = s.Sum(su => su.LoanAmnt).ToString() }).ToList();
+                    break;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

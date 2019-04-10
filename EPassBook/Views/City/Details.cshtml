@@ -1,0 +1,64 @@
+﻿@model EPassBook.Models.CityViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Edit City Details
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Edit City</a></li>
+            @*<li class="active">Dashboard</li>*@
+        </ol>
+    </section>
+    <section class="content" id="City">
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.CityId }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
+        </div>
+        <!--Left Column-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                    </div>
+                    <div class="box-body">
+                       <h4>@Html.DisplayFor(model => model.CityName)'s Details</h4>
+                        <hr />
+                        <div class="row ">
+                            <div class="col-md-3">
+                              <strong>@Html.DisplayNameFor(model => model.CityName)</strong>
+                            </div>
+                            <div class="col-md-5">
+                                @Html.DisplayFor(model => model.CityName)
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                               <strong> @Html.DisplayNameFor(model => model.CityShortName)</strong>
+                            </div>
+                            <div class="col-md-5">
+                                @Html.DisplayFor(model => model.CityShortName)
+                            </div>
+                        </div>
+                        @*<dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CityShortName)
+                            </dt>
+
+                            <dd>
+                            </dd>
+                        </dl>*@
+                     </div>
+                     </div>
+                   </div>
+                </div>
+       </section>
+  </div>
+

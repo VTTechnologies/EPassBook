@@ -1,0 +1,131 @@
+﻿@model EPassBook.Models.BeneficiaryViewModel
+@{
+    ViewBag.Title = "UploadBeneficiayExcel";
+    //Layout = null;
+}
+
+<h2>UploadBeneficiayExcel</h2>
+
+@using (Html.BeginForm("UploadBeneficiayExcel", "Beneficiary", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Users
+            </h1>
+            <ol class="breadcrumb">
+                <li><i class="fa fa-dashboard"></i> @Html.ActionLink("Home", "Index", "Beneficiary")</li>
+                <li class="active">Upload Beneficiary</li>
+            </ol>
+        </section>
+        <section class="content" id="Index">
+            <div class="row">
+                <div class="col-xs-12">
+                    @Html.ActionLink("Back To List", "Index", null, htmlAttributes: new { @class = "btn btn-primary" })
+                </div>
+            </div>
+            <!-- left column -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.Label("Select City")
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.DropDownListFor(model => model.CityId, Model.Cities, "SELECT CITY", new { @class = "form-control", @Id = "selectCity" })
+                                        <label id="lblErrorMsg" style="color:red"></label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.Label("Select File")
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="file" name="postedFile" id="fuExcel" class="btn btn-primary" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="submit" value="Import" id="btnImport" class="btn btn-primary" onclick="return validation();" />
+                                    </div>
+                                </div>
+                            </div><br />
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <a href="https://navnirmangroup.org/Uploads/Benificairy_Sample_data.xlsx">Click here for sample Sheet</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-10 col-md-offset-1">
+                                        <textarea id="lblErrors" style="color:red; height:400px; width:80%" disabled="disabled">@ViewBag.WrongBeniData</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+}
+
+<script>
+        $(document).ready(function () {
+            debugger;
+            $("#selectCity").val("");
+        var message = "@ViewBag.Success"
+        //alert(message);
+        if (message != "") {
+            alert(message);
+        }
+    });
+</script>
+<script>
+    function validation() {
+        debugger;
+        var selectedCity = $("#selectCity option:selected").text();
+        var imgVal = $('#fuExcel').val();
+
+        if (selectedCity == 'SELECT CITY') {
+            $("#lblErrorMsg").html("Please select city");
+            return false;
+        }
+        else {
+            $("#lblErrorMsg").html('');
+        }
+        if (imgVal == '') {
+            alert("Please select file");
+            return false;
+        }
+        var ext = $('#fuExcel').val().split('.').pop().toLowerCase();
+        if ($.inArray(ext, ['xlsx', 'xls']) == -1) {
+            alert('invalid file!');
+            return false;
+        }
+    };
+    $(document).ready(function () {
+
+        $('#myFile').bind('change', function () {
+            debugger;
+            var f = this.files[0];
+            if (f.size > 10388608 || f.fileSize > 10388608) {
+                alert("Allowed file size exceeded. (Max. 10 MB)")
+                this.value = null;
+            }
+
+        });
+        $('#selectCity').on('change', function () {
+            debugger;
+            var selectedValue = $(this).val();
+            if (selectedValue != "") {
+                $("#lblErrorMsg").html('');
+            }
+        });
+    });
+</script>

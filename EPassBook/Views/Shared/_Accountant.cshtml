@@ -14,6 +14,7 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h4>Accountant</h4>
+                    <label style="color:red">Note: Please check all comments in Survey Details tab before proceeding </label>
                 </div>
                 @using (@Html.BeginForm("Accountant", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
                 {
@@ -27,7 +28,6 @@
                             </div>
                             <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
                                 @Html.DisplayFor(model => model.AccountNo, new { htmlAttributes = new { @class = "form-control" } })
-
                             </div>
                         </div>
 
@@ -54,7 +54,30 @@
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                 @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control" } })
-
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                @Html.LabelFor(model => model.TransactionDate)
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                @Html.LabelFor(model => model.TransactionType)
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                @Html.DropDownListFor(model => model.TransactionType, new SelectList(new List<object>
+                                    {
+                                    new{ value="RTGS", text="RTGS" },
+                                    new{ value="IMPS", text="IMPS" },
+                                    new{ value="NEFT", text="NEFT" },
+                                    new{ value="Check", text="Check" },
+                                    new{ value="Cash", text="Cash" },
+                                    },
+                                    "value",
+                                    "text"),"Select Items",
+                                    new {  @class = "form-control"})
                             </div>
                         </div>
 
@@ -74,7 +97,23 @@
                                 <label id="lblmsg_acct" class="text-danger"></label>
                             </div>
                         </div>
-                        <div class="box-footer">
+
+                        <div class="form-group">
+                            <button id="btnGenOTP" type="button" class="btn btn-primary" />
+                        </div>
+
+                        <div class="form-group" id="otpDiv" visible="false">
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                <label id="lblotp">Enter OTP: </label>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.OTP, htmlAttributes: new { @class = "form-control", @maxlength = "4", id = "txtOtp" })
+                                @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
+                                <label id="lblOTPError" class="text-danger"></label>
+                            </div>
+                        </div>
+
+                        <div class="box-footer" id="btnSubmit">
                             <input type="submit" onclick="return validationAcountant();" value="Send to Chief Officer" class="btn btn-primary" />
                         </div>
                     </div>
@@ -95,17 +134,65 @@
 
 <script type="text/javascript">
 
-    function validationAcountant() {
-        if (($("#TransactionId").val().trim() == "")) {
+    function validationAcountant()
+    {
+        var isOTPverfied = false;
+        var installmentId = '@Model.InstallmentId';
+        var Otp = $("#txtOtp").val();
+        $("#lblOTPError").text('');
+        $("#lblmsg_acct").text('');
+        if ($("#TransactionId").val().trim() == "" || $("#TransactionId").val() == 0)
+        {
             $("#lblmsg_acct").text("Please Enter Transaction no");
             return false;
         }
-        else if (!$("#chkAccountant").is(":checked")) {
+        else if (($("#TransactionDate").val().trim() == "")) {
+            $("#lblmsg_acct").text("Please Enter Transation Date");
+            return false;
+        }
+        else if ($("#TransactionType").val() == '') {
+            $("#lblmsg_acct").text("Please select transaction type.");
+            return false;
+        }
+        else if (!$("#chkAccountant").is(":checked"))
+        {
             $("#lblmsg_acct").text("Please sign in to confirm your submission");
             return false;
         }
+        else if (Otp == '') {
+            $("#lblOTPError").text("Please enter OTP");
+            return false;
+        }
+        var isOTPverfied = ValidateOTP(installmentId, Otp);
+        if (isOTPverfied != 'True') {
+            alert("Wrong OTP");
+            return false;
+        }
+        return true;
     }
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
+        $("#btnGenOTP").text('Generate OTP');
+        $("#otpDiv").hide();
+        $('#btnSubmit').hide();
+
+        $("#btnGenOTP").on("click", function ()
+        {
+            var installmentId = '@Model.InstallmentId';
+            AjaxWithParameter(installmentId);
+        });
+
+        $("#txtOtp").keyup(function (e)
+        {
+            KeyPressEvent(e);
+        });
+
+        $("#TransactionDate").datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true
+        });
+
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue',
@@ -113,7 +200,6 @@
         });
 
         $("#chkAccountant").change(function () {
-            debugger;
             $("#lblmsg_acct").text("");
         });
     });

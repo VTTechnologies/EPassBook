@@ -70,7 +70,7 @@
                                         @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                         @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                                         @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
@@ -91,7 +91,7 @@
                                         @Html.EditorFor(model => model.CityId, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                                         @Html.LabelFor(model => model.DTRNo, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -106,7 +106,7 @@
                                         @Html.LabelFor(model => model.RecordNo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.RecordNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.RecordNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.RecordNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -230,7 +230,7 @@
                                         @Html.LabelFor(model => model.AdharNo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.AdharNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.AdharNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.AdharNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -250,7 +250,7 @@
                                         @Html.LabelFor(model => model.Area, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.Area, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Area, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.Area, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -260,7 +260,7 @@
                                         @Html.LabelFor(model => model.MojaNo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.MojaNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.MojaNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.MojaNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -280,7 +280,7 @@
                                         @Html.LabelFor(model => model.KhasraNo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     </div>
                                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
-                                        @Html.EditorFor(model => model.KhasraNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.KhasraNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.KhasraNo, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -360,6 +360,14 @@
 }
 
 <script>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
     function validation() {
         var imgVal = $('#imgupload1').val();
         if (imgVal == '') {
@@ -371,6 +379,7 @@
     }
     function readURL(input, id) {
         //alert(id);
+
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
@@ -398,6 +407,7 @@
         $('#BeneficiaryResult').load(url);
     })*@
     function removeimg(img, fileupld) {
+        debugger;
         document.getElementById(img).removeAttribute('src');
         document.getElementById(fileupld).value = "";
 

@@ -19,7 +19,8 @@
             </div>
             <h2>Oops! Internal Error</h2>
             <p>Sorry, Somthing went terribly wrong</p>
-            @Html.ActionLink("Go To Homepage", "Index", "Home")
+            @*@Html.ActionLink("Go To Homepage", "Index", "Home")*@
+            <a href="javascript:void(0);" onclick="history.go(-1);">Go Back</a>
         </div>
     </div>
 </body>
