@@ -17,11 +17,11 @@ namespace EPassBook.Models
 
         [Required(ErrorMessage = "User Name is required.")]
         [StringLength(50, ErrorMessage = "The First Name must be less than {1} characters.")]
-        [Display(Name = "User Name:")]
+        [Display(Name = "User Name")]
         public string UserName { get; set; }
         [Required(ErrorMessage = "Please enter the Password.")]
         public string Password { get; set; }
-        [Display(Name = "Active:")]
+        [Display(Name = "Active")]
         public bool? IsActive { get; set;}
         //public Nullable<bool> IsLoggedIn { get; set; }
         [Required(ErrorMessage = "Please select user role.")]

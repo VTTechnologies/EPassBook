@@ -249,10 +249,10 @@ namespace EPassBook.Controllers
         [CustomAuthorize(Common.Admin)]
         public ActionResult Create([Bind(Exclude = "UserName,Password,CompanyID")] UserViewModel userVM)
         {
-            if (!ModelState.IsValidField("FirstName") && !ModelState.IsValidField("LastName")
-                && !ModelState.IsValidField("Dob") && !ModelState.IsValidField("Password")
-                && !ModelState.IsValidField("RoleId") && !ModelState.IsValidField("Email")
-                && !ModelState.IsValidField("MobileNo") && !ModelState.IsValidField("CityId"))
+            if (!ModelState.IsValidField("FirstName") || !ModelState.IsValidField("LastName")
+                || !ModelState.IsValidField("Dob")
+                || !ModelState.IsValidField("RoleId") || !ModelState.IsValidField("Email")
+                || !ModelState.IsValidField("MobileNo") || !ModelState.IsValidField("CityId"))
             { 
                 var roles = _roleMasterService.Get(r => r.IsActive == true);
                 var cities = _cityMasterService.Get(r => r.IsActive == true);
