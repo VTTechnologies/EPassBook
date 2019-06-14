@@ -105,7 +105,7 @@ namespace EPassBook.Controllers
 
                 mobileNoFirstFour = beneficiaryViewModel.MobileNo.ToString();
                 mobileNoFirstFour = !String.IsNullOrWhiteSpace(mobileNoFirstFour) && mobileNoFirstFour.Length >= 5 ? mobileNoFirstFour.Substring(0, 4) : mobileNoFirstFour;
-                password = beniFirstName + mobileNoFirstFour;
+                password = beniFirstName + mobileNoFirstFour; //first four Charactor of first name  and first four digit of mobile no. will be beneficiary's password
 
                 beneficiaryViewModel.Password = password;
 
@@ -114,7 +114,7 @@ namespace EPassBook.Controllers
                 _benificiaryService.Add(insertbeneficiary);
                 _benificiaryService.SaveChanges();
 
-                ViewBag.Message = "sussess message";
+                ViewBag.Message = "Success message";
 
                 //return RedirectToAction("Index");
 

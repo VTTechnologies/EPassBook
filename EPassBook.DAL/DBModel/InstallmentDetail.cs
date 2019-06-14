@@ -14,7 +14,6 @@ namespace EPassBook.DAL.DBModel
     
     public partial class InstallmentDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public InstallmentDetail()
         {
             this.Comments = new HashSet<Comment>();
@@ -43,12 +42,9 @@ namespace EPassBook.DAL.DBModel
         public string OTP { get; set; }
     
         public virtual BenificiaryMaster BenificiaryMaster { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual CompanyMaster CompanyMaster { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GeoTaggingDetail> GeoTaggingDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentSigning> InstallmentSignings { get; set; }
     }
 }

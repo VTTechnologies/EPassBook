@@ -14,13 +14,13 @@ namespace EPassBook.DAL.Service
 {
     public class CommentService : ICommentService
     {
-        private readonly EPassBookEntities _dbContext;
+        private readonly epassbook_dbEntities _dbContext;
         private UnitOfWork unitOfWork;
         private GenericRepository<Comment> commentRepository;
 
         public CommentService()
         {
-            _dbContext = new EPassBookEntities();
+            _dbContext = new epassbook_dbEntities();
             unitOfWork = new UnitOfWork(_dbContext);
             commentRepository = unitOfWork.GenericRepository<Comment>();
         }

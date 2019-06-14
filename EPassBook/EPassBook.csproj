@@ -352,6 +352,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Error.css" />
     <Content Include="Content\img\bg1.jpg" />
+    <Content Include="Content\img\blue.jpg" />
     <Content Include="Content\img\green.png" />
     <Content Include="Content\img\icons\button-icons.png" />
     <Content Include="Content\img\icons\grid-menu-icons.png" />
@@ -367,6 +368,7 @@
     <Content Include="Content\img\icons\weather-icons.png" />
     <Content Include="Content\img\icons\weather-main.png" />
     <Content Include="Content\img\loader.gif" />
+    <Content Include="Content\img\Red.jpg" />
     <Content Include="Content\img\spinner.gif" />
     <Content Include="Content\img\team\1.jpg" />
     <Content Include="Content\img\team\2.jpg" />

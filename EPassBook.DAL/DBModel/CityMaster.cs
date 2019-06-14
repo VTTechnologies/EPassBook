@@ -14,7 +14,6 @@ namespace EPassBook.DAL.DBModel
     
     public partial class CityMaster
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CityMaster()
         {
             this.BenificiaryMasters = new HashSet<BenificiaryMaster>();
@@ -26,9 +25,7 @@ namespace EPassBook.DAL.DBModel
         public string CityShortName { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BenificiaryMaster> BenificiaryMasters { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserMaster> UserMasters { get; set; }
     }
 }

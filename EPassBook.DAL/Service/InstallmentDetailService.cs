@@ -10,13 +10,13 @@ namespace EPassBook.DAL.Service
 {
     public class InstallmentDetailService : IInstallmentDetailService
     {
-        private readonly EPassBookEntities _dbContext;
+        private readonly epassbook_dbEntities _dbContext;
         private UnitOfWork unitOfWork;
         private GenericRepository<InstallmentDetail> installmentDetailRepository;
 
         public InstallmentDetailService()
         {
-            _dbContext = new EPassBookEntities();
+            _dbContext = new epassbook_dbEntities();
             unitOfWork = new UnitOfWork(_dbContext);
             installmentDetailRepository = unitOfWork.GenericRepository<InstallmentDetail>();
         }

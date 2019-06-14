@@ -1,24 +1,299 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="EPassBookModelStoreContainer" CdmEntityContainer="EPassBookEntities">
-    <FunctionImportMapping FunctionName="EPassBookModel.Store.Split" FunctionImportName="Split">
+  <EntityContainerMapping StorageEntityContainer="epassbook_dbModelStoreContainer" CdmEntityContainer="epassbook_dbEntities">
+    <EntitySetMapping Name="BenificiaryMasters">
+      <EntityTypeMapping TypeName="epassbook_dbModel.BenificiaryMaster">
+        <MappingFragment StoreEntitySet="BenificiaryMaster">
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+          <ScalarProperty Name="Mother" ColumnName="Mother" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="PresentAddress" ColumnName="PresentAddress" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="DTRNo" ColumnName="DTRNo" />
+          <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="General" ColumnName="General" />
+          <ScalarProperty Name="Single" ColumnName="Single" />
+          <ScalarProperty Name="Disabled" ColumnName="Disabled" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="AdharNo" ColumnName="AdharNo" />
+          <ScalarProperty Name="VoterID" ColumnName="VoterID" />
+          <ScalarProperty Name="Area" ColumnName="Area" />
+          <ScalarProperty Name="MojaNo" ColumnName="MojaNo" />
+          <ScalarProperty Name="KhataNo" ColumnName="KhataNo" />
+          <ScalarProperty Name="KhasraNo" ColumnName="KhasraNo" />
+          <ScalarProperty Name="PlotNo" ColumnName="PlotNo" />
+          <ScalarProperty Name="PoliceStation" ColumnName="PoliceStation" />
+          <ScalarProperty Name="WardNo" ColumnName="WardNo" />
+          <ScalarProperty Name="District" ColumnName="District" />
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+          <ScalarProperty Name="IFSCCode" ColumnName="IFSCCode" />
+          <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="Wife_Photo" ColumnName="Wife_Photo" />
+          <ScalarProperty Name="Hasband_Photo" ColumnName="Hasband_Photo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CityMasters">
+      <EntityTypeMapping TypeName="epassbook_dbModel.CityMaster">
+        <MappingFragment StoreEntitySet="CityMaster">
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="CityShortName" ColumnName="CityShortName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comments">
+      <EntityTypeMapping TypeName="epassbook_dbModel.Comment">
+        <MappingFragment StoreEntitySet="Comments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="InstallementId" ColumnName="InstallementId" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CommentsHisories">
+      <EntityTypeMapping TypeName="epassbook_dbModel.CommentsHisory">
+        <MappingFragment StoreEntitySet="CommentsHisory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="InstallementId" ColumnName="InstallementId" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyMasters">
+      <EntityTypeMapping TypeName="epassbook_dbModel.CompanyMaster">
+        <MappingFragment StoreEntitySet="CompanyMaster">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Modifiedby" ColumnName="Modifiedby" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DefaultComments">
+      <EntityTypeMapping TypeName="epassbook_dbModel.DefaultComment">
+        <MappingFragment StoreEntitySet="DefaultComments">
+          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GeoTaggingDetails">
+      <EntityTypeMapping TypeName="epassbook_dbModel.GeoTaggingDetail">
+        <MappingFragment StoreEntitySet="GeoTaggingDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InstallmentDetails">
+      <EntityTypeMapping TypeName="epassbook_dbModel.InstallmentDetail">
+        <MappingFragment StoreEntitySet="InstallmentDetails">
+          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
+          <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
+          <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
+          <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
+          <ScalarProperty Name="StageID" ColumnName="StageID" />
+          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+          <ScalarProperty Name="OTP" ColumnName="OTP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InstallmentDetailsHistories">
+      <EntityTypeMapping TypeName="epassbook_dbModel.InstallmentDetailsHistory">
+        <MappingFragment StoreEntitySet="InstallmentDetailsHistory">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
+          <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
+          <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
+          <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
+          <ScalarProperty Name="StageID" ColumnName="StageID" />
+          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
+          <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+          <ScalarProperty Name="OTP" ColumnName="OTP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InstallmentRejections">
+      <EntityTypeMapping TypeName="epassbook_dbModel.InstallmentRejection">
+        <MappingFragment StoreEntitySet="InstallmentRejection">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
+          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InstallmentSignings">
+      <EntityTypeMapping TypeName="epassbook_dbModel.InstallmentSigning">
+        <MappingFragment StoreEntitySet="InstallmentSigning">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
+          <ScalarProperty Name="Sign" ColumnName="Sign" />
+          <ScalarProperty Name="SignData" ColumnName="SignData" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleMasters">
+      <EntityTypeMapping TypeName="epassbook_dbModel.RoleMaster">
+        <MappingFragment StoreEntitySet="RoleMaster">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StageInRoles">
+      <EntityTypeMapping TypeName="epassbook_dbModel.StageInRole">
+        <MappingFragment StoreEntitySet="StageInRole">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StageId" ColumnName="StageId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserInRoles">
+      <EntityTypeMapping TypeName="epassbook_dbModel.UserInRole">
+        <MappingFragment StoreEntitySet="UserInRoles">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserMasters">
+      <EntityTypeMapping TypeName="epassbook_dbModel.UserMaster">
+        <MappingFragment StoreEntitySet="UserMaster">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Dob" ColumnName="Dob" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="IsReset" ColumnName="IsReset" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WorkflowStages">
+      <EntityTypeMapping TypeName="epassbook_dbModel.WorkflowStage">
+        <MappingFragment StoreEntitySet="WorkflowStages">
+          <ScalarProperty Name="StageId" ColumnName="StageId" />
+          <ScalarProperty Name="Stage" ColumnName="Stage" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ELMAH_Error">
+      <EntityTypeMapping TypeName="epassbook_dbModel.ELMAH_Error">
+        <MappingFragment StoreEntitySet="ELMAH_Error">
+          <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+          <ScalarProperty Name="Application" ColumnName="Application" />
+          <ScalarProperty Name="Host" ColumnName="Host" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionName="epassbook_dbModel.Store.Split" FunctionImportName="Split">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="EPassBookModel.Split_Result">
+        <ComplexTypeMapping TypeName="epassbook_dbModel.Split_Result">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Value" ColumnName="Value" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="ELMAH_GetErrorsXml" FunctionName="EPassBookModel.Store.ELMAH_GetErrorsXml" />
-    <FunctionImportMapping FunctionImportName="ELMAH_GetErrorXml" FunctionName="EPassBookModel.Store.ELMAH_GetErrorXml" />
-    <FunctionImportMapping FunctionImportName="ELMAH_LogError" FunctionName="EPassBookModel.Store.ELMAH_LogError" />
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="EPassBookModel.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_checkUserExists" FunctionName="EPassBookModel.Store.sp_checkUserExists" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="EPassBookModel.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="EPassBookModel.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_GetInstallmentListViewForUsersRoles" FunctionName="EPassBookModel.Store.sp_GetInstallmentListViewForUsersRoles">
+    <FunctionImportMapping FunctionImportName="ELMAH_GetErrorsXml" FunctionName="epassbook_dbModel.Store.ELMAH_GetErrorsXml" />
+    <FunctionImportMapping FunctionImportName="ELMAH_GetErrorXml" FunctionName="epassbook_dbModel.Store.ELMAH_GetErrorXml" />
+    <FunctionImportMapping FunctionImportName="ELMAH_LogError" FunctionName="epassbook_dbModel.Store.ELMAH_LogError" />
+    <FunctionImportMapping FunctionImportName="sp_GetInstallmentListViewForUsersRoles" FunctionName="epassbook_dbModel.Store.sp_GetInstallmentListViewForUsersRoles">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="EPassBookModel.sp_GetInstallmentListViewForUsersRoles_Result">
+        <ComplexTypeMapping TypeName="epassbook_dbModel.sp_GetInstallmentListViewForUsersRoles_Result">
           <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
           <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
           <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
@@ -32,9 +307,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_GetSurveyDetailsByBenID" FunctionName="EPassBookModel.Store.sp_GetSurveyDetailsByBenID">
+    <FunctionImportMapping FunctionImportName="sp_GetSurveyDetailsByBenID" FunctionName="epassbook_dbModel.Store.sp_GetSurveyDetailsByBenID">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="EPassBookModel.sp_GetSurveyDetailsByBenID_Result">
+        <ComplexTypeMapping TypeName="epassbook_dbModel.sp_GetSurveyDetailsByBenID_Result">
           <ScalarProperty Name="InstallementId" ColumnName="InstallementId" />
           <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -47,344 +322,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_GetworkStatusforMAsterReports" FunctionName="EPassBookModel.Store.sp_GetworkStatusforMAsterReports">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="EPassBookModel.sp_GetworkStatusforMAsterReports_Result">
-          <ScalarProperty Name="Installment" ColumnName="Installment" />
-          <ScalarProperty Name="LevelType" ColumnName="LevelType" />
-          <ScalarProperty Name="CenterAmount" ColumnName="CenterAmount" />
-          <ScalarProperty Name="StateAmount" ColumnName="StateAmount" />
-          <ScalarProperty Name="BeneficiaryAmount" ColumnName="BeneficiaryAmount" />
-          <ScalarProperty Name="ULBAmount" ColumnName="ULBAmount" />
-          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="EPassBookModel.Store.sp_helpdiagramdefinition">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="EPassBookModel.sp_helpdiagramdefinition_Result">
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="EPassBookModel.Store.sp_helpdiagrams">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="EPassBookModel.sp_helpdiagrams_Result">
-          <ScalarProperty Name="Database" ColumnName="Database" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
-          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="EPassBookModel.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_UpdatTransactionId" FunctionName="EPassBookModel.Store.sp_UpdatTransactionId" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="EPassBookModel.Store.sp_upgraddiagrams" />
-    <EntitySetMapping Name="BenificiaryMasters">
-      <EntityTypeMapping TypeName="EPassBookModel.BenificiaryMaster">
-        <MappingFragment StoreEntitySet="BenificiaryMaster">
-          <ScalarProperty Name="Hasband_Photo" ColumnName="Hasband_Photo" />
-          <ScalarProperty Name="Wife_Photo" ColumnName="Wife_Photo" />
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
-          <ScalarProperty Name="IFSCCode" ColumnName="IFSCCode" />
-          <ScalarProperty Name="BranchName" ColumnName="BranchName" />
-          <ScalarProperty Name="BankName" ColumnName="BankName" />
-          <ScalarProperty Name="District" ColumnName="District" />
-          <ScalarProperty Name="WardNo" ColumnName="WardNo" />
-          <ScalarProperty Name="PoliceStation" ColumnName="PoliceStation" />
-          <ScalarProperty Name="PlotNo" ColumnName="PlotNo" />
-          <ScalarProperty Name="KhasraNo" ColumnName="KhasraNo" />
-          <ScalarProperty Name="KhataNo" ColumnName="KhataNo" />
-          <ScalarProperty Name="MojaNo" ColumnName="MojaNo" />
-          <ScalarProperty Name="Area" ColumnName="Area" />
-          <ScalarProperty Name="VoterID" ColumnName="VoterID" />
-          <ScalarProperty Name="AdharNo" ColumnName="AdharNo" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Disabled" ColumnName="Disabled" />
-          <ScalarProperty Name="Single" ColumnName="Single" />
-          <ScalarProperty Name="General" ColumnName="General" />
-          <ScalarProperty Name="Class" ColumnName="Class" />
-          <ScalarProperty Name="RecordNo" ColumnName="RecordNo" />
-          <ScalarProperty Name="DTRNo" ColumnName="DTRNo" />
-          <ScalarProperty Name="CityId" ColumnName="CityId" />
-          <ScalarProperty Name="PresentAddress" ColumnName="PresentAddress" />
-          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-          <ScalarProperty Name="Mother" ColumnName="Mother" />
-          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
-          <ScalarProperty Name="BeneficairyName" ColumnName="BeneficairyName" />
-          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CityMasters">
-      <EntityTypeMapping TypeName="EPassBookModel.CityMaster">
-        <MappingFragment StoreEntitySet="CityMaster">
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="CityShortName" ColumnName="CityShortName" />
-          <ScalarProperty Name="CityName" ColumnName="CityName" />
-          <ScalarProperty Name="CityId" ColumnName="CityId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Comments">
-      <EntityTypeMapping TypeName="EPassBookModel.Comment">
-        <MappingFragment StoreEntitySet="Comments">
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-          <ScalarProperty Name="Comments" ColumnName="Comments" />
-          <ScalarProperty Name="Reason" ColumnName="Reason" />
-          <ScalarProperty Name="InstallementId" ColumnName="InstallementId" />
-          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CommentsHisories">
-      <EntityTypeMapping TypeName="EPassBookModel.CommentsHisory">
-        <MappingFragment StoreEntitySet="CommentsHisory">
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-          <ScalarProperty Name="Comments" ColumnName="Comments" />
-          <ScalarProperty Name="Reason" ColumnName="Reason" />
-          <ScalarProperty Name="InstallementId" ColumnName="InstallementId" />
-          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CompanyMasters">
-      <EntityTypeMapping TypeName="EPassBookModel.CompanyMaster">
-        <MappingFragment StoreEntitySet="CompanyMaster">
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="Modifiedby" ColumnName="Modifiedby" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
-          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
-          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-          <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
-          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DefaultComments">
-      <EntityTypeMapping TypeName="EPassBookModel.DefaultComment">
-        <MappingFragment StoreEntitySet="DefaultComments">
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
-          <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GeoTaggingDetails">
-      <EntityTypeMapping TypeName="EPassBookModel.GeoTaggingDetail">
-        <MappingFragment StoreEntitySet="GeoTaggingDetails">
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-          <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
-          <ScalarProperty Name="Photo" ColumnName="Photo" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="InstallmentDetails">
-      <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetail">
-        <MappingFragment StoreEntitySet="InstallmentDetails">
-          <ScalarProperty Name="OTP" ColumnName="OTP" />
-          <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
-          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
-          <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
-          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
-          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-          <ScalarProperty Name="StageID" ColumnName="StageID" />
-          <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
-          <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
-          <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
-          <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
-          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="InstallmentDetailsHistories">
-      <EntityTypeMapping TypeName="EPassBookModel.InstallmentDetailsHistory">
-        <MappingFragment StoreEntitySet="InstallmentDetailsHistory">
-          <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
-          <ScalarProperty Name="IsRecommended" ColumnName="IsRecommended" />
-          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
-          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-          <ScalarProperty Name="StageID" ColumnName="StageID" />
-          <ScalarProperty Name="ConstructionLevel" ColumnName="ConstructionLevel" />
-          <ScalarProperty Name="IsCentreAmnt" ColumnName="IsCentreAmnt" />
-          <ScalarProperty Name="LoanAmnt" ColumnName="LoanAmnt" />
-          <ScalarProperty Name="BeneficiaryAmnt" ColumnName="BeneficiaryAmnt" />
-          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="InstallmentRejections">
-      <EntityTypeMapping TypeName="EPassBookModel.InstallmentRejection">
-        <MappingFragment StoreEntitySet="InstallmentRejection">
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
-          <ScalarProperty Name="InstallmentNo" ColumnName="InstallmentNo" />
-          <ScalarProperty Name="BeneficiaryId" ColumnName="BeneficiaryId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="InstallmentSignings">
-      <EntityTypeMapping TypeName="EPassBookModel.InstallmentSigning">
-        <MappingFragment StoreEntitySet="InstallmentSigning">
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="SignData" ColumnName="SignData" />
-          <ScalarProperty Name="Sign" ColumnName="Sign" />
-          <ScalarProperty Name="InstallmentId" ColumnName="InstallmentId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="RoleMasters">
-      <EntityTypeMapping TypeName="EPassBookModel.RoleMaster">
-        <MappingFragment StoreEntitySet="RoleMaster">
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="StageInRoles">
-      <EntityTypeMapping TypeName="EPassBookModel.StageInRole">
-        <MappingFragment StoreEntitySet="StageInRole">
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-          <ScalarProperty Name="StageId" ColumnName="StageId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="EPassBookModel.sysdiagram">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="definition" ColumnName="definition" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserInRoles">
-      <EntityTypeMapping TypeName="EPassBookModel.UserInRole">
-        <MappingFragment StoreEntitySet="UserInRoles">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserLoginDetails">
-      <EntityTypeMapping TypeName="EPassBookModel.UserLoginDetail">
-        <MappingFragment StoreEntitySet="UserLoginDetails">
-          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-          <ScalarProperty Name="CityId" ColumnName="CityId" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="OutLocation" ColumnName="OutLocation" />
-          <ScalarProperty Name="InLocation" ColumnName="InLocation" />
-          <ScalarProperty Name="OutTime" ColumnName="OutTime" />
-          <ScalarProperty Name="InTime" ColumnName="InTime" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserMasters">
-      <EntityTypeMapping TypeName="EPassBookModel.UserMaster">
-        <MappingFragment StoreEntitySet="UserMaster">
-          <ScalarProperty Name="IsReset" ColumnName="IsReset" />
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-          <ScalarProperty Name="CityId" ColumnName="CityId" />
-          <ScalarProperty Name="IsLoggedIn" ColumnName="IsLoggedIn" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-          <ScalarProperty Name="Dob" ColumnName="Dob" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="WorkflowStages">
-      <EntityTypeMapping TypeName="EPassBookModel.WorkflowStage">
-        <MappingFragment StoreEntitySet="WorkflowStages">
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="Stage" ColumnName="Stage" />
-          <ScalarProperty Name="StageId" ColumnName="StageId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ELMAH_Error">
-      <EntityTypeMapping TypeName="EPassBookModel.ELMAH_Error">
-        <MappingFragment StoreEntitySet="ELMAH_Error">
-          <ScalarProperty Name="AllXml" ColumnName="AllXml" />
-          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
-          <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
-          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-          <ScalarProperty Name="User" ColumnName="User" />
-          <ScalarProperty Name="Message" ColumnName="Message" />
-          <ScalarProperty Name="Source" ColumnName="Source" />
-          <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="Host" ColumnName="Host" />
-          <ScalarProperty Name="Application" ColumnName="Application" />
-          <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_UpdatTransactionId" FunctionName="epassbook_dbModel.Store.sp_UpdatTransactionId" />
   </EntityContainerMapping>
 </Mapping>

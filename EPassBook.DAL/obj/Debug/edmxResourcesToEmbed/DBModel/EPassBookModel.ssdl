@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="EPassBookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="epassbook_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="BenificiaryMaster">
     <Key>
       <PropertyRef Name="BeneficiaryId" />
@@ -8,7 +8,7 @@
     <Property Name="BeneficairyName" Type="nvarchar" MaxLength="150" />
     <Property Name="FatherName" Type="nvarchar" MaxLength="150" />
     <Property Name="Mother" Type="nvarchar" MaxLength="150" />
-    <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="MobileNo" Type="nvarchar" MaxLength="15" />
     <Property Name="PresentAddress" Type="nvarchar" MaxLength="350" />
     <Property Name="CityId" Type="int" />
     <Property Name="DTRNo" Type="nvarchar(max)" />
@@ -101,7 +101,7 @@
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'epassbook_db.dbo.ELMAH_Error' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="ELMAH_Error">
     <Key>
       <PropertyRef Name="ErrorId" />
@@ -163,7 +163,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="CompanyID" Type="int" />
-    <Property Name="TransactionID" Type="nvarchar" MaxLength="150" />
+    <Property Name="TransactionID" Type="nvarchar" MaxLength="50" />
     <Property Name="IsRecommended" Type="bit" />
     <Property Name="TransactionDate" Type="datetime" />
     <Property Name="TransactionType" Type="nvarchar(max)" />
@@ -187,10 +187,11 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="TransactionID" Type="nvarchar" MaxLength="50" />
     <Property Name="CompanyID" Type="int" />
-    <Property Name="TransactionID" Type="nvarchar" MaxLength="150" />
     <Property Name="IsRecommended" Type="bit" />
     <Property Name="TransactionType" Type="nvarchar(max)" />
+    <Property Name="OTP" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="InstallmentRejection">
     <Key>
@@ -238,16 +239,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="StageId" Type="int" />
     <Property Name="RoleId" Type="int" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
   <EntityType Name="UserInRoles">
     <Key>
       <PropertyRef Name="id" />
@@ -255,20 +246,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RoleId" Type="int" />
     <Property Name="UserId" Type="int" />
-  </EntityType>
-  <EntityType Name="UserLoginDetails">
-    <Key>
-      <PropertyRef Name="AttendanceId" />
-    </Key>
-    <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="int" />
-    <Property Name="InTime" Type="datetime" />
-    <Property Name="OutTime" Type="datetime" />
-    <Property Name="InLocation" Type="nvarchar(max)" />
-    <Property Name="OutLocation" Type="nvarchar(max)" />
-    <Property Name="Date" Type="datetime" />
-    <Property Name="CityId" Type="int" />
-    <Property Name="CompanyId" Type="int" />
   </EntityType>
   <EntityType Name="UserMaster">
     <Key>
@@ -511,20 +488,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserLoginDetails_UserMaster">
-    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="UserLoginDetails" Type="Self.UserLoginDetails" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UserMaster">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="UserLoginDetails">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_UserMaster_CityMaster">
     <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
     <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="*" />
@@ -586,9 +549,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     </ReferentialConstraint>
   </Association>
   <Association Name="UserInRoles_userid_fk">
-    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1" />
     <End Role="UserInRoles" Type="Self.UserInRoles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserMaster">
@@ -633,52 +594,12 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Parameter Name="StatusCode" Type="int" Mode="In" />
     <Parameter Name="TimeUtc" Type="datetime" Mode="In" />
   </Function>
-  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_checkUserExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="userId" Type="int" Mode="In" />
-    <Parameter Name="roleId" Type="int" Mode="In" />
-    <Parameter Name="cityId" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="version" Type="int" Mode="In" />
-    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-  </Function>
-  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
   <Function Name="sp_GetInstallmentListViewForUsersRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="stageids" Type="nvarchar(max)" Mode="In" />
   </Function>
   <Function Name="sp_GetSurveyDetailsByBenID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="BenificiaryId" Type="int" Mode="In" />
     <Parameter Name="installmentNo" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_GetworkStatusforMAsterReports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="cityId" Type="int" Mode="In" />
-    <Parameter Name="DTRNo" Type="nvarchar(max)" Mode="In" />
-    <Parameter Name="companyID" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-  </Function>
-  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-    <Parameter Name="owner_id" Type="int" Mode="In" />
-    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="sp_UpdatTransactionId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="benifciaryId" Type="int" Mode="In" />
@@ -687,7 +608,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <Parameter Name="installmentId" Type="int" Mode="In" />
     <Parameter Name="userid" Type="int" Mode="In" />
   </Function>
-  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="Split" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="List" Type="nvarchar" Mode="In" />
     <Parameter Name="SplitOn" Type="nvarchar" Mode="In" />
@@ -700,7 +620,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
       </CollectionType>
     </ReturnType>
   </Function>
-  <EntityContainer Name="EPassBookModelStoreContainer">
+  <EntityContainer Name="epassbook_dbModelStoreContainer">
     <EntitySet Name="BenificiaryMaster" EntityType="Self.BenificiaryMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CityMaster" EntityType="Self.CityMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
@@ -714,9 +634,7 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <EntitySet Name="InstallmentSigning" EntityType="Self.InstallmentSigning" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoleMaster" EntityType="Self.RoleMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StageInRole" EntityType="Self.StageInRole" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserInRoles" EntityType="Self.UserInRoles" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserLoginDetails" EntityType="Self.UserLoginDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkflowStages" EntityType="Self.WorkflowStages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" store:Type="Tables" store:Schema="dbo">
@@ -801,10 +719,6 @@ warning 6002: The table/view 'EPassBook.dbo.ELMAH_Error' does not have a primary
     <AssociationSet Name="FK_StageInRole_WorkflowStages" Association="Self.FK_StageInRole_WorkflowStages">
       <End Role="WorkflowStages" EntitySet="WorkflowStages" />
       <End Role="StageInRole" EntitySet="StageInRole" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserLoginDetails_UserMaster" Association="Self.FK_UserLoginDetails_UserMaster">
-      <End Role="UserMaster" EntitySet="UserMaster" />
-      <End Role="UserLoginDetails" EntitySet="UserLoginDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_UserMaster_CityMaster" Association="Self.FK_UserMaster_CityMaster">
       <End Role="CityMaster" EntitySet="CityMaster" />

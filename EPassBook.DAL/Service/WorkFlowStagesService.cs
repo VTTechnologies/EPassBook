@@ -10,13 +10,13 @@ namespace EPassBook.DAL.Service
 {
     public class WorkFlowStagesService : IWorkFlowStagesService
     {
-        private readonly EPassBookEntities _dbContext;
+        private readonly epassbook_dbEntities _dbContext;
         private UnitOfWork unitOfWork;
         private GenericRepository<WorkflowStage> workflowStageRepository;
         private GenericRepository<StageInRole> stageInRoleRepository;
         public WorkFlowStagesService()
         {
-            _dbContext = new EPassBookEntities();
+            _dbContext = new epassbook_dbEntities();
             unitOfWork = new UnitOfWork(_dbContext);
             workflowStageRepository = unitOfWork.GenericRepository<WorkflowStage>();
             stageInRoleRepository= unitOfWork.GenericRepository<StageInRole>();

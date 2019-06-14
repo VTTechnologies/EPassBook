@@ -11,9 +11,9 @@ namespace EPassBook.DAL.Repository
 {
     internal class UnitOfWork : IUnitOfWork
     {
-        private readonly EPassBookEntities _dbContext;
+        private readonly epassbook_dbEntities _dbContext;
         private Dictionary<string, object> repositories;
-        public UnitOfWork(EPassBookEntities context)
+        public UnitOfWork(epassbook_dbEntities context)
 
         {
             _dbContext = context;

@@ -54,7 +54,6 @@ namespace EPassBook.Controllers
                 var userData = _userService.GetPassword(user.UserName);
                 UserViewModel uservm = new UserViewModel();
 
-                Response.Cookies["UserId"].Value = userData.UserId.ToString();
 
                 HttpCookie objCookie = new HttpCookie("UserId");
                 objCookie.Value = userData.UserId.ToString();

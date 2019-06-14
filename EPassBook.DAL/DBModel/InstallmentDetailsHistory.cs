@@ -28,8 +28,8 @@ namespace EPassBook.DAL.DBModel
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
-        public Nullable<int> CompanyID { get; set; }
         public string TransactionID { get; set; }
+        public Nullable<int> CompanyID { get; set; }
         public Nullable<bool> IsRecommended { get; set; }
         public string TransactionType { get; set; }
         public string OTP { get; set; }

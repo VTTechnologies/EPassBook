@@ -14,7 +14,6 @@ namespace EPassBook.DAL.DBModel
     
     public partial class WorkflowStage
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public WorkflowStage()
         {
             this.StageInRoles = new HashSet<StageInRole>();
@@ -24,7 +23,6 @@ namespace EPassBook.DAL.DBModel
         public string Stage { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StageInRole> StageInRoles { get; set; }
     }
 }

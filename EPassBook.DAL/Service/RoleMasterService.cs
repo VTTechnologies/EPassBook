@@ -12,13 +12,13 @@ namespace EPassBook.DAL.Service
 {
      public class RoleMasterService : IRoleMasterService
     {
-        private readonly EPassBookEntities _dbContext;
+         private readonly epassbook_dbEntities _dbContext;
         private UnitOfWork unitOfWork;
         private GenericRepository<RoleMaster> roleMasterRepository;
 
         public RoleMasterService()
         {
-            _dbContext = new EPassBookEntities();
+            _dbContext = new epassbook_dbEntities();
             unitOfWork = new UnitOfWork(_dbContext);
             roleMasterRepository = unitOfWork.GenericRepository<RoleMaster>();
         }

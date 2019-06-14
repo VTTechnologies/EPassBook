@@ -10,13 +10,13 @@ namespace EPassBook.DAL.Service
 {
     public class InstallmentRejectionService : IInstallmentRejectionService
     {
-        private readonly EPassBookEntities _dbContext;
+        private readonly epassbook_dbEntities _dbContext;
         private UnitOfWork unitOfWork;
         private GenericRepository<InstallmentRejection> installmentRejectionRepository;
 
         public InstallmentRejectionService()
         {
-            _dbContext = new EPassBookEntities();
+            _dbContext = new epassbook_dbEntities();
             unitOfWork = new UnitOfWork(_dbContext);
             installmentRejectionRepository = unitOfWork.GenericRepository<InstallmentRejection>();
         }

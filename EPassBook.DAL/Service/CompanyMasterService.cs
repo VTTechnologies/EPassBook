@@ -12,13 +12,13 @@ namespace EPassBook.DAL.Service
 {
      public class CompanyMasterService : ICompanyMasterService
     {
-        private readonly EPassBookEntities _dbContext;
+         private readonly epassbook_dbEntities _dbContext;
         private UnitOfWork unitOfWork;
         private GenericRepository<CompanyMaster> companyMasterRepository;
 
         public CompanyMasterService()
         {
-            _dbContext = new EPassBookEntities();
+            _dbContext = new epassbook_dbEntities();
             unitOfWork = new UnitOfWork(_dbContext);
             companyMasterRepository = unitOfWork.GenericRepository<CompanyMaster>();
         }

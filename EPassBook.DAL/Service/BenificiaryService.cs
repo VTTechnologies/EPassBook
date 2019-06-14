@@ -10,13 +10,13 @@ namespace EPassBook.DAL.Service
 {
     public class BenificiaryService : IBenificiaryService
     {
-        private readonly EPassBookEntities _dbContext;
+        private readonly epassbook_dbEntities _dbContext;
         private UnitOfWork unitOfWork;
         private GenericRepository<BenificiaryMaster> benificiaryMasterRepository;
 
         public BenificiaryService()
         {
-            _dbContext = new EPassBookEntities();
+            _dbContext = new epassbook_dbEntities();
             unitOfWork = new UnitOfWork(_dbContext);
             benificiaryMasterRepository = unitOfWork.GenericRepository<BenificiaryMaster>();
         }

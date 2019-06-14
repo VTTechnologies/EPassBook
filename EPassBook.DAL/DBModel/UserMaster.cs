@@ -14,13 +14,11 @@ namespace EPassBook.DAL.DBModel
     
     public partial class UserMaster
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserMaster()
         {
             this.GeoTaggingDetails = new HashSet<GeoTaggingDetail>();
             this.InstallmentSignings = new HashSet<InstallmentSigning>();
             this.UserInRoles = new HashSet<UserInRole>();
-            this.UserLoginDetails = new HashSet<UserLoginDetail>();
         }
     
         public int UserId { get; set; }
@@ -40,13 +38,8 @@ namespace EPassBook.DAL.DBModel
     
         public virtual CityMaster CityMaster { get; set; }
         public virtual CompanyMaster CompanyMaster { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GeoTaggingDetail> GeoTaggingDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InstallmentSigning> InstallmentSignings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserInRole> UserInRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserLoginDetail> UserLoginDetails { get; set; }
     }
 }
