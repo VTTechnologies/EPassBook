@@ -34,7 +34,6 @@ D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.Cor
 D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csproj.CopyComplete
 D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
 D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb
-E:\VTT\Projects\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csprojResolveAssemblyReference.cache
 E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll.config
 E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.dll
 E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Debug\EPassBook.DAL.pdb
@@ -42,5 +41,6 @@ E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.dll
 E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.SqlServer.dll
 E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.xml
 E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\VTT\Projects\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.csprojResolveAssemblyReference.cache
 E:\VTT\Projects\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.dll
 E:\VTT\Projects\EPassBook\EPassBook.DAL\obj\Debug\EPassBook.DAL.pdb

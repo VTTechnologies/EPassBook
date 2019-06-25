@@ -1,0 +1,179 @@
+﻿@model IEnumerable<EPassBook.Models.WorkStatusDetailsViewModel>
+
+@if (Model != null)
+{
+
+}
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Creat User
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Create User</a></li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h2>Master Reports</h2>
+                    </div>
+                    <div class="box-body">
+                        <div class="row" style="margin:5px">
+                            <div class="box box-primary">
+                                <div class="box-body">
+                                    <div class="col-md-4">
+                                        <select id="ddlcity" class="form-control"></select>
+                                        <label id="lblCityError" style="color:red" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select id="ddldtr" class="form-control"></select>
+                                        <label id="lbldtrError" style="color:red" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input id="btnSearch" type="submit" value="Search" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3><label>DTR No:</label> <label id="lblDtrTitle" /></h3>
+                        <div class="table-responsive">
+                            <table id="surveyDetails" class="table table-bordered table-striped" style="">
+                                <thead>
+                                    <tr>
+                                        <th>Installment</th>
+                                        <th class="hidden-sm hidden-xs hidden-md">Work Status</th>
+                                        <th>State</th>
+                                        <th>Center</th>
+                                        <th class="hidden-sm hidden-xs hidden-md">Beneficiary</th>
+                                        <th>ULB</th>
+                                        <th>Total Amount(in Rs)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ddlDtr = $("#ddldtr");
+        ddlDtr.empty().append('<option selected="selected" value="0">SELECT DTR</option>');
+        bindCities();
+        $('#workStatusDetails').DataTable();
+    });
+    $("#ddlcity").change(function () {
+        var selectedCity = $(this).children("option:selected").val();
+        if (selectedCity != 0) {
+            $("#lblCityError").html('');
+        }
+        bindDTRs(selectedCity);
+    });
+    $("#ddldtr").change(function () {
+        var selectedDTR = $(this).children("option:selected").val();
+        if (selectedDTR != 0) {
+            $("#lbldtrError").html('');
+        }
+    });
+    $("#btnSearch").click(function () {
+        debugger
+        var SelectedcityId = $("#ddlcity").children("option:selected").val();
+        var SelectedDTRNo = $("#ddldtr").children("option:selected").val();
+        if (SelectedcityId == 0 && SelectedDTRNo == 0) {
+            $("#lblCityError").html('Please select city');
+            $("#lbldtrError").html('Please select DTR');
+            return false
+        }
+        else if (SelectedcityId == 0 || SelectedDTRNo == 0) {
+            if (SelectedcityId == 0) {
+                $("#lblCityError").html('Please select city');
+                return false
+            }
+            if (SelectedDTRNo == 0) {
+                $("#lbldtrError").html('Please select DTR');
+                return false
+            }
+        }
+        //var title = $("#ddlDtr").children("option:selected").val();
+        $("#lblDtrTitle").html(SelectedDTRNo);
+        GetFilteredData(SelectedcityId, SelectedDTRNo);
+    });
+
+    function bindCities() {
+        var ddlcity = $("#ddlcity");
+        var URL = "@Url.Action("getAllCities", "Dashboard")";
+        ddlcity.empty().append('<option selected="selected" value="0" disabled = "disabled">Loading.....</option>');
+        $.ajax({
+            type: "POST",
+            url: URL,
+            data: '{}',
+            success: function (response) {
+                ddlcity.empty().append('<option selected="Selected" value="0">SELECT CITY</option>');
+                $.each(response, function () {
+                    ddlcity.append($('<option></option>').val(this['Value']).html(this['Text']));
+                });
+            },
+            error: function (response) {
+                alert('error' + response);
+            }
+        });
+    }
+
+    function bindDTRs(SelectedcityId) {
+        var ddlDtr = $("#ddldtr");
+        ddlDtr.empty().append('<option Selected="Selected" disabled="disabled" value="0">loading...</option>');
+        var URL = "@Url.Action("GetAllDTRNosByCity", "Dashboard")";
+        var data = 'cityId=' + SelectedcityId;
+        $.ajax({
+            url: URL,
+            type: "POST",
+            data: data,
+            success: function (response) {
+                ddlDtr.empty().append('<option selected="selected" value="0">SELECT DTR</option>');
+                $.each(response, function () {
+                    ddlDtr.append($("<option></option>").val(this["Value"]).html(this["Text"]));
+                });
+            },
+            error: function (response) {
+                alert('error' + response);
+            }
+        });
+    }
+    function GetFilteredData(SelectedcityId, SelectedDTRNo) {
+        debugger;
+        var URL = "@Url.Action("MasterReports", "Dashboard")";
+        var data = { 'cityId': SelectedcityId, 'DTRno': SelectedDTRNo }
+        $.ajax({
+            type: "POST",
+            url: URL,
+            data: data,
+            success: function (response) {
+                var total = 0;
+                $("#surveyDetails").find("tr:not(:first)").remove();
+                $.each(response, function (i, item) {
+                    var html = "<tr><td>" + item.Installment + "</td>";
+                    html += "<td>" + item.LevelType + "</td>";
+                    html += "<td>" + item.StateAmount + "</td>";
+                    html += "<td>" + item.CenterAmount + "</td>";
+                    html += "<td>" + item.BeneficiaryAmount + "</td>";
+                    html += "<td>" + item.ULBAmount + "</td>";
+                    html += "<td>" + item.TotalAmount + "</td></tr>";
+                    total += parseInt(item.TotalAmount, 10);
+                    $("#surveyDetails tr:first").after(html);
+                });
+                var htmlfooter = "< tfoot ><tr><td></td><td></td><td></td><td></td><td></td><td>Total</td><td>" + total + "</td></tr></tfoot>";
+                $("#surveyDetails tr:last").after(htmlfooter);
+            },
+            error: function (response) {
+                alert('error' + response);
+            }
+        });
+    }
+
+</script>

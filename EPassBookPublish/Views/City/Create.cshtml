@@ -1,0 +1,64 @@
+﻿@model EPassBook.Models.CityViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header" >
+        <h1>
+            Create City
+        </h1>
+        <ol class="breadcrumb">
+            <li><i class="fa fa-dashboard">@Html.ActionLink("Home","Index","City")</i></li>
+            <li class="active">Create User</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        @using (Html.BeginForm("Create", "City", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="box-body">
+                                <br /><br />
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>City Name</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter City Name" } })
+                                            @Html.ValidationMessageFor(model => model.CityName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>City Short Name </label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            @Html.EditorFor(model => model.CityShortName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Short Name" } })
+                                            @Html.ValidationMessageFor(model => model.CityShortName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-2 col-md-offset-3">
+                                            <input type="submit" name="submit" value="Create" class="btn btn-primary " />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+</div>
+

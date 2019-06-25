@@ -55,11 +55,11 @@ namespace EPassBook.Controllers
                 UserViewModel uservm = new UserViewModel();
 
 
-                HttpCookie objCookie = new HttpCookie("UserId");
-                objCookie.Value = userData.UserId.ToString();
-                objCookie.Expires = DateTime.Now.AddDays(1);
+                //HttpCookie objCookie = new HttpCookie("UserId");
+                //objCookie.Value = userData.UserId.ToString();
+                //objCookie.Expires = DateTime.Now.AddDays(1);
 
-                Response.Cookies.Add(objCookie);
+                //Response.Cookies.Add(objCookie);
 
                 if (user.RememberMe)
                 {
@@ -300,6 +300,7 @@ namespace EPassBook.Controllers
             userVM.CompanyID = companyId;
             userVM.UserInRoles = new List<UserInRoleViewModel>();
             userVM.UserInRoles.Add(new UserInRoleViewModel() { RoleId= userVM.RoleId });
+            userVM.IsLoggedIn = false;
             var userData = Mapper.UserMapper.Attach(userVM);
             _userService.Add(userData);
             _userService.SaveChanges();

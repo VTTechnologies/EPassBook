@@ -1,0 +1,435 @@
+﻿@model EPassBook.Models.BeneficiaryViewModel
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Create Beneficiary
+        </h1>
+        <ol class="breadcrumb">
+            <li><i class="fa fa-dashboard"></i> @Html.ActionLink("Home", "Index", "Beneficiary")</li>
+            <li class="active">Create Beneficiary</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+
+                    </div>
+                    @using (Html.BeginForm("Create", "Beneficiary", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="box-body">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @*<div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.BeneficiaryId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.BeneficiaryId, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BeneficiaryId, "", new { @class = "text-danger" })
+                                    </div>
+                                    </div>*@
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.BeneficairyName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.BeneficairyName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BeneficairyName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.FatherName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.FatherName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.FatherName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.Mother, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.Mother, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Mother, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.PresentAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.PresentAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PresentAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                            @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        </div>
+                                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                            @Html.EditorFor(model => model.CityId, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>*@
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.DTRNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.DTRNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.DTRNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.RecordNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.RecordNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.RecordNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.Class, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.Class, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Class, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.General, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.General, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.General, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.Label("Marital Status", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.DropDownListFor(model => model.Single, new SelectList ( new List<object>
+                                        {
+                                        new {Value ="Married", Text="Married" },
+                                        new {Value ="Unmarried", Text="Unmarried" },
+                                   },"Value","Text"),"Select Items",new { @class = "form-control" })
+
+                                        @*@Html.EditorFor(model => model.Single, new { htmlAttributes = new { @class = "form-control" } })*@
+                                        @Html.ValidationMessageFor(model => model.Single, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.Disabled, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.Disabled, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Disabled, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.PoliceStation, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.PoliceStation, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PoliceStation, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.WardNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.WardNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.WardNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.District, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.District, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.District, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                                @Html.LabelFor(model => model.Hasband_Photo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <img id="img1" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
+                                                <input type="file" value="Upload" id="imgupload1" name="imgupload1" onchange="readURL(this, 'img1')" class="btn btn-primary col-md-7" />
+                                                <input type="button" id="btnimg1cencal" onclick="removeimg('img1','imgupload1')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                                @Html.LabelFor(model => model.Wife_Photo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <img id="img2" src="" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
+                                                <input type="file" value="Upload" id="imgupload2" name="imgupload2" onchange="readURL(this,'img2');" class="btn btn-primary col-md-7" />
+                                                <input type="button" id="btnimg2cencal" onclick="removeimg('img2','imgupload2')" value="Cancel" class="btn btn-danger col-md-4 pull-right" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                        <input type='file' onchange="readURL(this,'img1');" class="btn btn-primary col-md-12" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                                        <input type='file' onchange="readURL(this,'img1');" class="btn btn-primary col-md-12" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                        <input type="submit" value="Create" class="btn btn-default" />
+                                    </div>
+                                    </div>*@
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.AdharNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.AdharNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.AdharNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.VoterID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.VoterID, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.VoterID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.Area, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.Area, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Area, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.MojaNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.MojaNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.MojaNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.KhataNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.KhataNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.KhataNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.KhasraNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.KhasraNo, new { htmlAttributes = new { @onkeypress = " return isNumberKey(event);", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.KhasraNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.PlotNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.PlotNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PlotNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.BankName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.BankName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BankName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.BranchName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.BranchName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BranchName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.IFSCCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.IFSCCode, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.IFSCCode, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                        @Html.LabelFor(model => model.AccountNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    </div>
+                                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ui input">
+                                        @Html.EditorFor(model => model.AccountNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.AccountNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <input type="submit" id="btncreate" value="Create" onclick="return validation();" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            debugger
+            alert("submited successfully");
+            window.location.href = "/Beneficiary/Index/";
+        };
+    </script>
+}
+
+<script>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function validation() {
+        var maritalStatus = $("#Single").val();
+        if (maritalStatus != '')
+        {
+            if (maritalStatus == 'Married')
+            {
+                var imgVal = $('#imgupload1').val();
+                if (imgVal == '') {
+                    alert("Please select husband photo");
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            alert("Please select Marital status");
+            return false;
+        }
+
+        return true;
+    }
+    function readURL(input, id) {
+        //alert(id);
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            if (id == 'img1') {
+                reader.onload = function (e) {
+                    $('#img1')
+                        .attr('src', e.target.result);
+                };
+            }
+            if (id == 'img2') {
+                reader.onload = function (e) {
+                    $('#img2')
+                        .attr('src', e.target.result);
+                };
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    @*var url = '@Url.Action("Beneficiary", "Home")';
+    $('#btncreate').click(function ()
+    {
+        alert();
+        //var keyWord = $('#Keyword').val();
+        $('#BeneficiaryResult').load(url);
+    })*@
+    function removeimg(img, fileupld) {
+        debugger;
+        document.getElementById(img).removeAttribute('src');
+        document.getElementById(fileupld).value = "";
+
+    }
+
+
+</script>

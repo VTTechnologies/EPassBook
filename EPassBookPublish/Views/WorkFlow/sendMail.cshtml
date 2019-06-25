@@ -1,0 +1,35 @@
+﻿@model EPassBook.Helper.Mail
+@{
+    ViewBag.Title = "sendMail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>sendMail</h2>
+<div>
+    @using (Html.BeginForm("sendMail", "WorkFlow", FormMethod.Post))
+    {
+
+    @Html.LabelFor(model => model.ToEmail)
+    @Html.TextBoxFor(model => model.ToEmail)
+    <br />
+
+    @Html.LabelFor(model => model.Subject)
+    @Html.TextBoxFor(model => model.Subject)
+    <br />
+
+    @Html.LabelFor(model => model.Description)
+    @Html.TextBoxFor(model => model.Description)
+    <br />
+    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+
+    }
+</div>
+
+
+
+

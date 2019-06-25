@@ -142,7 +142,10 @@ namespace EPassBook.Controllers
                 TempData.Keep();
                 return RedirectToAction("Index", "Beneficiary");
             }
+            //Navnirman-debug.apk
             var Link = "http://www.navnirmangroup.org/files/public-docs/app-debug.apk";
+
+            //Internal error: Error in cURL request: OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to 10.217.138.101:443
 
             string BeniUserName = beneficiaryViewModel.AdharNo.ToString();
             BeniUserName = !String.IsNullOrWhiteSpace(BeniUserName) && BeniUserName.Length >= 6 ? BeniUserName.Substring(BeniUserName.Length - 6) : BeniUserName;

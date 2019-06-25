@@ -26,6 +26,7 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.BeneficiaryId, htmlAttributes: new {@id="beniId"  })
+                         @Html.HiddenFor(model => model.Password)
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="box-body">
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -394,7 +395,7 @@
         var maritalStatus = $("#Single").val();
         if (maritalStatus != '') {
             if (maritalStatus == 'Married') {
-                var imgVal = $('#imgupload1').val();
+                var imgVal = $('#img1').attr('src');
                 if (imgVal == '') {
                     alert("Please select husband photo");
                     return false;

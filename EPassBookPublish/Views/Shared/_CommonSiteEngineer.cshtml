@@ -1,0 +1,119 @@
+﻿@model EPassBook.Models.InstallmentDetailsViewModel
+
+
+<div class="row">
+    @*<div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    @Html.Partial("_InstallmentDetails", Model)
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div class="col-md-12">
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.InstallmentId, "InstallmentID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(m => m.InstallmentId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.BeneficiaryAmnt, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.BeneficiaryAmnt, new { htmlAttributes = new { @class = "form-control", @id = "txtBenAmnt", @disabled = "disabled" } })&nbsp;<span id="errmsgB"></span>
+
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.beniInRupees, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                <label id="lblBeniAmntRupees"></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsCentreAmnt, "State Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox icheck">
+                    @Html.RadioButtonFor(model => model.IsCentreAmnt, false, new { @disabled = "disabled" })State Assistance
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsCentreAmnt, "Central Assistance", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox icheck">
+                    @Html.RadioButtonFor(model => model.IsCentreAmnt, true, new { @disabled = "disabled" })Central Assistance
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LoanAmnt, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.LoanAmnt, new { htmlAttributes = new { @class = "form-control", @id = "txtLAmnt", @disabled = "disabled" } })&nbsp;<span id="errmsgL"></span>
+            </div>
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.lInRupees, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                <label id="lblAmntLRupees"></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Transaction Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                @Html.DropDownListFor(model => model.TransactionType, new SelectList(new List<object>
+                    {
+                    new{ value="RTGS", text="RTGS" },
+                                    new{ value="IMPS", text="IMPS" },
+                                    new{ value="NEFT", text="NEFT" },
+                                    new{ value="Check", text="Check" },
+                                    new{ value="Cash", text="Cash" },
+                    },
+                    "value",
+                    "text"),"Select Items",
+                    new {  @class = "form-control", @disabled = "disabled" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="text-align-last:end">
+
+                <strong>Via RTGS/DBT to the beneficiary for the plan as first instalment after </strong>
+
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                @Html.DropDownListFor(model => model.ConstructionLevel, new SelectList(new List<object>
+                                           {
+                                           new{ value="Not Started", text="Not Started" },
+                                           new{ value="Digging", text="Digging" },
+                                           new{ value="Plinth Level", text="Plinth Level" },
+                                           new{ value="Lintel Level", text="Lintel Level" },
+                                           new{ value="Roof Level", text="Roof Level" },
+                                           new{ value="Finishing/Completion", text="Finishing/Completion" },
+                                           },
+                                           "value",
+                                           "text"),"Select Items",
+                                           new {  @class = "form-control", disabled = "disabled" })
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <p>
+                    <strong> of the foundation.</strong>
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModifiedBy, "Upload Photo", htmlAttributes: new { @class = "control-label col-md-2", @disabled = "disabled" })
+            <div class="col-md-5">
+                <img id="imgsite" src="@Model.Photo" alt="your image" class="img-thumbnail col-md-12" style="height:200px" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Please see all comments in Survey Details tab.", htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+    </div>
+</div>
+
+
+
+

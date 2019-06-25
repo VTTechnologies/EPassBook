@@ -156,7 +156,9 @@
     <Folder Include="DTO\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="DBModel\EPassBookModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EPassBookModel.Designer.cs</LastGenOutput>

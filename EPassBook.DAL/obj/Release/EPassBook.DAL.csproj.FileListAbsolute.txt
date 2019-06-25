@@ -34,3 +34,12 @@ D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.csproj.C
 D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.csproj.CopyComplete
 D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.dll
 D:\Office data\VTTech\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.pdb
+E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Release\EPassBook.DAL.dll.config
+E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Release\EPassBook.DAL.dll
+E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Release\EPassBook.DAL.pdb
+E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.dll
+E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.SqlServer.dll
+E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.xml
+E:\VTT\Projects\EPassBook\EPassBook.DAL\bin\Release\EntityFramework.SqlServer.xml
+E:\VTT\Projects\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.dll
+E:\VTT\Projects\EPassBook\EPassBook.DAL\obj\Release\EPassBook.DAL.pdb

@@ -1,0 +1,14 @@
+﻿@{
+    var userDetails = HttpContext.Current.Session["UserDetails"] as EPassBook.Models.UserViewModel;
+
+    string layout = layout = "~/Views/Shared/_Layout.cshtml";
+    if (userDetails != null)
+    {
+        if (userDetails.UserInRoles.FirstOrDefault().RoleId == Convert.ToInt32(EPassBook.Helper.Common.Roles.Admin))
+        {
+            layout = "~/Views/Shared/_AdminLayout.cshtml";
+        }
+    }
+
+    Layout = layout;
+}

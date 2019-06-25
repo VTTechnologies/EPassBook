@@ -1,0 +1,148 @@
+﻿@model EPassBook.Models.InstallmentDetailsViewModel
+@{
+    if (ViewBag.Message != null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    if (ViewBag.Error != null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+<section class="content" id="cityengineer">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h4>City Engineer</h4>
+                </div>
+                @using (Html.BeginForm("CityEngineer", "WorkFlow", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="box-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        @Html.Partial("_CommonSiteEngineer", Model)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model._Comments, "Comments", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <label style="color:red">Note: Please check all previous comments in Survey Details tab before proceeding </label>
+                                @Html.TextAreaFor(model => model._Comments, htmlAttributes: new { @class = "form-control", @rows = 5 })
+                                @Html.ValidationMessageFor(model => model._Comments, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox icheck col-md-offset-2 col-md-10">
+                                @Html.CheckBoxFor(model => model.Sign, new { @class = "minimal", id = "chkCityEngineer" }) @Html.Label("City Engineer")
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <label id="lblmsg_CE" class="text-danger"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button id="btnGenOTP" type="button" class="btn btn-primary" />
+                        </div>
+
+                        <div class="form-group" id="otpDiv" visible="false">
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                <label id="lblotp">Enter OTP: </label>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.OTP, htmlAttributes: new { @class = "form-control", @maxlength = "4", id = "txtOtp" })
+                                @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
+                                <label id="lblOTPError" class="text-danger"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="btnSubmit">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Send to Cheif Officer" onclick="return validation_CE();" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@if (!EPassBook.Helper.AuthorizationForView.IsAuthorize(EPassBook.Helper.Common.CityEngineer))
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#cityengineer').find(':input').prop('disabled', true);
+        });
+    </script>
+}
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("submited successfully");
+            window.location.href = "/WorkFlow/Index/";
+        };
+    </script>
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnGenOTP").text('Generate OTP');
+        $("#otpDiv").hide();
+        $('#btnSubmit').hide();
+
+        $("#btnGenOTP").on("click", function ()
+        {
+            var installmentId = '@Model.InstallmentId';
+            AjaxWithParameter(installmentId);
+        });
+
+        //Only Take 4 charecter , show and Hide
+        $("#txtOtp").keyup(function (e) {
+            KeyPressEvent(e);
+        });
+
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
+
+        $("#chkCityEngineer").change(function () {
+            $("#lblmsg_CE").text("");
+        });
+    });
+    function validation_CE()
+    {
+        var isOTPverfied = false;
+        var installmentId = '@Model.InstallmentId';
+        var Otp = $("#txtOtp").val();
+        if (Otp == '')
+        {
+            $("#lblOTPError").text("Please enter OTP");
+            return false;
+        }
+        if (!$("#chkCityEngineer").is(":checked"))
+        {
+            $("#lblmsg_CE").text("Please sign in to confirm your submission");
+            return false;
+        }
+        var isOTPverfied = ValidateOTP(installmentId, Otp);
+        if (isOTPverfied != 'True')
+        {
+            alert("Wrong OTP");
+            return false;
+        }
+        return true;
+    }
+</script>
+
